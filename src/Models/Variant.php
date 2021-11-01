@@ -1,0 +1,83 @@
+<?php
+
+namespace IZal\Lshopify\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class Variant extends BaseModel
+{
+    use HasFactory;
+    use ImageableTrait;
+
+    protected $table = 'variants';
+
+    protected $casts = [
+        'taxable' => 'boolean',
+        'requires_shipping' => 'boolean',
+        'default' => 'boolean',
+        'track_quantity' => 'boolean',
+        'physical_product' => 'boolean',
+        'out_of_stock_sale' => 'boolean',
+        'price' => 'decimal:3',
+        'compare_at_price' => 'decimal:3',
+        'options' => 'array',
+    ];
+
+//    protected $with = ['product','image'];
+
+    protected $fillable = [
+        'product_id',
+        'price',
+        'position',
+        'sku',
+        'compare_at_price',
+        'fulfillment_service',
+        'inventory_management',
+        'barcode',
+        'weight',
+        'hs_code',
+        'origin_country_id',
+        'weight_unit',
+        'cost_price',
+        'quantity',
+        'default',
+        'taxable',
+        'requires_shipping',
+        'track_quantity',
+        'physical_product',
+        'out_of_stock_sale',
+        'image_id',
+    ];
+
+    public static function defaultVariants()
+    {
+        return [
+            ['id' => '1', 'name' => 'Size'],
+            ['id' => '2', 'name' => 'Color'],
+            ['id' => '3', 'name' => 'Material'],
+            ['id' => '4', 'name' => 'Style'],
+        ];
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
+
+    public function image()
+    {
+        return $this->belongsTo(Image::class);
+    }
+
+    public function orders()
+    {
+        return $this->belongsToMany(DraftOrder::class, 'order_variants');
+    }
+
+    public function getTitleAttribute()
+    {
+        return collect($this->options)
+            ->pluck('id')
+            ->join(' / ');
+    }
+}

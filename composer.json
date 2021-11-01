@@ -1,0 +1,34 @@
+{
+    "name": "izal/lshopify",
+    "description": "laravel shopify",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "IZal\\Lshopify\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "IZal\\Lshopify\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Afzal Abbas",
+            "email": "z4ls@live.com"
+        }
+    ],
+    "require": {
+        "php": "^7.3|^8.0",
+        "illuminate/support": "~6.0|~7.0|~8.0",
+        "inertiajs/inertia-laravel": "^0.4.4",
+        "tightenco/ziggy": "^1.4"
+    },
+    "require-dev": {
+        "laravel/framework": "^8.54",
+        "fakerphp/faker": "^1.9.1",
+        "phpunit/phpunit": "^9.3.3"
+    },
+    "minimum-stability": "stable"
+}

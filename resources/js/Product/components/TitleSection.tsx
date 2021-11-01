@@ -1,0 +1,42 @@
+import React from 'react';
+import Card from '../../components/Card';
+import Label from '../../components/forms/Label';
+import InputText from '../../components/forms/InputText';
+import TextArea from '../../components/forms/TextArea';
+import {Product} from '../../types';
+
+interface Props {
+  onChange: (field: keyof Product, value: string) => void;
+  title: string;
+  description: string;
+}
+
+interface T extends Props {}
+
+export default function TitleSection({onChange, title, description}: T) {
+  return (
+    <Card>
+      <div>
+        <Label title='Title' />
+        <InputText
+          name='title'
+          placeholder={'Short sleeve t-shirt'}
+          onChange={(e) => onChange('title', e.target.value)}
+          value={title}
+        />
+      </div>
+
+      <div>
+        <Label title='Description' />
+        <TextArea
+          name='description'
+          placeholder='Short sleeve t-shirt'
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onChange('description', e.target.value)
+          }
+          value={description || undefined}
+        />
+      </div>
+    </Card>
+  );
+}
