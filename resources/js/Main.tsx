@@ -28,7 +28,7 @@ export default function Main({
         <div className='flex flex-col w-0 flex-1 overflow-auto mb-50'>
           <Navbar />
           {/*<PopMessages />*/}
-          {/*<FlashMessages />*/}
+          <FlashMessages />
           {children}
         </div>
       </div>

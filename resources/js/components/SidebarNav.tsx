@@ -22,7 +22,7 @@ export default function SidebarNav() {
   const listDropItemActiveStyle =
     'text-gray-300 hover:text-gray-700 dark:hover:bg-gray-800 dark:hover:text-gray-100';
   const listDropItemStyle =
-    'text-gray-300 hover:text-gray-700 dark:hover:bg-gray-800 dark:hover:text-gray-100';
+    'text-gray-700 hover:text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-100';
 
   return (
     <div>

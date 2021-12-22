@@ -23,26 +23,40 @@ interface Props extends Page {
 export default function FlashMessages() {
   const [visible, setVisible] = useState(false);
   const {flash, errors, env} = usePage<Props>().props;
-
+  //
   let flashMessage: {type: keyof FlashMessageType; message: string | null} = {
     type: 'success',
     message: null,
   };
 
-  (Object.keys(flash) as Array<keyof typeof flash>).forEach((key) => {
-    let message = flash[key];
-    if (message) {
-      return (flashMessage = {
-        type: key,
-        message: message,
-      });
-    }
-    return;
-  });
+  if(flash) {
+      if (flash.success) {
+          flashMessage = {type: 'success', message: flash.success};
+      } else if (flash.error) {
+          flashMessage = {type: 'error', message: flash.error};
+      } else if (flash.warning) {
+          flashMessage = {type: 'warning', message: flash.warning};
+      } else if (flash.info) {
+          flashMessage = {type: 'info', message: flash.info};
+      }
+  }
 
-  const errorMessages: Array<string> = Object.keys(errors).map(
+  // if(flash){
+  //     (Object.keys(flash) as Array<keyof typeof flash>).forEach((key) => {
+  //         let message = flash[key];
+  //         if (message) {
+  //             return (flashMessage = {
+  //                 type: key,
+  //                 message: message,
+  //             });
+  //         }
+  //         return;
+  //     });
+  // }
+
+  const errorMessages: Array<string> = errors ? Object.keys(errors).map(
     (key) => errors[key]
-  );
+  ): [];
 
   useEffect(() => {
     if (flashMessage.message || errorMessages.length) {
@@ -120,7 +134,6 @@ const Content = ({
   type: keyof FlashMessageType;
   setVisible: (visibility: boolean) => void;
 }) => {
-  console.log('type', type);
 
   let themeStyle = 'text-white bg-green-500 border-green-300';
 

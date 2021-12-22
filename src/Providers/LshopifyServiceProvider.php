@@ -14,6 +14,7 @@ use IZal\Lshopify\Http\Middleware\LshopifyAdminMiddleware;
 
 class LshopifyServiceProvider extends ServiceProvider
 {
+
     /**
      * Register the application services.
      */
