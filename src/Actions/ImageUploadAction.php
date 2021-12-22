@@ -2,6 +2,7 @@
 
 namespace IZal\Lshopify\Actions;
 
+use Illuminate\Http\File;
 use IZal\Lshopify\Models\Image;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\UploadedFile;
@@ -79,10 +80,7 @@ class ImageUploadAction
 
     private function storeImage(UploadedFile $image): string
     {
-        $imagePath = $this->generateFileName($image->getClientOriginalExtension());
-
-        \Storage::put($imagePath, file_get_contents($image->getRealPath()));
-
+        $imagePath = \Storage::disk('public')->putFile('images', new File($image->getRealPath()));
         return $imagePath;
     }
 
