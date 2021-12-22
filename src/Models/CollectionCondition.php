@@ -3,6 +3,7 @@
 namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use IZaL\Lshopify\Database\Factories\CollectionConditionFactory;
 
 class CollectionCondition extends BaseModel
 {
@@ -12,6 +13,11 @@ class CollectionCondition extends BaseModel
     public $timestamps = false;
 
     protected $fillable = ['collection_id', 'field', 'criteria', 'value'];
+
+    public static function newFactory()
+    {
+        return CollectionConditionFactory::new();
+    }
 
     public function collection()
     {

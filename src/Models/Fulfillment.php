@@ -3,6 +3,7 @@
 namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use IZal\Lshopify\Database\Factories\FulfillmentFactory;
 
 class Fulfillment extends BaseModel
 {
@@ -11,6 +12,11 @@ class Fulfillment extends BaseModel
     protected $table = 'fulfillments';
 
     protected $guarded = ['id'];
+
+    public static function newFactory()
+    {
+        return FulfillmentFactory::new();
+    }
 
     public function order()
     {

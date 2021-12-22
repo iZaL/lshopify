@@ -3,6 +3,7 @@
 namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use IZal\Lshopify\Database\Factories\ImageFactory;
 
 class Image extends BaseModel
 {
@@ -11,6 +12,11 @@ class Image extends BaseModel
     protected $table = 'images';
 
     protected $fillable = ['name', 'imageable_id', 'imageable_type'];
+
+    public static function newFactory()
+    {
+        return ImageFactory::new();
+    }
 
     public function imageable()
     {

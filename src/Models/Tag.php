@@ -4,6 +4,7 @@ namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use IZal\Lshopify\Database\Factories\TagFactory;
 
 class Tag extends BaseModel
 {
@@ -13,6 +14,11 @@ class Tag extends BaseModel
     public $timestamps = false;
 
     protected $fillable = ['name', 'slug'];
+
+    public static function newFactory()
+    {
+        return TagFactory::new();
+    }
 
     public function taggable()
     {

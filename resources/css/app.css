@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+li,a,button {
+    @apply cursor-pointer;
+}

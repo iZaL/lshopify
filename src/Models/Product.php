@@ -2,6 +2,7 @@
 
 namespace IZal\Lshopify\Models;
 
+use IZal\Lshopify\Database\Factories\ProductFactory;
 use IZal\Lshopify\Helpers\HasTags;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -14,6 +15,11 @@ class Product extends BaseModel
     protected $table = 'products';
 
     protected $fillable = ['title', 'description', 'status', 'category_id'];
+
+    public static function newFactory()
+    {
+        return ProductFactory::new();
+    }
 
     public function variants()
     {

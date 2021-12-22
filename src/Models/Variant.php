@@ -3,6 +3,7 @@
 namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use IZal\Lshopify\Database\Factories\VariantFactory;
 
 class Variant extends BaseModel
 {
@@ -48,6 +49,11 @@ class Variant extends BaseModel
         'out_of_stock_sale',
         'image_id',
     ];
+
+    public static function newFactory()
+    {
+        return VariantFactory::new();
+    }
 
     public static function defaultVariants()
     {

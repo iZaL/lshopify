@@ -4,6 +4,7 @@ namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Arr;
+use IZal\Lshopify\Database\Factories\CustomerAddressFactory;
 
 class CustomerAddress extends BaseModel
 {
@@ -28,6 +29,11 @@ class CustomerAddress extends BaseModel
         'phone',
         'default',
     ];
+
+    public static function newFactory()
+    {
+        return CustomerAddressFactory::new();
+    }
 
     public function customer()
     {

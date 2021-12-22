@@ -4,6 +4,7 @@ namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Str;
+use IZal\Lshopify\Database\Factories\CustomerFactory;
 
 class Customer extends BaseModel
 {
@@ -14,6 +15,11 @@ class Customer extends BaseModel
     protected $casts = [];
 
     protected $fillable = ['first_name', 'last_name', 'email', 'phone', 'accepts_marketing', 'tax_exempted'];
+
+    public static function newFactory()
+    {
+        return CustomerFactory::new();
+    }
 
     public function getFullNameAttribute()
     {

@@ -14,6 +14,11 @@ class Discount extends BaseModel
 
     protected $fillable = ['order_id', 'variant_id', 'value', 'suffix', 'reason', 'name', 'target', 'reason'];
 
+    public static function newFactory()
+    {
+//        return DiscountFactory::new();
+    }
+
     public function order()
     {
         return $this->belongsTo(Order::class, 'order_id');

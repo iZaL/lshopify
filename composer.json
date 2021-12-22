@@ -10,7 +10,9 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "IZal\\Lshopify\\Tests\\": "tests/"
+            "IZal\\Lshopify\\Tests\\": "tests/",
+            "IZal\\Lshopify\\Database\\Factories\\":"database/factories/",
+            "IZal\\Lshopify\\Database\\Seeders\\":"database/seeders/"
         }
     },
     "authors": [

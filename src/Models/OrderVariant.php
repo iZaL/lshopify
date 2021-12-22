@@ -3,6 +3,7 @@
 namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use IZal\Lshopify\Database\Factories\OrderVariantFactory;
 
 class OrderVariant extends BaseModel
 {
@@ -13,6 +14,11 @@ class OrderVariant extends BaseModel
     protected $casts = [];
 
     protected $fillable = ['order_id', 'variant_id', 'total', 'subtotal', 'unit_price', 'quantity', 'price'];
+
+    public static function newFactory()
+    {
+        return OrderVariantFactory::new();
+    }
 
     public function order()
     {

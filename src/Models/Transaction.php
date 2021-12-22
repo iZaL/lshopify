@@ -3,6 +3,7 @@
 namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use IZal\Lshopify\Database\Factories\TransactionFactory;
 
 class Transaction extends BaseModel
 {
@@ -25,6 +26,11 @@ class Transaction extends BaseModel
     protected $casts = [
         'amount' => 'decimal:2',
     ];
+
+    public static function newFactory()
+    {
+        return TransactionFactory::new();
+    }
 
     public function parent()
     {

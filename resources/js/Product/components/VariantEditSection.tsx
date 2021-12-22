@@ -323,19 +323,19 @@ export default function VariantEditSection({
 
             <div className='w-full'>
               <div
-                className={`grid items-center gap-6 
+                className={`grid items-center gap-6
                 ${
                   variantOptions.length === 3 &&
                   'grid-cols-[repeat(4,10rem),9rem,9rem,auto]'
-                } 
+                }
                 ${
                   variantOptions.length === 2 &&
                   'grid-cols-[repeat(3,10rem),9rem,9rem,auto]'
-                } 
+                }
                 ${
                   variantOptions.length === 1 &&
                   'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
-                } 
+                }
                 `}
               >
                 {variantOptions.map((option, i) => {
@@ -390,19 +390,19 @@ export default function VariantEditSection({
                   <div className='flex items-start'>
                     <div className='min-w-0 max-w-100 self-center '>
                       <div
-                        className={`grid items-center gap-6 
+                        className={`grid items-center gap-6
                         ${
                           variantOptions.length === 3 &&
                           'grid-cols-[repeat(4,10rem),9rem,9rem,auto]'
-                        } 
+                        }
                         ${
                           variantOptions.length === 2 &&
                           'grid-cols-[repeat(3,10rem),9rem,9rem,auto]'
-                        } 
+                        }
                         ${
                           variantOptions.length === 1 &&
                           'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
-                        } 
+                        }
                        `}
                       >
                         {variantOptions.map((option: VariantOption, i) => {

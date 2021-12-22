@@ -4,6 +4,7 @@ namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use IZal\Lshopify\Database\Factories\DraftOrderFactory;
 
 class DraftOrder extends Order
 {
@@ -20,6 +21,11 @@ class DraftOrder extends Order
         static::creating(function ($model) {
             $model->draft = 1;
         });
+    }
+
+    public static function newFactory()
+    {
+        return DraftOrderFactory::new();
     }
 
     public function archive()

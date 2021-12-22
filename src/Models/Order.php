@@ -4,6 +4,7 @@ namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use IZal\Lshopify\Database\Factories\OrderFactory;
 
 class Order extends BaseModel
 {
@@ -70,6 +71,10 @@ class Order extends BaseModel
         });
     }
 
+    public static function newFactory()
+    {
+        return OrderFactory::new();
+    }
     public function customer()
     {
         return $this->belongsTo(Customer::class);
