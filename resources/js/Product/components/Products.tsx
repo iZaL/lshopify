@@ -17,7 +17,7 @@ export default function Products({products}: Props) {
     <ul className='px-4'>
       {products.map((product, i) => {
         return (
-          <li onClick={() => onProductClick(product)} key={i}>
+          <li className='cursor-pointer' onClick={() => onProductClick(product)} key={i}>
             {product.id} - {product.title}
           </li>
         );
