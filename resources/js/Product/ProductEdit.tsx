@@ -43,6 +43,7 @@ type Form = Product & {
 };
 
 export default function ProductEdit(props: Props) {
+
   const setNavigation = useSetRecoilState(navigationActiveState);
   const {
     product,
@@ -206,6 +207,7 @@ export default function ProductEdit(props: Props) {
     });
   };
 
+
   return (
     <Main>
       <div className='p-6'>
@@ -241,32 +243,34 @@ export default function ProductEdit(props: Props) {
                 onChange={(variants) => setData('variants', variants)}
               />
             ) : (
+
+                data.default_variant &&
               <>
-                <PricingSection
-                  variant={data.default_variant}
-                  onChange={(field, value) =>
-                    setDataObject('default_variant', field, value)
-                  }
-                />
-                <InventorySection
-                  variant={data.default_variant}
-                  onChange={(field, value) =>
-                    setDataObject('default_variant', field, value)
-                  }
-                />
-                <ShippingSection
-                  variant={data.default_variant}
-                  onChange={(field, value) =>
-                    setDataObject('default_variant', field, value)
-                  }
-                />
-                <VariantSection
-                  currentVariants={data.default_variant?.options || []}
-                  defaultVariants={variants}
-                  onChange={(field, value) =>
-                    setDataObject('default_variant', field, value)
-                  }
-                />
+                  <PricingSection
+                      variant={data.default_variant}
+                      onChange={(field, value) =>
+                          setDataObject('default_variant', field, value)
+                      }
+                  />
+                  <InventorySection
+                      variant={data.default_variant}
+                      onChange={(field, value) =>
+                          setDataObject('default_variant', field, value)
+                      }
+                  />
+                  <ShippingSection
+                      variant={data.default_variant}
+                      onChange={(field, value) =>
+                          setDataObject('default_variant', field, value)
+                      }
+                  />
+                  <VariantSection
+                      currentVariants={data.default_variant?.options || []}
+                      defaultVariants={variants}
+                      onChange={(field, value) =>
+                          setDataObject('default_variant', field, value)
+                      }
+                  />
               </>
             )}
           </section>
