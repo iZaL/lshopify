@@ -36,7 +36,7 @@ export const sidebarState = atom<SidebarStateProp>({
 
 export const darkModeState = atom<boolean>({
   key: 'darkModeState',
-  default: true,
+  default: false,
 });
 
 export const navigationState = atom<NavigationState>({

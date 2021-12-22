@@ -30,20 +30,21 @@ export default function PopMessages() {
     message: null,
   };
 
-  (Object.keys(flash) as Array<keyof typeof flash>).forEach((key) => {
-    let message = flash[key];
-    if (message) {
-      return (flashMessage = {
-        type: key,
-        message: message,
-      });
+    if(flash) {
+        if (flash.success) {
+            flashMessage = {type: 'success', message: flash.success};
+        } else if (flash.error) {
+            flashMessage = {type: 'error', message: flash.error};
+        } else if (flash.warning) {
+            flashMessage = {type: 'warning', message: flash.warning};
+        } else if (flash.info) {
+            flashMessage = {type: 'info', message: flash.info};
+        }
     }
-    return;
-  });
 
-  const errorMessages: Array<string> = Object.keys(errors).map(
-    (key) => errors[key]
-  );
+    const errorMessages: Array<string> = errors ? Object.keys(errors).map(
+        (key) => errors[key]
+    ): [];
 
   useEffect(() => {
     if (flashMessage.message || errorMessages.length) {
