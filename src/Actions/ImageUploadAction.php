@@ -80,7 +80,8 @@ class ImageUploadAction
 
     private function storeImage(UploadedFile $image): string
     {
-        $imagePath = \Storage::disk('public')->putFile('images', new File($image->getRealPath()));
+        $disk = config('lshopify.storage.disk','public');
+        $imagePath = \Storage::disk($disk)->putFile('images', new File($image->getRealPath()));
         return $imagePath;
     }
 
