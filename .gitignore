@@ -7,3 +7,5 @@ build
 composer.lock
 .phpunit.result.cache
 package-lock.json
+public
+hot
