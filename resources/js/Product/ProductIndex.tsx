@@ -43,7 +43,7 @@ export default function ProductIndex(props: Props) {
         </div>
 
         <div className='max-w-7xl mx-auto py-6 '>
-          <section className='rounded-lg overflow-hidden shadow'>
+          <section className='rounded-lg overflow-hidden shadow bg-white'>
             <ProductSearchBar tabs={tabs} />
             <Products products={products} />
           </section>

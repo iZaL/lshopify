@@ -11,16 +11,16 @@ export default function SidebarNav() {
   const [darkMode, setDarkMode] = useRecoilState(darkModeState);
 
   const listItemStyle =
-    'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600';
+    'text-gray-700 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600';
   const listItemActiveStyle =
-    'bg-white text-gray-600  dark:bg-gray-500 dark:text-gray-100 dark:hover:bg-gray-500  hover:bg-gray-50 hover:text-gray-700';
+    'bg-grey-300 text-gray-600 dark:bg-gray-500 dark:text-gray-100 dark:hover:bg-gray-500  hover:bg-gray-50 hover:text-gray-700';
 
   const listItemActiveIconStyle = 'text-green-700 dark:text-green-500';
   const listItemIconStyle =
     'text-gray-600 dark:text-green-500 group-hover:text-gray-500';
 
   const listDropItemActiveStyle =
-    'text-gray-300 hover:text-gray-700 dark:hover:bg-gray-800 dark:hover:text-gray-100';
+    'text-gray-700 hover:text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-800 dark:hover:text-gray-100';
   const listDropItemStyle =
     'text-gray-700 hover:text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-100';
 

@@ -35,7 +35,7 @@ export default function OrderIndex(props: Props) {
         </div>
 
         <div className='max-w-7xl mx-auto py-6 '>
-          <section className='dark:bg-gray-900 rounded-lg overflow-hidden shadow'>
+          <section className='dark:bg-gray-900 rounded-lg overflow-hidden shadow bg-white'>
             <DraftOrderList orders={orders} onItemClick={onOrderClick} />
           </section>
         </div>
