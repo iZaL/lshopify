@@ -34,4 +34,5 @@ class OrderVariant extends BaseModel
     {
         return $this->hasMany(Discount::class, 'variant_id');
     }
+
 }

@@ -67,4 +67,5 @@ class Product extends BaseModel
 
         return [...$variants];
     }
+
 }

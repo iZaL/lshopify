@@ -3,7 +3,7 @@
 namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use IZaL\Lshopify\Database\Factories\CollectionConditionFactory;
+use IZal\Lshopify\Database\Factories\CollectionConditionFactory;
 
 class CollectionCondition extends BaseModel
 {

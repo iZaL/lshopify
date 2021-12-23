@@ -18,7 +18,7 @@ class ImageDeleteControllerTest extends TestCase
         $image2 = $images[1];
         $image3 = $images[2];
 
-        $response = $this->post(route('lshopify.products.images.delete', $product->id), ['images' => [$image1, $image3]]);
+        $response = $this->post(route('lshopify.products.images.destroy', $product->id), ['images' => [$image1, $image3]]);
 
         $this->assertDatabaseHas('images', ['id' => $image2->id]);
         $this->assertDatabaseMissing('images', ['id' => $image1->id]);

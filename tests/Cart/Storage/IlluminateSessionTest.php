@@ -21,8 +21,8 @@ class IlluminateSessionTest extends CartTestCase
     /** @test */
     public function it_can_get_cart_session_key_and_cart_identity()
     {
-        $this->assertSame($this->cart->getStorage()->getInstance(), 'cart');
-        $this->assertSame($this->cart->getStorage()->getKey(), 'debut_sport_cart');
+        $this->assertSame($this->cart->getStorage()->getInstance(), 'main');
+        $this->assertSame($this->cart->getStorage()->getKey(), 'lshopify_cart');
         $this->assertInstanceOf('IZal\Lshopify\Cart\Storage\IlluminateSession', $this->cart->getStorage());
 
         $this->cart->add($this->createItem('Foobar 1', 125, 2));

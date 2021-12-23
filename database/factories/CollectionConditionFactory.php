@@ -1,6 +1,6 @@
 <?php
 
-namespace IZaL\Lshopify\Database\Factories;
+namespace IZal\Lshopify\Database\Factories;
 
 use IZal\Lshopify\Models\Collection;
 use IZal\Lshopify\Models\CollectionCondition;

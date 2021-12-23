@@ -10,7 +10,7 @@ class CategoryStoreControllerTest extends TestCase
     {
         $categoryData = ['name' => 'Shirt'];
         $data = $categoryData;
-        $response = $this->post('/categories', $data);
+        $response = $this->post(route('lshopify.categories.store'), $data);
         $this->assertDatabaseHas('categories', $categoryData);
     }
 }

@@ -3,7 +3,7 @@
 namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use IZaL\Lshopify\Database\Factories\CategoryFactory;
+use IZal\Lshopify\Database\Factories\CategoryFactory;
 
 class Category extends BaseModel
 {

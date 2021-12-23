@@ -43,7 +43,7 @@ class CartTest extends CartTestCase
     /** @test */
     public function it_can_get_the_cart_identity()
     {
-        $this->assertSame($this->cart->getInstance(), 'cart');
+        $this->assertSame($this->cart->getInstance(), 'main');
     }
 
     /** @test */
