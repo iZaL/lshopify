@@ -25,6 +25,7 @@ import {useForm} from '@inertiajs/inertia-react';
 import PaymentPaid from './Payment/components/PaymentPaid';
 import PaymentPending from './Payment/components/PaymentPending';
 import OrderViewActionButtons from './components/OrderViewActionButtons';
+import route from 'ziggy-js'
 
 interface Props {
   order: Order;
@@ -60,7 +61,7 @@ export default function OrderView(props: Props) {
     addressData: CustomerAddress
   ) => {
     Inertia.post(
-      `/customers`,
+      route('lshopify.customers.store'),
       {
         customer: customerData,
         address: addressData,
@@ -75,7 +76,7 @@ export default function OrderView(props: Props) {
 
   const onAttachCustomer = (customer?: Customer) => {
     Inertia.post(
-      `/orders/${order.id}/customer`,
+        route('lshopify.orders.customer.update',[order.id]),
       {
         customer_id: customer ? customer.id : null,
       },
@@ -91,27 +92,27 @@ export default function OrderView(props: Props) {
     type: 'shipping' | 'billing',
     address: Shipping | Billing
   ) => {
-    Inertia.patch(`/orders/${order.id}`, {
+    Inertia.patch(route('lshopify.orders.update',[order.id]), {
       [type]: address,
     });
   };
 
   const updateOrderAttributes = (attributes: Partial<Order>) => {
-    Inertia.patch(`/orders/${order.id}`, {
+    Inertia.patch(route('lshopify.orders.update',[order.id]), {
       ...attributes,
     });
   };
 
   const markAsPaid = () => {
-    Inertia.post(`/orders/${order.id}/payments`);
+    Inertia.post(route('lshopify.orders.payments.store',[order.id]));
   };
 
   const markAsFulfilled = (fulfillment: Fulfillment) => {
-    Inertia.get(`/orders/${order.id}/fulfillments/${fulfillment.id}/fulfill`);
+    Inertia.get(route('lshopify.orders.fulfill',[order.id,fulfillment.id]));
   };
 
   const refund = () => {
-    Inertia.get(`/orders/${order.id}/refund`);
+    Inertia.get(route('lshopify.orders.refund',[order.id]));
   };
 
   return (

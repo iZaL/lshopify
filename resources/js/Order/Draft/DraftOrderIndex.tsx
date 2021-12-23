@@ -7,6 +7,7 @@ import {Order} from '../../types';
 import DraftOrderIndexActionButtons from './components/DraftOrderIndexActionButtons';
 import DraftOrderList from './components/DraftOrderList';
 import {Inertia} from '@inertiajs/inertia';
+import route from "ziggy-js";
 
 interface Props {
   orders: Order[];
@@ -24,7 +25,7 @@ export default function DraftOrderIndex(props: Props) {
   }, []);
 
   const onOrderClick = (order: Order) => {
-    Inertia.get(`/draft_orders/${order.id}/edit`);
+    Inertia.get(route('lshopify.orders.draft.edit',[order.id]));
   };
 
   return (

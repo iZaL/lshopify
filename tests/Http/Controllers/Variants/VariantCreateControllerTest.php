@@ -14,7 +14,7 @@ class VariantCreateControllerTest extends TestCase
                 return ['product_id' => $product->id];
             })
             ->create();
-        $response = $this->get('/products/'.$product->id.'/variants/create');
+        $response = $this->get(route('lshopify.products.variants.create',$product->id));
         $response->assertInertia(
             fn ($assert) => $assert
             ->has('product')

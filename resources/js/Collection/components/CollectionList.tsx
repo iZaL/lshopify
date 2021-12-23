@@ -1,6 +1,7 @@
 import React from 'react';
 import {Collection} from '../../types';
 import {Inertia} from '@inertiajs/inertia';
+import route from 'ziggy-js'
 
 interface Props {
   collections: Collection[];
@@ -8,7 +9,7 @@ interface Props {
 
 export default function CollectionList({collections}: Props) {
   const onCollectionClick = (collection: Collection) => {
-    return Inertia.get(`/collections/${collection.id}/edit`);
+    return Inertia.get(route('lshopify.collections.edit',[collection.id]));
   };
 
   return (

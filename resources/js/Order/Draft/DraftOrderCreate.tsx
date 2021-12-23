@@ -54,7 +54,7 @@ export default function DraftOrderCreate(props: Props) {
   };
 
   const onApplyDiscount = (discount: CartDiscount, item?: CartItem) => {
-    Inertia.post('/cart/discount/add', {
+    Inertia.post(route('lshopify.cart.discount.add'), {
       discount: discount,
       item: item,
     });

@@ -8,7 +8,7 @@ class ProductCreateControllerTest extends TestCase
 {
     public function test__invoke()
     {
-        $response = $this->get('/products/new');
+        $response = $this->get(route('lshopify.products.create'));
         $response->assertInertia(
             fn ($assert) => $assert
             ->has('collection')

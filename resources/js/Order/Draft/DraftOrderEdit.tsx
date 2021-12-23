@@ -21,6 +21,7 @@ import {CustomerForm} from '../../form_types';
 import DraftOrderDetailsSection from './components/DraftOrderDetailsSection';
 import CustomerSelect from './components/CustomerSelect';
 import CustomerEdit from './components/CustomerEdit';
+import route from 'ziggy-js'
 
 interface Props {
   products: Product[];
@@ -58,21 +59,21 @@ export default function DraftOrderEdit(props: Props) {
   }, [props.order]);
 
   const onCartItemAdd = (variantIDs: number[]) => {
-    Inertia.post('/cart/add', {
+      Inertia.post(route('lshopify.cart.add'), {
       variantIDs: variantIDs,
       orderID: order.id,
     });
   };
 
   const onCartItemRemove = (rowId: string) => {
-    Inertia.post('/cart/remove', {
+      Inertia.post(route('lshopify.cart.remove'), {
       rowId: rowId,
       orderID: order.id,
     });
   };
 
   const onCartItemEdit = (rowId: string, item: CartItem) => {
-    Inertia.post('/cart/update', {
+    Inertia.post(route('lshopify.cart.update'), {
       rowId: rowId,
       item: item,
       orderID: order.id,
@@ -80,14 +81,14 @@ export default function DraftOrderEdit(props: Props) {
   };
 
   const onApplyDiscount = (discount: CartDiscount, item?: CartItem) => {
-    Inertia.post('/cart/discount/add', {
+    Inertia.post(route('lshopify.cart.discount.add'), {
       discount: discount,
       item: item,
     });
   };
 
   const onRemoveDiscount = (discount: CartDiscount, item?: CartItem) => {
-    Inertia.post('/cart/discount/remove', {
+    Inertia.post(route('lshopify.cart.discount.remove'), {
       discount: discount,
       item: item,
     });
@@ -98,7 +99,7 @@ export default function DraftOrderEdit(props: Props) {
     addressData: CustomerAddress
   ) => {
     Inertia.post(
-      `/customers`,
+        route('lshopify.customers.store'),
       {
         customer: customerData,
         address: addressData,
@@ -113,7 +114,8 @@ export default function DraftOrderEdit(props: Props) {
 
   const onAttachCustomer = (customer?: Customer) => {
     Inertia.post(
-      `/draft_orders/${order.id}/customer`,
+        route('lshopify.orders.draft.customer.update',[order.id]),
+      // `/draft_orders/${order.id}/customer`,
       {
         customer_id: customer ? customer.id : null,
       },
@@ -137,7 +139,7 @@ export default function DraftOrderEdit(props: Props) {
   };
 
   const onCreateOrder = () => {
-    Inertia.post(`/draft_orders/${order.id}/confirm`);
+    Inertia.post(route('lshopify.orders.draft.confirm',[order.id]));
   };
 
   const handleSubmit = (extraData?: {[x: string]: any}) => {
@@ -148,7 +150,7 @@ export default function DraftOrderEdit(props: Props) {
         ...extraData,
       };
     }
-    Inertia.post(`/draft_orders/${order.id}`, postData, {
+    Inertia.post(route('lshopify.orders.draft.update',[order.id]), postData, {
       onSuccess: () => {
         console.log('success');
       },

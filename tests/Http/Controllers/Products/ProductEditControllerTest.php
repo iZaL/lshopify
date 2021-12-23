@@ -15,7 +15,7 @@ class ProductEditControllerTest extends TestCase
             })
             ->create();
 
-        $response = $this->get('/products/'.$product->id.'/edit');
+        $response = $this->get(route('lshopify.products.edit',$product->id));
         $response->assertInertia(
             fn ($assert) => $assert
             ->has('product')

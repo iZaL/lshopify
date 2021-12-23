@@ -18,11 +18,11 @@ import {
 import {useForm} from '@inertiajs/inertia-react';
 import {Inertia} from '@inertiajs/inertia';
 import {CustomerForm} from '../form_types';
-import FormSubmitBar from '../components/FormSubmitBar';
 import AddressCard from '../Customer/components/AddressCard';
 import FulfillmentItems from './components/FulfillmentItems';
 import ShippingInfo from './components/ShippingInfo';
 import Button from '../components/Button';
+import route from 'ziggy-js'
 
 interface Props {
   order: Order;
@@ -85,7 +85,8 @@ export default function FulfillmentView({fulfillment, order}: Props) {
 
   const onAttachCustomer = (customer?: Customer) => {
     Inertia.post(
-      `/draft_orders/${order.id}/customer`,
+        route('lshopify.orders.draft.customer.update',[order.id]),
+      // `/draft_orders/${order.id}/customer`,
       {
         customer_id: customer ? customer.id : null,
       },
@@ -102,7 +103,7 @@ export default function FulfillmentView({fulfillment, order}: Props) {
     addressData: CustomerAddress
   ) => {
     Inertia.post(
-      `/customers`,
+      route('lshopify.customers.store'),
       {
         customer: customerData,
         address: addressData,
@@ -126,7 +127,8 @@ export default function FulfillmentView({fulfillment, order}: Props) {
 
   const handleSubmit = () => {
     Inertia.post(
-      `/orders/${order.id}/fulfillments/${fulfillment.id}/fulfill`,
+        route('lshopify.orders.fulfill',[order.id,fulfillment.id]),
+        // `/orders/${order.id}/fulfillments/${fulfillment.id}/fulfill`,
       {
         ...data.fulfillment,
       },

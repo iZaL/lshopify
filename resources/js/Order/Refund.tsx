@@ -13,6 +13,7 @@ import Card from '../components/Card';
 import Subheader from '../components/Subheader';
 import Button from '../components/Button';
 import InputText from '../components/forms/InputText';
+import route from 'ziggy-js'
 
 interface Props {
   order: Order;
@@ -131,7 +132,7 @@ export default function Refund({order}: Props) {
     console.log('p',postData);
 
     Inertia.post(
-      `/orders/${order.id}/refund`,
+        route('lshopify.orders.refund',[order.id]),
 
   {
       variants:postData

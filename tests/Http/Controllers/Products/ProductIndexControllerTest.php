@@ -8,7 +8,7 @@ class ProductIndexControllerTest extends TestCase
 {
     public function test__invoke()
     {
-        $response = $this->get('/products');
+        $response = $this->get(route('lshopify.products.index'));
         $response->assertInertia(
             fn ($assert) => $assert
             ->has('products')
