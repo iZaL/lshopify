@@ -1,17 +1,9 @@
 module.exports = {
-  mode:'jit',
-  purge: [
-    './resources/**/*.tsx',
-  ],
-  darkMode: false, // or 'media' or 'class'
-  theme: {
-    extend: {},
-  },
-  variants: {
-    extend: {},
-  },
-  plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/aspect-ratio')
-  ],
+    content: [
+        './lshopify/resources/**/*.tsx',
+    ],
+    darkMode: 'class',
+    plugins: [
+        require('@tailwindcss/aspect-ratio')
+    ],
 }

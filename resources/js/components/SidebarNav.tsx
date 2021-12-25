@@ -1,19 +1,18 @@
-import React from 'react';
-import {Disclosure} from '@headlessui/react';
-import {darkModeState, filteredNavigationState, sidebarState} from '../atoms';
-import {useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil';
-import {Link} from '@inertiajs/inertia-react';
-import classNames from 'classnames';
-import {Switch} from '@headlessui/react';
+import React from 'react'
+import { Disclosure, Switch } from '@headlessui/react'
+import { darkModeState, filteredNavigationState } from '../atoms'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { Link } from '@inertiajs/inertia-react'
+import classNames from 'classnames'
 
 export default function SidebarNav() {
   const navigation = useRecoilValue(filteredNavigationState);
   const [darkMode, setDarkMode] = useRecoilState(darkModeState);
 
   const listItemStyle =
-    'text-gray-700 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600';
+    'text-gray-700 hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600';
   const listItemActiveStyle =
-    'bg-grey-300 text-gray-600 dark:bg-gray-500 dark:text-gray-100 dark:hover:bg-gray-500  hover:bg-gray-50 hover:text-gray-700';
+    'bg-grey-300 text-gray-600 dark:bg-gray-500 dark:text-gray-100 dark:hover:bg-gray-500  hover:bg-gray-100 hover:text-gray-700';
 
   const listItemActiveIconStyle = 'text-green-700 dark:text-green-500';
   const listItemIconStyle =
@@ -34,7 +33,7 @@ export default function SidebarNav() {
                 href={item.href}
                 className={classNames(
                   item.current ? listItemActiveStyle : listItemStyle,
-                  ' group w-full flex items-center pl-2 py-2 text-sm font-medium rounded-md'
+                  ' group w-full flex items-center pl-2 py-2 text-sm font-semibold rounded-md'
                 )}
               >
                 <item.icon
@@ -55,7 +54,7 @@ export default function SidebarNav() {
                     <Disclosure.Button
                       className={classNames(
                         item.current ? listItemActiveStyle : listItemStyle,
-                        'group w-full flex items-center pl-2 pr-1 py-2 text-sm font-medium rounded-md focus:outline-none '
+                        'group w-full flex items-center pl-2 pr-1 py-2 text-sm font-semibold rounded-md focus:outline-none '
                       )}
                     >
                       <item.icon
