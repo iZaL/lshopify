@@ -1,6 +1,6 @@
 module.exports = {
     content: [
-        './lshopify/resources/**/*.tsx',
+        './resources/**/*.tsx',
     ],
     darkMode: 'class',
     plugins: [
