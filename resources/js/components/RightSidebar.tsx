@@ -1,16 +1,20 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, {Fragment, useEffect, useState} from 'react';
 import SidebarNav from './SidebarNav';
-import { Dialog, Transition } from '@headlessui/react'
-import { XIcon } from '@heroicons/react/outline'
+import {Dialog, Transition} from '@headlessui/react';
+import {XIcon} from '@heroicons/react/outline';
 
 interface Props {
-  isOpen:boolean;
-  onClose:() => void;
-  children:React.ReactNode;
-  title:string;
+  isOpen: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+  title: string;
 }
-export default function RightSidebar({isOpen,onClose,title, children}:Props) {
-
+export default function RightSidebar({
+  isOpen,
+  onClose,
+  title,
+  children,
+}: Props) {
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
@@ -40,7 +44,7 @@ export default function RightSidebar({isOpen,onClose,title, children}:Props) {
               leave="transform transition ease-in-out duration-300 sm:duration-700"
               leaveFrom="translate-x-0"
               leaveTo="translate-x-full">
-              <div className="w-screen max-w-md">
+              <div className="w-screen max-w-sm">
                 <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
                   <div className="px-4 sm:px-6">
                     <div className="flex items-start justify-between">
