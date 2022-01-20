@@ -5,7 +5,13 @@ import {
   SearchIcon,
   UserAddIcon,
 } from '@heroicons/react/outline';
-import {ArchiveIcon, SortAscendingIcon} from '@heroicons/react/solid';
+import {
+  ArchiveIcon,
+  ArrowDownIcon,
+  ChevronDoubleDownIcon,
+  ChevronDownIcon,
+  SortAscendingIcon
+} from '@heroicons/react/solid'
 import classNames from 'classnames';
 
 interface TabProps {
@@ -66,8 +72,8 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
               </div>
               <input
                 type="text"
-                name="email"
-                id="email"
+                name="search"
+                id="search"
                 className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-10 focus:outline-none focus:blue-500 focus:border-blue-500 sm:text-sm"
                 placeholder="Filter Products"
               />
@@ -79,43 +85,47 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
               <div className="inline-flex sm:shadow-sm">
                 <button
                   type="button"
-                  className="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600">
-                  <ReplyIcon
-                    className="mr-2.5 h-5 w-5 text-gray-400"
+                  className="hidden sm:inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600">
+                  <span>Vendor</span>
+                  <ChevronDownIcon
+                    className="ml-2.5 h-5 w-5 text-gray-400"
                     aria-hidden="true"
                   />
-                  <span>Reply</span>
+
                 </button>
                 <button
                   type="button"
                   className="hidden sm:inline-flex -ml-px relative items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600">
-                  <PencilIcon
-                    className="mr-2.5 h-5 w-5 text-gray-400"
+                  <span>Tagged</span>
+                  <ChevronDownIcon
+                    className="ml-2.5 h-5 w-5 text-gray-400"
                     aria-hidden="true"
                   />
-                  <span>Note</span>
+
                 </button>
                 <button
                   type="button"
-                  className="hidden sm:inline-flex -ml-px relative items-center px-4 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600">
-                  <UserAddIcon
-                    className="mr-2.5 h-5 w-5 text-gray-400"
+                  className="hidden sm:inline-flex -ml-px relative items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600">
+                  <span>Status</span>
+                  <ChevronDownIcon
+                    className="ml-2.5 h-5 w-5 text-gray-400"
                     aria-hidden="true"
                   />
-                  <span>Assign</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={onMoreFiltersClick}
+                  className="sm:inline-flex -ml-px relative items-center px-4 py-2 md:rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600">
+                  <span>Filters</span>
                 </button>
               </div>
 
               <div className="hidden lg:flex space-x-3">
+
                 <button
                   type="button"
-                  onClick={onMoreFiltersClick}
-                  className="hidden sm:inline-flex -ml-px relative items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600">
-                  <span>Filters</span>
-                </button>
-                <button
-                  type="button"
-                  className="hidden sm:inline-flex -ml-px relative items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600">
+                  className="sm:inline-flex -ml-px relative items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600">
                   <SortAscendingIcon
                     className="mr-2.5 h-5 w-5 text-gray-400"
                     aria-hidden="true"

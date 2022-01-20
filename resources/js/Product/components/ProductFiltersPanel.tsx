@@ -38,7 +38,7 @@ export default function ProductFiltersPanel() {
           {({open}) => (
             <>
               <DisclosureButton open={open} title={'Product Vendor'} />
-              <Disclosure.Panel className="pt-4">
+              <Disclosure.Panel className="pt-4" static={open}>
                 <div className="space-y-4">
                   <div className="flex items-center">
                     <input

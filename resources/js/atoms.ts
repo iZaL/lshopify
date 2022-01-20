@@ -49,6 +49,20 @@ export const navigationState = atom<NavigationState>({
       href: route('lshopify.home'),
       expanded: false,
     },
+
+    {
+      name: 'Products',
+      icon: TagIcon,
+      current: false,
+      href: '#',
+      children: [
+        {name: 'All Products', href: route('lshopify.products.index')},
+        // {name: 'Inventory', href: '#'},
+        // {name: 'Transfers', href: '#'},
+        {name: 'Collections', href: route('lshopify.collections.index')},
+        // {name: 'Gift cards', href: '#'},
+      ],
+    },
     {
       name: 'Orders',
       icon: FolderDownloadIcon,
@@ -57,41 +71,28 @@ export const navigationState = atom<NavigationState>({
       children: [
         {name: 'Orders', href: route('lshopify.orders.index')},
         {name: 'Drafts', href: route('lshopify.orders.draft.index')},
-        {name: 'Abandoned Checkouts', href: '#'},
+        // {name: 'Abandoned Checkouts', href: '#'},
       ],
     },
-    {
-      name: 'Products',
-      icon: TagIcon,
-      current: false,
-      href: '#',
-      children: [
-        {name: 'All Products', href: route('lshopify.products.index')},
-        {name: 'Inventory', href: '#'},
-        {name: 'Transfers', href: '#'},
-        {name: 'Collections', href: route('lshopify.collections.index')},
-        {name: 'Gift cards', href: '#'},
-      ],
-    },
-    {
-      name: 'Customers',
-      icon: UserIcon,
-      current: false,
-      href: '#',
-      expanded: false,
-    },
-    {
-      name: 'Analytics',
-      icon: ChartBarIcon,
-      current: false,
-      href: '#',
-      children: [
-        {name: 'Overview', href: '#'},
-        {name: 'Members', href: '#'},
-        {name: 'Calendar', href: '#'},
-        {name: 'Settings', href: '#'},
-      ],
-    },
+    // {
+    //   name: 'Customers',
+    //   icon: UserIcon,
+    //   current: false,
+    //   href: '#',
+    //   expanded: false,
+    // },
+    // {
+    //   name: 'Analytics',
+    //   icon: ChartBarIcon,
+    //   current: false,
+    //   href: '#',
+    //   children: [
+    //     {name: 'Overview', href: '#'},
+    //     {name: 'Members', href: '#'},
+    //     {name: 'Calendar', href: '#'},
+    //     {name: 'Settings', href: '#'},
+    //   ],
+    // },
   ],
 });
 
