@@ -14,65 +14,65 @@ interface Props {
 export default function PricingSection({onChange, variant}: Props) {
   return (
     <Card>
-      <Subheader text='Pricing' />
+      <Subheader text="Pricing" />
 
-      <div className='flex space-x-10'>
-        <div className='flex-1'>
-          <Label title='Price' />
+      <div className="flex space-x-10">
+        <div className="flex-1">
+          <Label title="Price" />
           <InputText
-            name='price'
-            onChange={(e) => onChange('price', e.target.value)}
+            name="price"
+            onChange={e => onChange('price', e.target.value)}
             leftComponent={
-              <div className='text-md text-gray-400 text-sm'>OMR</div>
+              <div className="text-md text-gray-400 text-sm">OMR</div>
             }
-            style='pl-14'
-            placeholder='0.00'
+            style="pl-14"
+            placeholder="0.00"
             value={variant.price}
           />
         </div>
 
-        <div className='flex-1'>
-          <Label title='Compare at Price' />
+        <div className="flex-1">
+          <Label title="Compare at Price" />
           <InputText
-            name='compare_at_price'
-            onChange={(e) => onChange('compare_at_price', e.target.value)}
+            name="compare_at_price"
+            onChange={e => onChange('compare_at_price', e.target.value)}
             leftComponent={
-              <div className='text-md text-gray-400 text-sm'>OMR</div>
+              <div className="text-md text-gray-400 text-sm">OMR</div>
             }
-            style='pl-14'
-            placeholder='0.00'
+            style="pl-14"
+            placeholder="0.00"
             value={variant.compare_at_price}
           />
         </div>
       </div>
 
-      <div className='flex space-x-10'>
-        <div className=' flex-1'>
-          <Label title='Cost per item' />
+      <div className="flex space-x-10">
+        <div className=" flex-1">
+          <Label title="Cost per item" />
           <InputText
-            name='cost_price'
-            onChange={(e) => onChange('cost_price', e.target.value)}
+            name="cost_price"
+            onChange={e => onChange('cost_price', e.target.value)}
             leftComponent={
-              <div className='text-md text-gray-400 text-sm'>OMR</div>
+              <div className="text-md text-gray-400 text-sm">OMR</div>
             }
-            style='pl-14'
-            placeholder='0.00'
+            style="pl-14"
+            placeholder="0.00"
             value={variant.cost_price}
           />
-          <p className='block text-sm text-gray-500 py-1'>
+          <p className="block text-sm text-gray-500 py-1">
             Customers wont see this
           </p>
         </div>
 
-        <div className='flex-1'>
-          <div className='flex'>
-            <div className='flex-1'>
-              <label className='block text-sm text-gray-500'>Margin</label>
+        <div className="flex-1">
+          <div className="flex">
+            <div className="flex-1">
+              <label className="block text-sm text-gray-500">Margin</label>
               <span>-</span>
             </div>
 
-            <div className='flex-1'>
-              <label className='block text-sm text-gray-500'>Profit</label>
+            <div className="flex-1">
+              <label className="block text-sm text-gray-500">Profit</label>
               <span>-</span>
             </div>
           </div>
@@ -80,10 +80,10 @@ export default function PricingSection({onChange, variant}: Props) {
       </div>
 
       <Checkbox
-        name='taxable'
-        label='Charge tax on this product'
+        name="taxable"
+        label="Charge tax on this product"
         checked={variant.taxable}
-        onChange={(e) => onChange('taxable', e.target.checked)}
+        onChange={e => onChange('taxable', e.target.checked)}
       />
     </Card>
   );

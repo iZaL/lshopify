@@ -42,7 +42,13 @@ export const darkModeState = atom<boolean>({
 export const navigationState = atom<NavigationState>({
   key: 'navigationState',
   default: [
-    {name: 'Home', icon: HomeIcon, current: true, href: route('lshopify.home'), expanded: false},
+    {
+      name: 'Home',
+      icon: HomeIcon,
+      current: true,
+      href: route('lshopify.home'),
+      expanded: false,
+    },
     {
       name: 'Orders',
       icon: FolderDownloadIcon,
@@ -99,7 +105,7 @@ export const filteredNavigationState = selector({
   get: ({get}) => {
     const active = get(navigationActiveState);
     const list = get(navigationState);
-    return list.map((nav) => {
+    return list.map(nav => {
       const current = nav.name === active;
       return {
         ...nav,

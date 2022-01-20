@@ -8,7 +8,7 @@ import {Collection, Product} from '../../types';
 interface Props {
   onChange: <T extends keyof Collection>(
     field: T,
-    value: Collection[T] | any
+    value: Collection[T] | any,
   ) => void;
   name: string;
   description: string;
@@ -20,20 +20,20 @@ export default function TitleSection({onChange, name, description}: T) {
   return (
     <Card>
       <div>
-        <Label title='Name' />
+        <Label title="Name" />
         <InputText
-          name='name'
+          name="name"
           placeholder={'e.g. Summer collection, Under 100$, Staff picks'}
-          onChange={(e) => onChange('name', e.target.value)}
+          onChange={e => onChange('name', e.target.value)}
           value={name}
         />
       </div>
 
       <div>
-        <Label title='Description (optional)' />
+        <Label title="Description (optional)" />
         <TextArea
-          name='description'
-          placeholder='Summer collection, Under 100$, Staff picks'
+          name="description"
+          placeholder="Summer collection, Under 100$, Staff picks"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             onChange('description', e.target.value)
           }

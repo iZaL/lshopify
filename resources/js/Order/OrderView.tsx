@@ -25,7 +25,7 @@ import {useForm} from '@inertiajs/inertia-react';
 import PaymentPaid from './Payment/components/PaymentPaid';
 import PaymentPending from './Payment/components/PaymentPending';
 import OrderViewActionButtons from './components/OrderViewActionButtons';
-import route from 'ziggy-js'
+import route from 'ziggy-js';
 
 interface Props {
   order: Order;
@@ -58,7 +58,7 @@ export default function OrderView(props: Props) {
 
   const onCustomerCreate = (
     customerData: CustomerForm,
-    addressData: CustomerAddress
+    addressData: CustomerAddress,
   ) => {
     Inertia.post(
       route('lshopify.customers.store'),
@@ -70,13 +70,13 @@ export default function OrderView(props: Props) {
         onSuccess: () => {
           console.log('success');
         },
-      }
+      },
     );
   };
 
   const onAttachCustomer = (customer?: Customer) => {
     Inertia.post(
-        route('lshopify.orders.customer.update',[order.id]),
+      route('lshopify.orders.customer.update', [order.id]),
       {
         customer_id: customer ? customer.id : null,
       },
@@ -84,57 +84,56 @@ export default function OrderView(props: Props) {
         onSuccess: () => {
           console.log('success');
         },
-      }
+      },
     );
   };
 
   const onCustomerAddressSave = (
     type: 'shipping' | 'billing',
-    address: Shipping | Billing
+    address: Shipping | Billing,
   ) => {
-    Inertia.patch(route('lshopify.orders.update',[order.id]), {
+    Inertia.patch(route('lshopify.orders.update', [order.id]), {
       [type]: address,
     });
   };
 
   const updateOrderAttributes = (attributes: Partial<Order>) => {
-    Inertia.patch(route('lshopify.orders.update',[order.id]), {
+    Inertia.patch(route('lshopify.orders.update', [order.id]), {
       ...attributes,
     });
   };
 
   const markAsPaid = () => {
-    Inertia.post(route('lshopify.orders.payments.store',[order.id]));
+    Inertia.post(route('lshopify.orders.payments.store', [order.id]));
   };
 
   const markAsFulfilled = (fulfillment: Fulfillment) => {
-    Inertia.get(route('lshopify.orders.fulfill',[order.id,fulfillment.id]));
+    Inertia.get(route('lshopify.orders.fulfill', [order.id, fulfillment.id]));
   };
 
   const refund = () => {
-    Inertia.get(route('lshopify.orders.refund',[order.id]));
+    Inertia.get(route('lshopify.orders.refund', [order.id]));
   };
 
   return (
     <Main>
-      <div className='p-6'>
-        <div className='max-w-7xl mx-auto xl:flex xl:items-center xl:justify-between'>
+      <div className="p-6">
+        <div className="max-w-7xl mx-auto xl:flex xl:items-center xl:justify-between">
           <PageHeader text={`Order ${order.id}`} />
           <OrderViewActionButtons onRefundClick={() => refund()} />
         </div>
 
-        <div className='mt-6 max-w-3xl mx-auto grid grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3'>
-          <section className='lg:col-start-1 lg:col-span-2 space-y-6 '>
-
+        <div className="mt-6 max-w-3xl mx-auto grid grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+          <section className="lg:col-start-1 lg:col-span-2 space-y-6 ">
             {order.pending_fulfillments?.map((fulfillment, i) => (
-              <Card style='p-0' key={i}>
-                <Subheader text='Unfulfilled' />
+              <Card style="p-0" key={i}>
+                <Subheader text="Unfulfilled" />
                 <OrderItems
                   variants={fulfillment.variants}
                   onItemClick={() => {}}
                 />
                 <Border />
-                <div className='flex justify-end'>
+                <div className="flex justify-end">
                   <Button onClick={() => markAsFulfilled(fulfillment)}>
                     Fulfill items
                   </Button>
@@ -143,7 +142,7 @@ export default function OrderView(props: Props) {
             ))}
 
             {order.success_fulfillments?.map((fulfillment, i) => (
-              <Card style='p-0' key={i}>
+              <Card style="p-0" key={i}>
                 <Subheader text={`Fulfilled #${fulfillment.id}`} />
                 <OrderItems
                   variants={fulfillment.variants}
@@ -151,7 +150,7 @@ export default function OrderView(props: Props) {
                 />
                 <Border />
 
-                <div className='flex justify-end space-x-4'>
+                <div className="flex justify-end space-x-4">
                   <Button onClick={() => markAsFulfilled(fulfillment)}>
                     Add tracking
                   </Button>
@@ -159,16 +158,15 @@ export default function OrderView(props: Props) {
               </Card>
             ))}
 
-
             {order.returns.length ? (
-              <Card style='p-0'>
+              <Card style="p-0">
                 <Subheader text={`Returned`} />
                 <OrderItems variants={order.returns} onItemClick={() => {}} />
                 <Border />
 
-                <div className='flex justify-end space-x-4'>
+                <div className="flex justify-end space-x-4">
                   <DropdownButton
-                    buttonTitle='More'
+                    buttonTitle="More"
                     items={[
                       {title: 'View', onClick: () => {}},
                       {title: 'Cancel', onClick: () => {}},
@@ -186,28 +184,27 @@ export default function OrderView(props: Props) {
 
             {order.is_payment_pending && (
               <Card>
-                <Subheader text='Pending' />
+                <Subheader text="Pending" />
                 <PaymentPending order={order} onPaidClick={markAsPaid} />
               </Card>
             )}
 
             {order.payments?.map((payment, i) => (
-              <Card style='p-0' key={i}>
-                <Subheader text='Paid' />
+              <Card style="p-0" key={i}>
+                <Subheader text="Paid" />
                 <PaymentPaid payment={payment} quantity={order.quantity} />
               </Card>
             ))}
-
           </section>
 
-          <section className='lg:col-start-3 lg:col-span-1 space-y-6'>
+          <section className="lg:col-start-3 lg:col-span-1 space-y-6">
             {order.customer ? (
               <CustomerEdit
                 order={data}
                 onCustomerRemove={() => onAttachCustomer()}
                 onChange={(field, value) => setData(field, value)}
                 onCustomerAddressSave={onCustomerAddressSave}
-                onContactSave={(attributes) =>
+                onContactSave={attributes =>
                   // setData({...data, ...attributes});
                   updateOrderAttributes(attributes)
                 }
@@ -215,10 +212,10 @@ export default function OrderView(props: Props) {
             ) : (
               <CustomerSelect
                 searchTerm={customerSearchTerm}
-                setSearchTerm={(text) => setCustomerSearchTerm(text)}
+                setSearchTerm={text => setCustomerSearchTerm(text)}
                 customers={customers || []}
                 onCustomerCreate={onCustomerCreate}
-                onCustomerSelect={(customer) => onAttachCustomer(customer)}
+                onCustomerSelect={customer => onAttachCustomer(customer)}
               />
             )}
           </section>

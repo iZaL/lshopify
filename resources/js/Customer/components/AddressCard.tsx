@@ -15,18 +15,17 @@ export default function AddressCard({address, onSave, title}: Props) {
   const [showDialog, setShowDialog] = useState(false);
 
   return (
-    <div className=''>
-      <div className='flex flex-row items-center justify-between'>
-        <Subheader text={title} style='text-xs' />
+    <div className="">
+      <div className="flex flex-row items-center justify-between">
+        <Subheader text={title} style="text-xs" />
         <div
-          className='text-sm text-blue-500 cursor-pointer hover:underline'
-          onClick={() => setShowDialog(true)}
-        >
+          className="text-sm text-blue-500 cursor-pointer hover:underline"
+          onClick={() => setShowDialog(true)}>
           Edit
         </div>
       </div>
 
-      <div className='mt-2 text-sm '>
+      <div className="mt-2 text-sm ">
         <div>{`${address.first_name} ${address.last_name}`}</div>
         <div>{address.company}</div>
         <div>{address.address1}</div>
@@ -39,15 +38,14 @@ export default function AddressCard({address, onSave, title}: Props) {
 
       <Modal
         visible={showDialog}
-        width='max-w-2xl'
+        width="max-w-2xl"
         heading={`EDIT ${title}`}
-        submitButtonTitle='Done'
+        submitButtonTitle="Done"
         hideFooter={true}
         onClose={() => setShowDialog(false)}
-        onConfirm={() => setShowDialog(false)}
-      >
+        onConfirm={() => setShowDialog(false)}>
         <AddressForm address={address}>
-          {(attributes) => {
+          {attributes => {
             return (
               <ModalFooter
                 onProceed={() => {

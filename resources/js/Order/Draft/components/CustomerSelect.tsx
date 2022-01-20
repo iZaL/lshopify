@@ -32,7 +32,7 @@ export default function CustomerSelect({
 
   const onCustomerSave = (
     customerData: CustomerForm,
-    addressData: CustomerAddress
+    addressData: CustomerAddress,
   ) => {
     console.log('customerData', customerData);
     onCustomerCreate(customerData, addressData);
@@ -40,44 +40,41 @@ export default function CustomerSelect({
 
   return (
     <Card>
-      <Subheader text='Find or create a customer' />
+      <Subheader text="Find or create a customer" />
 
-      <div className='relative w-100' onClick={() => setShowMenu(true)}>
+      <div className="relative w-100" onClick={() => setShowMenu(true)}>
         <InputText
-          name='search'
+          name="search"
           placeholder={'Search products'}
-          onChange={(e) => {
+          onChange={e => {
             setSearchTerm(e.target.value);
           }}
-          value=''
-          leftComponent={<SearchIcon className='w-5 h-5 text-gray-500' />}
-          autocomplete='off'
+          value=""
+          leftComponent={<SearchIcon className="w-5 h-5 text-gray-500" />}
+          autocomplete="off"
         />
 
         <Dropdown
           visible={showMenu}
-          setVisible={(visible) => setShowMenu(visible)}
-        >
-          <div className='bg-white'>
-            <div className='p-2'>
+          setVisible={visible => setShowMenu(visible)}>
+          <div className="bg-white">
+            <div className="p-2">
               <div
-                className='flex flex-row items-center space-x-2 rounded-md px-5 py-2 text-sm text-gray-800 hover:bg-gray-100 cursor-pointer'
-                onClick={() => setShowDialog('create_customer')}
-              >
-                <PlusCircleIcon className='w-5 h-5 text-gray-500' />
+                className="flex flex-row items-center space-x-2 rounded-md px-5 py-2 text-sm text-gray-800 hover:bg-gray-100 cursor-pointer"
+                onClick={() => setShowDialog('create_customer')}>
+                <PlusCircleIcon className="w-5 h-5 text-gray-500" />
                 <div>Create new customer</div>
               </div>
             </div>
 
-            <Border style='my-0' />
+            <Border style="my-0" />
 
-            <ul className='p-2'>
+            <ul className="p-2">
               {customers.map((customer, i) => (
                 <li
                   key={i}
-                  className='text-sm text-gray-800 space-x-2 rounded-md px-5 py-2 hover:bg-gray-100 cursor-pointer'
-                  onClick={() => onCustomerSelect(customer)}
-                >
+                  className="text-sm text-gray-800 space-x-2 rounded-md px-5 py-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => onCustomerSelect(customer)}>
                   {customer.full_name}
                 </li>
               ))}
@@ -87,14 +84,13 @@ export default function CustomerSelect({
       </div>
 
       <Modal
-        width='max-w-2xl'
+        width="max-w-2xl"
         visible={showDialog === 'create_customer'}
         onClose={() => setShowDialog(null)}
-        heading='Create a new customer'
+        heading="Create a new customer"
         onConfirm={() => {}}
-        submitButtonTitle='Save customer'
-        hideFooter={true}
-      >
+        submitButtonTitle="Save customer"
+        hideFooter={true}>
         <CreateCustomerForm>
           {(customerData: CustomerForm, addressData: CustomerAddress) => (
             <ModalFooter

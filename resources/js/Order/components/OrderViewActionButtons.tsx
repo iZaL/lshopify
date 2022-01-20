@@ -7,9 +7,9 @@ interface Props {
 
 export default function OrderViewActionButtons({onRefundClick}: Props) {
   return (
-    <div className='mt-5 flex xl:mt-0 xl:ml-4'>
-      <div className=''>
-        <Button theme='default' onClick={onRefundClick}>
+    <div className="mt-5 flex xl:mt-0 xl:ml-4">
+      <div className="">
+        <Button theme="default" onClick={onRefundClick}>
           Refund
         </Button>
       </div>

@@ -30,21 +30,21 @@ export default function PopMessages() {
     message: null,
   };
 
-    if(flash) {
-        if (flash.success) {
-            flashMessage = {type: 'success', message: flash.success};
-        } else if (flash.error) {
-            flashMessage = {type: 'error', message: flash.error};
-        } else if (flash.warning) {
-            flashMessage = {type: 'warning', message: flash.warning};
-        } else if (flash.info) {
-            flashMessage = {type: 'info', message: flash.info};
-        }
+  if (flash) {
+    if (flash.success) {
+      flashMessage = {type: 'success', message: flash.success};
+    } else if (flash.error) {
+      flashMessage = {type: 'error', message: flash.error};
+    } else if (flash.warning) {
+      flashMessage = {type: 'warning', message: flash.warning};
+    } else if (flash.info) {
+      flashMessage = {type: 'info', message: flash.info};
     }
+  }
 
-    const errorMessages: Array<string> = errors ? Object.keys(errors).map(
-        (key) => errors[key]
-    ): [];
+  const errorMessages: Array<string> = errors
+    ? Object.keys(errors).map(key => errors[key])
+    : [];
 
   useEffect(() => {
     if (flashMessage.message || errorMessages.length) {
@@ -64,7 +64,7 @@ export default function PopMessages() {
           There were error with your submission
         </h3>
         <div className={`mt-2 text-sm text-gray-50`}>
-          <ul className='list-disc pl-5 space-y-1'>
+          <ul className="list-disc pl-5 space-y-1">
             {errorMessages.map((message, index) => {
               return <li key={index}>{message}</li>;
             })}
@@ -94,21 +94,19 @@ export default function PopMessages() {
   }
 
   return (
-    <div className='z-20'>
+    <div className="z-20">
       <Transition
         show={visible}
-        enter='transition-opacity duration-100'
-        enterFrom='opacity-0'
-        enterTo='opacity-100'
-        leave='transition-opacity duration-100'
-        leaveFrom='opacity-100'
-        leaveTo='opacity-0'
-      >
+        enter="transition-opacity duration-100"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-100"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0">
         <Content
           type={flashMessageType}
-          setVisible={(visibility) => setVisible(visibility)}
-        >
-          <div className='relative'>{message}</div>
+          setVisible={visibility => setVisible(visibility)}>
+          <div className="relative">{message}</div>
         </Content>
       </Transition>
     </div>
@@ -145,14 +143,13 @@ const Content = ({
 
   return (
     <div
-      className={`fixed right-0 min-w-[320px] shadow shadow-md rounded rounded-md mx-6 mt-6 p-4 border-l-4  ${themeStyle}`}
-    >
-      <div className='flex items-center'>
-        <div className=''>{children}</div>
-        <div className='ml-auto pl-3'>
-          <div className=''>
-            <Button theme='default' onClick={() => setVisible(false)}>
-              <XIcon className='h-5 w-5' aria-hidden='true' />
+      className={`fixed right-0 min-w-[320px] shadow shadow-md rounded rounded-md mx-6 mt-6 p-4 border-l-4  ${themeStyle}`}>
+      <div className="flex items-center">
+        <div className="">{children}</div>
+        <div className="ml-auto pl-3">
+          <div className="">
+            <Button theme="default" onClick={() => setVisible(false)}>
+              <XIcon className="h-5 w-5" aria-hidden="true" />
             </Button>
           </div>
         </div>

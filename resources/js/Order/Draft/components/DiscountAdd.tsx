@@ -24,33 +24,32 @@ export default function DiscountAdd({discount, children}: Props) {
   };
 
   return (
-    <div className=''>
-      <div className='p-5'>
-        <div className='flex space-x-4'>
-          <div className='flex-1'>
-            <Label title='Discount type' />
+    <div className="">
+      <div className="p-5">
+        <div className="flex space-x-4">
+          <div className="flex-1">
+            <Label title="Discount type" />
             <Select
-              name='suffix'
-              onChange={(e) => setAttributes('suffix', e.target.value)}
-              value={discountAttributes.suffix}
-            >
-              <option value='amount'>Amount</option>
-              <option value='percentage'>Percentage</option>
+              name="suffix"
+              onChange={e => setAttributes('suffix', e.target.value)}
+              value={discountAttributes.suffix}>
+              <option value="amount">Amount</option>
+              <option value="percentage">Percentage</option>
             </Select>
           </div>
-          <div className='flex-1'>
-            <Label title='Discount value' />
+          <div className="flex-1">
+            <Label title="Discount value" />
             <InputText
-              name='value'
-              onChange={(e) => setAttributes('value', e.target.value)}
+              name="value"
+              onChange={e => setAttributes('value', e.target.value)}
               leftComponent={
                 discountAttributes.suffix === 'amount' ? (
-                  <div className='text-md text-gray-400 text-sm'>OMR</div>
+                  <div className="text-md text-gray-400 text-sm">OMR</div>
                 ) : null
               }
               rightComponent={
                 discountAttributes.suffix === 'percentage' ? (
-                  <div className='text-md text-gray-400 text-sm'>%</div>
+                  <div className="text-md text-gray-400 text-sm">%</div>
                 ) : null
               }
               style={discountAttributes.suffix === 'amount' ? 'pl-14' : ''}
@@ -62,12 +61,12 @@ export default function DiscountAdd({discount, children}: Props) {
           </div>
         </div>
 
-        <div className='mt-5'>
-          <Label title='Reason' />
+        <div className="mt-5">
+          <Label title="Reason" />
           <InputText
-            name='reason'
-            placeholder='Reason'
-            onChange={(e) => setAttributes('reason', e.target.value)}
+            name="reason"
+            placeholder="Reason"
+            onChange={e => setAttributes('reason', e.target.value)}
             value={discountAttributes.reason}
           />
         </div>

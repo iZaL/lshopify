@@ -9,7 +9,7 @@ interface Props {
 
 export default function DraftOrderList({orders, onItemClick}: Props) {
   return (
-    <ul className='p-4'>
+    <ul className="p-4">
       {orders.map((order, i) => {
         return (
           <li key={i} onClick={() => onItemClick(order)}>

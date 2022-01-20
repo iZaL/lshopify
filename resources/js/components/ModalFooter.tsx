@@ -27,13 +27,13 @@ export default function ModalFooter({
   }
 
   return (
-    <div className='bg-gray-50 dark:bg-gray-600 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse'>
-      <Button onClick={() => onProceed()} theme='success'>
+    <div className="bg-gray-50 dark:bg-gray-600 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+      <Button onClick={() => onProceed()} theme="success">
         {submitButtonTitle}
       </Button>
 
       {!hideCancelButton && (
-        <Button theme='default' onClick={onHideModal} style='mr-5'>
+        <Button theme="default" onClick={onHideModal} style="mr-5">
           Cancel
         </Button>
       )}

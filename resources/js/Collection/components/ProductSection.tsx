@@ -14,13 +14,13 @@ interface Props {
 export default function ProductSection({collectionProducts, sortTerm}: Props) {
   return (
     <Card>
-      <Subheader text='Products' />
+      <Subheader text="Products" />
 
-      <div className='flex flex-row flex-wrap items-stretch'>
-        <div className='flex-grow mt-2 sm:mt-0'>
-          <Select name='sort' onChange={() => {}} value={sortTerm}>
-            <option value=''>Best selling</option>
-            <option value=''>Product title A-Z</option>
+      <div className="flex flex-row flex-wrap items-stretch">
+        <div className="flex-grow mt-2 sm:mt-0">
+          <Select name="sort" onChange={() => {}} value={sortTerm}>
+            <option value="">Best selling</option>
+            <option value="">Product title A-Z</option>
           </Select>
         </div>
       </div>
@@ -28,12 +28,11 @@ export default function ProductSection({collectionProducts, sortTerm}: Props) {
       <div>
         {collectionProducts.map((product, i) => (
           <div
-            className='flex flex-row items-center px-4 space-x-2 space-y-2'
-            key={i}
-          >
-            <div className='w-5'>{i + 1}.</div>
+            className="flex flex-row items-center px-4 space-x-2 space-y-2"
+            key={i}>
+            <div className="w-5">{i + 1}.</div>
             <VariantImage image={product.image} onClick={() => {}} />
-            <div className='flex-auto'>
+            <div className="flex-auto">
               <ProductTitle product={product} />
             </div>
           </div>

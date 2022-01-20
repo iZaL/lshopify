@@ -16,20 +16,20 @@ export default function Checkbox({
   onChange,
 }: Props) {
   return (
-    <div className='relative flex items-start'>
-      <div className='flex items-center h-5'>
+    <div className="relative flex items-start">
+      <div className="flex items-center h-5">
         <input
           id={name}
           name={name}
-          type='checkbox'
+          type="checkbox"
           className={`focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded ${style}`}
           checked={checked}
           onChange={onChange}
         />
       </div>
       {label && (
-        <div className='ml-3 text-sm'>
-          <label htmlFor='comments' className=''>
+        <div className="ml-3 text-sm">
+          <label htmlFor="comments" className="">
             {label}
           </label>
         </div>

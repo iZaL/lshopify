@@ -42,12 +42,12 @@ export default function DraftOrderDetailsSection({
   >(null);
 
   const [selectedDiscount, setSelectedDiscount] = useState<CartDiscount | null>(
-    null
+    null,
   );
   const [selectedDiscountItem, setSelectedDiscountItem] =
     useState<CartItem | null>(null);
 
-  const items: CartItem[] = Object.keys(cart.items).map((k) => cart.items[k]);
+  const items: CartItem[] = Object.keys(cart.items).map(k => cart.items[k]);
 
   const onRemoveDiscountConfirm = (discount: CartDiscount) => {
     onRemoveDiscount(discount);
@@ -62,7 +62,7 @@ export default function DraftOrderDetailsSection({
           type: 'discount',
           target: 'subtotal',
         },
-        selectedDiscountItem
+        selectedDiscountItem,
       );
     } else {
       onApplyDiscount({
@@ -83,7 +83,7 @@ export default function DraftOrderDetailsSection({
 
   return (
     <Card>
-      <Subheader text='Order Details' />
+      <Subheader text="Order Details" />
 
       <ProductSearch
         searchTerm={searchTerm}
@@ -103,58 +103,56 @@ export default function DraftOrderDetailsSection({
       <>
         <Border />
 
-        <div className='mt-5 text-sm'>
-          <div className='flex flex-row space-x-5'>
-            <div className='flex-1'>
-              <Label title='Notes' />
-              <InputText name='notes' onChange={() => {}} value='' />
+        <div className="mt-5 text-sm">
+          <div className="flex flex-row space-x-5">
+            <div className="flex-1">
+              <Label title="Notes" />
+              <InputText name="notes" onChange={() => {}} value="" />
             </div>
-            <div className='flex-1 space-y-2'>
-              <div className='flex flex-row justify-between'>
-                <div className=''>Subtotal</div>
-                <div className=''>OMR {cart.subtotal}</div>
+            <div className="flex-1 space-y-2">
+              <div className="flex flex-row justify-between">
+                <div className="">Subtotal</div>
+                <div className="">OMR {cart.subtotal}</div>
               </div>
 
               {cart.total !== cart.subtotal ? (
                 <>
-                  <div className='flex flex-row justify-between'>
+                  <div className="flex flex-row justify-between">
                     <Button
-                      theme='clear'
-                      style='text-blue-500 hover:underline'
-                      onClick={() => onShowDiscountDialog(cart.discount)}
-                    >
+                      theme="clear"
+                      style="text-blue-500 hover:underline"
+                      onClick={() => onShowDiscountDialog(cart.discount)}>
                       Edit discount
                     </Button>
                   </div>
-                  <div className='flex flex-row justify-between'>
-                    <div className='text-gray-500'>Custom discount</div>
-                    <div className=''>-OMR {cart.discount_value}</div>
+                  <div className="flex flex-row justify-between">
+                    <div className="text-gray-500">Custom discount</div>
+                    <div className="">-OMR {cart.discount_value}</div>
                   </div>
                 </>
               ) : (
-                <div className='flex flex-row justify-between'>
+                <div className="flex flex-row justify-between">
                   <Button
-                    theme='clear'
+                    theme="clear"
                     onClick={() => onShowDiscountDialog(cart.discount)}
-                    style='text-blue-500 hover:underline'
-                  >
+                    style="text-blue-500 hover:underline">
                     Add discount
                   </Button>
-                  <div className=''>——</div>
+                  <div className="">——</div>
                 </div>
               )}
 
-              <div className='flex flex-row justify-between'>
-                <div className=''>Add shipping</div>
-                <div className=''>——</div>
+              <div className="flex flex-row justify-between">
+                <div className="">Add shipping</div>
+                <div className="">——</div>
               </div>
-              <div className='flex flex-row justify-between'>
-                <div className=''>Tax</div>
-                <div className=''>——</div>
+              <div className="flex flex-row justify-between">
+                <div className="">Tax</div>
+                <div className="">——</div>
               </div>
-              <div className='flex flex-row justify-between font-bold'>
-                <div className=''>Total</div>
-                <div className=''>OMR {cart.total}</div>
+              <div className="flex flex-row justify-between font-bold">
+                <div className="">Total</div>
+                <div className="">OMR {cart.total}</div>
               </div>
             </div>
           </div>
@@ -164,8 +162,8 @@ export default function DraftOrderDetailsSection({
           <>
             <Border />
 
-            <div className='flex flex-row items-center justify-between '>
-              <div className='text-xs font-semibold'>INVOICE</div>
+            <div className="flex flex-row items-center justify-between ">
+              <div className="text-xs font-semibold">INVOICE</div>
               <Button onClick={() => setShowDialog('send_invoice')}>
                 Send Invoice
               </Button>
@@ -173,19 +171,17 @@ export default function DraftOrderDetailsSection({
 
             <Border />
 
-            <div className='flex flex-row items-center justify-between '>
-              <div className='text-xs font-semibold'>PAYMENT</div>
-              <div className='flex flex-row space-x-5'>
+            <div className="flex flex-row items-center justify-between ">
+              <div className="text-xs font-semibold">PAYMENT</div>
+              <div className="flex flex-row space-x-5">
                 <Button
-                  theme='default'
-                  onClick={() => setShowDialog('payment_paid')}
-                >
+                  theme="default"
+                  onClick={() => setShowDialog('payment_paid')}>
                   Mark as paid
                 </Button>
                 <Button
-                  theme='default'
-                  onClick={() => setShowDialog('payment_pending')}
-                >
+                  theme="default"
+                  onClick={() => setShowDialog('payment_pending')}>
                   Mark as pending
                 </Button>
                 <Button>Pay by credit card</Button>
@@ -196,15 +192,14 @@ export default function DraftOrderDetailsSection({
       </>
 
       <Modal
-        heading='Add discount'
+        heading="Add discount"
         visible={showDialog === 'discount'}
         onClose={() => setShowDialog(null)}
         onConfirm={() => {}}
-        width='max-w-xl'
-        hideFooter={true}
-      >
+        width="max-w-xl"
+        hideFooter={true}>
         <DiscountAdd discount={selectedDiscount}>
-          {(discountAttributes) => (
+          {discountAttributes => (
             <ModalFooter
               onHideModal={() => setShowDialog(null)}
               onProceed={() => {
@@ -212,17 +207,15 @@ export default function DraftOrderDetailsSection({
                 onDiscountConfirm(discountAttributes);
               }}
               submitButtonTitle={selectedDiscount?.name ? 'Update' : 'Done'}
-              hideCancelButton={true}
-            >
+              hideCancelButton={true}>
               {selectedDiscount?.name && (
                 <Button
-                  theme='error'
+                  theme="error"
                   onClick={() => {
                     setShowDialog(null);
                     onRemoveDiscountConfirm(selectedDiscount);
                   }}
-                  style='mr-5'
-                >
+                  style="mr-5">
                   Remove discount
                 </Button>
               )}
@@ -234,16 +227,15 @@ export default function DraftOrderDetailsSection({
       <Modal
         visible={showDialog === 'payment_paid'}
         heading={`Mark as paid`}
-        submitButtonTitle='Create order'
+        submitButtonTitle="Create order"
         onClose={() => {
           setShowDialog(null);
         }}
         onConfirm={() => {
           setShowDialog(null);
           onCreateOrder();
-        }}
-      >
-        <p className='p-5 text-sm'>
+        }}>
+        <p className="p-5 text-sm">
           This will create an order. Mark this order as paid if you received OMR{' '}
           {cart.total} outside of Shopify.
         </p>
@@ -252,16 +244,15 @@ export default function DraftOrderDetailsSection({
       <Modal
         visible={showDialog === 'payment_pending'}
         heading={`Mark as pending payment`}
-        submitButtonTitle='Create order'
+        submitButtonTitle="Create order"
         onClose={() => {
           setShowDialog(null);
         }}
         onConfirm={() => {
           setShowDialog(null);
           onCreateOrder();
-        }}
-      >
-        <p className='p-5 text-sm'>
+        }}>
+        <p className="p-5 text-sm">
           This will create an order without payment. You will be able to collect
           payment of OMR {cart.total} later.
         </p>

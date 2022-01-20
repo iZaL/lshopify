@@ -15,7 +15,7 @@ export default function ProductView({}: Props) {
 
   return (
     <Main>
-      <div className='p-6'>
+      <div className="p-6">
         <h1>View Product</h1>
       </div>
     </Main>

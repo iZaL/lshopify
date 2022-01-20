@@ -30,7 +30,7 @@ interface Props {
   onBulkAttributesSet: <T extends keyof Variant>(
     variantIDs: number[],
     field: T,
-    value: Variant[T]
+    value: Variant[T],
   ) => void;
   images: Image[];
 }
@@ -55,13 +55,13 @@ export default function VariantEditSection({
   const onVariantOptionsChange = (
     variant: Variant,
     option: VariantOption,
-    value: string
+    value: string,
   ) => {
-    const variants = currentVariants.map((v) => {
+    const variants = currentVariants.map(v => {
       if (v.id === variant.id) {
         return {
           ...v,
-          options: v.options?.map((o) => {
+          options: v.options?.map(o => {
             return o.name === option.name ? {...option, id: value} : o;
           }),
         };
@@ -74,9 +74,9 @@ export default function VariantEditSection({
   const onVariantAttributeChange = <T extends keyof Variant>(
     variant: Variant,
     field: T,
-    value: Variant[T]
+    value: Variant[T],
   ) => {
-    const variants = currentVariants.map((v) => {
+    const variants = currentVariants.map(v => {
       if (v.id === variant.id) {
         return {
           ...v,
@@ -89,7 +89,7 @@ export default function VariantEditSection({
   };
 
   const onApplyAll = <T extends keyof Variant>(field: T, value: Variant[T]) => {
-    const variants = currentVariants.map((variant) => {
+    const variants = currentVariants.map(variant => {
       if (checkedVariantIDs.includes(variant.id)) {
         return {
           ...variant,
@@ -120,7 +120,7 @@ export default function VariantEditSection({
 
   const onCheckboxChange = (variantID: number) => {
     const checkedBox = checkedVariantIDs.includes(variantID)
-      ? checkedVariantIDs.filter((vID) => vID !== variantID)
+      ? checkedVariantIDs.filter(vID => vID !== variantID)
       : [...checkedVariantIDs, variantID];
     setCheckedVariantIDs(checkedBox);
   };
@@ -129,13 +129,13 @@ export default function VariantEditSection({
     if (currentVariants.length === checkedVariantIDs.length) {
       setCheckedVariantIDs([]);
     } else {
-      setCheckedVariantIDs(currentVariants.map((v) => v.id));
+      setCheckedVariantIDs(currentVariants.map(v => v.id));
     }
   };
 
   const onVariantOptionClick = (option: VariantOption) => {
     let variantIDs: Array<number> = [];
-    currentVariants.map((variant) => {
+    currentVariants.map(variant => {
       variantIDs = variant.options?.some(({id}) => id === option.id)
         ? [...variantIDs, variant.id]
         : [...variantIDs];
@@ -145,9 +145,9 @@ export default function VariantEditSection({
 
   const onBulkEditorConfirm = (variants: Variant[]) => {
     const selectedVariants = variants.map(({id}) => id);
-    const newVariants = currentVariants.map((variant) => {
+    const newVariants = currentVariants.map(variant => {
       if (selectedVariants.includes(variant.id)) {
-        return variants.find((v) => v.id === variant.id) ?? variant;
+        return variants.find(v => v.id === variant.id) ?? variant;
       }
       return variant;
     });
@@ -156,16 +156,16 @@ export default function VariantEditSection({
 
   return (
     <Card>
-      <div className='flex flex-row justify-between items-center text-sm space-x-4'>
-        <div className='flex-1'>
-          <Subheader text='Variants' />
+      <div className="flex flex-row justify-between items-center text-sm space-x-4">
+        <div className="flex-1">
+          <Subheader text="Variants" />
         </div>
-        <Button onClick={onAddVariantClick} theme='clear' style='text-blue-500'>
+        <Button onClick={onAddVariantClick} theme="clear" style="text-blue-500">
           Add Variant
         </Button>
-        <div className='relative'>
+        <div className="relative">
           <DropdownButton
-            buttonTitle='More Options'
+            buttonTitle="More Options"
             arrowVisible={true}
             items={[
               {
@@ -186,57 +186,53 @@ export default function VariantEditSection({
         </div>
       </div>
 
-      <ul className='flex flex-row space-x-4 text-sm flex-wrap'>
-        <li className=''>Select:</li>
+      <ul className="flex flex-row space-x-4 text-sm flex-wrap">
+        <li className="">Select:</li>
         <li
-          className='text-blue-500'
-          onClick={() => setCheckedVariantIDs(currentVariants.map((v) => v.id))}
-        >
+          className="text-blue-500"
+          onClick={() => setCheckedVariantIDs(currentVariants.map(v => v.id))}>
           All
         </li>
-        <li className='text-blue-500' onClick={() => setCheckedVariantIDs([])}>
+        <li className="text-blue-500" onClick={() => setCheckedVariantIDs([])}>
           None
         </li>
         {variantValues.map((option, i) => {
           return (
             <li
               key={i}
-              className='text-blue-500'
-              onClick={() => onVariantOptionClick(option)}
-            >
+              className="text-blue-500"
+              onClick={() => onVariantOptionClick(option)}>
               {option.id}
             </li>
           );
         })}
       </ul>
 
-      <div className='overflow-x-auto overflow-y-auto text-sm'>
+      <div className="overflow-x-auto overflow-y-auto text-sm">
         {checkedVariantIDs.length ? (
-          <div className='flex flex-row items-center w-full py-2 h-12 '>
+          <div className="flex flex-row items-center w-full py-2 h-12 ">
             <Button
-              theme='clear'
-              style='px-4 py-2 rounded-l-md border border-gray-300 font-medium'
-            >
+              theme="clear"
+              style="px-4 py-2 rounded-l-md border border-gray-300 font-medium">
               <Checkbox
-                name='selected'
+                name="selected"
                 checked={checkedVariantIDs.length === currentVariants.length}
                 onChange={() => onSelectedAllChange()}
               />
-              <span className='px-2'>{checkedVariantIDs.length} selected</span>
+              <span className="px-2">{checkedVariantIDs.length} selected</span>
             </Button>
 
             <Button
-              theme='clear'
-              style='-ml-px px-4 py-2 border border-gray-300 font-medium'
-              onClick={() => setShowDialog('bulk_editor')}
-            >
+              theme="clear"
+              style="-ml-px px-4 py-2 border border-gray-300 font-medium"
+              onClick={() => setShowDialog('bulk_editor')}>
               Open bulk editor
             </Button>
 
             <DropdownButton
-              buttonTitle='More actions'
+              buttonTitle="More actions"
               arrowVisible={true}
-              width='w-[16rem]'
+              width="w-[16rem]"
               buttonProps={{
                 theme: 'clear',
                 style: 'px-4 py-2 border border-gray-300 rounded-r-md',
@@ -291,7 +287,7 @@ export default function VariantEditSection({
                     onBulkAttributesSet(
                       checkedVariantIDs,
                       'out_of_stock_sale',
-                      true
+                      true,
                     );
                   },
                 },
@@ -301,7 +297,7 @@ export default function VariantEditSection({
                     onBulkAttributesSet(
                       checkedVariantIDs,
                       'out_of_stock_sale',
-                      false
+                      false,
                     );
                   },
                 },
@@ -309,19 +305,19 @@ export default function VariantEditSection({
             />
           </div>
         ) : (
-          <div className='flex flex-row items-center w-full py-2 h-12'>
-            <div className='flex items-center'>
-              <div className='flex justify-center items-center w-12'>
+          <div className="flex flex-row items-center w-full py-2 h-12">
+            <div className="flex items-center">
+              <div className="flex justify-center items-center w-12">
                 <Checkbox
                   checked={checkedVariantIDs.length === currentVariants.length}
                   onChange={() => onSelectedAllChange()}
-                  name=''
+                  name=""
                 />
               </div>
-              <div className='flex justify-center items-center w-16 ' />
+              <div className="flex justify-center items-center w-16 " />
             </div>
 
-            <div className='w-full'>
+            <div className="w-full">
               <div
                 className={`grid items-center gap-6
                 ${
@@ -336,25 +332,24 @@ export default function VariantEditSection({
                   variantOptions.length === 1 &&
                   'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
                 }
-                `}
-              >
+                `}>
                 {variantOptions.map((option, i) => {
                   return (
-                    <div className='text-sm font-semibold' key={i}>
+                    <div className="text-sm font-semibold" key={i}>
                       {option.name}
                     </div>
                   );
                 })}
-                <div className='text-sm font-semibold'>Price</div>
-                <div className='text-sm font-semibold'>Quantity</div>
-                <div className='text-sm font-semibold'>SKU</div>
-                <div className='text-sm font-semibold'>Edit</div>
+                <div className="text-sm font-semibold">Price</div>
+                <div className="text-sm font-semibold">Quantity</div>
+                <div className="text-sm font-semibold">SKU</div>
+                <div className="text-sm font-semibold">Edit</div>
               </div>
             </div>
           </div>
         )}
 
-        <ul className='max-w-full'>
+        <ul className="max-w-full">
           {currentVariants.map((variant: Variant, i) => {
             return (
               <li
@@ -363,21 +358,20 @@ export default function VariantEditSection({
                   checkedVariantIDs.includes(variant.id)
                     ? 'bg-blue-50 dark:bg-gray-700'
                     : '',
-                  'box-border position-relative inline-block min-w-full hover:bg-gray-100 dark:hover:bg-gray-900 border-t border-gray-200'
-                )}
-              >
-                <div className='flex items-center'>
-                  <div className='flex items-center'>
-                    <div className='flex justify-center items-center w-12'>
+                  'box-border position-relative inline-block min-w-full hover:bg-gray-100 dark:hover:bg-gray-900 border-t border-gray-200',
+                )}>
+                <div className="flex items-center">
+                  <div className="flex items-center">
+                    <div className="flex justify-center items-center w-12">
                       <Checkbox
                         checked={checkedVariantIDs.includes(variant.id)}
                         onChange={() => onCheckboxChange(variant.id)}
-                        name=''
+                        name=""
                       />
                     </div>
-                    <div className='w-14 mr-2'>
+                    <div className="w-14 mr-2">
                       <VariantImage
-                        style='h-12'
+                        style="h-12"
                         image={variant.image}
                         onClick={() => {
                           setSelectedVariant(variant);
@@ -387,8 +381,8 @@ export default function VariantEditSection({
                     </div>
                   </div>
 
-                  <div className='flex items-start'>
-                    <div className='min-w-0 max-w-100 self-center '>
+                  <div className="flex items-start">
+                    <div className="min-w-0 max-w-100 self-center ">
                       <div
                         className={`grid items-center gap-6
                         ${
@@ -403,22 +397,21 @@ export default function VariantEditSection({
                           variantOptions.length === 1 &&
                           'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
                         }
-                       `}
-                      >
+                       `}>
                         {variantOptions.map((option: VariantOption, i) => {
                           let currentOption = ensure(
-                            variant.options?.find((v) => v.name === option.name)
+                            variant.options?.find(v => v.name === option.name),
                           );
                           return (
                             <div key={i}>
                               <InputText
                                 name={currentOption.id}
                                 value={currentOption.id}
-                                onChange={(e) =>
+                                onChange={e =>
                                   onVariantOptionsChange(
                                     variant,
                                     currentOption,
-                                    e.target.value
+                                    e.target.value,
                                   )
                                 }
                               />
@@ -426,62 +419,60 @@ export default function VariantEditSection({
                           );
                         })}
 
-                        <div className=''>
+                        <div className="">
                           <InputText
-                            name='price'
+                            name="price"
                             value={variant.price}
-                            onChange={(e) =>
+                            onChange={e =>
                               onVariantAttributeChange(
                                 variant,
                                 'price',
-                                e.target.value
+                                e.target.value,
                               )
                             }
                           />
                         </div>
-                        <div className=''>
+                        <div className="">
                           <InputText
-                            name='quantity'
+                            name="quantity"
                             value={variant.quantity}
-                            onChange={(e) =>
+                            onChange={e =>
                               onVariantAttributeChange(
                                 variant,
                                 'quantity',
-                                e.target.value
+                                e.target.value,
                               )
                             }
                           />
                         </div>
-                        <div className=''>
+                        <div className="">
                           <InputText
-                            name='sku'
+                            name="sku"
                             value={variant.sku}
-                            onChange={(e) =>
+                            onChange={e =>
                               onVariantAttributeChange(
                                 variant,
                                 'sku',
-                                e.target.value
+                                e.target.value,
                               )
                             }
                           />
                         </div>
-                        <div className='hidden sm:block flex sticky top-0 right-0 h-full py-4 px-2 bg-gray-100 dark:bg-gray-900 shadow shadow-md'>
-                          <div className='flex flex-row flex-nowrap box-border  items-center space-x-4'>
+                        <div className="hidden sm:block flex sticky top-0 right-0 h-full py-4 px-2 bg-gray-100 dark:bg-gray-900 shadow shadow-md">
+                          <div className="flex flex-row flex-nowrap box-border  items-center space-x-4">
                             <Button
-                              theme='default'
-                              style='text-xs'
-                              onClick={() => onEditVariantClick(variant)}
-                            >
+                              theme="default"
+                              style="text-xs"
+                              onClick={() => onEditVariantClick(variant)}>
                               Edit
                             </Button>
                             <Button
-                              theme='default'
-                              style='text-xs'
+                              theme="default"
+                              style="text-xs"
                               onClick={() => {
                                 setSelectedVariant(variant);
                                 setShowDialog('delete_variant');
-                              }}
-                            >
+                              }}>
                               Delete
                             </Button>
                           </div>
@@ -497,79 +488,74 @@ export default function VariantEditSection({
       </div>
 
       <Modal
-        heading='Edit prices'
+        heading="Edit prices"
         visible={showDialog === 'price'}
         onClose={() => setShowDialog(null)}
-        onConfirm={() => setShowDialog(null)}
-      >
+        onConfirm={() => setShowDialog(null)}>
         <EditPrices
-          variants={currentVariants.filter((v) =>
-            checkedVariantIDs.includes(v.id)
+          variants={currentVariants.filter(v =>
+            checkedVariantIDs.includes(v.id),
           )}
           onChange={(variant, value) =>
             onVariantAttributeChange(variant, 'price', value)
           }
-          onApplyAll={(value) => onApplyAll('price', value)}
+          onApplyAll={value => onApplyAll('price', value)}
         />
       </Modal>
 
       <Modal
-        heading='Edit quantities'
+        heading="Edit quantities"
         visible={showDialog === 'quantity'}
         onClose={() => setShowDialog(null)}
-        onConfirm={() => setShowDialog(null)}
-      >
+        onConfirm={() => setShowDialog(null)}>
         <EditQuantities
-          variants={currentVariants.filter((v) =>
-            checkedVariantIDs.includes(v.id)
+          variants={currentVariants.filter(v =>
+            checkedVariantIDs.includes(v.id),
           )}
           onChange={(variant, value) =>
             onVariantAttributeChange(variant, 'quantity', value)
           }
-          onApplyAll={(value) => onApplyAll('quantity', value)}
+          onApplyAll={value => onApplyAll('quantity', value)}
         />
       </Modal>
 
       <Modal
-        heading='Are you sure you want to delete the selected variants?'
+        heading="Are you sure you want to delete the selected variants?"
         visible={showDialog === 'delete_variants'}
         onClose={() => setShowDialog(null)}
         onConfirm={() => {
           setShowDialog(null);
           onVariantsDelete(checkedVariantIDs);
         }}
-        theme='red'
-        submitButtonTitle='Delete'
-      >
-        <p className='p-5 text-sm'>
+        theme="red"
+        submitButtonTitle="Delete">
+        <p className="p-5 text-sm">
           You cannot recover deleted product variants, do you wish to continue?
         </p>
       </Modal>
 
       <Modal
-        heading='Are you sure you want to remove images?'
+        heading="Are you sure you want to remove images?"
         visible={showDialog === 'remove_images'}
         onClose={() => setShowDialog(null)}
         onConfirm={() => {
           setShowDialog(null);
           onApplyAll('image', null);
         }}
-        theme='red'
-        submitButtonTitle='Remove'
-      >
-        <p className='p-5 text-sm'>do you wish to continue?</p>
+        theme="red"
+        submitButtonTitle="Remove">
+        <p className="p-5 text-sm">do you wish to continue?</p>
       </Modal>
 
       <Modal
-        heading='Edit images'
+        heading="Edit images"
         visible={showDialog === 'add_images'}
         onClose={() => setShowDialog(null)}
-        onConfirm={onImageSubmit}
-      >
-        <div className='p-5'>
+        onConfirm={onImageSubmit}>
+        <div className="p-5">
           <DZFileUploadBox
-            onImagesSelect={(images) => setSelectedImage(images[0])}
-            onImagesUpload={(images) => onImagesUpload(images)}
+            onImagesSelect={images => setSelectedImage(images[0])}
+            onImagesUpload={images => onImagesUpload(images)}
             images={images}
             selectedImages={selectedImage ? [selectedImage] : []}
           />
@@ -577,50 +563,47 @@ export default function VariantEditSection({
       </Modal>
 
       <Modal
-        heading='Edit country/region of origin'
+        heading="Edit country/region of origin"
         visible={showDialog === 'origin_country'}
         onClose={() => setShowDialog(null)}
-        onConfirm={() => setShowDialog(null)}
-      >
+        onConfirm={() => setShowDialog(null)}>
         <EditOriginCountry
-          variants={currentVariants.filter((v) =>
-            checkedVariantIDs.includes(v.id)
+          variants={currentVariants.filter(v =>
+            checkedVariantIDs.includes(v.id),
           )}
           onChange={(variant, value) =>
             onVariantAttributeChange(variant, 'origin_country_id', value)
           }
-          onApplyAll={(value) => onApplyAll('origin_country_id', value)}
+          onApplyAll={value => onApplyAll('origin_country_id', value)}
         />
       </Modal>
 
       <Modal
-        heading='Edit HS codes'
+        heading="Edit HS codes"
         visible={showDialog === 'hs_code'}
         onClose={() => setShowDialog(null)}
-        onConfirm={() => setShowDialog(null)}
-      >
+        onConfirm={() => setShowDialog(null)}>
         <EditHSCodes
-          variants={currentVariants.filter((v) =>
-            checkedVariantIDs.includes(v.id)
+          variants={currentVariants.filter(v =>
+            checkedVariantIDs.includes(v.id),
           )}
           onChange={(variant, value) =>
             onVariantAttributeChange(variant, 'hs_code', value)
           }
-          onApplyAll={(value) => onApplyAll('hs_code', value)}
+          onApplyAll={value => onApplyAll('hs_code', value)}
         />
       </Modal>
 
       <Modal
-        heading='Edit Options'
+        heading="Edit Options"
         visible={showDialog === 'edit_options'}
         onClose={() => setShowDialog(null)}
-        onConfirm={() => setShowDialog(null)}
-      >
+        onConfirm={() => setShowDialog(null)}>
         <EditVariantOptions
           variants={currentVariants}
           variantOptions={variantOptions}
           variantValues={variantValues}
-          onDelete={(variants) => {
+          onDelete={variants => {
             setShowDialog(null);
             onVariantsDelete(variants);
           }}
@@ -628,19 +611,17 @@ export default function VariantEditSection({
       </Modal>
 
       <Modal
-        heading='Bulk Edit'
+        heading="Bulk Edit"
         visible={showDialog === 'bulk_editor'}
-        width='max-w-7xl'
+        width="max-w-7xl"
         hideFooter={true}
         onClose={() => setShowDialog(null)}
-        onConfirm={() => setShowDialog(null)}
-      >
+        onConfirm={() => setShowDialog(null)}>
         <BulkEditor
           variants={currentVariants.filter(({id}) =>
-            checkedVariantIDs.includes(id)
-          )}
-        >
-          {(variants) => (
+            checkedVariantIDs.includes(id),
+          )}>
+          {variants => (
             <ModalFooter
               onHideModal={() => setShowDialog(null)}
               onProceed={() => {
@@ -655,8 +636,8 @@ export default function VariantEditSection({
       <Modal
         visible={showDialog === 'delete_variant'}
         heading={`Delete ${selectedVariant?.title}`}
-        theme='red'
-        submitButtonTitle='Delete'
+        theme="red"
+        submitButtonTitle="Delete"
         onClose={() => {
           setShowDialog(null);
           // setSelectedVariant(null);
@@ -665,9 +646,8 @@ export default function VariantEditSection({
           setShowDialog(null);
           // setSelectedVariant(null);
           onVariantsDelete(selectedVariant ? [selectedVariant.id] : []);
-        }}
-      >
-        <p className='p-5 text-sm'>
+        }}>
+        <p className="p-5 text-sm">
           Are you sure you want to delete the variant {selectedVariant?.title}?
           This action cannot be reversed.
         </p>

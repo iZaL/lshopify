@@ -21,7 +21,7 @@ import {CustomerForm} from '../../form_types';
 import DraftOrderDetailsSection from './components/DraftOrderDetailsSection';
 import CustomerSelect from './components/CustomerSelect';
 import CustomerEdit from './components/CustomerEdit';
-import route from 'ziggy-js'
+import route from 'ziggy-js';
 
 interface Props {
   products: Product[];
@@ -59,14 +59,14 @@ export default function DraftOrderEdit(props: Props) {
   }, [props.order]);
 
   const onCartItemAdd = (variantIDs: number[]) => {
-      Inertia.post(route('lshopify.cart.add'), {
+    Inertia.post(route('lshopify.cart.add'), {
       variantIDs: variantIDs,
       orderID: order.id,
     });
   };
 
   const onCartItemRemove = (rowId: string) => {
-      Inertia.post(route('lshopify.cart.remove'), {
+    Inertia.post(route('lshopify.cart.remove'), {
       rowId: rowId,
       orderID: order.id,
     });
@@ -96,10 +96,10 @@ export default function DraftOrderEdit(props: Props) {
 
   const onCustomerCreate = (
     customerData: CustomerForm,
-    addressData: CustomerAddress
+    addressData: CustomerAddress,
   ) => {
     Inertia.post(
-        route('lshopify.customers.store'),
+      route('lshopify.customers.store'),
       {
         customer: customerData,
         address: addressData,
@@ -108,13 +108,13 @@ export default function DraftOrderEdit(props: Props) {
         onSuccess: () => {
           console.log('success');
         },
-      }
+      },
     );
   };
 
   const onAttachCustomer = (customer?: Customer) => {
     Inertia.post(
-        route('lshopify.orders.draft.customer.update',[order.id]),
+      route('lshopify.orders.draft.customer.update', [order.id]),
       // `/draft_orders/${order.id}/customer`,
       {
         customer_id: customer ? customer.id : null,
@@ -123,13 +123,13 @@ export default function DraftOrderEdit(props: Props) {
         onSuccess: () => {
           console.log('success');
         },
-      }
+      },
     );
   };
 
   const onCustomerAddressSave = (
     type: 'shipping' | 'billing',
-    address: Shipping | Billing
+    address: Shipping | Billing,
   ) => {
     handleSubmit({
       [type]: {
@@ -139,7 +139,7 @@ export default function DraftOrderEdit(props: Props) {
   };
 
   const onCreateOrder = () => {
-    Inertia.post(route('lshopify.orders.draft.confirm',[order.id]));
+    Inertia.post(route('lshopify.orders.draft.confirm', [order.id]));
   };
 
   const handleSubmit = (extraData?: {[x: string]: any}) => {
@@ -150,7 +150,7 @@ export default function DraftOrderEdit(props: Props) {
         ...extraData,
       };
     }
-    Inertia.post(route('lshopify.orders.draft.update',[order.id]), postData, {
+    Inertia.post(route('lshopify.orders.draft.update', [order.id]), postData, {
       onSuccess: () => {
         console.log('success');
       },
@@ -159,16 +159,16 @@ export default function DraftOrderEdit(props: Props) {
 
   return (
     <Main>
-      <div className='p-6'>
+      <div className="p-6">
         <FormSubmitBar onSubmit={handleSubmit} />
 
-        <PageHeader text='Order Edit' />
+        <PageHeader text="Order Edit" />
 
-        <div className='mt-6 max-w-3xl mx-auto grid grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3'>
-          <section className='space-y-6 lg:col-start-1 lg:col-span-2 space-y-6'>
+        <div className="mt-6 max-w-3xl mx-auto grid grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+          <section className="space-y-6 lg:col-start-1 lg:col-span-2 space-y-6">
             <DraftOrderDetailsSection
               searchTerm={searchTerm}
-              setSearchTerm={(text) => setSearchTerm(text)}
+              setSearchTerm={text => setSearchTerm(text)}
               products={products || []}
               cart={cart}
               onVariantsAdd={onCartItemAdd}
@@ -180,24 +180,22 @@ export default function DraftOrderEdit(props: Props) {
             />
           </section>
 
-          <section className='lg:col-start-3 lg:col-span-1 space-y-6'>
+          <section className="lg:col-start-3 lg:col-span-1 space-y-6">
             {order.customer ? (
               <CustomerEdit
                 order={data}
                 onCustomerRemove={() => onAttachCustomer()}
                 onChange={(field, value) => setData(field, value)}
                 onCustomerAddressSave={onCustomerAddressSave}
-                onContactSave={(attributes) =>
-                  setData({...data, ...attributes})
-                }
+                onContactSave={attributes => setData({...data, ...attributes})}
               />
             ) : (
               <CustomerSelect
                 searchTerm={customerSearchTerm}
-                setSearchTerm={(text) => setCustomerSearchTerm(text)}
+                setSearchTerm={text => setCustomerSearchTerm(text)}
                 customers={customers || []}
                 onCustomerCreate={onCustomerCreate}
-                onCustomerSelect={(customer) => onAttachCustomer(customer)}
+                onCustomerSelect={customer => onAttachCustomer(customer)}
               />
             )}
           </section>

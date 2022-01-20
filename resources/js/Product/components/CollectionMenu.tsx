@@ -14,16 +14,16 @@ export default function CollectionMenu({
   onChange,
 }: Props) {
   return (
-    <div className='relative'>
-      <div className='z-30 bg-blue-50 h-[12rem] overflow-y-scroll absolute top-0 left-0 w-full rounded-md shadow-md bg-white focus:outline-none focus:border-none'>
-        <ul role='button' className='font-weight-light '>
+    <div className="relative">
+      <div className="z-30 bg-blue-50 h-[12rem] overflow-y-scroll absolute top-0 left-0 w-full rounded-md shadow-md bg-white focus:outline-none focus:border-none">
+        <ul role="button" className="font-weight-light ">
           {defaultCollection.map((item, index) => {
             return (
               <CollectionMenuItem
                 key={index}
                 item={item}
-                checked={collection.some((collect) => collect.id === item.id)}
-                onChange={(e) => onChange(item, e)}
+                checked={collection.some(collect => collect.id === item.id)}
+                onChange={e => onChange(item, e)}
               />
             );
           })}

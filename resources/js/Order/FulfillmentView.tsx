@@ -22,7 +22,7 @@ import AddressCard from '../Customer/components/AddressCard';
 import FulfillmentItems from './components/FulfillmentItems';
 import ShippingInfo from './components/ShippingInfo';
 import Button from '../components/Button';
-import route from 'ziggy-js'
+import route from 'ziggy-js';
 
 interface Props {
   order: Order;
@@ -58,34 +58,38 @@ export default function FulfillmentView({fulfillment, order}: Props) {
     });
   }, [order]);
 
-  const onVariantQuantityChange = (trueVariant:VariantPivot, variant: VariantPivot, value: number) => {
+  const onVariantQuantityChange = (
+    trueVariant: VariantPivot,
+    variant: VariantPivot,
+    value: number,
+  ) => {
     // const trueVariant = fulfillment.variants.find(({id}) => id === variant.id);
 
     // if (trueVariant) {
-      if (value <= trueVariant.pivot_quantity) {
-        const newVariants = data.fulfillment.variants.map((v) => {
-          if (v.id === variant.id) {
-            return {
-              ...v,
-              pivot_quantity: value,
-            };
-          }
-          return v;
-        });
-        setData({
-          ...data,
-          fulfillment: {
-            ...data.fulfillment,
-            variants: newVariants,
-          },
-        });
-      }
+    if (value <= trueVariant.pivot_quantity) {
+      const newVariants = data.fulfillment.variants.map(v => {
+        if (v.id === variant.id) {
+          return {
+            ...v,
+            pivot_quantity: value,
+          };
+        }
+        return v;
+      });
+      setData({
+        ...data,
+        fulfillment: {
+          ...data.fulfillment,
+          variants: newVariants,
+        },
+      });
+    }
     // }
   };
 
   const onAttachCustomer = (customer?: Customer) => {
     Inertia.post(
-        route('lshopify.orders.draft.customer.update',[order.id]),
+      route('lshopify.orders.draft.customer.update', [order.id]),
       // `/draft_orders/${order.id}/customer`,
       {
         customer_id: customer ? customer.id : null,
@@ -94,13 +98,13 @@ export default function FulfillmentView({fulfillment, order}: Props) {
         onSuccess: () => {
           console.log('success');
         },
-      }
+      },
     );
   };
 
   const onCustomerCreate = (
     customerData: CustomerForm,
-    addressData: CustomerAddress
+    addressData: CustomerAddress,
   ) => {
     Inertia.post(
       route('lshopify.customers.store'),
@@ -112,13 +116,13 @@ export default function FulfillmentView({fulfillment, order}: Props) {
         onSuccess: () => {
           console.log('success');
         },
-      }
+      },
     );
   };
 
   const onCustomerAddressSave = (
     type: 'shipping' | 'billing',
-    address: Shipping | Billing
+    address: Shipping | Billing,
   ) => {
     Inertia.patch(`/orders/${order.id}`, {
       [type]: address,
@@ -127,8 +131,8 @@ export default function FulfillmentView({fulfillment, order}: Props) {
 
   const handleSubmit = () => {
     Inertia.post(
-        route('lshopify.orders.fulfill',[order.id,fulfillment.id]),
-        // `/orders/${order.id}/fulfillments/${fulfillment.id}/fulfill`,
+      route('lshopify.orders.fulfill', [order.id, fulfillment.id]),
+      // `/orders/${order.id}/fulfillments/${fulfillment.id}/fulfill`,
       {
         ...data.fulfillment,
       },
@@ -136,30 +140,30 @@ export default function FulfillmentView({fulfillment, order}: Props) {
         onSuccess: () => {
           console.log('success');
         },
-      }
+      },
     );
   };
 
   return (
     <Main>
-      <div className='p-6'>
-        <div className='max-w-7xl mx-auto xl:flex xl:items-center xl:justify-between'>
+      <div className="p-6">
+        <div className="max-w-7xl mx-auto xl:flex xl:items-center xl:justify-between">
           <PageHeader text={`Fulfill Items`} />
         </div>
 
-        <div className='mt-6 max-w-3xl mx-auto grid grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3'>
-          <section className='lg:col-start-1 lg:col-span-2 space-y-6 '>
+        <div className="mt-6 max-w-3xl mx-auto grid grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+          <section className="lg:col-start-1 lg:col-span-2 space-y-6 ">
             <Card>
-              <div className='pt-5 px-5 flex flex-row items-center space-x-4 '>
-                <div className='font-bold'>#1008</div>
-                <div className='rounded rounded-xl opacity-90 bg-yellow-400 px-3 text-sm'>
+              <div className="pt-5 px-5 flex flex-row items-center space-x-4 ">
+                <div className="font-bold">#1008</div>
+                <div className="rounded rounded-xl opacity-90 bg-yellow-400 px-3 text-sm">
                   Partially fulfilled
                 </div>
               </div>
 
               <Border />
 
-              <div className='px-5'>
+              <div className="px-5">
                 <FulfillmentItems
                   variants={data.fulfillment.variants || []}
                   currentVariants={fulfillment.variants}
@@ -173,22 +177,22 @@ export default function FulfillmentView({fulfillment, order}: Props) {
 
               <Border />
 
-              <div className='flex justify-end pb-5 px-5'>
-                <Button style='w-full' onClick={() => handleSubmit()}>
-                  <div className='w-full text-center'>Fulfill Items</div>
+              <div className="flex justify-end pb-5 px-5">
+                <Button style="w-full" onClick={() => handleSubmit()}>
+                  <div className="w-full text-center">Fulfill Items</div>
                 </Button>
               </div>
             </Card>
           </section>
 
-          <section className='lg:col-start-3 lg:col-span-1 space-y-4'>
+          <section className="lg:col-start-3 lg:col-span-1 space-y-4">
             <Card>
               <AddressCard
                 address={order.billing}
-                onSave={(attributes) =>
+                onSave={attributes =>
                   onCustomerAddressSave('billing', attributes)
                 }
-                title='SHIPPING ADDRESS'
+                title="SHIPPING ADDRESS"
               />
             </Card>
           </section>

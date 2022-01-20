@@ -12,7 +12,7 @@ interface Props {
   customer?: Customer | null;
   children: (
     customerData: CustomerForm,
-    addressData: CustomerAddress
+    addressData: CustomerAddress,
   ) => ReactElement;
 }
 
@@ -48,7 +48,7 @@ export default function CreateCustomerForm({customer, children}: Props) {
 
   const onCustomerAttributeChange = <T extends keyof Customer>(
     field: T,
-    value: Customer[T]
+    value: Customer[T],
   ) => {
     setCustomerData({
       ...customerData,
@@ -65,7 +65,7 @@ export default function CreateCustomerForm({customer, children}: Props) {
 
   const onAddressAttributeChange = <T extends keyof CustomerAddress>(
     field: T,
-    value: CustomerAddress[T]
+    value: CustomerAddress[T],
   ) => {
     setAddressData({
       ...addressData,
@@ -75,66 +75,64 @@ export default function CreateCustomerForm({customer, children}: Props) {
 
   return (
     <>
-      <div className='p-5'>
-        <div className='grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6'>
-          <div className='sm:col-span-3'>
-            <Label title='First name' />
+      <div className="p-5">
+        <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+          <div className="sm:col-span-3">
+            <Label title="First name" />
             <InputText
-              name='first_name'
+              name="first_name"
               value={customerData.first_name}
-              onChange={(e) =>
+              onChange={e =>
                 onCustomerAttributeChange('first_name', e.target.value)
               }
             />
           </div>
-          <div className='sm:col-span-3'>
-            <Label title='Last name' />
+          <div className="sm:col-span-3">
+            <Label title="Last name" />
             <InputText
-              name='last_name'
+              name="last_name"
               value={customerData.last_name}
-              onChange={(e) =>
+              onChange={e =>
                 onCustomerAttributeChange('last_name', e.target.value)
               }
             />
           </div>
-          <div className='sm:col-span-6'>
-            <Label title='Email address' />
+          <div className="sm:col-span-6">
+            <Label title="Email address" />
             <InputText
-              name='email'
-              type='email'
+              name="email"
+              type="email"
               value={customerData.email}
-              onChange={(e) =>
-                onCustomerAttributeChange('email', e.target.value)
-              }
+              onChange={e => onCustomerAttributeChange('email', e.target.value)}
             />
           </div>
 
-          <div className='sm:col-span-6'>
+          <div className="sm:col-span-6">
             <Checkbox
-              name='accepts_marketing'
-              label='Customer accepts email marketing'
+              name="accepts_marketing"
+              label="Customer accepts email marketing"
               checked={customerData.accepts_marketing}
-              onChange={(e) =>
+              onChange={e =>
                 onCustomerAttributeChange('accepts_marketing', e.target.checked)
               }
             />
           </div>
 
-          <div className='sm:col-span-6'>
+          <div className="sm:col-span-6">
             <Checkbox
-              name='tax_exempted'
-              label='Customer is tax exempt'
+              name="tax_exempted"
+              label="Customer is tax exempt"
               checked={customerData.tax_exempted}
-              onChange={(e) =>
+              onChange={e =>
                 onCustomerAttributeChange('tax_exempted', e.target.checked)
               }
             />
           </div>
 
-          <div className='sm:col-span-6'>
+          <div className="sm:col-span-6">
             <Border />
 
-            <Subheader text='Shipping address' />
+            <Subheader text="Shipping address" />
           </div>
 
           <CreateAddressForm

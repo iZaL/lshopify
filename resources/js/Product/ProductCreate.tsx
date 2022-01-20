@@ -22,7 +22,7 @@ import {
   VariantOption,
 } from '../types';
 import {Inertia} from '@inertiajs/inertia';
-import route from "ziggy-js";
+import route from 'ziggy-js';
 
 interface Props {
   collection: Collection[];
@@ -82,7 +82,7 @@ export default function ProductCreate(props: Props) {
   const setDataObject = <T extends keyof Product, K extends keyof Product[T]>(
     objectKey: T,
     fieldKey: K,
-    value: Product[T][K]
+    value: Product[T][K],
   ) => {
     setData({
       ...data,
@@ -98,9 +98,9 @@ export default function ProductCreate(props: Props) {
   };
 
   const onImagesDelete = (images: Image[]) => {
-    const deletingImageIDs = images.map((img) => img.id);
+    const deletingImageIDs = images.map(img => img.id);
     const currentImages = data.images?.filter(
-      (img) => !deletingImageIDs.includes(img.id)
+      img => !deletingImageIDs.includes(img.id),
     );
     setData('images', currentImages);
   };
@@ -116,7 +116,7 @@ export default function ProductCreate(props: Props) {
           setIsProductTypeLoading(false);
           Inertia.reload();
         },
-      }
+      },
     );
   };
 
@@ -131,7 +131,7 @@ export default function ProductCreate(props: Props) {
           setIsTagsLoading(false);
           Inertia.reload();
         },
-      }
+      },
     );
   };
 
@@ -144,22 +144,22 @@ export default function ProductCreate(props: Props) {
 
   return (
     <Main>
-      <div className='p-6'>
+      <div className="p-6">
         <FormSubmitBar onSubmit={handleSubmit} />
 
         <PageHeader text={'Add Product'} />
 
-        <div className='mt-6 max-w-3xl mx-auto grid grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3'>
-          <section className='space-y-6 lg:col-start-1 lg:col-span-2 space-y-6'>
+        <div className="mt-6 max-w-3xl mx-auto grid grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+          <section className="space-y-6 lg:col-start-1 lg:col-span-2 space-y-6">
             <TitleSection
               title={data.title}
               description={data.description}
               onChange={(field, value) => setData(field, value)}
             />
             <MediaSection
-              onImagesDelete={(images) => onImagesDelete(images)}
+              onImagesDelete={images => onImagesDelete(images)}
               images={data.images || []}
-              onImagesUpload={(images) => onImagesUpload(images)}
+              onImagesUpload={images => onImagesUpload(images)}
             />
             <PricingSection
               variant={data.default_variant}
@@ -188,7 +188,7 @@ export default function ProductCreate(props: Props) {
             />
           </section>
 
-          <section className='lg:col-start-3 lg:col-span-1 space-y-6'>
+          <section className="lg:col-start-3 lg:col-span-1 space-y-6">
             <StatusSection
               activeStatus={data.status}
               onChange={(field, value) => setData(field, value)}
@@ -200,13 +200,13 @@ export default function ProductCreate(props: Props) {
               tags={data.tags || []}
               defaultCollection={collection}
               collection={data.collections || []}
-              onProductTypeChange={(value) => setData('product_type', value)}
-              setTags={(collection) => setData('tags', collection)}
-              setCollection={(collection) => setData('collections', collection)}
-              onProductTypeCreate={(value) => onProductTypeCreate(value)}
+              onProductTypeChange={value => setData('product_type', value)}
+              setTags={collection => setData('tags', collection)}
+              setCollection={collection => setData('collections', collection)}
+              onProductTypeCreate={value => onProductTypeCreate(value)}
               isProductTypeLoading={isProductTypeLoading}
               isTagsLoading={isTagsLoading}
-              onTagsCreate={(value) => onTagsCreate(value)}
+              onTagsCreate={value => onTagsCreate(value)}
             />
           </section>
         </div>

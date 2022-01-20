@@ -24,21 +24,23 @@ export default function VariantOptionsItem({
 }: Props) {
   return (
     <>
-      <div className='flex flex-row justify-between'>
-        <div className='text-sm font-semi-bold'>Option {iteration}</div>
+      <div className="flex flex-row justify-between">
+        <div className="text-sm font-semi-bold">Option {iteration}</div>
         {showRemoveItemButton && (
-          <Button onClick={() => (variant ? onVariantRemove(variant) : null)} theme='clear'>
-            <div className='text-blue-700 text-sm'>Remove</div>
+          <Button
+            onClick={() => (variant ? onVariantRemove(variant) : null)}
+            theme="clear">
+            <div className="text-blue-700 text-sm">Remove</div>
           </Button>
         )}
       </div>
 
-      <div className='grid grid-cols-3 gap-5 pb-4'>
-        <div className='md:col-span-1 text-sm'>
+      <div className="grid grid-cols-3 gap-5 pb-4">
+        <div className="md:col-span-1 text-sm">
           <CreatableSelect
-            className='basic-multi-select'
-            classNamePrefix='select'
-            onChange={(option) =>
+            className="basic-multi-select"
+            classNamePrefix="select"
+            onChange={option =>
               onVariantChange(variant, {
                 id: option?.value,
                 name: option?.label,
@@ -56,11 +58,11 @@ export default function VariantOptionsItem({
             value={{value: variant.id, label: variant.name}}
           />
         </div>
-        <div className='md:col-span-2'>
+        <div className="md:col-span-2">
           <CreatableSelect
             isMulti
-            className='basic-multi-select'
-            classNamePrefix='select'
+            className="basic-multi-select"
+            classNamePrefix="select"
             components={{
               DropdownIndicator: () => null,
               IndicatorSeparator: () => null,
@@ -72,10 +74,10 @@ export default function VariantOptionsItem({
               value: id,
               label: name,
             }))}
-            onChange={(values) =>
+            onChange={values =>
               onVariantOptionsChange(
                 variant,
-                values.map((value) => ({id: value.value, name: value.label}))
+                values.map(value => ({id: value.value, name: value.label})),
               )
             }
           />

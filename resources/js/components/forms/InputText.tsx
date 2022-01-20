@@ -30,8 +30,7 @@ const Button = ({
       } px-3 focus:outline-none focus:none focus:border-none ${
         !onClick && 'pointer-events-none'
       }  `}
-      onClick={onClick}
-    >
+      onClick={onClick}>
       {children}
     </button>
   );
@@ -49,14 +48,14 @@ export default function InputText({
   ...props
 }: Props) {
   return (
-    <div className='relative rounded-md shadow-sm '>
+    <div className="relative rounded-md shadow-sm ">
       {leftComponent && (
-        <Button onClick={leftComponentOnClick} position='left'>
+        <Button onClick={leftComponentOnClick} position="left">
           {leftComponent}
         </Button>
       )}
       <input
-        type='text'
+        type="text"
         name={name}
         id={name}
         autoComplete={autocomplete ? autocomplete : ''}
@@ -67,7 +66,7 @@ export default function InputText({
         {...props}
       />
       {rightComponent && (
-        <Button onClick={rightComponentOnClick} position='right'>
+        <Button onClick={rightComponentOnClick} position="right">
           {rightComponent}
         </Button>
       )}

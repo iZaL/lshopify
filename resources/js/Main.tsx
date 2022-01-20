@@ -22,10 +22,10 @@ export default function Main({
       <Helmet>
         <title>{title ? title : 'Laravel Shopify'}</title>
       </Helmet>
-      <div className='h-screen flex overflow-hidden bg-gray-100 dark:bg-gray-800 dark:text-white '>
+      <div className="h-screen flex overflow-hidden bg-gray-100 dark:bg-gray-800 dark:text-white ">
         <MobileSidebar />
         <Sidebar />
-        <div className='flex flex-col w-0 flex-1 overflow-auto mb-50'>
+        <div className="flex flex-col w-0 flex-1 overflow-auto mb-50">
           <Navbar />
           <PopMessages />
           {/*<FlashMessages />*/}

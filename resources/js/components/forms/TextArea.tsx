@@ -17,7 +17,7 @@ export default function TextArea({
   ...props
 }: TextAreaProps) {
   return (
-    <div className='mt-1 flex rounded-md shadow-sm'>
+    <div className="mt-1 flex rounded-md shadow-sm">
       <textarea
         name={name}
         id={name}

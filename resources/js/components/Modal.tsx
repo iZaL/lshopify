@@ -50,60 +50,55 @@ export default function Modal({
   return (
     <Transition.Root show={rendered} as={Fragment}>
       <Dialog
-        as='div'
+        as="div"
         static
-        className='fixed z-40 inset-0 overflow-y-auto mx-10'
+        className="fixed z-40 inset-0 overflow-y-auto mx-10"
         open={visible}
-        onClose={onHideModal}
-      >
-        <div className='flex items-center justify-center min-h-screen text-center sm:block sm:p-0'>
+        onClose={onHideModal}>
+        <div className="flex items-center justify-center min-h-screen text-center sm:block sm:p-0">
           <Transition.Child
             as={Fragment}
-            enter='ease-out duration-300'
-            enterFrom='opacity-0'
-            enterTo='opacity-100'
-            leave='ease-in duration-200'
-            leaveFrom='opacity-100'
-            leaveTo='opacity-0'
-          >
-            <Dialog.Overlay className='fixed inset-0 bg-gray-500 dark:bg-gray-900 bg-opacity-75 transition-opacity' />
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0">
+            <Dialog.Overlay className="fixed inset-0 bg-gray-500 dark:bg-gray-900 bg-opacity-75 transition-opacity" />
           </Transition.Child>
 
           <span
-            className='sm:inline-block sm:align-middle sm:h-screen'
-            aria-hidden='true'
-          >
+            className="sm:inline-block sm:align-middle sm:h-screen"
+            aria-hidden="true">
             &#8203;
           </span>
 
           <Transition.Child
             as={Fragment}
-            enter='ease-out duration-300'
-            enterFrom='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
-            enterTo='opacity-100 translate-y-0 sm:scale-100'
-            leave='ease-in duration-200'
-            leaveFrom='opacity-100 translate-y-0 sm:scale-100'
-            leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
-          >
+            enter="ease-out duration-300"
+            enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            enterTo="opacity-100 translate-y-0 sm:scale-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
             <div
-              className={`inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle ${width} sm:w-full `}
-            >
-              <div className='px-4 py-5 border-b border-gray-200 sm:px-6'>
-                <div className='-ml-4 -mt-2 flex items-center justify-between flex-wrap sm:flex-nowrap'>
-                  <div className='ml-4 mt-2'>
-                    <h3 className='sticky text-lg leading-6 font-medium text-gray-900'>
+              className={`inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle ${width} sm:w-full `}>
+              <div className="px-4 py-5 border-b border-gray-200 sm:px-6">
+                <div className="-ml-4 -mt-2 flex items-center justify-between flex-wrap sm:flex-nowrap">
+                  <div className="ml-4 mt-2">
+                    <h3 className="sticky text-lg leading-6 font-medium text-gray-900">
                       {heading}
                     </h3>
                     {subHeading && (
-                      <p className='mt-1 max-w-2xl text-sm text-gray-500'>
+                      <p className="mt-1 max-w-2xl text-sm text-gray-500">
                         {subHeading}
                       </p>
                     )}
                   </div>
-                  <div className='ml-4 mt-2 flex-shrink-0'>
+                  <div className="ml-4 mt-2 flex-shrink-0">
                     <Button
                       onClick={onHideModal}
-                      theme='default'
+                      theme="default"
                       // className='relative inline-flex items-center px-4 py-2 border border-gray-400 rounded hover:bg-gray-200 ring-0'
                     >
                       X
@@ -112,7 +107,7 @@ export default function Modal({
                 </div>
               </div>
 
-              <div className='relative overflow-y-scroll max-h-[30rem]'>
+              <div className="relative overflow-y-scroll max-h-[30rem]">
                 {children}
               </div>
 

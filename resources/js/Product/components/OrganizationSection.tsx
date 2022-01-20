@@ -50,9 +50,7 @@ export default function OrganizationSection({
     if (checked) {
       newCollection = [...collection, collectionItem];
     } else {
-      newCollection = collection.filter(
-        (item) => item.id !== collectionItem.id
-      );
+      newCollection = collection.filter(item => item.id !== collectionItem.id);
     }
     setCollection(newCollection);
   };
@@ -75,16 +73,16 @@ export default function OrganizationSection({
     <Card>
       <Subheader text={'Organization'} />
 
-      <div className='mt-1 sm:mt-0 sm:col-span-2 py-2 text-sm'>
-        <Label title='Product Type' style='mb-1' />
+      <div className="mt-1 sm:mt-0 sm:col-span-2 py-2 text-sm">
+        <Label title="Product Type" style="mb-1" />
         <CreatableSelect
           options={productTypes.map(({id, name}) => ({
             value: id,
             label: name,
           }))}
           value={{value: productType?.id, label: productType?.name}}
-          classNamePrefix='select'
-          onChange={(option) =>
+          classNamePrefix="select"
+          onChange={option =>
             onProductChange({id: option?.value, name: option?.label})
           }
           components={{
@@ -94,9 +92,9 @@ export default function OrganizationSection({
           }}
           isLoading={isProductTypeLoading}
           noOptionsMessage={() => null}
-          placeholder='e.g. Shirts'
+          placeholder="e.g. Shirts"
           isClearable={true}
-          onCreateOption={(value) => onProductTypeCreate(value)}
+          onCreateOption={value => onProductTypeCreate(value)}
         />
       </div>
 
@@ -104,19 +102,18 @@ export default function OrganizationSection({
 
       <Subheader text={'COLLECTIONS'} style={'text-xs'} />
 
-      <div className='text-sm'>
+      <div className="text-sm">
         <div onClick={() => setShowCollectionMenu(!showCollectionMenu)}>
           <InputText
-            name='collection'
-            leftComponent={<SearchIcon className='h-5 w-5 text-gray-400' />}
-            placeholder='Search for collection'
+            name="collection"
+            leftComponent={<SearchIcon className="h-5 w-5 text-gray-400" />}
+            placeholder="Search for collection"
             onChange={() => {}}
           />
         </div>
         {showCollectionMenu && (
           <OutsideClickHandler
-            onOutsideClick={() => setShowCollectionMenu(false)}
-          >
+            onOutsideClick={() => setShowCollectionMenu(false)}>
             <CollectionMenu
               defaultCollection={defaultCollection}
               collection={collection}
@@ -125,22 +122,20 @@ export default function OrganizationSection({
           </OutsideClickHandler>
         )}
 
-        <div className='mt-4 '>
-          <ul className='space-y-2'>
+        <div className="mt-4 ">
+          <ul className="space-y-2">
             {collection.map((item, index) => {
               return (
-                <li className='flex flex-row justify-between ' key={index}>
+                <li className="flex flex-row justify-between " key={index}>
                   <a
-                    href='#'
-                    className='text-sm text-gray-600 text-blue-500 underline'
-                  >
+                    href="#"
+                    className="text-sm text-gray-600 text-blue-500 underline">
                     {item.name}
                   </a>
 
                   <Button
-                    theme='clear'
-                    onClick={() => onCollectionChange(item, false)}
-                  >
+                    theme="clear"
+                    onClick={() => onCollectionChange(item, false)}>
                     X
                   </Button>
                 </li>
@@ -150,7 +145,7 @@ export default function OrganizationSection({
         </div>
 
         {!collection.length && (
-          <div className='block text-sm text-gray-500'>
+          <div className="block text-sm text-gray-500">
             Add this product to a collection so it’s easy to find in your store.
           </div>
         )}
@@ -162,8 +157,8 @@ export default function OrganizationSection({
 
       <CreatableSelect
         isMulti
-        className='basic-multi-select text-sm'
-        classNamePrefix='select'
+        className="basic-multi-select text-sm"
+        classNamePrefix="select"
         onChange={onTagsChange}
         components={{
           DropdownIndicator: () => null,
@@ -180,7 +175,7 @@ export default function OrganizationSection({
           value: id,
           label: name,
         }))}
-        onCreateOption={(value) => onTagsCreate(value)}
+        onCreateOption={value => onTagsCreate(value)}
       />
     </Card>
   );

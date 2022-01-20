@@ -17,20 +17,20 @@ export default function TitleSection({onChange, title, description}: T) {
   return (
     <Card>
       <div>
-        <Label title='Title' />
+        <Label title="Title" />
         <InputText
-          name='title'
+          name="title"
           placeholder={'Short sleeve t-shirt'}
-          onChange={(e) => onChange('title', e.target.value)}
+          onChange={e => onChange('title', e.target.value)}
           value={title}
         />
       </div>
 
       <div>
-        <Label title='Description' />
+        <Label title="Description" />
         <TextArea
-          name='description'
-          placeholder='Short sleeve t-shirt'
+          name="description"
+          placeholder="Short sleeve t-shirt"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             onChange('description', e.target.value)
           }

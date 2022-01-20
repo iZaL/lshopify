@@ -20,7 +20,7 @@ export default function VariantSection({
 }: Props) {
   const [hasVariants, setHasVariants] = useState(false);
   const pendingVariants = defaultVariants.filter(
-    ({id}) => !currentVariants.some((v) => v.id === id)
+    ({id}) => !currentVariants.some(v => v.id === id),
   );
 
   const onVariantsHideShow = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,10 +34,10 @@ export default function VariantSection({
 
   const onVariantChange = (
     oldVariant: VariantOption,
-    newVariant: VariantOption
+    newVariant: VariantOption,
   ) => {
     const variants = currentVariants.filter(
-      (variant) => variant.id !== oldVariant.id
+      variant => variant.id !== oldVariant.id,
     );
     const newVariants = [
       ...variants,
@@ -49,7 +49,7 @@ export default function VariantSection({
   const onVariantAdd = () => {
     const variantKeys = currentVariants.map(({id}) => id);
     const randomVariant = defaultVariants.find(
-      ({id}) => !variantKeys.includes(id)
+      ({id}) => !variantKeys.includes(id),
     );
     if (randomVariant) {
       const variants = [...currentVariants, {...randomVariant, options: []}];
@@ -58,15 +58,15 @@ export default function VariantSection({
   };
 
   const onVariantRemove = (variant: VariantOption) => {
-    const variants = currentVariants.filter((v) => v.id !== variant.id);
+    const variants = currentVariants.filter(v => v.id !== variant.id);
     onChange('options', variants);
   };
 
   const onVariantOptionsChange = (
     currentVariant: VariantOption,
-    options: VariantOption[]
+    options: VariantOption[],
   ) => {
-    const variants = currentVariants.map((variant) => {
+    const variants = currentVariants.map(variant => {
       if (variant.id === currentVariant.id) {
         return {
           ...currentVariant,
@@ -80,10 +80,10 @@ export default function VariantSection({
 
   return (
     <Card>
-      <Subheader text='Variants' />
+      <Subheader text="Variants" />
       <Checkbox
-        name='variant'
-        label='This product has multiple options, like different sizes or colors'
+        name="variant"
+        label="This product has multiple options, like different sizes or colors"
         checked={hasVariants}
         onChange={onVariantsHideShow}
       />
@@ -91,7 +91,7 @@ export default function VariantSection({
       {hasVariants && (
         <>
           <Border />
-          <Subheader text='OPTIONS' style='text-sm' />
+          <Subheader text="OPTIONS" style="text-sm" />
           {currentVariants.map((variant: VariantOption, index) => {
             return (
               <VariantOptionsItem
@@ -108,7 +108,7 @@ export default function VariantSection({
           })}
 
           {currentVariants.length <= 2 && (
-            <Button onClick={onVariantAdd} theme='default'>
+            <Button onClick={onVariantAdd} theme="default">
               Add another option
             </Button>
           )}

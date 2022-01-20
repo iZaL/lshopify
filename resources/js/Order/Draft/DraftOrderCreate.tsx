@@ -8,7 +8,7 @@ import {useForm} from '@inertiajs/inertia-react';
 import {Inertia} from '@inertiajs/inertia';
 import DraftOrderDetailsSection from './components/DraftOrderDetailsSection';
 import {Product, Cart, CartItem, CartDiscount} from '../../types';
-import route from "ziggy-js";
+import route from 'ziggy-js';
 
 interface Props {
   products: Product[];
@@ -79,16 +79,16 @@ export default function DraftOrderCreate(props: Props) {
 
   return (
     <Main>
-      <div className='p-6'>
+      <div className="p-6">
         <FormSubmitBar onSubmit={handleSubmit} />
 
         <PageHeader text={'Create Order'} />
 
-        <div className='mt-6 max-w-3xl mx-auto grid grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3'>
-          <section className='lg:col-start-1 lg:col-span-2 space-y-6'>
+        <div className="mt-6 max-w-3xl mx-auto grid grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+          <section className="lg:col-start-1 lg:col-span-2 space-y-6">
             <DraftOrderDetailsSection
               searchTerm={searchTerm}
-              setSearchTerm={(text) => setSearchTerm(text)}
+              setSearchTerm={text => setSearchTerm(text)}
               products={products || []}
               cart={cart}
               onVariantsAdd={onVariantsAdd}

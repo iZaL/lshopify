@@ -11,7 +11,7 @@ import PricingSection from '../components/PricingSection';
 import ProductInfo from './components/ProductInfo';
 import InventorySection from '../components/InventorySection';
 import ShippingSection from '../components/ShippingSection';
-import route from "ziggy-js";
+import route from 'ziggy-js';
 
 interface Props {
   product: Product;
@@ -58,13 +58,13 @@ export default function VariantCreate(props: Props) {
   }, [product.images]);
 
   const onVariantItemClick = (v: Variant) => {
-    const url = route('lshopify.products.variants.edit',[product.id,v.id]);
+    const url = route('lshopify.products.variants.edit', [product.id, v.id]);
     // const url = `/products/${product.id}/variants/${v.id}/edit`;
     return Inertia.get(url);
   };
 
   const onImagesUpload = (images: Image[]) => {
-    const url = route('lshopify.products.images.store',[product.id]);
+    const url = route('lshopify.products.images.store', [product.id]);
     const productData = {
       images: images,
     };
@@ -77,7 +77,7 @@ export default function VariantCreate(props: Props) {
   };
 
   const handleSubmit = (): void => {
-    const url = route('lshopify.products.variants.store',[product.id]);
+    const url = route('lshopify.products.variants.store', [product.id]);
     post(url, {
       preserveScroll: false,
       // onSuccess: () => {},
@@ -86,13 +86,13 @@ export default function VariantCreate(props: Props) {
 
   return (
     <Main>
-      <div className='p-6'>
+      <div className="p-6">
         <FormSubmitBar onSubmit={handleSubmit} />
 
-        <PageHeader text='Add Variant' />
+        <PageHeader text="Add Variant" />
 
-        <div className='mt-6 max-w-3xl mx-auto grid grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3'>
-          <section className='space-y-6 lg:col-start-1 lg:col-span-1'>
+        <div className="mt-6 max-w-3xl mx-auto grid grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+          <section className="space-y-6 lg:col-start-1 lg:col-span-1">
             <ProductInfo product={product} variant={product.default_variant} />
             <VariantList
               variants={product.variants || []}
@@ -101,13 +101,13 @@ export default function VariantCreate(props: Props) {
             />
           </section>
 
-          <section className='lg:col-start-2 lg:col-span-2 space-y-6'>
+          <section className="lg:col-start-2 lg:col-span-2 space-y-6">
             <VariantOptionsEdit
               variant={data}
               options={data.options || []}
               images={data.images}
               onChange={(field, value: any) => setData(field, value)}
-              onImagesUpload={(images) => onImagesUpload(images)}
+              onImagesUpload={images => onImagesUpload(images)}
             />
             <PricingSection
               variant={data}

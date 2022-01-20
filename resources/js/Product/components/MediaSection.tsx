@@ -26,26 +26,26 @@ const MediaSection = ({onImagesUpload, images, onImagesDelete}: Props) => {
 
   return (
     <Card>
-      <div className='flex flex-row items-center justify-between text-sm h-8'>
+      <div className="flex flex-row items-center justify-between text-sm h-8">
         {selectedImages.length ? (
           <>
-            <div className='flex flex-row  items-center space-x-2'>
+            <div className="flex flex-row  items-center space-x-2">
               <input
-                type='checkbox'
-                className='h-4 w-4'
+                type="checkbox"
+                className="h-4 w-4"
                 checked={selectedImages.length === images.length}
                 onChange={() => onImageClick()}
               />
-              <Button theme='clear' onClick={() => onImageClick()}>
+              <Button theme="clear" onClick={() => onImageClick()}>
                 {selectedImages.length} media selected
               </Button>
             </div>
-            <Button theme='clear' onClick={() => setShowDeleteDialog(true)}>
-              <div className='text-red-500'>Delete media</div>
+            <Button theme="clear" onClick={() => setShowDeleteDialog(true)}>
+              <div className="text-red-500">Delete media</div>
             </Button>
           </>
         ) : (
-          <Subheader text='Media' style='text-lg' />
+          <Subheader text="Media" style="text-lg" />
         )}
       </div>
 
@@ -53,13 +53,13 @@ const MediaSection = ({onImagesUpload, images, onImagesDelete}: Props) => {
         isMulti={true}
         images={images}
         selectedImages={selectedImages}
-        onImagesSelect={(images) => setSelectedImages(images)}
-        onImagesUpload={(images) => onImagesUpload(images)}
+        onImagesSelect={images => setSelectedImages(images)}
+        onImagesUpload={images => onImagesUpload(images)}
       />
 
       <Modal
         heading={`Delete ${selectedImages.length} of ${images.length} media ? `}
-        subHeading='This cant be undone'
+        subHeading="This cant be undone"
         visible={showDeleteDialog}
         onClose={() => setShowDeleteDialog(false)}
         onConfirm={() => {
@@ -67,10 +67,9 @@ const MediaSection = ({onImagesUpload, images, onImagesDelete}: Props) => {
           setSelectedImages([]);
           onImagesDelete(selectedImages);
         }}
-        theme='red'
-        submitButtonTitle='Delete'
-      >
-        <p className='p-5 text-sm'>do you wish to continue?</p>
+        theme="red"
+        submitButtonTitle="Delete">
+        <p className="p-5 text-sm">do you wish to continue?</p>
       </Modal>
     </Card>
   );

@@ -24,7 +24,7 @@ import {
   Variant,
   VariantOption,
 } from '../types';
-import route from "ziggy-js";
+import route from 'ziggy-js';
 
 interface Props {
   product: Product;
@@ -43,7 +43,6 @@ type Form = Product & {
 };
 
 export default function ProductEdit(props: Props) {
-
   const setNavigation = useSetRecoilState(navigationActiveState);
   const {
     product,
@@ -85,7 +84,7 @@ export default function ProductEdit(props: Props) {
   const setDataObject = <T extends keyof Product, K extends keyof Product[T]>(
     objectKey: T,
     fieldKey: K,
-    value: Product[T][K]
+    value: Product[T][K],
   ) => {
     setData({
       ...data,
@@ -97,20 +96,20 @@ export default function ProductEdit(props: Props) {
   };
 
   const onAddVariantClick = () => {
-    const url = route('lshopify.products.variants.create',[product.id]);
-    // const url = `/products/${product.id}/variants/create`;
+    const url = route('lshopify.products.variants.create', [product.id]);
     return Inertia.get(url);
   };
 
   const onEditVariantClick = (variant: Variant) => {
-    const url = route('lshopify.products.variants.edit',[product.id,variant.id]);
-    // const url = `/products/${product.id}/variants/${variant.id}/edit`;
+    const url = route('lshopify.products.variants.edit', [
+      product.id,
+      variant.id,
+    ]);
     return Inertia.get(url);
   };
 
   const onImagesUpload = (images: Image[]) => {
-    const url = route('lshopify.products.images.store',[product.id]);
-    // const url = `/products/${product.id}/images`;
+    const url = route('lshopify.products.images.store', [product.id]);
     const productData = {
       images: images,
     };
@@ -123,8 +122,7 @@ export default function ProductEdit(props: Props) {
   };
 
   const onVariantsDelete = (variants: number[]) => {
-    const url = route('lshopify.products.variants.destroy',[product.id]);
-    // const url = `/products/${product.id}/variants/delete`;
+    const url = route('lshopify.products.variants.destroy', [product.id]);
     const productData = {
       variants: variants,
     };
@@ -139,10 +137,9 @@ export default function ProductEdit(props: Props) {
   const onBulkAttributesSet = <T extends keyof Variant>(
     variants: number[],
     field: T,
-    value: Variant[T]
+    value: Variant[T],
   ) => {
-    const url = route('lshopify.products.variants.attributes',[product.id]);
-    // const url = `/products/${product.id}/variants/attributes`;
+    const url = route('lshopify.products.variants.attributes', [product.id]);
     const productData = {
       variants: variants,
       field: field,
@@ -157,8 +154,7 @@ export default function ProductEdit(props: Props) {
   };
 
   const onImagesDelete = (images: Image[]) => {
-    const url = route('lshopify.products.images.destroy',[product.id]);
-    // const url = `/products/${product.id}/images/delete`;
+    const url = route('lshopify.products.images.destroy', [product.id]);
     const productData = {
       images: images,
     };
@@ -171,7 +167,6 @@ export default function ProductEdit(props: Props) {
 
   const onProductTypeCreate = (value: string) => {
     const url = route('lshopify.categories.store');
-    // const url = `/categories`;
     setIsProductTypeLoading(true);
     Inertia.post(
       url,
@@ -181,7 +176,7 @@ export default function ProductEdit(props: Props) {
           setIsProductTypeLoading(false);
           Inertia.reload();
         },
-      }
+      },
     );
   };
   const onTagsCreate = (value: string) => {
@@ -195,28 +190,27 @@ export default function ProductEdit(props: Props) {
           setIsTagsLoading(false);
           Inertia.reload();
         },
-      }
+      },
     );
   };
 
   const handleSubmit = (): void => {
-    const url = route('lshopify.products.update',[product.id]);
+    const url = route('lshopify.products.update', [product.id]);
     post(url, {
       preserveScroll: false,
       onSuccess: () => {},
     });
   };
 
-
   return (
     <Main>
-      <div className='p-6'>
+      <div className="p-6">
         <FormSubmitBar onSubmit={handleSubmit} />
 
         <PageHeader text={product.title} />
 
-        <div className='mt-6 max-w-3xl mx-auto grid grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3'>
-          <section className='space-y-6 lg:col-start-1 lg:col-span-2 space-y-6'>
+        <div className="mt-6 max-w-3xl mx-auto grid grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+          <section className="space-y-6 lg:col-start-1 lg:col-span-2 space-y-6">
             <TitleSection
               title={data.title}
               description={data.description}
@@ -225,8 +219,8 @@ export default function ProductEdit(props: Props) {
 
             <MediaSection
               images={data.images || []}
-              onImagesDelete={(images) => onImagesDelete(images)}
-              onImagesUpload={(images) => onImagesUpload(images)}
+              onImagesDelete={images => onImagesDelete(images)}
+              onImagesUpload={images => onImagesUpload(images)}
             />
 
             {product.variants?.length ? (
@@ -237,45 +231,45 @@ export default function ProductEdit(props: Props) {
                 images={data.images || []}
                 onAddVariantClick={onAddVariantClick}
                 onEditVariantClick={onEditVariantClick}
-                onImagesUpload={(images) => onImagesUpload(images)}
-                onVariantsDelete={(variants) => onVariantsDelete(variants)}
+                onImagesUpload={images => onImagesUpload(images)}
+                onVariantsDelete={variants => onVariantsDelete(variants)}
                 onBulkAttributesSet={onBulkAttributesSet}
-                onChange={(variants) => setData('variants', variants)}
+                onChange={variants => setData('variants', variants)}
               />
             ) : (
-
-                data.default_variant &&
-              <>
+              data.default_variant && (
+                <>
                   <PricingSection
-                      variant={data.default_variant}
-                      onChange={(field, value) =>
-                          setDataObject('default_variant', field, value)
-                      }
+                    variant={data.default_variant}
+                    onChange={(field, value) =>
+                      setDataObject('default_variant', field, value)
+                    }
                   />
                   <InventorySection
-                      variant={data.default_variant}
-                      onChange={(field, value) =>
-                          setDataObject('default_variant', field, value)
-                      }
+                    variant={data.default_variant}
+                    onChange={(field, value) =>
+                      setDataObject('default_variant', field, value)
+                    }
                   />
                   <ShippingSection
-                      variant={data.default_variant}
-                      onChange={(field, value) =>
-                          setDataObject('default_variant', field, value)
-                      }
+                    variant={data.default_variant}
+                    onChange={(field, value) =>
+                      setDataObject('default_variant', field, value)
+                    }
                   />
                   <VariantSection
-                      currentVariants={data.default_variant?.options || []}
-                      defaultVariants={variants}
-                      onChange={(field, value) =>
-                          setDataObject('default_variant', field, value)
-                      }
+                    currentVariants={data.default_variant?.options || []}
+                    defaultVariants={variants}
+                    onChange={(field, value) =>
+                      setDataObject('default_variant', field, value)
+                    }
                   />
-              </>
+                </>
+              )
             )}
           </section>
 
-          <section className='lg:col-start-3 lg:col-span-1 space-y-6'>
+          <section className="lg:col-start-3 lg:col-span-1 space-y-6">
             <StatusSection
               activeStatus={data.status}
               onChange={(field, value) => setData(field, value)}
@@ -289,11 +283,11 @@ export default function ProductEdit(props: Props) {
               collection={data.collections || []}
               isProductTypeLoading={isProductTypeLoading}
               isTagsLoading={isTagsLoading}
-              onProductTypeChange={(record) => setData('product_type', record)}
-              setTags={(tags) => setData('tags', tags)}
-              setCollection={(collection) => setData('collections', collection)}
-              onTagsCreate={(value) => onTagsCreate(value)}
-              onProductTypeCreate={(value) => onProductTypeCreate(value)}
+              onProductTypeChange={record => setData('product_type', record)}
+              setTags={tags => setData('tags', tags)}
+              setCollection={collection => setData('collections', collection)}
+              onTagsCreate={value => onTagsCreate(value)}
+              onProductTypeCreate={value => onProductTypeCreate(value)}
             />
           </section>
         </div>

@@ -21,85 +21,85 @@ export default function AddressForm({address, children}: Props) {
 
   return (
     <>
-      <div className='p-5 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6'>
-        <div className='sm:col-span-3'>
-          <Label title='First name' />
+      <div className="p-5 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+        <div className="sm:col-span-3">
+          <Label title="First name" />
           <InputText
-            name='first_name'
+            name="first_name"
             value={data.first_name}
-            onChange={(e) => onDataChange('first_name', e.target.value)}
+            onChange={e => onDataChange('first_name', e.target.value)}
           />
         </div>
 
-        <div className='sm:col-span-3'>
-          <Label title='Last name' />
+        <div className="sm:col-span-3">
+          <Label title="Last name" />
           <InputText
-            name='last_name'
+            name="last_name"
             value={data.last_name}
-            onChange={(e) => onDataChange('last_name', e.target.value)}
+            onChange={e => onDataChange('last_name', e.target.value)}
           />
         </div>
 
-        <div className='sm:col-span-6'>
-          <Label title='Company' />
+        <div className="sm:col-span-6">
+          <Label title="Company" />
           <InputText
-            name='company'
+            name="company"
             value={data.company}
-            onChange={(e) => onDataChange('company', e.target.value)}
+            onChange={e => onDataChange('company', e.target.value)}
           />
         </div>
 
-        <div className='sm:col-span-6'>
-          <Label title='Address' />
+        <div className="sm:col-span-6">
+          <Label title="Address" />
           <InputText
-            name='address1'
+            name="address1"
             value={data.address1}
-            onChange={(e) => onDataChange('address1', e.target.value)}
+            onChange={e => onDataChange('address1', e.target.value)}
           />
         </div>
 
-        <div className='sm:col-span-6'>
-          <Label title='Apartment, suite, etc.' />
+        <div className="sm:col-span-6">
+          <Label title="Apartment, suite, etc." />
           <InputText
-            name='address2'
+            name="address2"
             value={data.address2}
-            onChange={(e) => onDataChange('address2', e.target.value)}
+            onChange={e => onDataChange('address2', e.target.value)}
           />
         </div>
 
-        <div className='sm:col-span-6'>
-          <Label title='Postal code' />
+        <div className="sm:col-span-6">
+          <Label title="Postal code" />
           <InputText
-            name='zip'
+            name="zip"
             value={data.zip}
-            onChange={(e) => onDataChange('zip', e.target.value)}
+            onChange={e => onDataChange('zip', e.target.value)}
           />
         </div>
 
-        <div className='sm:col-span-6'>
-          <Label title='City ' />
+        <div className="sm:col-span-6">
+          <Label title="City " />
           <InputText
-            name='city'
+            name="city"
             value={data.city}
-            onChange={(e) => onDataChange('city', e.target.value)}
+            onChange={e => onDataChange('city', e.target.value)}
           />
         </div>
 
-        <div className='sm:col-span-6'>
-          <Label title='Country/Region' />
+        <div className="sm:col-span-6">
+          <Label title="Country/Region" />
           <InputText
-            name='country'
+            name="country"
             value={data.country}
-            onChange={(e) => onDataChange('country', e.target.value)}
+            onChange={e => onDataChange('country', e.target.value)}
           />
         </div>
 
-        <div className='sm:col-span-6'>
-          <Label title='Phone' />
+        <div className="sm:col-span-6">
+          <Label title="Phone" />
           <InputText
-            name='phone'
+            name="phone"
             value={data.phone}
-            onChange={(e) => onDataChange('phone', e.target.value)}
+            onChange={e => onDataChange('phone', e.target.value)}
           />
         </div>
       </div>

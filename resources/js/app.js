@@ -1,10 +1,10 @@
-import React from "react";
-import { render } from "react-dom";
-import { App } from "@inertiajs/inertia-react";
-import { RecoilRoot } from "recoil";
-import { InertiaProgress } from '@inertiajs/progress';
+import React from 'react';
+import {render} from 'react-dom';
+import {App} from '@inertiajs/inertia-react';
+import {RecoilRoot} from 'recoil';
+import {InertiaProgress} from '@inertiajs/progress';
 
-const el = document.getElementById("app");
+const el = document.getElementById('app');
 
 InertiaProgress.init({
   delay: 50,
@@ -17,8 +17,8 @@ render(
   <RecoilRoot>
     <App
       initialPage={JSON.parse(el?.dataset?.page)}
-      resolveComponent={(name) => require(`./${name}`).default}
+      resolveComponent={name => require(`./${name}`).default}
     />
   </RecoilRoot>,
-  el
+  el,
 );

@@ -29,16 +29,16 @@ export default function FlashMessages() {
     message: null,
   };
 
-  if(flash) {
-      if (flash.success) {
-          flashMessage = {type: 'success', message: flash.success};
-      } else if (flash.error) {
-          flashMessage = {type: 'error', message: flash.error};
-      } else if (flash.warning) {
-          flashMessage = {type: 'warning', message: flash.warning};
-      } else if (flash.info) {
-          flashMessage = {type: 'info', message: flash.info};
-      }
+  if (flash) {
+    if (flash.success) {
+      flashMessage = {type: 'success', message: flash.success};
+    } else if (flash.error) {
+      flashMessage = {type: 'error', message: flash.error};
+    } else if (flash.warning) {
+      flashMessage = {type: 'warning', message: flash.warning};
+    } else if (flash.info) {
+      flashMessage = {type: 'info', message: flash.info};
+    }
   }
 
   // if(flash){
@@ -54,9 +54,9 @@ export default function FlashMessages() {
   //     });
   // }
 
-  const errorMessages: Array<string> = errors ? Object.keys(errors).map(
-    (key) => errors[key]
-  ): [];
+  const errorMessages: Array<string> = errors
+    ? Object.keys(errors).map(key => errors[key])
+    : [];
 
   useEffect(() => {
     if (flashMessage.message || errorMessages.length) {
@@ -76,7 +76,7 @@ export default function FlashMessages() {
           There were error with your submission
         </h3>
         <div className={`mt-2 text-sm text-gray-50`}>
-          <ul className='list-disc pl-5 space-y-1'>
+          <ul className="list-disc pl-5 space-y-1">
             {errorMessages.map((message, index) => {
               return <li key={index}>{message}</li>;
             })}
@@ -108,17 +108,15 @@ export default function FlashMessages() {
   return (
     <Transition
       show={visible}
-      enter='transition-opacity duration-75'
-      enterFrom='opacity-0'
-      enterTo='opacity-100'
-      leave='transition-opacity duration-150'
-      leaveFrom='opacity-100'
-      leaveTo='opacity-0'
-    >
+      enter="transition-opacity duration-75"
+      enterFrom="opacity-0"
+      enterTo="opacity-100"
+      leave="transition-opacity duration-150"
+      leaveFrom="opacity-100"
+      leaveTo="opacity-0">
       <Content
         type={flashMessageType}
-        setVisible={(visibility) => setVisible(visibility)}
-      >
+        setVisible={visibility => setVisible(visibility)}>
         <div>{message}</div>
       </Content>
     </Transition>
@@ -134,7 +132,6 @@ const Content = ({
   type: keyof FlashMessageType;
   setVisible: (visibility: boolean) => void;
 }) => {
-
   let themeStyle = 'text-white bg-green-500 border-green-300';
 
   switch (type) {
@@ -153,14 +150,14 @@ const Content = ({
   }
 
   return (
-    <div className='relative'>
+    <div className="relative">
       <div className={`mx-6 mt-6 p-4 border-l-4  ${themeStyle}`}>
-        <div className='flex items-center'>
-          <div className=''>{children}</div>
-          <div className='ml-auto pl-3'>
-            <div className=''>
-              <Button theme='default' onClick={() => setVisible(false)}>
-                <XIcon className='h-5 w-5' aria-hidden='true' />
+        <div className="flex items-center">
+          <div className="">{children}</div>
+          <div className="ml-auto pl-3">
+            <div className="">
+              <Button theme="default" onClick={() => setVisible(false)}>
+                <XIcon className="h-5 w-5" aria-hidden="true" />
               </Button>
             </div>
           </div>

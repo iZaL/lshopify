@@ -10,7 +10,7 @@ import {Inertia} from '@inertiajs/inertia';
 import ProductSection from './components/ProductSection';
 import {useForm} from '@inertiajs/inertia-react';
 import ProductAddSection from './components/ProductAddSection';
-import route from "ziggy-js";
+import route from 'ziggy-js';
 
 interface Props {
   collection: Collection;
@@ -48,7 +48,7 @@ export default function CollectionEdit(props: Props) {
   }, [collection.products]);
 
   const onAddProductsToCollection = (productIDs: number[]) => {
-    const url = route('lshopify.collections.products.update',[collection.id]);
+    const url = route('lshopify.collections.products.update', [collection.id]);
     Inertia.post(
       url,
       {
@@ -58,12 +58,12 @@ export default function CollectionEdit(props: Props) {
         onSuccess: () => {
           Inertia.reload();
         },
-      }
+      },
     );
   };
 
   const handleSubmit = () => {
-    const url = route('lshopify.collections.update',[collection.id]);
+    const url = route('lshopify.collections.update', [collection.id]);
 
     Inertia.post(
       url,
@@ -75,19 +75,19 @@ export default function CollectionEdit(props: Props) {
         onSuccess: () => {
           Inertia.reload();
         },
-      }
+      },
     );
   };
 
   return (
     <Main>
-      <div className='p-6'>
+      <div className="p-6">
         <FormSubmitBar onSubmit={handleSubmit} />
 
         <PageHeader text={collection.name} />
 
-        <div className='mt-6 max-w-3xl mx-auto grid grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3'>
-          <section className='space-y-6 lg:col-start-1 lg:col-span-2 space-y-6'>
+        <div className="mt-6 max-w-3xl mx-auto grid grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+          <section className="space-y-6 lg:col-start-1 lg:col-span-2 space-y-6">
             <TitleSection
               name={data.name}
               description={data.description || ''}

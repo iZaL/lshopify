@@ -29,34 +29,34 @@ export default function VariantOptionsEdit({
 
   const onVariantOptionsChange = (
     option: VariantOption,
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const currentOptions = options.map(
       (
-        o
+        o,
       ): VariantOption & {
         edited?: boolean;
       } => {
         return o.name === option.name
           ? {...option, id: e.target.value, edited: true}
           : o;
-      }
+      },
     );
     onChange('options', currentOptions);
   };
 
   return (
     <Card>
-      <Subheader text='Options' />
-      <div className='flex flex-row space-x-4 justify-center'>
-        <ul className='flex-1 space-y-6'>
+      <Subheader text="Options" />
+      <div className="flex flex-row space-x-4 justify-center">
+        <ul className="flex-1 space-y-6">
           {options.map((o, i) => {
             return (
               <li key={i}>
                 <Label title={o.name} />
                 <InputText
                   name={o.name}
-                  onChange={(e) => {
+                  onChange={e => {
                     onVariantOptionsChange(o, e);
                   }}
                   value={o.id}
@@ -66,37 +66,35 @@ export default function VariantOptionsEdit({
           })}
         </ul>
 
-        <div className='flex flex-col items-center justify-center w-40'>
+        <div className="flex flex-col items-center justify-center w-40">
           <VariantImage
             image={variant?.image}
-            style='h-32 w-32'
+            style="h-32 w-32"
             onClick={() => setShowDialog(true)}
           />
           <Button
-            theme='clear'
-            style='text-blue-500 text-sm text-center underline'
-            onClick={() => setShowDialog(true)}
-          >
+            theme="clear"
+            style="text-blue-500 text-sm text-center underline"
+            onClick={() => setShowDialog(true)}>
             Change image
           </Button>
         </div>
       </div>
 
       <Modal
-        heading='Edit images'
+        heading="Edit images"
         visible={showDialog}
         onClose={() => setShowDialog(false)}
         onConfirm={() => {
           setShowDialog(false);
           onChange('image', selectedImage);
-        }}
-      >
-        <div className='p-5'>
+        }}>
+        <div className="p-5">
           <DZFileUploadBox
             images={images}
             selectedImages={selectedImage ? [selectedImage] : []}
-            onImagesSelect={(images) => setSelectedImage(images[0])}
-            onImagesUpload={(images) => onImagesUpload(images)}
+            onImagesSelect={images => setSelectedImage(images[0])}
+            onImagesUpload={images => onImagesUpload(images)}
           />
         </div>
       </Modal>

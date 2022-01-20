@@ -15,27 +15,26 @@ export default function StatusSection({onChange, activeStatus}: Props) {
     <Card>
       <Subheader text={'Product Status'} />
 
-      <div className='mt-1 sm:mt-0'>
+      <div className="mt-1 sm:mt-0">
         <Select
-          name='status'
-          onChange={(e) => onChange('status', e.target.value)}
-          value={activeStatus}
-        >
-          <option value='draft'>Draft</option>
-          <option value='active'>Active</option>
+          name="status"
+          onChange={e => onChange('status', e.target.value)}
+          value={activeStatus}>
+          <option value="draft">Draft</option>
+          <option value="active">Active</option>
         </Select>
       </div>
 
-      <div className='block text-sm text-gray-500 mb-4'>
+      <div className="block text-sm text-gray-500 mb-4">
         This product will be available to 1 sales channel.
       </div>
 
-      <div className='w-full border-t border-gray-300' />
+      <div className="w-full border-t border-gray-300" />
 
       <Subheader text={'SALES CHANNELS AND APPS'} style={'text-xs'} />
       <Checkbox
-        label='Online Store'
-        name='online_store'
+        label="Online Store"
+        name="online_store"
         checked={false}
         onChange={() => {}}
       />
