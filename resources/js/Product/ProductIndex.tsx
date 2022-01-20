@@ -1,15 +1,14 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import Main from '../Main';
-import {navigationActiveState} from '../atoms';
-import {useSetRecoilState} from 'recoil';
-import PageHeader from '../components/PageHeader';
-import {Product} from '../types';
-import ProductIndexActionButtons from './components/ProductIndexActionButtons';
-import ProductSearchBar from './components/ProductSearchBar';
-import Products from './components/Products';
-import {Dialog, Transition} from '@headlessui/react';
-import {XIcon} from '@heroicons/react/outline';
-import SidebarNav from '../components/SidebarNav';
+import React, { useEffect, useState } from 'react'
+import Main from '../Main'
+import { navigationActiveState } from '../atoms'
+import { useSetRecoilState } from 'recoil'
+import PageHeader from '../components/PageHeader'
+import { Product } from '../types'
+import ProductIndexActionButtons from './components/ProductIndexActionButtons'
+import ProductSearchBar from './components/ProductSearchBar'
+import Products from './components/Products'
+import RightSidebar from '../components/RightSidebar'
+import ProductFiltersPanel from './components/ProductFiltersPanel'
 
 interface TabProps {
   name: string;
@@ -31,7 +30,9 @@ interface Props {
 export default function ProductIndex(props: Props) {
   const setNavigation = useSetRecoilState(navigationActiveState);
 
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
 
   const {products} = props;
 
@@ -39,75 +40,45 @@ export default function ProductIndex(props: Props) {
     setNavigation('Products');
   }, []);
 
-  const onMoreFiltersClick = () => {
-    setSidebarOpen(true);
-  };
 
-  const FiltersSidebar = () => {
-    return (
-      <Transition.Root show={sidebarOpen} as={Fragment}>
-        <Dialog
-          as="div"
-          className="fixed inset-0 overflow-hidden"
-          onClose={setSidebarOpen}>
-          <div className="absolute inset-0 overflow-hidden">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-in-out duration-500"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in-out duration-500"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0">
-              <Dialog.Overlay className="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-            </Transition.Child>
+  // <Disclosure as="div" key={section.id} className="border-t border-gray-200 px-4 py-6">
+  //   {({ open }) => (
+  //     <>
+  //       <h3 className="-mx-2 -my-3 flow-root">
+  //         <Disclosure.Button className="px-2 py-3 bg-white w-full flex items-center justify-between text-gray-400 hover:text-gray-500">
+  //           <span className="font-medium text-gray-900">{section.name}</span>
+  //           <span className="ml-6 flex items-center">
+  //                               {open ? (
+  //                                 <MinusSmIcon className="h-5 w-5" aria-hidden="true" />
+  //                               ) : (
+  //                                 <PlusSmIcon className="h-5 w-5" aria-hidden="true" />
+  //                               )}
+  //                             </span>
+  //         </Disclosure.Button>
+  //       </h3>
+  //       <Disclosure.Panel className="pt-6">
+  //         <div className="space-y-6">
+  //           {section.options.map((option, optionIdx) => (
+  //             <div key={option.value} className="flex items-center">
+  //               <input
+  //                 id={`filter-mobile-${section.id}-${optionIdx}`}
+  //                 name={`${section.id}[]`}
+  //                 defaultValue={option.value}
+  //                 type="checkbox"
+  //                 defaultChecked={option.checked}
+  //                 className="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
+  //               />
+  //               <label
+  //                 htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
+  //                 className="ml-3 min-w-0 flex-1 text-gray-500"
+  //               >
+  //                 {option.label}
+  //               </label>
+  //             </div>
+  //           ))}
+  //         </div>
+  //       </Disclosure.Panel>
 
-            <div className="fixed inset-y-0 right-0 pl-10 max-w-full flex">
-              <Transition.Child
-                as={Fragment}
-                enter="transform transition ease-in-out duration-500 sm:duration-700"
-                enterFrom="translate-x-full"
-                enterTo="translate-x-0"
-                leave="transform transition ease-in-out duration-500 sm:duration-700"
-                leaveFrom="translate-x-0"
-                leaveTo="translate-x-full">
-                <div className="w-screen max-w-md">
-                  <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
-                    <div className="px-4 sm:px-6">
-                      <div className="flex items-start justify-between">
-                        <Dialog.Title className="text-lg font-medium text-gray-900">
-                          Panel title
-                        </Dialog.Title>
-                        <div className="ml-3 h-7 flex items-center">
-                          <button
-                            type="button"
-                            className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            onClick={() => setSidebarOpen(false)}>
-                            <span className="sr-only">Close panel</span>
-                            <XIcon className="h-6 w-6" aria-hidden="true" />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="mt-6 relative flex-1 px-4 sm:px-6">
-                      {/* Replace with your content */}
-                      <div className="absolute inset-0 px-4 sm:px-6">
-                        <div
-                          className="h-full border-2 border-dashed border-gray-200"
-                          aria-hidden="true"
-                        />
-                      </div>
-                      {/* /End replace */}
-                    </div>
-                  </div>
-                </div>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition.Root>
-    );
-  };
 
   return (
     <Main>
@@ -119,10 +90,12 @@ export default function ProductIndex(props: Props) {
 
         <div className="max-w-7xl mx-auto py-6 ">
           <section className="rounded-lg overflow-hidden shadow bg-white">
-            <FiltersSidebar />
+            <RightSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} title={'More Filters'}>
+              <ProductFiltersPanel />
+            </RightSidebar>
             <ProductSearchBar
               tabs={tabs}
-              onMoreFiltersClick={onMoreFiltersClick}
+              onMoreFiltersClick={() => setSidebarOpen(!sidebarOpen)}
             />
             <Products products={products} />
           </section>
