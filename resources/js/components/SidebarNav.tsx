@@ -13,13 +13,18 @@ export default function SidebarNav() {
       />
       <Navigator.Item
         name="Products"
-        active={route().current('lshopify.products.*')}
+        active={route().current('lshopify.products.*') || route().current('lshopify.collections.*')}
         dropdown={true}
         href={route('lshopify.products.index')}>
         <Navigator.SubItem
           name="All Products"
           href={route('lshopify.products.index')}
-          active={route().current('lshopify.products.index')}
+          active={route().current('lshopify.products.*')}
+        />
+        <Navigator.SubItem
+          name="Collections"
+          href={route('lshopify.collections.index')}
+          active={route().current('lshopify.collections.*')}
         />
       </Navigator.Item>
 
@@ -32,6 +37,11 @@ export default function SidebarNav() {
           name="All Orders"
           href={route('lshopify.orders.index')}
           active={route().current('lshopify.orders.index')}
+        />
+        <Navigator.SubItem
+          name="Drafts"
+          href={route('lshopify.orders.draft.index')}
+          active={route().current('lshopify.orders.draft.*')}
         />
       </Navigator.Item>
     </Navigator>

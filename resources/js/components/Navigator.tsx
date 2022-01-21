@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import classNames from 'classnames';
 import {Link} from '@inertiajs/inertia-react';
 import {Disclosure} from '@headlessui/react';
-import {Inertia} from '@inertiajs/inertia';
 interface Props {
   children: React.ReactNode;
 }
