@@ -2,9 +2,9 @@ const mix = require('laravel-mix');
 const path = require('path');
 
 mix
-  .ts('resources/js/app.js', 'public/vendor/lshopify')
+  .ts('lshopify/resources/js/app.js', 'public/vendor/lshopify')
   .react()
-  .postCss('resources/css/app.css', 'public/vendor/lshopify', [
+  .postCss('lshopify/resources/css/app.css', 'public/vendor/lshopify', [
     require("tailwindcss"),
   ])
   .disableNotifications()

@@ -15,7 +15,7 @@ return [
     'dashboard' => [
         'domain' => null,
         'prefix' => 'store',
-        'alias' => 'lshopify.'
+        'alias' => 'lshopify.',
     ],
 
     'middleware' => [
