@@ -3,7 +3,6 @@ import Navigator from './Navigator';
 import route from 'ziggy-js';
 
 export default function SidebarNav() {
-  console.log('route current', route().current());
   return (
     <Navigator>
       <Navigator.Item
@@ -13,9 +12,13 @@ export default function SidebarNav() {
       />
       <Navigator.Item
         name="Products"
-        active={route().current('lshopify.products.*') || route().current('lshopify.collections.*')}
+        active={
+          route().current('lshopify.products.*') ||
+          route().current('lshopify.collections.*')
+        }
+        href={route('lshopify.products.index')}
         dropdown={true}
-        href={route('lshopify.products.index')}>
+      >
         <Navigator.SubItem
           name="All Products"
           href={route('lshopify.products.index')}
@@ -31,8 +34,9 @@ export default function SidebarNav() {
       <Navigator.Item
         name="Orders"
         active={route().current('lshopify.orders.*')}
+        href={route('lshopify.orders.index')}
         dropdown={true}
-        href={route('lshopify.orders.index')}>
+      >
         <Navigator.SubItem
           name="All Orders"
           href={route('lshopify.orders.index')}

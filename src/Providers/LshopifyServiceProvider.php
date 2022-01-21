@@ -4,77 +4,156 @@ namespace IZal\Lshopify\Providers;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Events\Dispatcher;
 
 use Inertia\Inertia;
 use IZal\Lshopify\Cart\CartServiceProvider;
-use IZal\Lshopify\Http\Middleware\HandleInertiaRequests;
-use IZal\Lshopify\Http\Middleware\LshopifyAdminMiddleware;
 
 class LshopifyServiceProvider extends ServiceProvider
 {
 
     /**
-     * Register the application services.
+     * Bootstrap any package services.
+     *
+     * @return void
      */
-    public function register()
-    {
-        $this->app->register(CartServiceProvider::class);
-
-        $this->app->singleton('LshopifyGuard', function () {
-            return config('auth.defaults.guard', 'web');
-        });
-
-        $this->registerConfigs();
-
-    }
 
     public function boot(Router $router, Dispatcher $event)
     {
+
+        if (! config('lshopify.enabled')) {
+            return;
+        }
 
         JsonResource::withoutWrapping();
 
         Inertia::setRootView('lshopify');
 
-        $router->aliasMiddleware('admin', LshopifyAdminMiddleware::class);
+        Route::middlewareGroup('lshopify', config('lshopify.middleware', []));
 
-        $router->pushMiddlewareToGroup('web', HandleInertiaRequests::class);
+//        $router->pushMiddlewareToGroup('web', HandleInertiaRequests::class);
 
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'lshopify');
+        $this->registerCommands();
 
-        $this->loadRoutesFrom(__DIR__.'/../../routes/lshopify.php');
+        $this->registerPublishing();
 
-        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        $this->registerRoutes();
 
-        $this->registerPublishableResources();
+        $this->registerMigrations();
+
+        $this->loadViewsFrom(
+            __DIR__.'/../../resources/views', 'lshopify'
+        );
+    }
+
+    /**
+     * Register the package routes.
+     *
+     * @return void
+     */
+    private function registerRoutes()
+    {
+        Route::group($this->routeConfiguration(), function () {
+            $this->loadRoutesFrom(__DIR__.'/../../routes/lshopify.php');
+        });
+
+    }
+
+    /**
+     * Get the Telescope route group configuration array.
+     *
+     * @return array
+     */
+    private function routeConfiguration()
+    {
+        return [
+            'domain' => config('lshopify.dashboard.domain', null),
+//            'namespace' => 'Laravel\Telescope\Http\Controllers',
+            'middleware' => 'lshopify',
+            'prefix' => config('lshopify.dashboard.path'),
+            'as' => config('lshopify.dashboard.alias')
+        ];
+    }
+
+    /**
+     * Register the package's migrations.
+     *
+     * @return void
+     */
+    private function registerMigrations()
+    {
+        if ($this->app->runningInConsole() && $this->shouldMigrate()) {
+            $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+        }
+    }
+
+    /**
+     * Register the package's publishable resources.
+     *
+     * @return void
+     */
+    private function registerPublishing()
+    {
+        if ($this->app->runningInConsole()) {
+
+            $this->publishes([
+                __DIR__.'/../../resources/views/app.blade.php' => resource_path('views/lshopify.blade.php'),
+                __DIR__.'/../../webpack.mix.js' => base_path('webpack.mix.js'),
+            ]);
+
+            $this->publishes([
+                __DIR__.'/../../database/migrations' => database_path('migrations'),
+            ], 'lshopify-migrations');
+
+            $this->publishes([
+                __DIR__.'/../../public' => public_path('vendor/lshopify'),
+            ], ['lshopify-assets', 'laravel-assets']);
+
+            $this->publishes([
+                __DIR__.'/../../config/lshopify.php' => config_path('lshopify.php'),
+            ], 'lshopify-config');
+
+        }
+    }
+
+    /**
+     * Register the package's commands.
+     *
+     * @return void
+     */
+    protected function registerCommands()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+            ]);
+        }
+    }
+
+    /**
+     * Register any package services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->register(CartServiceProvider::class);
+
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/lshopify.php', 'lshopify'
+        );
 
     }
 
 
     /**
-     * Register the publishable files.
+     * Determine if we should register the migrations.
+     *
+     * @return bool
      */
-    private function registerPublishableResources()
+    protected function shouldMigrate()
     {
-
-        $this->publishes([
-          __DIR__.'/../../resources/views/app.blade.php' => resource_path('views/lshopify.blade.php'),
-          __DIR__.'/../../webpack.mix.js' => base_path('webpack.mix.js'),
-        ]);
-
-        if ($this->app->runningInConsole()) {
-            // Publish assets
-            $this->publishes([
-                 __DIR__.'/../../publishable/assets' => public_path('lshopify'),
-                 __DIR__.'/../../publishable/config/lshopify.php' => config_path('lshopify.php'),
-//                 __DIR__ . '/../../resources/js' => resource_path('js'),
-             ],'assets');
-        }
-
-    }
-
-    public function registerConfigs()
-    {
+        return true;
     }
 }

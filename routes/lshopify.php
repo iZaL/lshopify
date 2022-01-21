@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix' => 'admin', 'as' => 'lshopify.', 'middleware' => ['web','admin']], function () {
+//Route::group(['prefix' => 'admin', 'as' => config('lshopify.dashboard.path').'.', 'middleware' => ['web','admin']], function () {
 
     Route::post('cart/add', \IZal\Lshopify\Http\Controllers\Cart\CartAddController::class)->name('cart.add');
     Route::post('cart/update', \IZal\Lshopify\Http\Controllers\Cart\CartUpdateController::class)->name('cart.update');
@@ -89,4 +89,4 @@ Route::group(['prefix' => 'admin', 'as' => 'lshopify.', 'middleware' => ['web','
     Route::get('/', \IZal\Lshopify\Http\Controllers\DashboardController::class)->name('home');
 
 
-});
+//});

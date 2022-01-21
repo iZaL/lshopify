@@ -5,20 +5,15 @@ namespace IZal\Lshopify\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class LshopifyAdminMiddleware
+class LshopifyAuthorizeMiddleware
 {
-
     public function handle($request, Closure $next)
     {
-        auth()->setDefaultDriver(app('LshopifyGuard'));
+        auth()->setDefaultDriver('web');
         if (!auth()->guest()) {
-            $user = auth()->user();
-            if ($user->admin) {
-                return $next($request);
-            }
+            return $next($request);
         }
         return redirect()->route('login');
     }
-
 }
 
