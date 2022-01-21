@@ -4,9 +4,7 @@ return [
 
     'enabled' => true,
 
-    'controllers' => [
-        'namespace' => 'Zal\\Lshopify\\Http\\Controllers',
-    ],
+    'enable_local_development' => false,
 
     'storage' => [
         'disk' => 'public',
@@ -20,9 +18,7 @@ return [
 
     'middleware' => [
         'web',
-        \IZal\Lshopify\Http\Middleware\LshopifyAuthorizeMiddleware::class,
         \IZal\Lshopify\Http\Middleware\HandleInertiaRequests::class
     ],
-
 
 ];

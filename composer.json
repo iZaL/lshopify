@@ -26,13 +26,6 @@
       "IZal\\Lshopify\\Database\\Seeders\\":"database/seeders/"
     }
   },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "IZaL\\Lshopify\\LshopifyServiceProvider"
-      ]
-    }
-  },
   "authors": [
     {
       "name": "Afzal Abbas",

@@ -95,12 +95,7 @@ class LshopifyServiceProvider extends ServiceProvider
 
             $this->publishes([
                 __DIR__.'/../../resources/views/app.blade.php' => resource_path('views/lshopify.blade.php'),
-                __DIR__.'/../../stubs/webpack.mix.js' => base_path('webpack.mix.js'),
             ],'lshopify-stubs');
-
-            $this->publishes([
-                __DIR__.'/../../database/migrations' => database_path('migrations'),
-            ], 'lshopify-migrations');
 
             $this->publishes([
                 __DIR__.'/../../public/vendor/lshopify' => public_path('vendor/lshopify'),
@@ -109,6 +104,15 @@ class LshopifyServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../../config/lshopify.php' => config_path('lshopify.php'),
             ], 'lshopify-config');
+
+            if(config('lshopify.enable_local_development')) {
+                $this->publishes([
+                    __DIR__.'/../../database/migrations' => database_path('migrations'),
+                ], 'lshopify-migrations');
+                $this->publishes([
+                    __DIR__.'/../../stubs/webpack.mix.js' => base_path('webpack.mix.js'),
+                ],'lshopify-stubs');
+            }
 
         }
     }
