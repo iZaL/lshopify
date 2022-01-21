@@ -58,7 +58,7 @@ export default function Products({products}: Props) {
               <tbody>
                 {products.map((product, id) => (
                   <tr
-                    key={product.title}
+                    key={product.id}
                     className={`${id % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
                     <td>
                       <div className="flex justify-center items-center w-12">

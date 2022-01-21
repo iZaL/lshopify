@@ -2,21 +2,7 @@ import React, {useState} from 'react';
 import classNames from 'classnames';
 import {Link} from '@inertiajs/inertia-react';
 import {Disclosure} from '@headlessui/react';
-
-const listItemStyle =
-  'text-gray-700 hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600';
-const listItemActiveStyle =
-  'bg-grey-300 text-gray-600 dark:bg-gray-500 dark:text-gray-100 dark:hover:bg-gray-500  hover:bg-gray-100 hover:text-gray-700';
-
-const listItemActiveIconStyle = 'text-green-700 dark:text-green-500';
-const listItemIconStyle =
-  'text-gray-600 dark:text-green-500 group-hover:text-gray-500';
-
-const listDropItemActiveStyle =
-  'text-gray-700 hover:text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-800 dark:hover:text-gray-100';
-const listDropItemStyle =
-  'text-gray-700 hover:text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-100';
-
+import {Inertia} from '@inertiajs/inertia';
 interface Props {
   children: React.ReactNode;
 }
@@ -51,15 +37,17 @@ const NavItem = ({children, href, active, dropdown, name}: NavItemProps) => {
   return (
     <>
       {dropdown ? (
-        <Disclosure as="div" className="space-y-1">
+        <Disclosure as="div" className="space-y-1" defaultOpen={active}>
           {({open}) => {
             return (
               <>
                 <Disclosure.Button
+                  as={'a'}
                   className={classNames(
-                    active ? listItemActiveStyle : listItemStyle,
-                    'group w-full flex items-center pl-2 pr-1 py-2 text-sm font-semibold rounded-md focus:outline-none ',
-                  )}>
+                    'group w-full flex items-center pl-2 py-2 text-sm font-semibold rounded-md text-gray-800 hover:bg-gray-100',
+                    active ? 'text-green-800' : '',
+                  )}
+                  href={href}>
                   {name}
                   <svg
                     className={classNames(
@@ -71,7 +59,8 @@ const NavItem = ({children, href, active, dropdown, name}: NavItemProps) => {
                     <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
                   </svg>
                 </Disclosure.Button>
-                {children}
+                {open && children}
+                {/*{children}*/}
               </>
             );
           }}
@@ -82,16 +71,9 @@ const NavItem = ({children, href, active, dropdown, name}: NavItemProps) => {
         <Link
           href={href}
           className={classNames(
-            active ? listItemActiveStyle : listItemStyle,
-            ' group w-full flex items-center pl-2 py-2 text-sm font-semibold rounded-md',
+            'group w-full flex items-center pl-2 py-2 text-sm font-semibold rounded-md text-gray-800 hover:bg-gray-100',
+            active ? 'bg-gray-200 text-green-800' : '',
           )}>
-          {/*<item.icon*/}
-          {/*  className={classNames(*/}
-          {/*    item.current ? listItemActiveIconStyle : listItemIconStyle,*/}
-          {/*    'mr-3 h-5 h-5',*/}
-          {/*  )}*/}
-          {/*  aria-hidden="true"*/}
-          {/*/>*/}
           {name}
         </Link>
       )}
@@ -108,12 +90,12 @@ interface NavSubItemProps {
 
 const NavSubItem = ({name, active, href}: NavSubItemProps) => {
   return (
-    <Disclosure.Panel className="space-y-1">
+    <Disclosure.Panel className="space-y-1" static>
       <Link
         href={href}
         className={classNames(
-          active ? listDropItemActiveStyle : listDropItemStyle,
           'group w-full flex items-center pl-11 pr-2 py-2 text-sm font-normal rounded-md',
+          active ? 'bg-gray-100 text-green-800' : '',
         )}>
         {name}
       </Link>
