@@ -1,6 +1,6 @@
 {
     "name": "izal/lshopify",
-    "description": "laravel shopify",
+    "description": "Laravel ecommerce admin package like shopify",
     "type": "package",
     "license": "MIT",
     "autoload": {
@@ -13,13 +13,6 @@
             "IZal\\Lshopify\\Tests\\": "tests/",
             "IZal\\Lshopify\\Database\\Factories\\":"database/factories/",
             "IZal\\Lshopify\\Database\\Seeders\\":"database/seeders/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "IZaL\\Lshopify\\LshopifyServiceProvider"
-            ]
         }
     },
     "authors": [

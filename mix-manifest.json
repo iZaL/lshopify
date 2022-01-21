@@ -1,4 +1,4 @@
 {
-    "/public/lshopify/js/app.js": "/public/lshopify/js/app.js",
-    "/public/lshopify/css/app.css": "/public/lshopify/css/app.css"
+    "/public/vendor/lshopify/app.js": "/public/vendor/lshopify/app.js",
+    "/public/vendor/lshopify/app.css": "/public/vendor/lshopify/app.css"
 }

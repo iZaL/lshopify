@@ -1,13 +1,10 @@
 <?php
 
-namespace IZal\Lshopify;
+namespace IZal\Lshopify\Providers;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Contracts\Events\Dispatcher;
-
 use Inertia\Inertia;
 use IZal\Lshopify\Cart\CartServiceProvider;
 
@@ -20,7 +17,7 @@ class LshopifyServiceProvider extends ServiceProvider
      * @return void
      */
 
-    public function boot(Router $router, Dispatcher $event)
+    public function boot()
     {
 
         if (! config('lshopify.enabled')) {
@@ -33,8 +30,6 @@ class LshopifyServiceProvider extends ServiceProvider
 
         Route::middlewareGroup('lshopify', config('lshopify.middleware', []));
 
-//        $router->pushMiddlewareToGroup('web', HandleInertiaRequests::class);
-
         $this->registerCommands();
 
         $this->registerPublishing();
@@ -44,7 +39,7 @@ class LshopifyServiceProvider extends ServiceProvider
         $this->registerMigrations();
 
         $this->loadViewsFrom(
-            __DIR__.'/../resources/views', 'lshopify'
+            __DIR__.'/../../resources/views', 'lshopify'
         );
     }
 
@@ -56,7 +51,7 @@ class LshopifyServiceProvider extends ServiceProvider
     private function registerRoutes()
     {
         Route::group($this->routeConfiguration(), function () {
-            $this->loadRoutesFrom(__DIR__.'/../routes/lshopify.php');
+            $this->loadRoutesFrom(__DIR__.'/../../routes/lshopify.php');
         });
     }
 
@@ -84,7 +79,7 @@ class LshopifyServiceProvider extends ServiceProvider
     private function registerMigrations()
     {
         if ($this->app->runningInConsole() && $this->shouldMigrate()) {
-            $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+            $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
         }
     }
 
@@ -99,20 +94,20 @@ class LshopifyServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
 
             $this->publishes([
-                __DIR__.'/../resources/views/app.blade.php' => resource_path('views/lshopify.blade.php'),
-                __DIR__.'/../stubs/webpack.mix.js' => base_path('webpack.mix.js'),
+                __DIR__.'/../../resources/views/app.blade.php' => resource_path('views/lshopify.blade.php'),
+                __DIR__.'/../../stubs/webpack.mix.js' => base_path('webpack.mix.js'),
             ],'lshopify-stubs');
 
             $this->publishes([
-                __DIR__.'/../database/migrations' => database_path('migrations'),
+                __DIR__.'/../../database/migrations' => database_path('migrations'),
             ], 'lshopify-migrations');
 
             $this->publishes([
-                __DIR__.'/../public' => public_path('vendor/lshopify'),
+                __DIR__.'/../../public/vendor/lshopify' => public_path('vendor/lshopify'),
             ], ['lshopify-assets']);
 
             $this->publishes([
-                __DIR__.'/../config/lshopify.php' => config_path('lshopify.php'),
+                __DIR__.'/../../config/lshopify.php' => config_path('lshopify.php'),
             ], 'lshopify-config');
 
         }
@@ -141,7 +136,7 @@ class LshopifyServiceProvider extends ServiceProvider
         $this->app->register(CartServiceProvider::class);
 
         $this->mergeConfigFrom(
-            __DIR__.'/../config/lshopify.php', 'lshopify'
+            __DIR__.'/../../config/lshopify.php', 'lshopify'
         );
 
     }
