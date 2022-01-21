@@ -1,9 +1,7 @@
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
 import classNames from 'classnames';
 import {Link} from '@inertiajs/inertia-react';
-import DropdownAlt from './DropdownAlt';
-import route from 'ziggy-js';
-import {Disclosure, Switch} from '@headlessui/react';
+import {Disclosure} from '@headlessui/react';
 
 const listItemStyle =
   'text-gray-700 hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600';
@@ -34,58 +32,70 @@ const Navigator = ({children}: Props) => {
 
   return (
     <NavigatorContext.Provider value={{open, setOpen, toggleOpen}}>
-      <div className="relative">{children}</div>
+      <nav className="flex-1 px-2 space-y-1" aria-label="Sidebar">
+        {children}
+      </nav>
     </NavigatorContext.Provider>
   );
 };
 
 interface NavItemProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   active?: boolean;
   dropdown?: boolean;
   name: string;
+  href: string;
 }
 
-const NavItem = ({children, active, dropdown, name}: NavItemProps) => {
+const NavItem = ({children, href, active, dropdown, name}: NavItemProps) => {
   return (
-    <div
-      className={classNames(
-        'flex items-center px-4 py-2 text-sm font-medium text-gray-900',
-        {'bg-gray-100': active},
-        {'hover:bg-gray-200': active},
-      )}>
+    <>
       {dropdown ? (
-        <>
-          <Disclosure as="div" className="space-y-1">
-            {({open}) => {
-              return (
-                <>
-                  <Disclosure.Button
+        <Disclosure as="div" className="space-y-1">
+          {({open}) => {
+            return (
+              <>
+                <Disclosure.Button
+                  className={classNames(
+                    active ? listItemActiveStyle : listItemStyle,
+                    'group w-full flex items-center pl-2 pr-1 py-2 text-sm font-semibold rounded-md focus:outline-none ',
+                  )}>
+                  {name}
+                  <svg
                     className={classNames(
-                      active ? listItemActiveStyle : listItemStyle,
-                      'group w-full flex items-center pl-2 pr-1 py-2 text-sm font-semibold rounded-md focus:outline-none ',
-                    )}>
-                    {name}
-                    <svg
-                      className={classNames(
-                        open ? 'text-gray-400 rotate-90' : 'text-gray-300',
-                        'ml-auto h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150',
-                      )}
-                      viewBox="0 0 20 20"
-                      aria-hidden="true">
-                      <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
-                    </svg>
-                  </Disclosure.Button>
-                  {children}
-                </>
-              );
-            }}
-          </Disclosure>
-        </>
-      ) : (
+                      open ? 'text-gray-400 rotate-90' : 'text-gray-300',
+                      'ml-auto h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150',
+                    )}
+                    viewBox="0 0 20 20"
+                    aria-hidden="true">
+                    <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
+                  </svg>
+                </Disclosure.Button>
+                {children}
+              </>
+            );
+          }}
+        </Disclosure>
+      ) : children ? (
         children
+      ) : (
+        <Link
+          href={href}
+          className={classNames(
+            active ? listItemActiveStyle : listItemStyle,
+            ' group w-full flex items-center pl-2 py-2 text-sm font-semibold rounded-md',
+          )}>
+          {/*<item.icon*/}
+          {/*  className={classNames(*/}
+          {/*    item.current ? listItemActiveIconStyle : listItemIconStyle,*/}
+          {/*    'mr-3 h-5 h-5',*/}
+          {/*  )}*/}
+          {/*  aria-hidden="true"*/}
+          {/*/>*/}
+          {name}
+        </Link>
       )}
-    </div>
+    </>
   );
 };
 
@@ -93,7 +103,7 @@ interface NavSubItemProps {
   children?: React.ReactNode;
   href: string;
   name: string;
-  active?:boolean;
+  active?: boolean;
 }
 
 const NavSubItem = ({name, active, href}: NavSubItemProps) => {
@@ -108,7 +118,7 @@ const NavSubItem = ({name, active, href}: NavSubItemProps) => {
         {name}
       </Link>
     </Disclosure.Panel>
-  )
+  );
 };
 
 Navigator.Item = NavItem;

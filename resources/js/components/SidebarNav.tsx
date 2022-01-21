@@ -1,9 +1,8 @@
-import React from 'react'
-import Navigator from './Navigator'
-import route from 'ziggy-js'
+import React from 'react';
+import Navigator from './Navigator';
+import route from 'ziggy-js';
 
 export default function SidebarNav() {
-
   /**
    * <Navigator>
    *   <Navigator.Item href="?" active="" dropdown="true" name="Products">
@@ -16,15 +15,15 @@ export default function SidebarNav() {
     <Navigator>
       <Navigator.Item
         name="Home"
-        active={route().current() === 'lshopify.home'}>
-        <div>Home</div>
-      </Navigator.Item>
+        active={route().current() === 'lshopify.home'}
+        href={''}
+      />
 
       <Navigator.Item
         name="Products"
         active={route().current() === 'lshopify.products.*'}
         dropdown={true}
-      >
+        href={''}>
         <Navigator.SubItem
           name="All Products"
           href={route('lshopify.products.index')}
