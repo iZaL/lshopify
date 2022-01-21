@@ -23,6 +23,7 @@ class LshopifyServiceProvider extends ServiceProvider
     public function boot(Router $router, Dispatcher $event)
     {
 
+        dd('wa');
         if (! config('lshopify.enabled')) {
             return;
         }
