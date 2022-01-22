@@ -2,8 +2,6 @@ import React from 'react';
 import {Disclosure} from '@headlessui/react';
 import {ChevronDownIcon, ChevronUpIcon} from '@heroicons/react/solid';
 
-interface Props {}
-
 const DisclosureButton = ({open, title}: {open: boolean; title: string}) => {
   return (
     <h3 className="-mx-2 -my-3 flow-root">

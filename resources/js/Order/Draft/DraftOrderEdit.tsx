@@ -73,6 +73,7 @@ export default function DraftOrderEdit(props: Props) {
   };
 
   const onCartItemEdit = (rowId: string, item: CartItem) => {
+    // @ts-ignore
     Inertia.post(route('lshopify.cart.update'), {
       rowId: rowId,
       item: item,
@@ -98,6 +99,7 @@ export default function DraftOrderEdit(props: Props) {
     customerData: CustomerForm,
     addressData: CustomerAddress,
   ) => {
+    // @ts-ignore
     Inertia.post(
       route('lshopify.customers.store'),
       {
@@ -150,6 +152,7 @@ export default function DraftOrderEdit(props: Props) {
         ...extraData,
       };
     }
+    // @ts-ignore
     Inertia.post(route('lshopify.orders.draft.update', [order.id]), postData, {
       onSuccess: () => {
         console.log('success');

@@ -35,7 +35,7 @@ export default function EditVariantOptions({
     onDelete(deletingVariants);
   };
 
-  const onVariantOptionsUpdate = (option: VariantOption, value: string) => {};
+  const onVariantOptionsUpdate = () => {};
 
   const onVariantOptionsRemove = (option: VariantOption) => {
     let currentVariants: number[] = [];

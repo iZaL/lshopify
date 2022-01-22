@@ -1,9 +1,9 @@
-import React from 'react';
-import Card from '../../components/Card';
-import Label from '../../components/forms/Label';
-import InputText from '../../components/forms/InputText';
-import TextArea from '../../components/forms/TextArea';
-import {Collection, Product} from '../../types';
+import React from 'react'
+import Card from '../../components/Card'
+import Label from '../../components/forms/Label'
+import InputText from '../../components/forms/InputText'
+import TextArea from '../../components/forms/TextArea'
+import { Collection } from '../../types'
 
 interface Props {
   onChange: <T extends keyof Collection>(

@@ -106,6 +106,7 @@ export default function FulfillmentView({fulfillment, order}: Props) {
     customerData: CustomerForm,
     addressData: CustomerAddress,
   ) => {
+    // @ts-ignore
     Inertia.post(
       route('lshopify.customers.store'),
       {
@@ -124,6 +125,7 @@ export default function FulfillmentView({fulfillment, order}: Props) {
     type: 'shipping' | 'billing',
     address: Shipping | Billing,
   ) => {
+    // @ts-ignore
     Inertia.patch(`/orders/${order.id}`, {
       [type]: address,
     });

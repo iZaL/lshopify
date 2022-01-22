@@ -1,18 +1,7 @@
-import React from 'react';
-import {
-  PencilIcon,
-  ReplyIcon,
-  SearchIcon,
-  UserAddIcon,
-} from '@heroicons/react/outline';
-import {
-  ArchiveIcon,
-  ArrowDownIcon,
-  ChevronDoubleDownIcon,
-  ChevronDownIcon,
-  SortAscendingIcon,
-} from '@heroicons/react/solid';
-import classNames from 'classnames';
+import React from 'react'
+import { SearchIcon, } from '@heroicons/react/outline'
+import { ChevronDownIcon, SortAscendingIcon, } from '@heroicons/react/solid'
+import classNames from 'classnames'
 
 interface TabProps {
   name: string;

@@ -60,6 +60,7 @@ export default function OrderView(props: Props) {
     customerData: CustomerForm,
     addressData: CustomerAddress,
   ) => {
+    // @ts-ignore
     Inertia.post(
       route('lshopify.customers.store'),
       {
@@ -92,12 +93,14 @@ export default function OrderView(props: Props) {
     type: 'shipping' | 'billing',
     address: Shipping | Billing,
   ) => {
+    // @ts-ignore
     Inertia.patch(route('lshopify.orders.update', [order.id]), {
       [type]: address,
     });
   };
 
   const updateOrderAttributes = (attributes: Partial<Order>) => {
+    // @ts-ignore
     Inertia.patch(route('lshopify.orders.update', [order.id]), {
       ...attributes,
     });

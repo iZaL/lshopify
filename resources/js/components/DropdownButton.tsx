@@ -1,9 +1,9 @@
-import React, {Fragment, useState} from 'react';
-import Button from './Button';
-import {ChevronDownIcon} from '@heroicons/react/solid';
-import {Menu, Transition} from '@headlessui/react';
-import classNames from 'classnames';
-import OutsideClickHandler from './OutsideClickHandler';
+import React, { useState } from 'react'
+import Button from './Button'
+import { ChevronDownIcon } from '@heroicons/react/solid'
+import { Menu } from '@headlessui/react'
+import classNames from 'classnames'
+import OutsideClickHandler from './OutsideClickHandler'
 
 interface Props {
   items: Array<{title: string; onClick: () => void}>;

@@ -163,7 +163,7 @@ export default function OrganizationSection({
         components={{
           DropdownIndicator: () => null,
           IndicatorSeparator: () => null,
-          LoadingIndicator: () => Loader({theme: 'green'}),
+          LoadingIndicator: () => Loader(),
         }}
         isLoading={isTagsLoading}
         noOptionsMessage={() => null}

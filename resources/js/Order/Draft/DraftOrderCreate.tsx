@@ -47,6 +47,7 @@ export default function DraftOrderCreate(props: Props) {
   };
 
   const onVariantEdit = (rowId: string, item: CartItem) => {
+    // @ts-ignore
     Inertia.post(route('lshopify.cart.update'), {
       rowId: rowId,
       item: item,
@@ -54,6 +55,7 @@ export default function DraftOrderCreate(props: Props) {
   };
 
   const onApplyDiscount = (discount: CartDiscount, item?: CartItem) => {
+    // @ts-ignore
     Inertia.post(route('lshopify.cart.discount.add'), {
       discount: discount,
       item: item,
@@ -61,6 +63,7 @@ export default function DraftOrderCreate(props: Props) {
   };
 
   const onRemoveDiscount = (discount: CartDiscount, item?: CartItem) => {
+    // @ts-ignore
     Inertia.post(route('lshopify.cart.discount.remove'), {
       discount: discount,
       item: item,
@@ -70,6 +73,7 @@ export default function DraftOrderCreate(props: Props) {
   const onCreateOrder = () => {};
 
   const handleSubmit = () => {
+    // @ts-ignore
     Inertia.post(route('lshopify.orders.draft.store'), data, {
       onSuccess: () => {
         console.log('success');

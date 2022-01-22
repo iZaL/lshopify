@@ -145,6 +145,7 @@ export default function ProductEdit(props: Props) {
       field: field,
       value: value,
     };
+    // @ts-ignore
     Inertia.post(url, productData, {
       preserveScroll: false,
       onSuccess: () => {

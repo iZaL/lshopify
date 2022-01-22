@@ -1,7 +1,6 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import SidebarNav from './SidebarNav';
-import {Dialog, Transition} from '@headlessui/react';
-import {XIcon} from '@heroicons/react/outline';
+import React, { Fragment } from 'react'
+import { Dialog, Transition } from '@headlessui/react'
+import { XIcon } from '@heroicons/react/outline'
 
 interface Props {
   isOpen: boolean;

@@ -1,6 +1,5 @@
-import React from 'react';
-import {Order} from '../../../types';
-import {Inertia} from '@inertiajs/inertia';
+import React from 'react'
+import { Order } from '../../../types'
 
 interface Props {
   orders: Order[];

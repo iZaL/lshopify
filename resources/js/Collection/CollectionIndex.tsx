@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
-import Main from '../Main';
-import {navigationActiveState} from '../atoms';
-import {useSetRecoilState} from 'recoil';
-import PageHeader from '../components/PageHeader';
-import {Collection, Product} from '../types';
-import CollectionIndexActionButtons from './components/CollectionIndexActionButtons';
-import CollectionList from './components/CollectionList';
+import React, { useEffect } from 'react'
+import Main from '../Main'
+import { navigationActiveState } from '../atoms'
+import { useSetRecoilState } from 'recoil'
+import PageHeader from '../components/PageHeader'
+import { Collection } from '../types'
+import CollectionIndexActionButtons from './components/CollectionIndexActionButtons'
+import CollectionList from './components/CollectionList'
 
 interface Props {
   collections: Collection[];

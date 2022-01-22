@@ -1,10 +1,6 @@
 import React from 'react';
 
-interface Props {
-  theme?: string;
-}
-
-export default function Loader({theme = 'green'}: Props) {
+export default function Loader() {
   let textColor = 'text-green-500';
 
   return (

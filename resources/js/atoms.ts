@@ -1,12 +1,6 @@
-import {atom, selector} from 'recoil';
-import {
-  ChartBarIcon,
-  FolderDownloadIcon,
-  HomeIcon,
-  TagIcon,
-  UserIcon,
-} from '@heroicons/react/solid';
-import route from 'ziggy-js';
+import { atom, selector } from 'recoil'
+import { FolderDownloadIcon, HomeIcon, TagIcon, } from '@heroicons/react/solid'
+import route from 'ziggy-js'
 
 type NavigationRouteProps =
   | 'Home'

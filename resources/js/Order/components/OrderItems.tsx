@@ -1,14 +1,14 @@
-import React from 'react';
-import {VariantPivot} from '../../types';
-import VariantImage from '../../Product/Variant/components/VariantImage';
-import ProductTitle from '../../Product/components/ProductTitle';
+import React from 'react'
+import { VariantPivot } from '../../types'
+import VariantImage from '../../Product/Variant/components/VariantImage'
+import ProductTitle from '../../Product/components/ProductTitle'
 
 interface Props {
   variants: VariantPivot[];
   onItemClick: (item: any) => void;
 }
 
-export default function OrderItems({variants, onItemClick}: Props) {
+export default function OrderItems({variants}: Props) {
   if (!variants.length) {
     return null;
   }

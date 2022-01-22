@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {SearchIcon} from '@heroicons/react/outline';
-import InputText from '../../components/forms/InputText';
-import Border from '../../components/Border';
-import Checkbox from '../../components/forms/Checkbox';
-import VariantImage from '../Variant/components/VariantImage';
-import Modal from '../../components/Modal';
-import {CartItem, Product, Variant} from '../../types';
-import Button from '../../components/Button';
+import React, { useState } from 'react'
+import { SearchIcon } from '@heroicons/react/outline'
+import InputText from '../../components/forms/InputText'
+import Border from '../../components/Border'
+import Checkbox from '../../components/forms/Checkbox'
+import VariantImage from '../Variant/components/VariantImage'
+import Modal from '../../components/Modal'
+import { CartItem, Product, Variant } from '../../types'
+import Button from '../../components/Button'
 
 interface Props {
   searchTerm: string;
