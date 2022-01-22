@@ -1,7 +1,7 @@
-import React, { ReactElement, useState } from 'react'
-import { Billing, CustomerAddress, Shipping } from '../../types'
-import InputText from '../../components/forms/InputText'
-import Label from '../../components/forms/Label'
+import React, {ReactElement, useState} from 'react';
+import {Billing, CustomerAddress, Shipping} from '../../types';
+import InputText from '../../components/forms/InputText';
+import Label from '../../components/forms/Label';
 
 interface Props {
   address: Shipping | Billing;

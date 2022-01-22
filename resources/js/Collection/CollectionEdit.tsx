@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react'
-import Main from '../Main'
-import { navigationActiveState } from '../atoms'
-import { useSetRecoilState } from 'recoil'
-import PageHeader from '../components/PageHeader'
-import TitleSection from './components/TitleSection'
-import FormSubmitBar from '../components/FormSubmitBar'
-import { Collection, Product } from '../types'
-import { Inertia } from '@inertiajs/inertia'
-import ProductSection from './components/ProductSection'
-import { useForm } from '@inertiajs/inertia-react'
-import ProductAddSection from './components/ProductAddSection'
-import route from 'ziggy-js'
+import React, {useEffect} from 'react';
+import Main from '../Main';
+import {navigationActiveState} from '../atoms';
+import {useSetRecoilState} from 'recoil';
+import PageHeader from '../components/PageHeader';
+import TitleSection from './components/TitleSection';
+import FormSubmitBar from '../components/FormSubmitBar';
+import {Collection, Product} from '../types';
+import {Inertia} from '@inertiajs/inertia';
+import ProductSection from './components/ProductSection';
+import {useForm} from '@inertiajs/inertia-react';
+import ProductAddSection from './components/ProductAddSection';
+import route from 'ziggy-js';
 
 interface Props {
   collection: Collection;

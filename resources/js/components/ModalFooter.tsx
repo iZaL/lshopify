@@ -1,5 +1,5 @@
-import React, { ReactNode } from 'react'
-import Button from './Button'
+import React, {ReactNode} from 'react';
+import Button from './Button';
 
 interface Props {
   onHideModal: () => void;
@@ -17,7 +17,6 @@ export default function ModalFooter({
   hideCancelButton = false,
   children,
 }: Props) {
-
   return (
     <div className="bg-gray-50 dark:bg-gray-600 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
       <Button onClick={() => onProceed()} theme="success">

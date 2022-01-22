@@ -17,8 +17,7 @@ export default function SidebarNav() {
           route().current('lshopify.collections.*')
         }
         href={route('lshopify.products.index')}
-        dropdown={true}
-      >
+        dropdown={true}>
         <Navigator.SubItem
           name="All Products"
           href={route('lshopify.products.index')}
@@ -35,8 +34,7 @@ export default function SidebarNav() {
         name="Orders"
         active={route().current('lshopify.orders.*')}
         href={route('lshopify.orders.index')}
-        dropdown={true}
-      >
+        dropdown={true}>
         <Navigator.SubItem
           name="All Orders"
           href={route('lshopify.orders.index')}

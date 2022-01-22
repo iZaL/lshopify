@@ -31,8 +31,7 @@ const Navigator = ({children}: Props) => {
 };
 
 const NavItem = ({children, href, active, dropdown, name}: NavItemProps) => {
-
-  if(dropdown) {
+  if (dropdown) {
     return (
       <Disclosure as="div" className="space-y-1" defaultOpen={active}>
         {({open}) => {
@@ -61,10 +60,10 @@ const NavItem = ({children, href, active, dropdown, name}: NavItemProps) => {
           );
         }}
       </Disclosure>
-    )
+    );
   }
 
-  if(children) {
+  if (children) {
     return <>{children}</>;
   }
 
@@ -78,7 +77,6 @@ const NavItem = ({children, href, active, dropdown, name}: NavItemProps) => {
       {name}
     </Link>
   );
-
 };
 
 const NavSubItem = ({name, active, href}: NavSubItemProps) => {

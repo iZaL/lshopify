@@ -1,5 +1,5 @@
-import React from 'react'
-import { Order } from '../../../types'
+import React from 'react';
+import {Order} from '../../../types';
 
 interface Props {
   orders: Order[];

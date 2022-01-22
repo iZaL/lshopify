@@ -1,5 +1,5 @@
-import React, { ReactNode } from 'react'
-import OutsideClickHandler from './OutsideClickHandler'
+import React, {ReactNode} from 'react';
+import OutsideClickHandler from './OutsideClickHandler';
 
 interface Props {
   items?: Array<{title: string; onClick: () => void}>;

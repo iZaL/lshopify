@@ -5,18 +5,22 @@ import Button from './Button';
 interface Props {
   onDiscard?: () => void;
   onSubmit: () => void;
-  hide?:boolean
+  hide?: boolean;
 }
 
-export default function FormSubmitBar({onDiscard, onSubmit, hide=false}: Props) {
+export default function FormSubmitBar({
+  onDiscard,
+  onSubmit,
+  hide = false,
+}: Props) {
   const discard = () => {
     Inertia.reload({
       onSuccess: () => Inertia.reload(),
     });
   };
 
-  if(hide) {
-    return null
+  if (hide) {
+    return null;
   }
 
   return (
