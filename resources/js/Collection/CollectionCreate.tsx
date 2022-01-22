@@ -1,16 +1,15 @@
-import React from 'react'
-import Main from '../Main'
-import PageHeader from '../components/PageHeader'
-import TitleSection from './components/TitleSection'
-import FormSubmitBar from '../components/FormSubmitBar'
-import { useForm } from '@inertiajs/inertia-react'
-import { Collection } from '../types'
-import CollectionTypeSection from './components/CollectionTypeSection'
-import { Inertia } from '@inertiajs/inertia'
-import route from 'ziggy-js'
+import React from 'react';
+import Main from '../Main';
+import PageHeader from '../components/PageHeader';
+import TitleSection from './components/TitleSection';
+import FormSubmitBar from '../components/FormSubmitBar';
+import {useForm} from '@inertiajs/inertia-react';
+import {Collection} from '../types';
+import CollectionTypeSection from './components/CollectionTypeSection';
+import {Inertia} from '@inertiajs/inertia';
+import route from 'ziggy-js';
 
 export default function CollectionCreate() {
-
   const collection: Collection = {
     id: 0,
     name: 'Summer collection',

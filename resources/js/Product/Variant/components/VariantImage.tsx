@@ -15,7 +15,11 @@ export default function VariantImage({image, imageStyle, onClick}: Props) {
       className={`flex justify-center items-center  border border-gray-200 rounded cursor-pointer ${style}`}
       onClick={onClick}>
       {image ? (
-        <img src={image.url} className="object-contain pointer-events-none" alt="" />
+        <img
+          src={image.url}
+          className="object-contain pointer-events-none"
+          alt=""
+        />
       ) : (
         <svg
           xmlns="http://www.w3.org/2000/svg"

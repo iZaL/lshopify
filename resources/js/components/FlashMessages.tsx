@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ReactNode, useMemo } from 'react'
+import React, {useState, useEffect, ReactNode, useMemo} from 'react';
 import {usePage} from '@inertiajs/inertia-react';
 import {XIcon} from '@heroicons/react/solid';
 import {Page} from '@inertiajs/inertia';
@@ -24,12 +24,13 @@ export default function FlashMessages() {
   const [visible, setVisible] = useState(false);
   const {flash, errors, env} = usePage<Props>().props;
   //
-  let flashMessage: {type: keyof FlashMessageType; message: string | null} = useMemo(() => {
-    return {
-      type: 'success',
-      message: null,
-    }
-  },[]);
+  let flashMessage: {type: keyof FlashMessageType; message: string | null} =
+    useMemo(() => {
+      return {
+        type: 'success',
+        message: null,
+      };
+    }, []);
 
   if (flash) {
     if (flash.success) {
@@ -56,9 +57,10 @@ export default function FlashMessages() {
   //     });
   // }
 
-  const errorMessages: Array<string> = useMemo(()=> errors
-    ? Object.keys(errors).map(key => errors[key])
-    : [],[errors]);
+  const errorMessages: Array<string> = useMemo(
+    () => (errors ? Object.keys(errors).map(key => errors[key]) : []),
+    [errors],
+  );
 
   useEffect(() => {
     if (flashMessage.message || errorMessages.length) {

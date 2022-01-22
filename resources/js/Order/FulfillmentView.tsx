@@ -26,7 +26,6 @@ interface Props {
 }
 
 export default function FulfillmentView({fulfillment, order}: Props) {
-
   const {data, setData} = useForm<{
     order: Order;
     fulfillment: Fulfillment;

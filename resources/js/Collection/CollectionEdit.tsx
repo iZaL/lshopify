@@ -16,7 +16,6 @@ interface Props {
 }
 
 export default function CollectionEdit(props: Props) {
-
   const {collection, products} = props;
 
   const {data, setData, isDirty} = useForm<

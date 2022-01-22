@@ -281,7 +281,9 @@ export default function ProductEdit(props: Props) {
               isTagsLoading={isTagsLoading}
               onProductTypeChange={record => setData('product_type', record)}
               setTags={tagCollection => setData('tags', tagCollection)}
-              setCollection={collectionCollection => setData('collections', collectionCollection)}
+              setCollection={collectionCollection =>
+                setData('collections', collectionCollection)
+              }
               onTagsCreate={value => onTagsCreate(value)}
               onProductTypeCreate={value => onProductTypeCreate(value)}
             />

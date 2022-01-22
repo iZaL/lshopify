@@ -2,7 +2,7 @@ import React, {ReactNode} from 'react';
 
 interface Props {
   name: string;
-  type?:string;
+  type?: string;
   autocomplete?: string;
   placeholder?: string;
   inputStyle?: string;
@@ -57,7 +57,7 @@ export default function InputText({
         </Button>
       )}
       <input
-        type={type ? type:'text'}
+        type={type ? type : 'text'}
         name={name}
         id={name}
         autoComplete={autocomplete ? autocomplete : ''}

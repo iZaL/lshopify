@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Variant} from '../../../types';
 import InputText from '../../../components/forms/InputText';
-import Button from '../../../components/Button'
+import Button from '../../../components/Button';
 
 interface Props {
   variants: Variant[];
@@ -29,10 +29,7 @@ export default function EditPrices({variants, onChange, onApplyAll}: Props) {
             placeholder="0"
           />
         </div>
-        <Button
-          theme='default'
-          onClick={() => onApplyAll(allText)}
-          >
+        <Button theme="default" onClick={() => onApplyAll(allText)}>
           Apply to all
         </Button>
       </form>

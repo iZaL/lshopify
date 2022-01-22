@@ -6,7 +6,7 @@ import Border from '../../components/Border';
 import InputText from '../../components/forms/InputText';
 import Select from '../../components/forms/Select';
 import {TrashIcon} from '@heroicons/react/outline';
-import Button from '../../components/Button'
+import Button from '../../components/Button';
 
 interface Props {
   onChange: <T extends keyof Collection>(
@@ -174,7 +174,7 @@ export default function CollectionTypeSection({onChange, collection}: T) {
           })}
 
           <Button
-            theme='default'
+            theme="default"
             onClick={addNewCondition}
             // className="rounded rounded-md bg-white border border-gray-400 p-2 text-sm inline-block hover:bg-gray-100 "
           >

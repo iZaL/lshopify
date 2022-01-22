@@ -23,7 +23,6 @@ interface Props {
 }
 
 export default function OrderView(props: Props) {
-
   const {order, customers} = props;
 
   const [customerSearchTerm, setCustomerSearchTerm] = useState('');

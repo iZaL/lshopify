@@ -128,9 +128,8 @@ export default function OrganizationSection({
               return (
                 <li className="flex flex-row justify-between " key={index}>
                   <Button
-                    theme='clear'
-                    buttonStyle="text-sm text-gray-600 text-blue-500 underline"
-                  >
+                    theme="clear"
+                    buttonStyle="text-sm text-gray-600 text-blue-500 underline">
                     {item.name}
                   </Button>
 

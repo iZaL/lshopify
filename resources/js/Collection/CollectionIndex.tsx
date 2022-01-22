@@ -10,7 +10,6 @@ interface Props {
 }
 
 export default function CollectionIndex(props: Props) {
-
   const {collections} = props;
 
   return (

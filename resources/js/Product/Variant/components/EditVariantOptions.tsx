@@ -40,9 +40,11 @@ export default function EditVariantOptions({
   const onVariantOptionsRemove = (option: VariantOption) => {
     let currentVariants: number[] = [];
     variants.map(variant => {
-      return currentVariants = variant.options?.some(({id}) => id === option.id)
+      return (currentVariants = variant.options?.some(
+        ({id}) => id === option.id,
+      )
         ? [...currentVariants, variant.id]
-        : [...currentVariants];
+        : [...currentVariants]);
     });
     setDeletingOption(option);
     setDeletingVariants(currentVariants);

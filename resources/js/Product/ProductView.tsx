@@ -1,8 +1,7 @@
-import React from 'react'
-import Main from '../Main'
+import React from 'react';
+import Main from '../Main';
 
 export default function ProductView() {
-
   return (
     <Main>
       <div className="p-6">

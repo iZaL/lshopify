@@ -17,8 +17,7 @@ export default function Button({
   children,
   onClick,
 }: Props) {
-  let themeStyle =
-    `text-white bg-green-700 hover:bg-green-900 focus:ring-1 focus:ring-offset-2 focus:ring-green-500 focus:border-green-500`;
+  let themeStyle = `text-white bg-green-700 hover:bg-green-900 focus:ring-1 focus:ring-offset-2 focus:ring-green-500 focus:border-green-500`;
 
   switch (theme) {
     case 'error':

@@ -18,7 +18,6 @@ interface Props {
 }
 
 export default function Refund({order}: Props) {
-
   const {data, setData} = useForm<{
     order: Order;
     restock: boolean;

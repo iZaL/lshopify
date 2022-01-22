@@ -4,7 +4,7 @@ import {Inertia} from '@inertiajs/inertia';
 import route from 'ziggy-js';
 import VariantImage from '../Variant/components/VariantImage';
 import Checkbox from '../../components/forms/Checkbox';
-import Button from '../../components/Button'
+import Button from '../../components/Button';
 
 interface Props {
   products: Product[];
@@ -75,7 +75,9 @@ export default function Products({products}: Props) {
                       )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      <Button theme='clear' onClick={() => onProductClick(product)}>
+                      <Button
+                        theme="clear"
+                        onClick={() => onProductClick(product)}>
                         {product.title}
                       </Button>
                     </td>

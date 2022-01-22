@@ -3,7 +3,6 @@ import Main from './Main';
 import PageHeader from './components/PageHeader';
 
 export default function Dashboard() {
-
   return (
     <Main>
       <div className="p-6">

@@ -1,8 +1,8 @@
-import React from 'react'
-import Main from '../Main'
-import PageHeader from './../components/PageHeader'
-import { Order } from '../types'
-import DraftOrderIndexActionButtons from './Draft/components/DraftOrderIndexActionButtons'
+import React from 'react';
+import Main from '../Main';
+import PageHeader from './../components/PageHeader';
+import {Order} from '../types';
+import DraftOrderIndexActionButtons from './Draft/components/DraftOrderIndexActionButtons';
 
 interface Props {
   order: Order;

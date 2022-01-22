@@ -1,11 +1,11 @@
-import React from 'react'
-import Main from '../../Main'
-import PageHeader from '../../components/PageHeader'
-import { Order } from '../../types'
-import DraftOrderIndexActionButtons from './components/DraftOrderIndexActionButtons'
-import DraftOrderList from './components/DraftOrderList'
-import { Inertia } from '@inertiajs/inertia'
-import route from 'ziggy-js'
+import React from 'react';
+import Main from '../../Main';
+import PageHeader from '../../components/PageHeader';
+import {Order} from '../../types';
+import DraftOrderIndexActionButtons from './components/DraftOrderIndexActionButtons';
+import DraftOrderList from './components/DraftOrderList';
+import {Inertia} from '@inertiajs/inertia';
+import route from 'ziggy-js';
 
 interface Props {
   orders: Order[];
@@ -13,7 +13,6 @@ interface Props {
 }
 
 export default function DraftOrderIndex(props: Props) {
-
   const {orders, cartTotal} = props;
 
   const onOrderClick = (order: Order) => {

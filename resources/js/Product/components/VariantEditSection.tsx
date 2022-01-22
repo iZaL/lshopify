@@ -136,9 +136,9 @@ export default function VariantEditSection({
   const onVariantOptionClick = (option: VariantOption) => {
     let variantIDs: Array<number> = [];
     currentVariants.map(variant => {
-      return variantIDs = variant.options?.some(({id}) => id === option.id)
+      return (variantIDs = variant.options?.some(({id}) => id === option.id)
         ? [...variantIDs, variant.id]
-        : [...variantIDs];
+        : [...variantIDs]);
     });
     setCheckedVariantIDs([...variantIDs]);
   };
@@ -160,7 +160,10 @@ export default function VariantEditSection({
         <div className="flex-1">
           <Subheader text="Variants" />
         </div>
-        <Button onClick={onAddVariantClick} theme="clear" buttonStyle="text-blue-500">
+        <Button
+          onClick={onAddVariantClick}
+          theme="clear"
+          buttonStyle="text-blue-500">
           Add Variant
         </Button>
         <div className="relative">

@@ -12,7 +12,6 @@ interface Props {
 }
 
 export default function OrderIndex(props: Props) {
-
   const {orders} = props;
 
   const onOrderClick = (order: Order) => {

@@ -14,7 +14,6 @@ interface Props {
 }
 
 export default function DraftOrderCreate(props: Props) {
-
   const {products, cart} = props;
 
   const [searchTerm, setSearchTerm] = useState('');

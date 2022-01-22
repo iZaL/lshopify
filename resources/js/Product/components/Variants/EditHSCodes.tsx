@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Variant} from '../../../types';
 import InputText from '../../../components/forms/InputText';
-import Button from '../../../components/Button'
+import Button from '../../../components/Button';
 
 interface Props {
   variants: Variant[];
@@ -25,9 +25,7 @@ export default function EditHSCodes({variants, onChange, onApplyAll}: Props) {
             placeholder="Search or enter a HS codes"
           />
         </div>
-        <Button
-          theme='default'
-          onClick={() => onApplyAll(allText)}>
+        <Button theme="default" onClick={() => onApplyAll(allText)}>
           Apply to all
         </Button>
       </form>
