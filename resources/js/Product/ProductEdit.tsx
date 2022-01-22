@@ -114,10 +114,10 @@ export default function ProductEdit(props: Props) {
     });
   };
 
-  const onVariantsDelete = (variants: number[]) => {
+  const onVariantsDelete = (variantIDs: number[]) => {
     const url = route('lshopify.products.variants.destroy', [product.id]);
     const productData = {
-      variants: variants,
+      variants: variantIDs,
     };
     Inertia.post(url, productData, {
       preserveScroll: false,
@@ -128,13 +128,13 @@ export default function ProductEdit(props: Props) {
   };
 
   const onBulkAttributesSet = <T extends keyof Variant>(
-    variants: number[],
+    variantIDs: number[],
     field: T,
     value: Variant[T],
   ) => {
     const url = route('lshopify.products.variants.attributes', [product.id]);
     const productData = {
-      variants: variants,
+      variants: variantIDs,
       field: field,
       value: value,
     };
@@ -228,9 +228,9 @@ export default function ProductEdit(props: Props) {
                 onAddVariantClick={onAddVariantClick}
                 onEditVariantClick={onEditVariantClick}
                 onImagesUpload={images => onImagesUpload(images)}
-                onVariantsDelete={variants => onVariantsDelete(variants)}
+                onVariantsDelete={variantIDs => onVariantsDelete(variantIDs)}
                 onBulkAttributesSet={onBulkAttributesSet}
-                onChange={variants => setData('variants', variants)}
+                onChange={variantIDs => setData('variants', variantIDs)}
               />
             ) : (
               data.default_variant && (
@@ -280,8 +280,8 @@ export default function ProductEdit(props: Props) {
               isProductTypeLoading={isProductTypeLoading}
               isTagsLoading={isTagsLoading}
               onProductTypeChange={record => setData('product_type', record)}
-              setTags={tags => setData('tags', tags)}
-              setCollection={collection => setData('collections', collection)}
+              setTags={tagCollection => setData('tags', tagCollection)}
+              setCollection={collectionCollection => setData('collections', collectionCollection)}
               onTagsCreate={value => onTagsCreate(value)}
               onProductTypeCreate={value => onProductTypeCreate(value)}
             />

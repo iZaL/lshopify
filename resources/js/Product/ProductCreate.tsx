@@ -195,8 +195,8 @@ export default function ProductCreate(props: Props) {
               defaultCollection={collection}
               collection={data.collections || []}
               onProductTypeChange={value => setData('product_type', value)}
-              setTags={collection => setData('tags', collection)}
-              setCollection={collection => setData('collections', collection)}
+              setTags={tagsCollection => setData('tags', tagsCollection)}
+              setCollection={collectionCollection => setData('collections', collectionCollection)}
               onProductTypeCreate={value => onProductTypeCreate(value)}
               isProductTypeLoading={isProductTypeLoading}
               isTagsLoading={isTagsLoading}

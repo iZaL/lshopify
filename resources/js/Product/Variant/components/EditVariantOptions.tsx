@@ -40,7 +40,7 @@ export default function EditVariantOptions({
   const onVariantOptionsRemove = (option: VariantOption) => {
     let currentVariants: number[] = [];
     variants.map(variant => {
-      currentVariants = variant.options?.some(({id}) => id === option.id)
+      return currentVariants = variant.options?.some(({id}) => id === option.id)
         ? [...currentVariants, variant.id]
         : [...currentVariants];
     });

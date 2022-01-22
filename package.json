@@ -9,8 +9,8 @@
     "prod": "npm run production",
     "production": "mix --production",
     "prettify": "prettier --write './lshopify/resources/js/**/*.{js,ts,tsx}'",
-    "lint": "eslint ./resources/js --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "eslint ./resources/js --ext .js,.jsx,.ts,.tsx --fix"
+    "lint": "eslint ./resources/js --ext .ts,.tsx",
+    "lint:fix": "eslint ./resources/js --ext .ts,.tsx --fix"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.11",
