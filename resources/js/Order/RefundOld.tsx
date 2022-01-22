@@ -1,7 +1,5 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Main from '../Main';
-import {navigationActiveState} from '../atoms';
-import {useSetRecoilState} from 'recoil';
 import PageHeader from '../components/PageHeader';
 import Border from '../components/Border';
 import {Customer, Fulfillment, Order, VariantPivot} from '../types';
@@ -20,7 +18,6 @@ interface Props {
 }
 
 export default function Refund({order}: Props) {
-  const setNavigation = useSetRecoilState(navigationActiveState);
 
   const {data, setData} = useForm<{
     order: Order;
@@ -42,23 +39,6 @@ export default function Refund({order}: Props) {
     },
     restock: true,
   });
-
-  useEffect(() => {
-    setNavigation('Orders');
-  }, []);
-
-  useEffect(() => {
-    console.log('data changed', data);
-  }, [data]);
-
-  // useEffect(() => {
-  //   setData({
-  //     ...data,
-  //     order: {
-  //       ...order,
-  //     },
-  //   });
-  // }, [order]);
 
   const onVariantQuantityChange = (
     fulfillment: Fulfillment,

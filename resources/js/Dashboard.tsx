@@ -1,15 +1,8 @@
 import * as React from 'react';
 import Main from './Main';
-import {useSetRecoilState} from 'recoil';
-import {navigationActiveState} from './atoms';
 import PageHeader from './components/PageHeader';
 
 export default function Dashboard() {
-  const setNavigation = useSetRecoilState(navigationActiveState);
-
-  React.useEffect(() => {
-    setNavigation('Home');
-  }, []);
 
   return (
     <Main>

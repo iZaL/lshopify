@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import Main from '../Main';
-import {navigationActiveState} from '../atoms';
-import {useSetRecoilState} from 'recoil';
 import PageHeader from '../components/PageHeader';
 import TitleSection from './components/TitleSection';
 import MediaSection from './components/MediaSection';
@@ -43,7 +41,6 @@ type Form = Product & {
 };
 
 export default function ProductEdit(props: Props) {
-  const setNavigation = useSetRecoilState(navigationActiveState);
   const {
     product,
     variant_options,
@@ -65,10 +62,6 @@ export default function ProductEdit(props: Props) {
 
   const [isProductTypeLoading, setIsProductTypeLoading] = useState(false);
   const [isTagsLoading, setIsTagsLoading] = useState(false);
-
-  useEffect(() => {
-    setNavigation('Products');
-  }, []);
 
   useEffect(() => {
     // console.log('data changed', data);

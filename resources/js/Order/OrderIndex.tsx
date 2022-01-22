@@ -1,7 +1,5 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Main from '../Main';
-import {navigationActiveState} from '../atoms';
-import {useSetRecoilState} from 'recoil';
 import PageHeader from './../components/PageHeader';
 import {Order} from '../types';
 import DraftOrderIndexActionButtons from './Draft/components/DraftOrderIndexActionButtons';
@@ -14,14 +12,8 @@ interface Props {
 }
 
 export default function OrderIndex(props: Props) {
-  const setNavigation = useSetRecoilState(navigationActiveState);
 
   const {orders} = props;
-  console.log('props', props);
-
-  useEffect(() => {
-    setNavigation('Orders');
-  }, []);
 
   const onOrderClick = (order: Order) => {
     Inertia.get(route('lshopify.orders.show', [order.id]));

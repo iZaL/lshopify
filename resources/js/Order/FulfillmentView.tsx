@@ -1,7 +1,5 @@
 import React, {useEffect} from 'react';
 import Main from '../Main';
-import {navigationActiveState} from '../atoms';
-import {useSetRecoilState} from 'recoil';
 import PageHeader from '../components/PageHeader';
 import Card from '../components/Card';
 import Border from '../components/Border';
@@ -28,7 +26,6 @@ interface Props {
 }
 
 export default function FulfillmentView({fulfillment, order}: Props) {
-  const setNavigation = useSetRecoilState(navigationActiveState);
 
   const {data, setData} = useForm<{
     order: Order;
@@ -37,14 +34,6 @@ export default function FulfillmentView({fulfillment, order}: Props) {
     order: order,
     fulfillment: fulfillment,
   });
-
-  useEffect(() => {
-    setNavigation('Orders');
-  }, []);
-
-  useEffect(() => {
-    console.log('data changed', data);
-  }, [data]);
 
   useEffect(() => {
     setData({

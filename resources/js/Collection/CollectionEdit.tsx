@@ -1,7 +1,5 @@
 import React, {useEffect} from 'react';
 import Main from '../Main';
-import {navigationActiveState} from '../atoms';
-import {useSetRecoilState} from 'recoil';
 import PageHeader from '../components/PageHeader';
 import TitleSection from './components/TitleSection';
 import FormSubmitBar from '../components/FormSubmitBar';
@@ -18,27 +16,16 @@ interface Props {
 }
 
 export default function CollectionEdit(props: Props) {
-  const setNavigation = useSetRecoilState(navigationActiveState);
 
   const {collection, products} = props;
 
-  console.log('props', props);
-
-  const {data, setData} = useForm<
+  const {data, setData, isDirty} = useForm<
     Collection & {searchTerm: string; sortTerm: string}
   >({
     ...collection,
     searchTerm: '',
     sortTerm: '',
   });
-
-  useEffect(() => {
-    setNavigation('Products');
-  }, []);
-
-  useEffect(() => {
-    console.log('data changed', data);
-  }, [data]);
 
   useEffect(() => {
     setData({
@@ -82,7 +69,7 @@ export default function CollectionEdit(props: Props) {
   return (
     <Main>
       <div className="p-6">
-        <FormSubmitBar onSubmit={handleSubmit} />
+        <FormSubmitBar onSubmit={handleSubmit} show={isDirty} />
 
         <PageHeader text={collection.name} />
 

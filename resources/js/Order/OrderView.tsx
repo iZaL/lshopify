@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import Main from '../Main';
-import {navigationActiveState} from '../atoms';
-import {useSetRecoilState} from 'recoil';
 import PageHeader from './../components/PageHeader';
 import {Billing, Customer, Fulfillment, Order, Shipping} from '../types';
 import OrderItems from './components/OrderItems';
@@ -25,7 +23,6 @@ interface Props {
 }
 
 export default function OrderView(props: Props) {
-  const setNavigation = useSetRecoilState(navigationActiveState);
 
   const {order, customers} = props;
 
@@ -42,10 +39,6 @@ export default function OrderView(props: Props) {
       ...order,
     });
   }, [order]);
-
-  useEffect(() => {
-    setNavigation('Orders');
-  }, []);
 
   const onCustomerCreate = (
     customerData: any,

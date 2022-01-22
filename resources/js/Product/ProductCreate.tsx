@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import Main from '../Main';
-import {navigationActiveState} from '../atoms';
-import {useSetRecoilState} from 'recoil';
 import PageHeader from '../components/PageHeader';
 import TitleSection from './components/TitleSection';
 import MediaSection from './components/MediaSection';
@@ -37,7 +35,6 @@ export default function ProductCreate(props: Props) {
   const [isProductTypeLoading, setIsProductTypeLoading] = useState(false);
   const [isTagsLoading, setIsTagsLoading] = useState(false);
 
-  const setNavigation = useSetRecoilState(navigationActiveState);
   const product: Product = {
     id: 0,
     title: 'Short sleeve t-shirt',
@@ -70,10 +67,6 @@ export default function ProductCreate(props: Props) {
   const {data, setData, isDirty} = useForm({
     ...product,
   });
-
-  useEffect(() => {
-    setNavigation('Products');
-  }, []);
 
   useEffect(() => {
     console.log('data changed', data);

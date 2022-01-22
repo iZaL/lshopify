@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import Main from '../../Main';
-import {navigationActiveState} from '../../atoms';
-import {useSetRecoilState} from 'recoil';
 import PageHeader from '../../components/PageHeader';
 import FormSubmitBar from '../../components/FormSubmitBar';
 import {useForm} from '@inertiajs/inertia-react';
@@ -16,7 +14,6 @@ interface Props {
 }
 
 export default function DraftOrderCreate(props: Props) {
-  const setNavigation = useSetRecoilState(navigationActiveState);
 
   const {products, cart} = props;
 
@@ -25,10 +22,6 @@ export default function DraftOrderCreate(props: Props) {
   const {data} = useForm<Cart>({
     ...cart,
   });
-
-  useEffect(() => {
-    setNavigation('Orders');
-  }, []);
 
   useEffect(() => {
     console.log('data changed', data);

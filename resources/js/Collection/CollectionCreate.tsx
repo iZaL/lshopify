@@ -1,18 +1,15 @@
-import React, {useEffect} from 'react';
-import Main from '../Main';
-import {navigationActiveState} from '../atoms';
-import {useSetRecoilState} from 'recoil';
-import PageHeader from '../components/PageHeader';
-import TitleSection from './components/TitleSection';
-import FormSubmitBar from '../components/FormSubmitBar';
-import {useForm} from '@inertiajs/inertia-react';
-import {Collection} from '../types';
-import CollectionTypeSection from './components/CollectionTypeSection';
-import {Inertia} from '@inertiajs/inertia';
-import route from 'ziggy-js';
+import React from 'react'
+import Main from '../Main'
+import PageHeader from '../components/PageHeader'
+import TitleSection from './components/TitleSection'
+import FormSubmitBar from '../components/FormSubmitBar'
+import { useForm } from '@inertiajs/inertia-react'
+import { Collection } from '../types'
+import CollectionTypeSection from './components/CollectionTypeSection'
+import { Inertia } from '@inertiajs/inertia'
+import route from 'ziggy-js'
 
 export default function CollectionCreate() {
-  const setNavigation = useSetRecoilState(navigationActiveState);
 
   const collection: Collection = {
     id: 0,
@@ -23,17 +20,9 @@ export default function CollectionCreate() {
     conditions: [],
   };
 
-  const {data, setData} = useForm({
+  const {data, setData, isDirty} = useForm({
     ...collection,
   });
-
-  useEffect(() => {
-    setNavigation('Products');
-  }, []);
-
-  useEffect(() => {
-    console.log('data changed', data);
-  }, [data]);
 
   const handleSubmit = () => {
     const url = route('lshopify.collections.store');
@@ -48,7 +37,7 @@ export default function CollectionCreate() {
   return (
     <Main>
       <div className="p-6">
-        <FormSubmitBar onSubmit={handleSubmit} />
+        <FormSubmitBar onSubmit={handleSubmit} show={isDirty} />
 
         <PageHeader text={'Create collection'} />
 

@@ -1,7 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Main from '../Main';
-import {navigationActiveState} from '../atoms';
-import {useSetRecoilState} from 'recoil';
 import PageHeader from '../components/PageHeader';
 import {Product} from '../types';
 import ProductIndexActionButtons from './components/ProductIndexActionButtons';
@@ -28,15 +26,9 @@ interface Props {
 }
 
 export default function ProductIndex(props: Props) {
-  const setNavigation = useSetRecoilState(navigationActiveState);
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const {products} = props;
-
-  useEffect(() => {
-    setNavigation('Products');
-  }, []);
 
   return (
     <Main>

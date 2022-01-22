@@ -1,7 +1,5 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Main from '../Main';
-import {navigationActiveState} from '../atoms';
-import {useSetRecoilState} from 'recoil';
 import PageHeader from '../components/PageHeader';
 import {Collection} from '../types';
 import CollectionIndexActionButtons from './components/CollectionIndexActionButtons';
@@ -12,13 +10,8 @@ interface Props {
 }
 
 export default function CollectionIndex(props: Props) {
-  const setNavigation = useSetRecoilState(navigationActiveState);
 
   const {collections} = props;
-
-  useEffect(() => {
-    setNavigation('Products');
-  }, []);
 
   return (
     <Main>

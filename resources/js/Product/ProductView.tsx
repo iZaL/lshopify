@@ -1,13 +1,7 @@
-import React, {useEffect} from 'react';
-import Main from '../Main';
-import {navigationActiveState} from '../atoms';
-import {useSetRecoilState} from 'recoil';
+import React from 'react'
+import Main from '../Main'
 
 export default function ProductView() {
-  const setNavigation = useSetRecoilState(navigationActiveState);
-  useEffect(() => {
-    setNavigation('Products');
-  }, []);
 
   return (
     <Main>

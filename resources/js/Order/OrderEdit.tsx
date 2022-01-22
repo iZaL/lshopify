@@ -1,24 +1,15 @@
-import React, {useEffect} from 'react';
-import Main from '../Main';
-import {navigationActiveState} from '../atoms';
-import {useSetRecoilState} from 'recoil';
-import PageHeader from './../components/PageHeader';
-import {Order} from '../types';
-import DraftOrderIndexActionButtons from './Draft/components/DraftOrderIndexActionButtons';
+import React from 'react'
+import Main from '../Main'
+import PageHeader from './../components/PageHeader'
+import { Order } from '../types'
+import DraftOrderIndexActionButtons from './Draft/components/DraftOrderIndexActionButtons'
 
 interface Props {
   order: Order;
 }
 
 export default function OrderEdit(props: Props) {
-  const setNavigation = useSetRecoilState(navigationActiveState);
-
   const {order} = props;
-  console.log('props', props);
-
-  useEffect(() => {
-    setNavigation('Orders');
-  }, []);
 
   return (
     <Main>
