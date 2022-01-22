@@ -2,9 +2,7 @@ import React from 'react';
 import Border from '../../../components/Border';
 import DropdownButton from '../../../components/DropdownButton';
 
-interface Props {}
-
-export default function Refunded({}: Props) {
+export default function Refunded() {
   return (
     <>
       <div className="mx-auto grid grid-cols-1 grid-flow-col-dense grid-cols-5 text-sm">

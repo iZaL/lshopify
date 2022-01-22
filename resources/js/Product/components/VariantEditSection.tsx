@@ -136,7 +136,7 @@ export default function VariantEditSection({
   const onVariantOptionClick = (option: VariantOption) => {
     let variantIDs: Array<number> = [];
     currentVariants.map(variant => {
-      variantIDs = variant.options?.some(({id}) => id === option.id)
+      return variantIDs = variant.options?.some(({id}) => id === option.id)
         ? [...variantIDs, variant.id]
         : [...variantIDs];
     });
@@ -398,12 +398,12 @@ export default function VariantEditSection({
                           'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
                         }
                        `}>
-                        {variantOptions.map((option: VariantOption, i) => {
+                        {variantOptions.map((option: VariantOption, idx) => {
                           let currentOption = ensure(
                             variant.options?.find(v => v.name === option.name),
                           );
                           return (
-                            <div key={i}>
+                            <div key={idx}>
                               <InputText
                                 name={currentOption.id}
                                 value={currentOption.id}
@@ -554,8 +554,8 @@ export default function VariantEditSection({
         onConfirm={onImageSubmit}>
         <div className="p-5">
           <DZFileUploadBox
-            onImagesSelect={images => setSelectedImage(images[0])}
-            onImagesUpload={images => onImagesUpload(images)}
+            onImagesSelect={imgs => setSelectedImage(imgs[0])}
+            onImagesUpload={imgs => onImagesUpload(imgs)}
             images={images}
             selectedImages={selectedImage ? [selectedImage] : []}
           />

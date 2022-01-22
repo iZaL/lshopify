@@ -84,6 +84,7 @@ const DZFileUploadBox = React.memo(
                 checked ? '' : 'group-hover:opacity-75',
                 'object-cover pointer-events-none',
               )}
+              alt=""
             />
           </div>
           {checkbox}

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, ReactNode} from 'react';
+import React, { useState, useEffect, ReactNode, useMemo } from 'react'
 import {usePage} from '@inertiajs/inertia-react';
 import {XIcon} from '@heroicons/react/solid';
 import {Page} from '@inertiajs/inertia';
@@ -24,10 +24,12 @@ export default function FlashMessages() {
   const [visible, setVisible] = useState(false);
   const {flash, errors, env} = usePage<Props>().props;
   //
-  let flashMessage: {type: keyof FlashMessageType; message: string | null} = {
-    type: 'success',
-    message: null,
-  };
+  let flashMessage: {type: keyof FlashMessageType; message: string | null} = useMemo(() => {
+    return {
+      type: 'success',
+      message: null,
+    }
+  },[]);
 
   if (flash) {
     if (flash.success) {
@@ -54,15 +56,15 @@ export default function FlashMessages() {
   //     });
   // }
 
-  const errorMessages: Array<string> = errors
+  const errorMessages: Array<string> = useMemo(()=> errors
     ? Object.keys(errors).map(key => errors[key])
-    : [];
+    : [],[errors]);
 
   useEffect(() => {
     if (flashMessage.message || errorMessages.length) {
       setVisible(true);
     }
-  }, [flash, errors]);
+  }, [flashMessage, errorMessages]);
 
   let message: string | ReactNode = flashMessage.message;
   let flashMessageType: keyof FlashMessageType = flashMessage.type;
@@ -77,8 +79,8 @@ export default function FlashMessages() {
         </h3>
         <div className={`mt-2 text-sm text-gray-50`}>
           <ul className="list-disc pl-5 space-y-1">
-            {errorMessages.map((message, index) => {
-              return <li key={index}>{message}</li>;
+            {errorMessages.map((msg, index) => {
+              return <li key={index}>{msg}</li>;
             })}
           </ul>
         </div>

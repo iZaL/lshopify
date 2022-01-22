@@ -55,8 +55,8 @@ export default function OrganizationSection({
     setCollection(newCollection);
   };
 
-  const onTagsChange = (tags: any) => {
-    const newTags = tags.map((option: {label: string; value: string}) => {
+  const onTagsChange = (tgs: any) => {
+    const newTags = tgs.map((option: {label: string; value: string}) => {
       return {
         id: option.value,
         name: option.label,
@@ -65,8 +65,8 @@ export default function OrganizationSection({
     setTags(newTags);
   };
 
-  const onProductChange = (productTypes: any) => {
-    onProductTypeChange(productTypes);
+  const onProductChange = (types: any) => {
+    onProductTypeChange(types);
   };
 
   return (

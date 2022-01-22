@@ -3,11 +3,7 @@ import Main from '../Main';
 import {navigationActiveState} from '../atoms';
 import {useSetRecoilState} from 'recoil';
 
-interface Props {
-  data: {product: object};
-}
-
-export default function ProductView({}: Props) {
+export default function ProductView() {
   const setNavigation = useSetRecoilState(navigationActiveState);
   useEffect(() => {
     setNavigation('Products');

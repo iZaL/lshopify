@@ -63,11 +63,11 @@ export default function EditVariantOptions({
             </div>
             <div className="m-auto flex-1 px-4 text-sm text-gray-700">
               <div className="flex flex-row items-center space-x-2" key={i}>
-                {option.options?.map((o, i) => {
+                {option.options?.map((o, idx) => {
                   return (
                     <div
                       className="flex flex-row bg-gray-200 rounded rounded-md items-center justify-end h-6 overflow-hidden "
-                      key={i}>
+                      key={idx}>
                       <div className="px-2  flex-1">{o.id}</div>
                       <XIcon
                         className="w-6 h-6 hover:bg-gray-300 cursor-pointer hover:rounded hover:rounded-md"

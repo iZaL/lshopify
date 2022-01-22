@@ -2,9 +2,7 @@ import React from 'react';
 import {Link} from '@inertiajs/inertia-react';
 import route from 'ziggy-js';
 
-interface Props {}
-
-export default function DraftOrderIndexActionButtons({}: Props) {
+export default function DraftOrderIndexActionButtons() {
   return (
     <div className="mt-5 flex xl:mt-0 xl:ml-4">
       <div className="">

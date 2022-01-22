@@ -124,13 +124,13 @@ export default function ProductSearch({
                   </>
                 )}
               </li>
-              {product.variants?.map((variant, i) => {
+              {product.variants?.map((variant, idx) => {
                 return (
                   <li
                     className="pl-11 flex flex-row items-center py-2 px-4 space-x-4 hover:bg-gray-100 text-sm
               border-b border-gray-200
               "
-                    key={i}
+                    key={idx}
                     onClick={() => addRemoveVariant(variant)}>
                     <Checkbox
                       checked={selectedVariantIDs.includes(variant.id)}

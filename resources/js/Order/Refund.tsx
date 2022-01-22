@@ -132,9 +132,9 @@ export default function Refund({order}: Props) {
 
     console.log('p', postData);
 
+    // @ts-ignore
     Inertia.post(
       route('lshopify.orders.refund', [order.id]),
-
       {
         variants: postData,
         // variants: data.order.variants?.map((v) => {

@@ -3,9 +3,7 @@ import {ArrowCircleUpIcon} from '@heroicons/react/solid/esm/index';
 import {Link} from '@inertiajs/inertia-react';
 import route from 'ziggy-js';
 
-interface TextAreaProps {}
-
-export default function FileUploadBox({}: TextAreaProps) {
+export default function FileUploadBox() {
   return (
     <div className="mt-1 sm:mt-0">
       <div className="flex justify-center px-6 pt-5 pb-6 border-2 border-gray-500 border-dashed rounded-md">

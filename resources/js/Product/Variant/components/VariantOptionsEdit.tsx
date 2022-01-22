@@ -93,8 +93,8 @@ export default function VariantOptionsEdit({
           <DZFileUploadBox
             images={images}
             selectedImages={selectedImage ? [selectedImage] : []}
-            onImagesSelect={images => setSelectedImage(images[0])}
-            onImagesUpload={images => onImagesUpload(images)}
+            onImagesSelect={imgs => setSelectedImage(imgs[0])}
+            onImagesUpload={imgs => onImagesUpload(imgs)}
           />
         </div>
       </Modal>

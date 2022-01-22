@@ -13,7 +13,7 @@ export default function OutsideClickHandler({children, onOutsideClick}: Props) {
     return () => {
       document.removeEventListener('mousedown', handleClick);
     };
-  }, []);
+  });
 
   const handleClick = (event: any) => {
     if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
