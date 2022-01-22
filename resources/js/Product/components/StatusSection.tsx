@@ -31,7 +31,7 @@ export default function StatusSection({onChange, activeStatus}: Props) {
 
       <div className="w-full border-t border-gray-300" />
 
-      <Subheader text={'SALES CHANNELS AND APPS'} style={'text-xs'} />
+      <Subheader text={'SALES CHANNELS AND APPS'} headerStyle={'text-xs'} />
       <Checkbox
         label="Online Store"
         name="online_store"

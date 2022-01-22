@@ -2,22 +2,23 @@ import React, {ReactNode} from 'react';
 import classNames from 'classnames';
 
 interface Props {
-  style?: string;
+  buttonStyle?: string;
   onClick?: () => void;
   theme?: 'success' | 'error' | 'warning' | 'default' | 'clear';
   border?: boolean;
+  rounded?: boolean;
   children?: ReactNode;
 }
 
 export default function Button({
   theme = 'success',
   border = true,
-  style,
+  buttonStyle,
   children,
   onClick,
 }: Props) {
   let themeStyle =
-    'text-white bg-green-700 border-green-300 hover:bg-green-900 focus:ring-1 focus:ring-offset-2 focus:ring-green-500 focus:border-green-500';
+    `text-white bg-green-700 hover:bg-green-900 focus:ring-1 focus:ring-offset-2 focus:ring-green-500 focus:border-green-500`;
 
   switch (theme) {
     case 'error':
@@ -45,7 +46,7 @@ export default function Button({
       onClick={onClick ?? undefined}
       className={classNames(
         theme === 'clear' ? `` : `py-2 px-4 rounded-md`,
-        ` box-border block inline-flex text-sm text-center focus:outline-none ${themeStyle} ${style} `,
+        ` box-border block inline-flex text-sm text-center justify-center items-center focus:outline-none ${themeStyle} ${buttonStyle} `,
       )}>
       {children}
     </button>

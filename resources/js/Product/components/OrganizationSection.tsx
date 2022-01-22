@@ -74,7 +74,7 @@ export default function OrganizationSection({
       <Subheader text={'Organization'} />
 
       <div className="mt-1 sm:mt-0 sm:col-span-2 py-2 text-sm">
-        <Label title="Product Type" style="mb-1" />
+        <Label title="Product Type" labelStyle="mb-1" />
         <CreatableSelect
           options={productTypes.map(({id, name}) => ({
             value: id,
@@ -100,7 +100,7 @@ export default function OrganizationSection({
 
       <Border />
 
-      <Subheader text={'COLLECTIONS'} style={'text-xs'} />
+      <Subheader text={'COLLECTIONS'} headerStyle={'text-xs'} />
 
       <div className="text-sm">
         <div onClick={() => setShowCollectionMenu(!showCollectionMenu)}>
@@ -127,11 +127,12 @@ export default function OrganizationSection({
             {collection.map((item, index) => {
               return (
                 <li className="flex flex-row justify-between " key={index}>
-                  <a
-                    href="#"
-                    className="text-sm text-gray-600 text-blue-500 underline">
+                  <Button
+                    theme='clear'
+                    buttonStyle="text-sm text-gray-600 text-blue-500 underline"
+                  >
                     {item.name}
-                  </a>
+                  </Button>
 
                   <Button
                     theme="clear"
@@ -153,7 +154,7 @@ export default function OrganizationSection({
 
       <Border />
 
-      <Subheader text={'TAGS'} style={'text-xs'} />
+      <Subheader text={'TAGS'} headerStyle={'text-xs'} />
 
       <CreatableSelect
         isMulti

@@ -17,7 +17,7 @@ export default function AddressCard({address, onSave, title}: Props) {
   return (
     <div className="">
       <div className="flex flex-row items-center justify-between">
-        <Subheader text={title} style="text-xs" />
+        <Subheader text={title} headerStyle="text-xs" />
         <div
           className="text-sm text-blue-500 cursor-pointer hover:underline"
           onClick={() => setShowDialog(true)}>

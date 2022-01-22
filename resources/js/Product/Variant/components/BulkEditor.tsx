@@ -166,7 +166,7 @@ export default function BulkEditor({variants, children}: Props) {
                             OMR
                           </div>
                         }
-                        style="pl-14"
+                        inputStyle="pl-14"
                         placeholder="0.00"
                         value={variant.price}
                       />
@@ -188,7 +188,7 @@ export default function BulkEditor({variants, children}: Props) {
                             OMR
                           </div>
                         }
-                        style="pl-14"
+                        inputStyle="pl-14"
                         placeholder="0.00"
                         value={variant.compare_at_price}
                       />
@@ -210,7 +210,7 @@ export default function BulkEditor({variants, children}: Props) {
                             OMR
                           </div>
                         }
-                        style="pl-14"
+                        inputStyle="pl-14"
                         placeholder="0.00"
                         value={variant.cost_price}
                       />
@@ -269,7 +269,7 @@ export default function BulkEditor({variants, children}: Props) {
                     <div className="flex-shrink-0 w-40 ">
                       <Checkbox
                         name="out_of_stock_sale"
-                        style="text-center"
+                        inputStyle="text-center"
                         checked={variant.out_of_stock_sale}
                         onChange={e =>
                           onAttributeChange(

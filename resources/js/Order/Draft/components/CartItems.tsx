@@ -59,7 +59,7 @@ export default function CartItems({
               <VariantImage
                 image={item.variant.image}
                 onClick={() => {}}
-                style="w-12 h-12"
+                imageStyle="w-12 h-12"
               />
               <div className=" text-sm">
                 {item.variant.product && (

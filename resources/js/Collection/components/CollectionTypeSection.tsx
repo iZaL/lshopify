@@ -6,6 +6,7 @@ import Border from '../../components/Border';
 import InputText from '../../components/forms/InputText';
 import Select from '../../components/forms/Select';
 import {TrashIcon} from '@heroicons/react/outline';
+import Button from '../../components/Button'
 
 interface Props {
   onChange: <T extends keyof Collection>(
@@ -105,7 +106,7 @@ export default function CollectionTypeSection({onChange, collection}: T) {
         <>
           <Border />
 
-          <Subheader text="CONDITIONS" style="text-xs" />
+          <Subheader text="CONDITIONS" headerStyle="text-xs" />
 
           <div className="flex flex-row items-center text-sm">
             <div className="">Products must match :</div>
@@ -135,7 +136,7 @@ export default function CollectionTypeSection({onChange, collection}: T) {
                 <Select
                   name="title"
                   value={condition.field}
-                  style="flex-1"
+                  inputStyle="flex-1"
                   onChange={e =>
                     onConditionChange(condition, 'field', e.target.value)
                   }>
@@ -147,7 +148,7 @@ export default function CollectionTypeSection({onChange, collection}: T) {
                 <Select
                   name="criteria"
                   value={condition.criteria}
-                  style="flex-1"
+                  inputStyle="flex-1"
                   onChange={e =>
                     onConditionChange(condition, 'criteria', e.target.value)
                   }>
@@ -159,7 +160,7 @@ export default function CollectionTypeSection({onChange, collection}: T) {
                 <InputText
                   name="value"
                   value={condition.value}
-                  style="flex-1"
+                  inputStyle="flex-1"
                   onChange={e =>
                     onConditionChange(condition, 'value', e.target.value)
                   }
@@ -172,12 +173,13 @@ export default function CollectionTypeSection({onChange, collection}: T) {
             );
           })}
 
-          <a
+          <Button
+            theme='default'
             onClick={addNewCondition}
-            href="#"
-            className="rounded rounded-md bg-white border border-gray-400 p-2 text-sm inline-block hover:bg-gray-100 ">
+            // className="rounded rounded-md bg-white border border-gray-400 p-2 text-sm inline-block hover:bg-gray-100 "
+          >
             Add another collection
-          </a>
+          </Button>
         </>
       )}
     </Card>

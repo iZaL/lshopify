@@ -91,7 +91,7 @@ export default function VariantSection({
       {hasVariants && (
         <>
           <Border />
-          <Subheader text="OPTIONS" style="text-sm" />
+          <Subheader text="OPTIONS" headerStyle="text-sm" />
           {currentVariants.map((variant: VariantOption, index) => {
             return (
               <VariantOptionsItem

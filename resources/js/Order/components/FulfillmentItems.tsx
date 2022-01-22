@@ -37,7 +37,7 @@ export default function FulfillmentItems({
                 <VariantImage
                   image={variant.image}
                   onClick={() => {}}
-                  style="w-12 h-12"
+                  imageStyle="w-12 h-12"
                 />
                 <div className="text-blue-500 flex-1 flex-shrink-0">
                   {variant.product && (

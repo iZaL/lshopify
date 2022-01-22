@@ -45,7 +45,7 @@ const MediaSection = ({onImagesUpload, images, onImagesDelete}: Props) => {
             </Button>
           </>
         ) : (
-          <Subheader text="Media" style="text-lg" />
+          <Subheader text="Media" headerStyle="text-lg" />
         )}
       </div>
 
@@ -53,8 +53,8 @@ const MediaSection = ({onImagesUpload, images, onImagesDelete}: Props) => {
         isMulti={true}
         images={images}
         selectedImages={selectedImages}
-        onImagesSelect={images => setSelectedImages(images)}
-        onImagesUpload={images => onImagesUpload(images)}
+        onImagesSelect={imgs => setSelectedImages(imgs)}
+        onImagesUpload={imgs => onImagesUpload(imgs)}
       />
 
       <Modal

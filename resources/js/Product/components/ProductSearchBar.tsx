@@ -150,7 +150,7 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
                             <InputText
                               name="tag"
                               onChange={() => {}}
-                              style="w-36"
+                              inputStyle="w-36"
                             />
                           </div>
                         </form>

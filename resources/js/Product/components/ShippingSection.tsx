@@ -28,7 +28,7 @@ export default function ShippingSection({variant, onChange}: Props) {
 
       {variant.physical_product && (
         <>
-          <Subheader text="WEIGHT" style="text-xs" />
+          <Subheader text="WEIGHT" headerStyle="text-xs" />
 
           <div className="">
             <Label title="Weight" />
@@ -44,7 +44,7 @@ export default function ShippingSection({variant, onChange}: Props) {
 
           <div className="w-full border-t border-gray-300" />
 
-          <Subheader text="CUSTOMS INFORMATION" style="text-xs" />
+          <Subheader text="CUSTOMS INFORMATION" headerStyle="text-xs" />
 
           <div className="flex-1 min-w-0">
             <span className="block text-sm text-gray-500 py-1">
@@ -88,7 +88,7 @@ export default function ShippingSection({variant, onChange}: Props) {
 
       {!variant.physical_product && (
         <div className="flex-1 min-w-0">
-          <Subheader text="WEIGHT" style="text-xs" />
+          <Subheader text="WEIGHT" headerStyle="text-xs" />
           <span className="block text-sm text-gray-500 py-1">
             Used to calculate shipping rates at checkout and label prices during
             fulfillment.

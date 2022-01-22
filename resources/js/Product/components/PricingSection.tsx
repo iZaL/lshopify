@@ -25,7 +25,7 @@ export default function PricingSection({onChange, variant}: Props) {
             leftComponent={
               <div className="text-md text-gray-400 text-sm">OMR</div>
             }
-            style="pl-14"
+            inputStyle="pl-14"
             placeholder="0.00"
             value={variant.price}
           />
@@ -39,7 +39,7 @@ export default function PricingSection({onChange, variant}: Props) {
             leftComponent={
               <div className="text-md text-gray-400 text-sm">OMR</div>
             }
-            style="pl-14"
+            inputStyle="pl-14"
             placeholder="0.00"
             value={variant.compare_at_price}
           />
@@ -55,7 +55,7 @@ export default function PricingSection({onChange, variant}: Props) {
             leftComponent={
               <div className="text-md text-gray-400 text-sm">OMR</div>
             }
-            style="pl-14"
+            inputStyle="pl-14"
             placeholder="0.00"
             value={variant.cost_price}
           />

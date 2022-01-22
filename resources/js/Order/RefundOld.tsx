@@ -222,7 +222,7 @@ export default function Refund({order}: Props) {
           </section>
 
           <section className="lg:col-start-3 lg:col-span-1 space-y-4">
-            <Card style="text-sm">
+            <Card cardStyle="text-sm">
               <Subheader text="Summary" />
 
               <div className="flex flex-row items-center justify-between ">
@@ -247,7 +247,7 @@ export default function Refund({order}: Props) {
 
               <Border />
 
-              <Subheader text="REFUND AMOUNT" style="text-xs" />
+              <Subheader text="REFUND AMOUNT" headerStyle="text-xs" />
               {order.is_payment_pending ? (
                 <div>This order is pending payment.</div>
               ) : (
@@ -259,7 +259,7 @@ export default function Refund({order}: Props) {
 
               <Border />
 
-              <Button onClick={() => handleSubmit()} style="w-full">
+              <Button onClick={() => handleSubmit()} buttonStyle="w-full">
                 <div className="w-full text-center">
                   {order.is_payment_pending ? 'Restock' : 'Refund'} items
                 </div>

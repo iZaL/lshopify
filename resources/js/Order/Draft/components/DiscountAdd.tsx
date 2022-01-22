@@ -52,7 +52,7 @@ export default function DiscountAdd({discount, children}: Props) {
                   <div className="text-md text-gray-400 text-sm">%</div>
                 ) : null
               }
-              style={discountAttributes.suffix === 'amount' ? 'pl-14' : ''}
+              inputStyle={discountAttributes.suffix === 'amount' ? 'pl-14' : ''}
               placeholder={
                 discountAttributes.suffix === 'amount' ? '0.00' : '0'
               }

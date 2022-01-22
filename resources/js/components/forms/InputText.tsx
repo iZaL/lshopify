@@ -2,16 +2,17 @@ import React, {ReactNode} from 'react';
 
 interface Props {
   name: string;
+  type?:string;
   autocomplete?: string;
   placeholder?: string;
-  style?: string;
+  inputStyle?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string | number;
   rightComponent?: ReactNode;
   leftComponent?: ReactNode;
   leftComponentOnClick?: ReactNode;
   rightComponentOnClick?: () => void;
-  [x: string]: any;
+  // [x: string]: any;
 }
 
 const Button = ({
@@ -40,11 +41,12 @@ export default function InputText({
   name,
   autocomplete,
   placeholder,
-  style,
+  inputStyle,
   leftComponent,
   rightComponent,
   rightComponentOnClick,
   leftComponentOnClick,
+  type,
   ...props
 }: Props) {
   return (
@@ -55,14 +57,14 @@ export default function InputText({
         </Button>
       )}
       <input
-        type="text"
+        type={type ? type:'text'}
         name={name}
         id={name}
         autoComplete={autocomplete ? autocomplete : ''}
         placeholder={placeholder ? placeholder : ''}
         className={`block w-full border border-gray-300 dark:border-gray-500 rounded-md shadow-sm py-2 pl-4 pr-10 dark:bg-gray-800
         ${leftComponent && 'pl-[3rem]'}
-        focus:outline-none focus:blue-500 focus:border-blue-500 sm:text-sm ${style}`}
+        focus:outline-none focus:blue-500 focus:border-blue-500 sm:text-sm ${inputStyle}`}
         {...props}
       />
       {rightComponent && (

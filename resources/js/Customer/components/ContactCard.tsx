@@ -16,7 +16,7 @@ export default function ContactCard({email, phone, onSave}: Props) {
   return (
     <div className="">
       <div className="flex flex-row items-center justify-between">
-        <Subheader text="CONTACT INFORMATION" style="text-xs" />
+        <Subheader text="CONTACT INFORMATION" headerStyle="text-xs" />
         <div
           className="text-sm text-blue-500 cursor-pointer hover:underline"
           onClick={() => setShowDialog(true)}>

@@ -17,7 +17,7 @@ export default function CollectionMenuItem({item, checked, onChange}: Props) {
         name={item.name}
         checked={checked}
         onChange={() => onChange(!checked)}
-        style="text-sm font-weight-light"
+        inputStyle="text-sm font-weight-light"
       />
       <div className="px-2">{item.name}</div>
     </li>

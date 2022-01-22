@@ -69,12 +69,12 @@ export default function VariantOptionsEdit({
         <div className="flex flex-col items-center justify-center w-40">
           <VariantImage
             image={variant?.image}
-            style="h-32 w-32"
+            imageStyle="h-32 w-32"
             onClick={() => setShowDialog(true)}
           />
           <Button
             theme="clear"
-            style="text-blue-500 text-sm text-center underline"
+            buttonStyle="text-blue-500 text-sm text-center underline"
             onClick={() => setShowDialog(true)}>
             Change image
           </Button>

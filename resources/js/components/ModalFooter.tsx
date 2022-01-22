@@ -24,7 +24,7 @@ export default function ModalFooter({
       </Button>
 
       {!hideCancelButton && (
-        <Button theme="default" onClick={onHideModal} style="mr-5">
+        <Button theme="default" onClick={onHideModal} buttonStyle="mr-5">
           Cancel
         </Button>
       )}

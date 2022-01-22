@@ -160,7 +160,7 @@ export default function VariantEditSection({
         <div className="flex-1">
           <Subheader text="Variants" />
         </div>
-        <Button onClick={onAddVariantClick} theme="clear" style="text-blue-500">
+        <Button onClick={onAddVariantClick} theme="clear" buttonStyle="text-blue-500">
           Add Variant
         </Button>
         <div className="relative">
@@ -213,7 +213,7 @@ export default function VariantEditSection({
           <div className="flex flex-row items-center w-full py-2 h-12 ">
             <Button
               theme="clear"
-              style="px-4 py-2 rounded-l-md border border-gray-300 font-medium">
+              buttonStyle="px-4 py-2 rounded-l-md border border-gray-300 font-medium">
               <Checkbox
                 name="selected"
                 checked={checkedVariantIDs.length === currentVariants.length}
@@ -224,7 +224,7 @@ export default function VariantEditSection({
 
             <Button
               theme="clear"
-              style="-ml-px px-4 py-2 border border-gray-300 font-medium"
+              buttonStyle="-ml-px px-4 py-2 border border-gray-300 font-medium"
               onClick={() => setShowDialog('bulk_editor')}>
               Open bulk editor
             </Button>
@@ -371,7 +371,7 @@ export default function VariantEditSection({
                     </div>
                     <div className="w-14 mr-2">
                       <VariantImage
-                        style="h-12"
+                        imageStyle="h-12"
                         image={variant.image}
                         onClick={() => {
                           setSelectedVariant(variant);
@@ -462,13 +462,13 @@ export default function VariantEditSection({
                           <div className="flex flex-row flex-nowrap box-border  items-center space-x-4">
                             <Button
                               theme="default"
-                              style="text-xs"
+                              buttonStyle="text-xs"
                               onClick={() => onEditVariantClick(variant)}>
                               Edit
                             </Button>
                             <Button
                               theme="default"
-                              style="text-xs"
+                              buttonStyle="text-xs"
                               onClick={() => {
                                 setSelectedVariant(variant);
                                 setShowDialog('delete_variant');

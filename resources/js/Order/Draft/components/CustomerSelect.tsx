@@ -67,7 +67,7 @@ export default function CustomerSelect({
               </div>
             </div>
 
-            <Border style="my-0" />
+            <Border borderStyle="my-0" />
 
             <ul className="p-2">
               {customers.map((customer, i) => (

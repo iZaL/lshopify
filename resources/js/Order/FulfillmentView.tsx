@@ -143,7 +143,7 @@ export default function FulfillmentView({fulfillment, order}: Props) {
               <Border />
 
               <div className="flex justify-end pb-5 px-5">
-                <Button style="w-full" onClick={() => handleSubmit()}>
+                <Button buttonStyle="w-full" onClick={() => handleSubmit()}>
                   <div className="w-full text-center">Fulfill Items</div>
                 </Button>
               </div>

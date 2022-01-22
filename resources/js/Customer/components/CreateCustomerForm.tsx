@@ -101,7 +101,6 @@ export default function CreateCustomerForm({customer, children}: Props) {
             <Label title="Email address" />
             <InputText
               name="email"
-              type="email"
               value={customerData.email}
               onChange={e => onCustomerAttributeChange('email', e.target.value)}
             />

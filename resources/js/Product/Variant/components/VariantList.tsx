@@ -17,8 +17,8 @@ export default function VariantList({
   onVariantItemClick,
 }: Props) {
   return (
-    <Card style="px-0">
-      <Subheader text="Variants" style="px-4" />
+    <Card cardStyle="px-0">
+      <Subheader text="Variants" headerStyle="px-4" />
       <ul className="">
         {variants.map((v, i) => {
           return (
@@ -32,7 +32,7 @@ export default function VariantList({
               <VariantImage
                 image={v.image}
                 onClick={() => {}}
-                style="h-8 w-8"
+                imageStyle="h-8 w-8"
               />
               <div className="">{v.title}</div>
             </li>

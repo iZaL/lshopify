@@ -3,23 +3,23 @@ import {Image} from '../../../types';
 
 interface Props {
   image: Image | null | undefined;
-  style?: string;
+  imageStyle?: string;
   onClick: () => void;
 }
 
-export default function VariantImage({image, style, onClick}: Props) {
-  let imageStyle = style ? style : 'w-16 h-16';
+export default function VariantImage({image, imageStyle, onClick}: Props) {
+  let style = imageStyle ? imageStyle : 'w-16 h-16';
 
   return (
     <div
-      className={`flex justify-center items-center  border border-gray-200 rounded cursor-pointer ${imageStyle}`}
+      className={`flex justify-center items-center  border border-gray-200 rounded cursor-pointer ${style}`}
       onClick={onClick}>
       {image ? (
         <img src={image.url} className="object-contain pointer-events-none" alt="" />
       ) : (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className={`${imageStyle} `}
+          className={`${style} `}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor">

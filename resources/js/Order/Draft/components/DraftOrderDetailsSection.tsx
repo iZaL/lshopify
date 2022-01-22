@@ -120,7 +120,7 @@ export default function DraftOrderDetailsSection({
                   <div className="flex flex-row justify-between">
                     <Button
                       theme="clear"
-                      style="text-blue-500 hover:underline"
+                      buttonStyle="text-blue-500 hover:underline"
                       onClick={() => onShowDiscountDialog(cart.discount)}>
                       Edit discount
                     </Button>
@@ -135,7 +135,7 @@ export default function DraftOrderDetailsSection({
                   <Button
                     theme="clear"
                     onClick={() => onShowDiscountDialog(cart.discount)}
-                    style="text-blue-500 hover:underline">
+                    buttonStyle="text-blue-500 hover:underline">
                     Add discount
                   </Button>
                   <div className="">——</div>
@@ -215,7 +215,7 @@ export default function DraftOrderDetailsSection({
                     setShowDialog(null);
                     onRemoveDiscountConfirm(selectedDiscount);
                   }}
-                  style="mr-5">
+                  buttonStyle="mr-5">
                   Remove discount
                 </Button>
               )}

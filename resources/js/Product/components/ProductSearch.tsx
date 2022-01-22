@@ -63,7 +63,7 @@ export default function ProductSearch({
         <Button
           theme="default"
           onClick={() => setShowDialog(true)}
-          style="ml-2">
+          buttonStyle="ml-2">
           Browse
         </Button>
       </div>
@@ -112,7 +112,7 @@ export default function ProductSearch({
                 <VariantImage
                   image={product.image}
                   onClick={() => {}}
-                  style="w-12 h-12"
+                  imageStyle="w-12 h-12"
                 />
                 <div className="flex-auto">{product.title}</div>
                 {!product.variants?.length && (
@@ -140,7 +140,7 @@ export default function ProductSearch({
                     <VariantImage
                       image={variant.image}
                       onClick={() => {}}
-                      style="w-12 h-12"
+                      imageStyle="w-12 h-12"
                     />
                     <div className="flex-auto">{variant.title}</div>
                     <div className="w-20">{variant.quantity} available</div>

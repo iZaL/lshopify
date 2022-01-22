@@ -5,13 +5,13 @@ interface Props {
   label?: string;
   checked: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  style?: string;
+  inputStyle?: string;
 }
 
 export default function Checkbox({
   name,
   label,
-  style,
+  inputStyle,
   checked = false,
   onChange,
 }: Props) {
@@ -22,7 +22,7 @@ export default function Checkbox({
           id={name}
           name={name}
           type="checkbox"
-          className={`focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded ${style}`}
+          className={`focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded ${inputStyle}`}
           checked={checked}
           onChange={onChange}
         />

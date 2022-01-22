@@ -122,7 +122,7 @@ export default function OrderView(props: Props) {
         <div className="mt-6 max-w-3xl mx-auto grid grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
           <section className="lg:col-start-1 lg:col-span-2 space-y-6 ">
             {order.pending_fulfillments?.map((fulfillment, i) => (
-              <Card style="p-0" key={i}>
+              <Card cardStyle="p-0" key={i}>
                 <Subheader text="Unfulfilled" />
                 <OrderItems
                   variants={fulfillment.variants}
@@ -138,7 +138,7 @@ export default function OrderView(props: Props) {
             ))}
 
             {order.success_fulfillments?.map((fulfillment, i) => (
-              <Card style="p-0" key={i}>
+              <Card cardStyle="p-0" key={i}>
                 <Subheader text={`Fulfilled #${fulfillment.id}`} />
                 <OrderItems
                   variants={fulfillment.variants}
@@ -155,7 +155,7 @@ export default function OrderView(props: Props) {
             ))}
 
             {order.returns.length ? (
-              <Card style="p-0">
+              <Card cardStyle="p-0">
                 <Subheader text={`Returned`} />
                 <OrderItems variants={order.returns} onItemClick={() => {}} />
                 <Border />
@@ -186,7 +186,7 @@ export default function OrderView(props: Props) {
             )}
 
             {order.payments?.map((payment, i) => (
-              <Card style="p-0" key={i}>
+              <Card cardStyle="p-0" key={i}>
                 <Subheader text="Paid" />
                 <PaymentPaid payment={payment} quantity={order.quantity} />
               </Card>

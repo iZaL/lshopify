@@ -91,7 +91,7 @@ export default function ProductAddSection({
               <ProductTitle product={product} />
             </div>
             <Button
-              style="p-2"
+              buttonStyle="p-2"
               theme="clear"
               onClick={() => removeProductFromCollection(product)}>
               <XIcon className="w-5 h-5 text-gray-500" />

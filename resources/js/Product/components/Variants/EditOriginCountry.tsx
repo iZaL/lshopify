@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Variant} from '../../../types';
+import Button from '../../../components/Button'
 
 interface Props {
   variants: Variant[];
@@ -32,12 +33,11 @@ export default function EditOriginCountry({
             <option value="3">Mexico</option>
           </select>
         </div>
-        <a
-          href="#"
-          onClick={() => onApplyAll(allText)}
-          className="inline-flex justify-center items-center px-3 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
+        <Button
+          theme='default'
+          onClick={() => onApplyAll(allText)}>
           Apply to all
-        </a>
+        </Button>
       </form>
 
       {variants.map((variant, i) => {
