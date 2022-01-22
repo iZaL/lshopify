@@ -3,13 +3,7 @@ import Main from '../Main';
 import {navigationActiveState} from '../atoms';
 import {useSetRecoilState} from 'recoil';
 import PageHeader from './../components/PageHeader';
-import {
-  Billing,
-  Customer,
-  Fulfillment,
-  Order,
-  Shipping,
-} from '../types';
+import {Billing, Customer, Fulfillment, Order, Shipping} from '../types';
 import OrderItems from './components/OrderItems';
 import Card from '../components/Card';
 import Button from '../components/Button';

@@ -61,7 +61,7 @@ export default function ProductEdit(props: Props) {
     _method: 'PATCH',
   };
 
-  const {data, setData, post} = useForm<Form>(formProps);
+  const {data, setData, post, isDirty} = useForm<Form>(formProps);
 
   const [isProductTypeLoading, setIsProductTypeLoading] = useState(false);
   const [isTagsLoading, setIsTagsLoading] = useState(false);
@@ -199,14 +199,16 @@ export default function ProductEdit(props: Props) {
     const url = route('lshopify.products.update', [product.id]);
     post(url, {
       preserveScroll: false,
+      preserveState: false,
       onSuccess: () => {},
     });
   };
 
+  console.log('isDirty', isDirty);
   return (
     <Main>
       <div className="p-6">
-        <FormSubmitBar onSubmit={handleSubmit} />
+        <FormSubmitBar onSubmit={handleSubmit} show={isDirty} />
 
         <PageHeader text={product.title} />
 

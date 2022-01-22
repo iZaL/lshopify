@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {SearchIcon} from '@heroicons/react/outline';
 import {ChevronDownIcon, SortAscendingIcon} from '@heroicons/react/solid';
 import classNames from 'classnames';
+import {Popover, Transition} from '@headlessui/react';
+import InputText from '../../components/forms/InputText';
 
 interface TabProps {
   name: string;
@@ -13,6 +15,17 @@ interface Props {
   tabs: TabProps[];
   onMoreFiltersClick: () => void;
 }
+// const filters = [
+//   {
+//     id: 'category',
+//     name: 'Category',
+//     options: [
+//       { value: 'new-arrivals', label: 'All New Arrivals', checked: false },
+//       { value: 'tees', label: 'Tees', checked: false },
+//       { value: 'objects', label: 'Objects', checked: true },
+//     ],
+//   }
+// ]
 
 export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
   return (
@@ -71,54 +84,196 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
 
           <div className="col-span-12 sm:col-span-6">
             <div className="relative z-0 inline-flex shadow-sm rounded-md sm:shadow-none sm:space-x-3">
-              <div className="inline-flex sm:shadow-sm">
-                <button
-                  type="button"
-                  className="hidden sm:inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600">
-                  <span>Vendor</span>
-                  <ChevronDownIcon
-                    className="ml-2.5 h-5 w-5 text-gray-400"
-                    aria-hidden="true"
-                  />
-                </button>
-                <button
-                  type="button"
-                  className="hidden sm:inline-flex -ml-px relative items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600">
-                  <span>Tagged</span>
-                  <ChevronDownIcon
-                    className="ml-2.5 h-5 w-5 text-gray-400"
-                    aria-hidden="true"
-                  />
-                </button>
-                <button
-                  type="button"
-                  className="hidden sm:inline-flex -ml-px relative items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600">
-                  <span>Status</span>
-                  <ChevronDownIcon
-                    className="ml-2.5 h-5 w-5 text-gray-400"
-                    aria-hidden="true"
-                  />
-                </button>
+              <Popover.Group className="flex items-center">
+                <div className="inline-flex sm:shadow-sm">
+                  <Popover className="relative inline-block text-left">
+                    <Popover.Button
+                      className="hidden group sm:inline-flex justify-center text-sm font-medium hover:text-gray-900
+                       px-4 py-2 rounded-l-md border border-gray-300 text-gray-900 hover:bg-gray-50
+                      ">
+                      <span>Vendor</span>
+                      <ChevronDownIcon
+                        className="flex-shrink-0 -mr-1 ml-1 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                        aria-hidden="true"
+                      />
+                    </Popover.Button>
 
-                <button
-                  type="button"
-                  onClick={onMoreFiltersClick}
-                  className="sm:inline-flex -ml-px relative items-center px-4 py-2 md:rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600">
-                  <span>Filters</span>
-                </button>
-              </div>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95">
+                      <Popover.Panel className="origin-top-right absolute right-0 mt-2 bg-white rounded-md shadow-2xl p-4 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <form className="space-y-4">
+                          <div className="flex items-center">
+                            <input
+                              id={`filter-1-1`}
+                              name={`1[]`}
+                              defaultValue={1}
+                              type="checkbox"
+                              defaultChecked={false}
+                              className="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
+                            />
+                            <label
+                              htmlFor={`filter-1-1`}
+                              className="ml-3 pr-6 text-sm font-medium text-gray-900 whitespace-nowrap">
+                              zalsstoredev
+                            </label>
+                          </div>
+                        </form>
+                      </Popover.Panel>
+                    </Transition>
+                  </Popover>
+                  <Popover className="relative inline-block text-left">
+                    <Popover.Button className="hidden sm:inline-flex -ml-px relative items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-900 hover:bg-gray-50">
+                      <span>Tagged</span>
+                      <ChevronDownIcon
+                        className="flex-shrink-0 -mr-1 ml-1 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                        aria-hidden="true"
+                      />
+                    </Popover.Button>
 
-              <div className="hidden lg:flex space-x-3">
-                <button
-                  type="button"
-                  className="sm:inline-flex -ml-px relative items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600">
-                  <SortAscendingIcon
-                    className="mr-2.5 h-5 w-5 text-gray-400"
-                    aria-hidden="true"
-                  />
-                  <span>Sort</span>
-                </button>
-              </div>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95">
+                      <Popover.Panel className="origin-top-right absolute right-0 mt-2 bg-white rounded-md shadow-2xl p-4 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <form className="space-y-4">
+                          <div className="flex items-center">
+                            <InputText
+                              name="tag"
+                              onChange={() => {}}
+                              style="w-36"
+                            />
+                          </div>
+                        </form>
+                      </Popover.Panel>
+                    </Transition>
+                  </Popover>
+
+                  <Popover className="relative inline-block text-left">
+                    <Popover.Button className="hidden sm:inline-flex -ml-px relative items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-900 hover:bg-gray-50">
+                      <span>Status</span>
+                      <ChevronDownIcon
+                        className="flex-shrink-0 -mr-1 ml-1 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                        aria-hidden="true"
+                      />
+                    </Popover.Button>
+
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95">
+                      <Popover.Panel className="origin-top-right absolute right-0 mt-2 bg-white rounded-md shadow-2xl p-4 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <form className="space-y-4">
+                          <div className="flex items-center">
+                            <input
+                              id={`filter-1-1`}
+                              name={`1[]`}
+                              defaultValue={1}
+                              type="checkbox"
+                              defaultChecked={false}
+                              className="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
+                            />
+                            <label
+                              htmlFor={`filter-1-1`}
+                              className="ml-3 pr-6 text-sm font-medium text-gray-900 whitespace-nowrap">
+                              Active
+                            </label>
+                          </div>
+                          <div className="flex items-center">
+                            <input
+                              id={`filter-1-1`}
+                              name={`1[]`}
+                              defaultValue={1}
+                              type="checkbox"
+                              defaultChecked={false}
+                              className="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
+                            />
+                            <label
+                              htmlFor={`filter-1-1`}
+                              className="ml-3 pr-6 text-sm font-medium text-gray-900 whitespace-nowrap">
+                              Draft
+                            </label>
+                          </div>
+                        </form>
+                      </Popover.Panel>
+                    </Transition>
+                  </Popover>
+
+                  <button
+                    type="button"
+                    onClick={onMoreFiltersClick}
+                    className="sm:inline-flex -ml-px relative items-center px-4 py-2 md:rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600">
+                    <span>Filters</span>
+                  </button>
+                </div>
+
+                <div className="hidden lg:flex space-x-3 ml-4">
+                  <Popover className="relative inline-block text-left">
+                    <Popover.Button className="sm:inline-flex -ml-px relative items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600">
+                      <SortAscendingIcon
+                        className="mr-2.5 h-5 w-5 text-gray-400"
+                        aria-hidden="true"
+                      />
+                      <span>Sort</span>
+                    </Popover.Button>
+
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95">
+                      <Popover.Panel className="origin-top-right absolute right-0 mt-2 bg-white rounded-md shadow-2xl p-4 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <form className="space-y-4">
+                          <div className="flex items-center">
+                            <input
+                              id={`filter-1-1`}
+                              name={`1[]`}
+                              type="radio"
+                              defaultChecked={false}
+                              className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                            />
+                            <label
+                              htmlFor={`filter-1-1`}
+                              className="ml-3 pr-6 text-sm text-gray-900 whitespace-nowrap">
+                              Product title A-Z
+                            </label>
+                          </div>
+                          <div className="flex items-center">
+                            <input
+                              id={`filter-1-1`}
+                              name={`1[]`}
+                              type="radio"
+                              defaultChecked={false}
+                              className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                            />
+                            <label
+                              htmlFor={`filter-1-1`}
+                              className="ml-3 pr-6 text-sm text-gray-900 whitespace-nowrap">
+                              Product title Z-A
+                            </label>
+                          </div>
+                        </form>
+                      </Popover.Panel>
+                    </Transition>
+                  </Popover>
+                </div>
+              </Popover.Group>
             </div>
           </div>
         </div>

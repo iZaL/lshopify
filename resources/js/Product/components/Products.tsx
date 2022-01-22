@@ -62,7 +62,7 @@ export default function Products({products}: Props) {
                     className={`${id % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
                     <td>
                       <div className="flex justify-center items-center w-12">
-                        <Checkbox checked={true} onChange={() => {}} name="" />
+                        <Checkbox checked={false} onChange={() => {}} name="" />
                       </div>
                     </td>
                     <td className="py-2">

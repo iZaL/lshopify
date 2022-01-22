@@ -6,14 +6,7 @@ import PageHeader from '../../components/PageHeader';
 import FormSubmitBar from '../../components/FormSubmitBar';
 import {Inertia} from '@inertiajs/inertia';
 import {useForm} from '@inertiajs/inertia-react';
-import {
-  Cart,
-  Order,
-  Product,
-  Customer,
-  Billing,
-  Shipping,
-} from '../../types';
+import {Cart, Order, Product, Customer, Billing, Shipping} from '../../types';
 import DraftOrderDetailsSection from './components/DraftOrderDetailsSection';
 import CustomerSelect from './components/CustomerSelect';
 import CustomerEdit from './components/CustomerEdit';
@@ -69,7 +62,7 @@ export default function DraftOrderEdit(props: Props) {
   };
 
   const onCartItemEdit = (rowId: string, item: any) => {
-  // const onCartItemEdit = (rowId: string, item: CartItem) => {
+    // const onCartItemEdit = (rowId: string, item: CartItem) => {
     // @ts-ignore
     Inertia.post(route('lshopify.cart.update'), {
       rowId: rowId,
@@ -79,7 +72,7 @@ export default function DraftOrderEdit(props: Props) {
   };
 
   const onApplyDiscount = (discount: any, item?: any) => {
-  // const onApplyDiscount = (discount: CartDiscount, item?: CartItem) => {
+    // const onApplyDiscount = (discount: CartDiscount, item?: CartItem) => {
     Inertia.post(route('lshopify.cart.discount.add'), {
       discount: discount,
       item: item,
@@ -87,7 +80,7 @@ export default function DraftOrderEdit(props: Props) {
   };
 
   const onRemoveDiscount = (discount: any, item?: any) => {
-  // const onRemoveDiscount = (discount: CartDiscount, item?: CartItem) => {
+    // const onRemoveDiscount = (discount: CartDiscount, item?: CartItem) => {
     Inertia.post(route('lshopify.cart.discount.remove'), {
       discount: discount,
       item: item,
