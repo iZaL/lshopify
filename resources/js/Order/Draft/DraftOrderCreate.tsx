@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from 'react';
-import Main from '../../Main';
-import {navigationActiveState} from '../../atoms';
-import {useSetRecoilState} from 'recoil';
-import PageHeader from '../../components/PageHeader';
-import FormSubmitBar from '../../components/FormSubmitBar';
-import {useForm} from '@inertiajs/inertia-react';
-import {Inertia} from '@inertiajs/inertia';
-import DraftOrderDetailsSection from './components/DraftOrderDetailsSection';
-import {Product, Cart, CartItem, CartDiscount} from '../../types';
-import route from 'ziggy-js';
+import React, { useEffect, useState } from 'react'
+import Main from '../../Main'
+import { navigationActiveState } from '../../atoms'
+import { useSetRecoilState } from 'recoil'
+import PageHeader from '../../components/PageHeader'
+import FormSubmitBar from '../../components/FormSubmitBar'
+import { useForm } from '@inertiajs/inertia-react'
+import { Inertia } from '@inertiajs/inertia'
+import DraftOrderDetailsSection from './components/DraftOrderDetailsSection'
+import { Cart, Product } from '../../types'
+import route from 'ziggy-js'
 
 interface Props {
   products: Product[];
@@ -46,7 +46,8 @@ export default function DraftOrderCreate(props: Props) {
     });
   };
 
-  const onVariantEdit = (rowId: string, item: CartItem) => {
+  const onVariantEdit = (rowId: string, item: any) => {
+  // const onVariantEdit = (rowId: string, item: CartItem) => {
     // @ts-ignore
     Inertia.post(route('lshopify.cart.update'), {
       rowId: rowId,
@@ -54,7 +55,8 @@ export default function DraftOrderCreate(props: Props) {
     });
   };
 
-  const onApplyDiscount = (discount: CartDiscount, item?: CartItem) => {
+  const onApplyDiscount = (discount: any, item?: any) => {
+  // const onApplyDiscount = (discount: CartDiscount, item?: CartItem) => {
     // @ts-ignore
     Inertia.post(route('lshopify.cart.discount.add'), {
       discount: discount,
@@ -62,7 +64,8 @@ export default function DraftOrderCreate(props: Props) {
     });
   };
 
-  const onRemoveDiscount = (discount: CartDiscount, item?: any) => {
+  const onRemoveDiscount = (discount: any, item?: any) => {
+  // const onRemoveDiscount = (discount: CartDiscount, item?: CartItem) => {
     // @ts-ignore
     Inertia.post(route('lshopify.cart.discount.remove'), {
       discount: discount,

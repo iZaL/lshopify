@@ -6,7 +6,6 @@ import PageHeader from './../components/PageHeader';
 import {
   Billing,
   Customer,
-  CustomerAddress,
   Fulfillment,
   Order,
   Shipping,
@@ -20,7 +19,6 @@ import {Inertia} from '@inertiajs/inertia';
 import DropdownButton from '../components/DropdownButton';
 import CustomerEdit from './Draft/components/CustomerEdit';
 import CustomerSelect from './Draft/components/CustomerSelect';
-import {CustomerForm} from '../form_types';
 import {useForm} from '@inertiajs/inertia-react';
 import PaymentPaid from './Payment/components/PaymentPaid';
 import PaymentPending from './Payment/components/PaymentPending';
@@ -56,8 +54,10 @@ export default function OrderView(props: Props) {
   }, []);
 
   const onCustomerCreate = (
-    customerData: CustomerForm,
-    addressData: CustomerAddress,
+    customerData: any,
+    addressData: any,
+    // customerData: CustomerForm,
+    // addressData: CustomerAddress,
   ) => {
     // @ts-ignore
     Inertia.post(
