@@ -5,14 +5,19 @@ import Button from './Button';
 interface Props {
   onDiscard?: () => void;
   onSubmit: () => void;
+  hide?:boolean
 }
 
-export default function FormSubmitBar({onDiscard, onSubmit}: Props) {
+export default function FormSubmitBar({onDiscard, onSubmit, hide=false}: Props) {
   const discard = () => {
     Inertia.reload({
       onSuccess: () => Inertia.reload(),
     });
   };
+
+  if(hide) {
+    return null
+  }
 
   return (
     <div className="absolute left-0 top-0 z-30 w-full position-sticky ">

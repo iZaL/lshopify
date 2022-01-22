@@ -67,7 +67,7 @@ export default function ProductCreate(props: Props) {
     images: [],
     tags: [],
   };
-  const {data, setData} = useForm({
+  const {data, setData, errors} = useForm({
     ...product,
   });
 
@@ -145,7 +145,7 @@ export default function ProductCreate(props: Props) {
   return (
     <Main>
       <div className="p-6">
-        <FormSubmitBar onSubmit={handleSubmit} />
+        <FormSubmitBar onSubmit={handleSubmit} hide={false} />
 
         <PageHeader text={'Add Product'} />
 
