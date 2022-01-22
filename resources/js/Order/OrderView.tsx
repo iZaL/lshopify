@@ -37,7 +37,6 @@ export default function OrderView(props: Props) {
 
   const {order, customers} = props;
 
-  console.log('props', props);
   const [customerSearchTerm, setCustomerSearchTerm] = useState('');
 
   const {data, setData} = useForm<Order & {_method: 'PATCH'}>({

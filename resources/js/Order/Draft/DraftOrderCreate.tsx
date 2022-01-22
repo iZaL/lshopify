@@ -62,7 +62,7 @@ export default function DraftOrderCreate(props: Props) {
     });
   };
 
-  const onRemoveDiscount = (discount: CartDiscount, item?: CartItem) => {
+  const onRemoveDiscount = (discount: CartDiscount, item?: any) => {
     // @ts-ignore
     Inertia.post(route('lshopify.cart.discount.remove'), {
       discount: discount,
