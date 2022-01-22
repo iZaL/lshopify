@@ -98,7 +98,7 @@ class LshopifyServiceProvider extends ServiceProvider
             ],'lshopify-stubs');
 
             $this->publishes([
-                __DIR__.'/../../public/' => public_path('/'),
+                __DIR__.'/../../assets/' => public_path('/'),
             ], ['lshopify-assets']);
 
             $this->publishes([
