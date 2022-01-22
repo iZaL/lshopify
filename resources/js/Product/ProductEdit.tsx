@@ -23,6 +23,8 @@ import {
   VariantOption,
 } from '../types';
 import route from 'ziggy-js';
+import {ArrowLeftIcon} from '@heroicons/react/solid';
+import Button from '../components/Button';
 
 interface Props {
   product: Product;
@@ -203,7 +205,17 @@ export default function ProductEdit(props: Props) {
       <div className="p-6">
         <FormSubmitBar onSubmit={handleSubmit} show={isDirty} />
 
-        <PageHeader text={product.title} />
+        <div className="flex flex-row space-x-2 items-center">
+          <Button
+            theme="default"
+            onClick={() => {
+              Inertia.get(route('lshopify.products.index'));
+            }}
+            buttonStyle="hover:border-gray-400 hover:text-gray-500">
+            <ArrowLeftIcon className="w-4 h-4 " />
+          </Button>
+          <PageHeader text={product.title} />
+        </div>
 
         <div className="mt-6 max-w-3xl mx-auto grid grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
           <section className="space-y-6 lg:col-start-1 lg:col-span-2 space-y-6">

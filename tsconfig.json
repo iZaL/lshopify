@@ -1,11 +1,9 @@
 {
   "compilerOptions": {
-    /* Basic Options */
     "target": "es5",
     "module": "commonjs",
     "jsx": "react",
 
-    /* Strict Type-Checking Options */
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -15,7 +13,6 @@
     "noImplicitThis": true,
     "alwaysStrict": true,
 
-    /* Additional Checks */
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
@@ -24,7 +21,6 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
 
-    /* Advanced Options */
     "forceConsistentCasingInFileNames": true
   }
 }
