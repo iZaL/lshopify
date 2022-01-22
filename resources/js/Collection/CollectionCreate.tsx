@@ -1,19 +1,17 @@
-import React, {useEffect} from 'react';
-import Main from '../Main';
-import {navigationActiveState} from '../atoms';
-import {useSetRecoilState} from 'recoil';
-import PageHeader from '../components/PageHeader';
-import TitleSection from './components/TitleSection';
-import FormSubmitBar from '../components/FormSubmitBar';
-import {useForm} from '@inertiajs/inertia-react';
-import {Collection} from '../types';
-import CollectionTypeSection from './components/CollectionTypeSection';
-import {Inertia} from '@inertiajs/inertia';
-import route from 'ziggy-js';
+import React, { useEffect } from 'react'
+import Main from '../Main'
+import { navigationActiveState } from '../atoms'
+import { useSetRecoilState } from 'recoil'
+import PageHeader from '../components/PageHeader'
+import TitleSection from './components/TitleSection'
+import FormSubmitBar from '../components/FormSubmitBar'
+import { useForm } from '@inertiajs/inertia-react'
+import { Collection } from '../types'
+import CollectionTypeSection from './components/CollectionTypeSection'
+import { Inertia } from '@inertiajs/inertia'
+import route from 'ziggy-js'
 
-interface Props {}
-
-export default function CollectionCreate(props: Props) {
+export default function CollectionCreate() {
   const setNavigation = useSetRecoilState(navigationActiveState);
 
   const collection: Collection = {

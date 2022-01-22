@@ -3,7 +3,6 @@ import Sidebar from './components/Sidebar';
 import MobileSidebar from './components/MobileSidebar';
 import Navbar from './components/Navbar';
 import {Helmet} from 'react-helmet';
-import FlashMessages from './components/FlashMessages';
 import {useRecoilValue} from 'recoil';
 import {darkModeState} from './atoms';
 import PopMessages from './components/PopMessages';

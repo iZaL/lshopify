@@ -67,7 +67,7 @@ export default function ProductCreate(props: Props) {
     images: [],
     tags: [],
   };
-  const {data, setData, errors} = useForm({
+  const {data, setData} = useForm({
     ...product,
   });
 

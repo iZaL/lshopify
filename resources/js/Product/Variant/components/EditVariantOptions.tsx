@@ -58,7 +58,7 @@ export default function EditVariantOptions({
               <InputText
                 name={`name${option.id}`}
                 value={option.name}
-                onChange={e => onVariantOptionsUpdate(option, e.target.value)}
+                onChange={() => onVariantOptionsUpdate()}
               />
             </div>
             <div className="m-auto flex-1 px-4 text-sm text-gray-700">

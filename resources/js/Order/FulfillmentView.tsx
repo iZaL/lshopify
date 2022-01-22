@@ -4,12 +4,10 @@ import {navigationActiveState} from '../atoms';
 import {useSetRecoilState} from 'recoil';
 import PageHeader from '../components/PageHeader';
 import Card from '../components/Card';
-import Subheader from '../components/Subheader';
 import Border from '../components/Border';
 import {
   Billing,
   Customer,
-  CustomerAddress,
   Fulfillment,
   Order,
   Shipping,
@@ -17,7 +15,6 @@ import {
 } from '../types';
 import {useForm} from '@inertiajs/inertia-react';
 import {Inertia} from '@inertiajs/inertia';
-import {CustomerForm} from '../form_types';
 import AddressCard from '../Customer/components/AddressCard';
 import FulfillmentItems from './components/FulfillmentItems';
 import ShippingInfo from './components/ShippingInfo';
@@ -85,40 +82,6 @@ export default function FulfillmentView({fulfillment, order}: Props) {
       });
     }
     // }
-  };
-
-  const onAttachCustomer = (customer?: Customer) => {
-    Inertia.post(
-      route('lshopify.orders.draft.customer.update', [order.id]),
-      // `/draft_orders/${order.id}/customer`,
-      {
-        customer_id: customer ? customer.id : null,
-      },
-      {
-        onSuccess: () => {
-          console.log('success');
-        },
-      },
-    );
-  };
-
-  const onCustomerCreate = (
-    customerData: CustomerForm,
-    addressData: CustomerAddress,
-  ) => {
-    // @ts-ignore
-    Inertia.post(
-      route('lshopify.customers.store'),
-      {
-        customer: customerData,
-        address: addressData,
-      },
-      {
-        onSuccess: () => {
-          console.log('success');
-        },
-      },
-    );
   };
 
   const onCustomerAddressSave = (

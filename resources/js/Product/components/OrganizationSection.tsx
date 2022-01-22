@@ -88,7 +88,7 @@ export default function OrganizationSection({
           components={{
             DropdownIndicator: () => null,
             IndicatorSeparator: () => null,
-            LoadingIndicator: () => Loader({theme: 'green'}),
+            LoadingIndicator: () => Loader(),
           }}
           isLoading={isProductTypeLoading}
           noOptionsMessage={() => null}
