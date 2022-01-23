@@ -51,7 +51,7 @@ const DZFileUploadBox = React.memo(
         <input
           name="image"
           type="checkbox"
-          className="h-4 w-4 absolute top-2 left-2 bg-transparent "
+          className="h-4 w-4 absolute top-2 left-2 bg-transparent bg-white"
           checked={selectedImages.map(img => img.id).includes(image.id)}
           onChange={() => onSelect(image)}
         />
@@ -66,8 +66,6 @@ const DZFileUploadBox = React.memo(
           <div className="rounded-full bg-white w-2 h-2" />
         </div>
       );
-
-      console.log('url', image.url);
 
       return (
         <li key={i} className="relative" onClick={() => onSelect(image)}>
@@ -107,9 +105,7 @@ const DZFileUploadBox = React.memo(
                 <div className="text-sm text-blue-500 underline ">
                   Add media
                 </div>
-                <div className="text-xs text-center">
-                  Order drop files to upload
-                </div>
+                <div className="text-xs text-center">Drop files to upload</div>
               </div>
             </div>
           </li>

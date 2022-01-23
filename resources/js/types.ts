@@ -30,6 +30,7 @@ export interface CollectionCondition {
   field: CollectionField;
   criteria: string;
   value: string;
+  title?: string;
 }
 
 export interface Collection {
@@ -40,6 +41,7 @@ export interface Collection {
   determiner: CollectionDeterminer;
   conditions: Array<CollectionCondition>;
   products?: Array<Product>;
+  image?: Image | null;
 }
 
 export interface Image extends File {

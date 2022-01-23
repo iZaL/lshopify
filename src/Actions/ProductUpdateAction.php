@@ -9,10 +9,6 @@ use Illuminate\Support\Collection;
 class ProductUpdateAction
 {
     /**
-     * @var ImageUploadAction
-     */
-    private $imageUploadAction;
-    /**
      * @var VariantCreateAction
      */
     private $variantCreateAction;
@@ -22,11 +18,9 @@ class ProductUpdateAction
     private $variantUpdateAction;
 
     public function __construct(
-        ImageUploadAction $imageUploadAction,
         VariantCreateAction $variantCreateAction,
         VariantUpdateAction $variantUpdateAction
     ) {
-        $this->imageUploadAction = $imageUploadAction;
         $this->variantCreateAction = $variantCreateAction;
         $this->variantUpdateAction = $variantUpdateAction;
     }

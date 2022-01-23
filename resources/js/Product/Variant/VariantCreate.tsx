@@ -54,7 +54,9 @@ export default function VariantCreate(props: Props) {
   }, [product.images]);
 
   const onVariantItemClick = (v: Variant) => {
-    return Inertia.get(route('lshopify.products.variants.edit', [product.id, v.id]));
+    return Inertia.get(
+      route('lshopify.products.variants.edit', [product.id, v.id]),
+    );
   };
 
   const onImagesUpload = (images: Image[]) => {

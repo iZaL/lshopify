@@ -10,7 +10,7 @@ interface Props {
   products: Product[];
 }
 
-export default function Products({products}: Props) {
+export default function ProductsList({products}: Props) {
   const onProductClick = (product: Product) => {
     return Inertia.get(route('lshopify.products.edit', [product.id]));
   };
@@ -102,18 +102,4 @@ export default function Products({products}: Props) {
       </div>
     </div>
   );
-  // return (
-  //   <ul className="px-4">
-  //     {products.map((product, i) => {
-  //       return (
-  //         <li
-  //           className="cursor-pointer"
-  //           onClick={() => onProductClick(product)}
-  //           key={i}>
-  //           {product.id} - {product.title}
-  //         </li>
-  //       );
-  //     })}
-  //   </ul>
-  // );
 }

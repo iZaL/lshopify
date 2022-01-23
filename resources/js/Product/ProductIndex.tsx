@@ -4,7 +4,7 @@ import PageHeader from '../components/PageHeader';
 import {Product} from '../types';
 import ProductIndexActionButtons from './components/ProductIndexActionButtons';
 import ProductSearchBar from './components/ProductSearchBar';
-import Products from './components/Products';
+import ProductsList from './components/ProductsList';
 import RightSidebar from '../components/RightSidebar';
 import ProductFiltersPanel from './components/ProductFiltersPanel';
 
@@ -50,7 +50,7 @@ export default function ProductIndex(props: Props) {
               tabs={tabs}
               onMoreFiltersClick={() => setSidebarOpen(!sidebarOpen)}
             />
-            <Products products={products} />
+            <ProductsList products={products} />
           </section>
         </div>
       </div>

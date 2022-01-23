@@ -8,6 +8,7 @@ use IZal\Lshopify\Database\Factories\CollectionFactory;
 class Collection extends BaseModel
 {
     use HasFactory;
+    use ImageableTrait;
 
     protected $table = 'collections';
     public $timestamps = false;

@@ -15,6 +15,7 @@ class CollectionResource extends JsonResource
             'name' => $this->name,
             'determiner' => $this->determiner,
             'type' => $this->type,
+            'image' => new ImageResource($this->image),
             'conditions' => CollectionConditionResource::collection($this->whenLoaded('conditions')),
             'products' => ProductResource::collection(
                 $this->manual() ? $this->whenLoaded('products') : $this->smart_products()

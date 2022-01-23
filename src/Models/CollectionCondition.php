@@ -3,6 +3,7 @@
 namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use IZal\Lshopify\Database\Factories\CollectionConditionFactory;
 
 class CollectionCondition extends BaseModel
@@ -22,5 +23,10 @@ class CollectionCondition extends BaseModel
     public function collection()
     {
         return $this->belongsTo(Collection::class, 'collection_id');
+    }
+
+    public function getTitleAttribute()
+    {
+        return ucfirst(strtolower(Str::headline($this->field . ' ' . $this->criteria . ' ' . $this->value)));
     }
 }
