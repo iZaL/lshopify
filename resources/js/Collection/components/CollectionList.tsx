@@ -67,8 +67,8 @@ export default function CollectionList({collections}: Props) {
                       </Button>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {collection.conditions.map((condition, id) => (
-                        <div key={id}>{condition.title}</div>
+                      {collection.conditions.map((condition, idx) => (
+                        <div key={idx}>{condition.title}</div>
                       ))}
                     </td>
                   </tr>

@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import Main from '../Main';
-import PageHeader from '../components/PageHeader';
-import TitleSection from './components/TitleSection';
-import FormSubmitBar from '../components/FormSubmitBar';
-import {Collection, Image, Product} from '../types';
-import {Inertia} from '@inertiajs/inertia';
-import ProductSection from './components/ProductSection';
-import {useForm} from '@inertiajs/inertia-react';
-import ProductAddSection from './components/ProductAddSection';
-import route from 'ziggy-js';
-import BackButton from '../components/BackButton';
+import React, { useEffect } from 'react'
+import Main from '../Main'
+import PageHeader from '../components/PageHeader'
+import TitleSection from './components/TitleSection'
+import FormSubmitBar from '../components/FormSubmitBar'
+import { Collection, Image, Product } from '../types'
+import { Inertia } from '@inertiajs/inertia'
+import ProductSection from './components/ProductSection'
+import { useForm } from '@inertiajs/inertia-react'
+import ProductAddSection from './components/ProductAddSection'
+import route from 'ziggy-js'
+import BackButton from '../components/BackButton'
 import ImageSelect from '../components/ImageSelect'
 
 interface Props {
@@ -19,7 +19,6 @@ interface Props {
 
 export default function CollectionEdit(props: Props) {
   const {collection, products} = props;
-
 
   const {data, setData, isDirty} = useForm<
     Collection & {searchTerm: string; sortTerm: string}
@@ -68,7 +67,7 @@ export default function CollectionEdit(props: Props) {
     );
   };
 
-  const onImageSubmit = (img:Image) => {
+  const onImageSubmit = (img: Image) => {
     setData({
       ...data,
       image: img,
@@ -81,11 +80,6 @@ export default function CollectionEdit(props: Props) {
       image: null,
     });
   };
-
-  const [images, setImages] = useState<Image[]>(data.image ? [data.image] : []);
-  const [selectedImage, setSelectedImage] = useState<Image | null>(
-    data.image ? data.image : null,
-  );
 
   return (
     <Main>
@@ -128,7 +122,7 @@ export default function CollectionEdit(props: Props) {
             <ImageSelect
               data={data}
               onImageRemove={() => onImageRemove()}
-              onConfirm={(img) => onImageSubmit(img)}
+              onConfirm={img => onImageSubmit(img)}
             />
           </section>
         </div>

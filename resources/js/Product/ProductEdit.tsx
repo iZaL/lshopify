@@ -23,8 +23,6 @@ import {
   VariantOption,
 } from '../types';
 import route from 'ziggy-js';
-import {ArrowLeftIcon} from '@heroicons/react/solid';
-import Button from '../components/Button';
 import BackButton from '../components/BackButton';
 
 interface Props {

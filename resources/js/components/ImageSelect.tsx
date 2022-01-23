@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react';
 import {Collection, Image} from '../types';
 import Card from './Card';
 import Subheader from './Subheader';
@@ -10,23 +10,24 @@ import DZFileUploadBox from './forms/DZFileUploadBox';
 interface Props {
   data: Collection & {searchTerm: string; sortTerm: string};
   onImageRemove: () => void;
-  onConfirm: (img:Image) => void;
+  onConfirm: (img: Image) => void;
 }
 
 export default function ImageSelect(props: Props) {
-
   const [showDialog, setShowDialog] = useState<boolean>(false);
-  const [images, setImages] = useState<Image[]>(props.data.image ? [props.data.image] : []);
+  const [images, setImages] = useState<Image[]>(
+    props.data.image ? [props.data.image] : [],
+  );
   const [selectedImage, setSelectedImage] = useState<Image | null>(
     props.data.image ? props.data.image : null,
   );
 
   const onConfirm = () => {
     setShowDialog(false);
-    if(selectedImage) {
+    if (selectedImage) {
       props.onConfirm(selectedImage);
     }
-  }
+  };
 
   return (
     <Card cardStyle="w-full h-full">
@@ -54,7 +55,9 @@ export default function ImageSelect(props: Props) {
           />
         </div>
       ) : (
-        <div className="relative cursor-pointer" onClick={() => setShowDialog(true)}>
+        <div
+          className="relative cursor-pointer"
+          onClick={() => setShowDialog(true)}>
           <div className="flex flex-col items-center justify-center w-full border-4 border-dashed border-gray-200 rounded-lg h-36">
             <div className="text-sm text-blue-500 underline ">Add media</div>
             <div className="text-xs text-center">Drop files to upload</div>
@@ -69,8 +72,8 @@ export default function ImageSelect(props: Props) {
         onConfirm={onConfirm}>
         <div className="p-5">
           <DZFileUploadBox
-            onImagesSelect={(imgs) => setSelectedImage(imgs[0])}
-            onImagesUpload={(imgs) => setImages([...images, ...imgs])}
+            onImagesSelect={imgs => setSelectedImage(imgs[0])}
+            onImagesUpload={imgs => setImages([...images, ...imgs])}
             images={images}
             selectedImages={selectedImage ? [selectedImage] : []}
           />
