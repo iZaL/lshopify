@@ -50,17 +50,11 @@ export default function VariantCreate(props: Props) {
   });
 
   useEffect(() => {
-    console.log('data changed', data);
-  }, [data]);
-
-  useEffect(() => {
     setData('images', product.images || []);
   }, [product.images]);
 
   const onVariantItemClick = (v: Variant) => {
-    const url = route('lshopify.products.variants.edit', [product.id, v.id]);
-    // const url = `/products/${product.id}/variants/${v.id}/edit`;
-    return Inertia.get(url);
+    return Inertia.get(route('lshopify.products.variants.edit', [product.id, v.id]));
   };
 
   const onImagesUpload = (images: Image[]) => {
@@ -80,7 +74,6 @@ export default function VariantCreate(props: Props) {
     const url = route('lshopify.products.variants.store', [product.id]);
     post(url, {
       preserveScroll: false,
-      // onSuccess: () => {},
     });
   };
 
