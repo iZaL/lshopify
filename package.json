@@ -8,7 +8,7 @@
     "hot": "mix watch --hot",
     "prod": "npm run production",
     "production": "mix --production",
-    "prettify": "prettier --write './resources/js/**/*.{js,ts,tsx}'",
+    "prettier": "prettier --write './resources/js/**/*.{js,ts,tsx}'",
     "lint": "eslint './resources/js/**/*{.ts,.tsx}'",
     "lint:fix": "eslint './resources/js/**/*{.ts,.tsx}' --fix"
   },

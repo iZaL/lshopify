@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Main from '../Main';
 import PageHeader from '../components/PageHeader';
 import Border from '../components/Border';
@@ -40,19 +40,6 @@ export default function Refund({order}: Props) {
     restock: true,
   });
 
-  useEffect(() => {
-    console.log('data changed', data);
-  }, [data]);
-
-  // useEffect(() => {
-  //   setData({
-  //     ...data,
-  //     order: {
-  //       ...order,
-  //     },
-  //   });
-  // }, [order]);
-
   const onVariantQuantityChange = (
     fulfillment: Fulfillment,
     trueVariant: VariantPivot,
@@ -92,14 +79,6 @@ export default function Refund({order}: Props) {
   const handleSubmit = () => {
     const postData = data.order.fulfillments.map(f => {
       return {
-        // id:f.id,
-        // variants:f.variants.map((v) => {
-        //   return {
-        //     id:v.id,
-        //     pivot_id: v.pivot_id,
-        //     pivot_quantity: v.pivot_quantity,
-        //   };
-        // }),
         ...f.variants.map(v => {
           return {
             id: v.id,
@@ -110,38 +89,10 @@ export default function Refund({order}: Props) {
       };
     });
 
-    // const postData = data.order.fulfillments.map((f) => {
-    //   return {
-    //     id:f.id,
-    //     variants:f.variants.map((v) => {
-    //       return {
-    //         id: v.id,
-    //         pivot_quantity: v.pivot_quantity,
-    //       };
-    //     })
-    //   }
-    // });
-
-    console.log('p', postData);
-
     // @ts-ignore
-    Inertia.post(
-      route('lshopify.orders.refund', [order.id]),
-      {
-        variants: postData,
-        // variants: data.order.variants?.map((v) => {
-        //   return {
-        //     id: v.id,
-        //     pivot_quantity: v.pivot_quantity,
-        //   };
-        // }),
-      },
-      {
-        onSuccess: () => {
-          console.log('success');
-        },
-      },
-    );
+    Inertia.post(route('lshopify.orders.refund', [order.id]), {
+      variants: postData,
+    });
   };
 
   return (
