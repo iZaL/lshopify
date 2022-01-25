@@ -4,7 +4,7 @@ import PageHeader from '../../components/PageHeader';
 import FormSubmitBar from '../../components/FormSubmitBar';
 import {Inertia} from '@inertiajs/inertia';
 import {useForm} from '@inertiajs/inertia-react';
-import {Cart, Order, Product, Customer, Billing, Shipping} from '../../types';
+import {Billing, Cart, Customer, Order, Product, Shipping} from '../../types';
 import DraftOrderDetailsSection from './components/DraftOrderDetailsSection';
 import CustomerSelect from './components/CustomerSelect';
 import CustomerEdit from './components/CustomerEdit';

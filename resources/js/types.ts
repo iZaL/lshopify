@@ -1,4 +1,4 @@
-import {OrderForm, CustomerForm} from './form_types';
+import {CustomerForm, OrderForm} from './form_types';
 
 export interface Tag {
   id: string;
