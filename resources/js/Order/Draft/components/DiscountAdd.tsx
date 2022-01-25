@@ -44,12 +44,12 @@ export default function DiscountAdd({discount, children}: Props) {
               onChange={e => setAttributes('value', e.target.value)}
               leftComponent={
                 discountAttributes.suffix === 'amount' ? (
-                  <div className="text-md text-gray-400 text-sm">OMR</div>
+                  <div className="text-md text-sm text-gray-400">OMR</div>
                 ) : null
               }
               rightComponent={
                 discountAttributes.suffix === 'percentage' ? (
-                  <div className="text-md text-gray-400 text-sm">%</div>
+                  <div className="text-md text-sm text-gray-400">%</div>
                 ) : null
               }
               inputStyle={discountAttributes.suffix === 'amount' ? 'pl-14' : ''}

@@ -44,12 +44,12 @@ export default function ImageSelect(props: Props) {
       </div>
 
       {props.data.image ? (
-        <div className="w-full border-4 border border-gray-200 rounded-lg p-2">
+        <div className="w-full rounded-lg border-4 border border-gray-200 p-2">
           <img
             src={props.data.image.url}
             className={classNames(
               'group-hover:opacity-75',
-              'object-contain pointer-events-none w-full h-36',
+              'pointer-events-none h-36 w-full object-contain',
             )}
             alt=""
           />
@@ -58,9 +58,9 @@ export default function ImageSelect(props: Props) {
         <div
           className="relative cursor-pointer"
           onClick={() => setShowDialog(true)}>
-          <div className="flex flex-col items-center justify-center w-full border-4 border-dashed border-gray-200 rounded-lg h-36">
+          <div className="flex h-36 w-full flex-col items-center justify-center rounded-lg border-4 border-dashed border-gray-200">
             <div className="text-sm text-blue-500 underline ">Add media</div>
-            <div className="text-xs text-center">Drop files to upload</div>
+            <div className="text-center text-xs">Drop files to upload</div>
           </div>
         </div>
       )}

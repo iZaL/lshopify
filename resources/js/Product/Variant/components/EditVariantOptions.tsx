@@ -52,7 +52,7 @@ export default function EditVariantOptions({
   };
 
   return (
-    <div className="p-5 space-y-2">
+    <div className="space-y-2 p-5">
       {currentVariantOptions.map((option, i) => {
         return (
           <div className="flex flex-row items-center text-sm" key={i}>
@@ -68,11 +68,11 @@ export default function EditVariantOptions({
                 {option.options?.map((o, idx) => {
                   return (
                     <div
-                      className="flex flex-row bg-gray-200 rounded rounded-md items-center justify-end h-6 overflow-hidden "
+                      className="flex h-6 flex-row items-center justify-end overflow-hidden rounded rounded-md bg-gray-200 "
                       key={idx}>
-                      <div className="px-2  flex-1">{o.id}</div>
+                      <div className="flex-1  px-2">{o.id}</div>
                       <XIcon
-                        className="w-6 h-6 hover:bg-gray-300 cursor-pointer hover:rounded hover:rounded-md"
+                        className="h-6 w-6 cursor-pointer hover:rounded hover:rounded-md hover:bg-gray-300"
                         onClick={() => {
                           onVariantOptionsRemove(o);
                         }}

@@ -55,7 +55,7 @@ export default function CartItems({
           <div
             className="grid grid-cols-6 items-center space-x-4 text-sm "
             key={i}>
-            <div className="col-span-4 inline-flex space-x-2 items-center">
+            <div className="col-span-4 inline-flex items-center space-x-2">
               <VariantImage
                 image={item.variant.image}
                 onClick={() => {}}
@@ -70,11 +70,11 @@ export default function CartItems({
                 <div className="">{item.variant.title}</div>
                 <div className="space-x-2">
                   <span
-                    className="cursor-pointer hover:underline text-blue-500"
+                    className="cursor-pointer text-blue-500 hover:underline"
                     onClick={() => onShowDiscountDialog(item.discount, item)}>
                     OMR {item.unit_price}
                   </span>
-                  <span className="strike line-through text-gray-500">
+                  <span className="strike text-gray-500 line-through">
                     {item.total !== item.subtotal && `OMR ${item.price}`}
                   </span>
                 </div>
@@ -93,7 +93,7 @@ export default function CartItems({
               <div>OMR {item.total}</div>
               <div className="">
                 <Button theme="clear" onClick={() => removeItem(item)}>
-                  <XIcon className="text-md w-5 h-5 cursor-pointer hover:text-gray-500" />
+                  <XIcon className="text-md h-5 w-5 cursor-pointer hover:text-gray-500" />
                 </Button>
               </div>
             </div>

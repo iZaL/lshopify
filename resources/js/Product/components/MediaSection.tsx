@@ -26,7 +26,7 @@ const MediaSection = ({onImagesUpload, images, onImagesDelete}: Props) => {
 
   return (
     <Card>
-      <div className="flex flex-row items-center justify-between text-sm h-8">
+      <div className="flex h-8 flex-row items-center justify-between text-sm">
         {selectedImages.length ? (
           <>
             <div className="flex flex-row  items-center space-x-2">

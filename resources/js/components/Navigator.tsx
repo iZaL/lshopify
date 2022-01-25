@@ -24,7 +24,7 @@ interface NavSubItemProps {
 
 const Navigator = ({children}: Props) => {
   return (
-    <nav className="flex-1 px-2 space-y-1" aria-label="Sidebar">
+    <nav className="flex-1 space-y-1 px-2" aria-label="Sidebar">
       {children}
     </nav>
   );
@@ -40,15 +40,15 @@ const NavItem = ({children, href, active, dropdown, name}: NavItemProps) => {
               <Disclosure.Button
                 as="a"
                 className={classNames(
-                  'group w-full flex items-center pl-2 py-2 text-sm font-semibold rounded-md text-gray-800 hover:bg-gray-100',
+                  'group flex w-full items-center rounded-md py-2 pl-2 text-sm font-semibold text-gray-800 hover:bg-gray-100',
                   active ? 'text-green-800' : '',
                 )}
                 href={href}>
                 {name}
                 <svg
                   className={classNames(
-                    'ml-auto h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150',
-                    open ? 'text-gray-400 rotate-90' : 'text-gray-300',
+                    'ml-auto h-5 w-5 transform transition-colors duration-150 ease-in-out group-hover:text-gray-400',
+                    open ? 'rotate-90 text-gray-400' : 'text-gray-300',
                   )}
                   viewBox="0 0 20 20"
                   aria-hidden="true">
@@ -71,7 +71,7 @@ const NavItem = ({children, href, active, dropdown, name}: NavItemProps) => {
     <Link
       href={href}
       className={classNames(
-        'group w-full flex items-center pl-2 py-2 text-sm font-semibold rounded-md text-gray-800 hover:bg-gray-100',
+        'group flex w-full items-center rounded-md py-2 pl-2 text-sm font-semibold text-gray-800 hover:bg-gray-100',
         active ? 'bg-gray-200 text-green-800' : '',
       )}>
       {name}
@@ -85,7 +85,7 @@ const NavSubItem = ({name, active, href}: NavSubItemProps) => {
       <Link
         href={href}
         className={classNames(
-          'group w-full flex items-center pl-11 pr-2 py-2 text-sm font-normal rounded-md',
+          'group flex w-full items-center rounded-md py-2 pl-11 pr-2 text-sm font-normal',
           active ? 'bg-gray-100 text-green-800' : '',
         )}>
         {name}

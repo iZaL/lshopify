@@ -21,7 +21,7 @@ export default function NotificationBox({message, type}: Props) {
   }
 
   return (
-    <div className={`rounded-md ${bgColor} py-6 px-6 m-6`}>
+    <div className={`rounded-md ${bgColor} m-6 py-6 px-6`}>
       <div className="flex">
         <div className="flex-shrink-0">
           <CheckCircleIcon
@@ -37,7 +37,7 @@ export default function NotificationBox({message, type}: Props) {
             <button
               onSubmit={() => alert('wa')}
               type="button"
-              className="inline-flex bg-green-50 rounded-md p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600">
+              className="inline-flex rounded-md bg-green-50 p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50">
               <span className="sr-only">{type}</span>
               <XIcon className="h-5 w-5" aria-hidden="true" />
             </button>

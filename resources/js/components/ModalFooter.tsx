@@ -18,7 +18,7 @@ export default function ModalFooter({
   children,
 }: Props) {
   return (
-    <div className="bg-gray-50 dark:bg-gray-600 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+    <div className="bg-gray-50 px-4 py-3 dark:bg-gray-600 sm:flex sm:flex-row-reverse sm:px-6">
       <Button onClick={() => onProceed()} theme="success">
         {submitButtonTitle}
       </Button>

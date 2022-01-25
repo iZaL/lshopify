@@ -21,7 +21,7 @@ export default function AddressForm({address, children}: Props) {
 
   return (
     <>
-      <div className="p-5 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+      <div className="grid grid-cols-1 gap-y-6 gap-x-4 p-5 sm:grid-cols-6">
         <div className="sm:col-span-3">
           <Label title="First name" />
           <InputText

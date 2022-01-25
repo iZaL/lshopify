@@ -21,13 +21,13 @@ export default function OrderIndex(props: Props) {
   return (
     <Main>
       <div className="p-6">
-        <div className="max-w-7xl mx-auto xl:flex xl:items-center xl:justify-between">
+        <div className="mx-auto max-w-7xl xl:flex xl:items-center xl:justify-between">
           <PageHeader text={`Orders`} />
           <DraftOrderIndexActionButtons />
         </div>
 
-        <div className="max-w-7xl mx-auto py-6 ">
-          <section className="dark:bg-gray-900 rounded-lg overflow-hidden shadow bg-white">
+        <div className="mx-auto max-w-7xl py-6 ">
+          <section className="overflow-hidden rounded-lg bg-white shadow dark:bg-gray-900">
             <DraftOrderList orders={orders} onItemClick={onOrderClick} />
           </section>
         </div>

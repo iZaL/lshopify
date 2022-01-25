@@ -18,7 +18,7 @@ export default function ErrorBox({errors}: Props) {
   });
 
   return (
-    <div className="rounded-md bg-red-50 py-6 px-6 m-6">
+    <div className="m-6 rounded-md bg-red-50 py-6 px-6">
       <div className="flex">
         <div className="flex-shrink-0">
           <XCircleIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
@@ -29,7 +29,7 @@ export default function ErrorBox({errors}: Props) {
             submission
           </h3>
           <div className="mt-2 text-sm text-red-700">
-            <ul className="list-disc pl-5 space-y-1">
+            <ul className="list-disc space-y-1 pl-5">
               {errorMessages.map((message, index) => {
                 return <li key={index}>{message}</li>;
               })}

@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react'
-import Main from '../Main'
-import PageHeader from '../components/PageHeader'
-import TitleSection from './components/TitleSection'
-import FormSubmitBar from '../components/FormSubmitBar'
-import { Collection, Image, Product } from '../types'
-import { Inertia } from '@inertiajs/inertia'
-import ProductSection from './components/ProductSection'
-import { useForm } from '@inertiajs/inertia-react'
-import ProductAddSection from './components/ProductAddSection'
-import route from 'ziggy-js'
-import BackButton from '../components/BackButton'
-import ImageSelect from '../components/ImageSelect'
+import React, {useEffect} from 'react';
+import Main from '../Main';
+import PageHeader from '../components/PageHeader';
+import TitleSection from './components/TitleSection';
+import FormSubmitBar from '../components/FormSubmitBar';
+import {Collection, Image, Product} from '../types';
+import {Inertia} from '@inertiajs/inertia';
+import ProductSection from './components/ProductSection';
+import {useForm} from '@inertiajs/inertia-react';
+import ProductAddSection from './components/ProductAddSection';
+import route from 'ziggy-js';
+import BackButton from '../components/BackButton';
+import ImageSelect from '../components/ImageSelect';
 
 interface Props {
   collection: Collection;
@@ -43,6 +43,7 @@ export default function CollectionEdit(props: Props) {
         products: productIDs,
       },
       {
+        preserveState: false,
         onSuccess: () => {
           Inertia.reload();
         },
@@ -67,17 +68,10 @@ export default function CollectionEdit(props: Props) {
     );
   };
 
-  const onImageSubmit = (img: Image) => {
+  const onImageSubmit = (img?: Image) => {
     setData({
       ...data,
-      image: img,
-    });
-  };
-
-  const onImageRemove = () => {
-    setData({
-      ...data,
-      image: null,
+      image: img ? img : null,
     });
   };
 
@@ -86,7 +80,7 @@ export default function CollectionEdit(props: Props) {
       <div className="p-6">
         <FormSubmitBar onSubmit={handleSubmit} show={isDirty} />
 
-        <div className="flex flex-row space-x-2 items-center">
+        <div className="flex flex-row items-center space-x-2">
           <BackButton
             onClick={() => {
               Inertia.get(route('lshopify.collections.index'));
@@ -95,8 +89,8 @@ export default function CollectionEdit(props: Props) {
           <PageHeader text={collection.name} />
         </div>
 
-        <div className="mt-6 max-w-3xl mx-auto grid grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
-          <section className="space-y-6 lg:col-start-1 lg:col-span-2 space-y-6">
+        <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+          <section className="space-y-6 space-y-6 lg:col-span-2 lg:col-start-1">
             <TitleSection
               name={data.name}
               description={data.description || ''}
@@ -118,10 +112,10 @@ export default function CollectionEdit(props: Props) {
               />
             )}
           </section>
-          <section className="lg:col-start-3 lg:col-span-1 space-y-6">
+          <section className="space-y-6 lg:col-span-1 lg:col-start-3">
             <ImageSelect
               data={data}
-              onImageRemove={() => onImageRemove()}
+              onImageRemove={() => onImageSubmit()}
               onConfirm={img => onImageSubmit(img)}
             />
           </section>

@@ -51,7 +51,7 @@ const DZFileUploadBox = React.memo(
         <input
           name="image"
           type="checkbox"
-          className="h-4 w-4 absolute top-2 left-2 bg-transparent bg-white"
+          className="absolute top-2 left-2 h-4 w-4 bg-transparent bg-white"
           checked={selectedImages.map(img => img.id).includes(image.id)}
           onChange={() => onSelect(image)}
         />
@@ -59,11 +59,11 @@ const DZFileUploadBox = React.memo(
         <div
           className={classNames(
             checked
-              ? 'bg-green-600 border-transparent'
-              : 'bg-white border-gray-300',
-            'absolute top-2 left-2 h-4 w-4 rounded-full border flex items-center justify-center ring-2 ring-offset-2 ring-green-500',
+              ? 'border-transparent bg-green-600'
+              : 'border-gray-300 bg-white',
+            'absolute top-2 left-2 flex h-4 w-4 items-center justify-center rounded-full border ring-2 ring-green-500 ring-offset-2',
           )}>
-          <div className="rounded-full bg-white w-2 h-2" />
+          <div className="h-2 w-2 rounded-full bg-white" />
         </div>
       );
 
@@ -72,15 +72,15 @@ const DZFileUploadBox = React.memo(
           <div
             className={classNames(
               checked
-                ? 'ring-2 ring-offset-2 ring-green-500'
-                : 'focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-green-500',
-              'group block w-full aspect-w-10 aspect-h-7 rounded-lg bg-gray-100 overflow-hidden',
+                ? 'ring-2 ring-green-500 ring-offset-2'
+                : 'focus-within:ring-2 focus-within:ring-green-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100',
+              'group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100',
             )}>
             <img
               src={image.url}
               className={classNames(
                 checked ? '' : 'group-hover:opacity-75',
-                'object-cover pointer-events-none',
+                'pointer-events-none object-cover',
               )}
               alt=""
             />
@@ -97,15 +97,15 @@ const DZFileUploadBox = React.memo(
             {...getRootProps({className: 'dropzone'})}
             className={classNames(
               images.length ? 'h-auto' : 'h-24',
-              'flex items-center justify-center border-4 border-dashed border-gray-200 rounded-lg bg-gray-100 dark:bg-gray-700 cursor-pointer',
+              'flex cursor-pointer items-center justify-center rounded-lg border-4 border-dashed border-gray-200 bg-gray-100 dark:bg-gray-700',
             )}>
             <input {...getInputProps()} />
             <div className="relative">
-              <div className="flex flex-col items-center justify-center w-full ">
+              <div className="flex w-full flex-col items-center justify-center ">
                 <div className="text-sm text-blue-500 underline ">
                   Add media
                 </div>
-                <div className="text-xs text-center">Drop files to upload</div>
+                <div className="text-center text-xs">Drop files to upload</div>
               </div>
             </div>
           </li>

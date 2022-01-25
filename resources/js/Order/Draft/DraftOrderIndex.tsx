@@ -22,13 +22,13 @@ export default function DraftOrderIndex(props: Props) {
   return (
     <Main>
       <div className="p-6">
-        <div className="max-w-7xl mx-auto xl:flex xl:items-center xl:justify-between">
+        <div className="mx-auto max-w-7xl xl:flex xl:items-center xl:justify-between">
           <PageHeader text={`Orders ${cartTotal}`} />
           <DraftOrderIndexActionButtons />
         </div>
 
-        <div className="max-w-7xl mx-auto py-6 ">
-          <section className="rounded-lg overflow-hidden shadow">
+        <div className="mx-auto max-w-7xl py-6 ">
+          <section className="overflow-hidden rounded-lg shadow">
             <DraftOrderList orders={orders} onItemClick={onOrderClick} />
           </section>
         </div>

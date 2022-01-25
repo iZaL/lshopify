@@ -57,7 +57,7 @@ export default function ProductSearch({
               setShowDialog(true);
             }}
             value=""
-            leftComponent={<SearchIcon className="w-5 h-5 text-gray-500" />}
+            leftComponent={<SearchIcon className="h-5 w-5 text-gray-500" />}
           />
         </div>
         <Button
@@ -80,7 +80,7 @@ export default function ProductSearch({
             placeholder={'Search products'}
             onChange={e => setSearchTerm(e.target.value)}
             value={searchTerm}
-            leftComponent={<SearchIcon className="w-5 h-5 text-gray-500" />}
+            leftComponent={<SearchIcon className="h-5 w-5 text-gray-500" />}
           />
         </div>
 
@@ -90,8 +90,8 @@ export default function ProductSearch({
           return (
             <div key={i}>
               <li
-                className="flex flex-row items-center py-2 px-4 space-x-4 hover:bg-gray-100 text-sm
-              border-b border-gray-200
+                className="flex flex-row items-center space-x-4 border-b border-gray-200 py-2 px-4
+              text-sm hover:bg-gray-100
               "
                 onClick={() =>
                   !product.variants?.length &&
@@ -127,8 +127,8 @@ export default function ProductSearch({
               {product.variants?.map((variant, idx) => {
                 return (
                   <li
-                    className="pl-11 flex flex-row items-center py-2 px-4 space-x-4 hover:bg-gray-100 text-sm
-              border-b border-gray-200
+                    className="flex flex-row items-center space-x-4 border-b border-gray-200 py-2 px-4 pl-11
+              text-sm hover:bg-gray-100
               "
                     key={idx}
                     onClick={() => addRemoveVariant(variant)}>

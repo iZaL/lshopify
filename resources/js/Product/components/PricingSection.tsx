@@ -23,7 +23,7 @@ export default function PricingSection({onChange, variant}: Props) {
             name="price"
             onChange={e => onChange('price', e.target.value)}
             leftComponent={
-              <div className="text-md text-gray-400 text-sm">OMR</div>
+              <div className="text-md text-sm text-gray-400">OMR</div>
             }
             inputStyle="pl-14"
             placeholder="0.00"
@@ -37,7 +37,7 @@ export default function PricingSection({onChange, variant}: Props) {
             name="compare_at_price"
             onChange={e => onChange('compare_at_price', e.target.value)}
             leftComponent={
-              <div className="text-md text-gray-400 text-sm">OMR</div>
+              <div className="text-md text-sm text-gray-400">OMR</div>
             }
             inputStyle="pl-14"
             placeholder="0.00"
@@ -53,13 +53,13 @@ export default function PricingSection({onChange, variant}: Props) {
             name="cost_price"
             onChange={e => onChange('cost_price', e.target.value)}
             leftComponent={
-              <div className="text-md text-gray-400 text-sm">OMR</div>
+              <div className="text-md text-sm text-gray-400">OMR</div>
             }
             inputStyle="pl-14"
             placeholder="0.00"
             value={variant.cost_price}
           />
-          <p className="block text-sm text-gray-500 py-1">
+          <p className="block py-1 text-sm text-gray-500">
             Customers wont see this
           </p>
         </div>

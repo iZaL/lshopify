@@ -56,8 +56,8 @@ export default function ProductAddSection({
     <Card>
       <Subheader text="Products" />
 
-      <div className="mx-auto grid grid-cols-1 grid-flow-col-dense grid-cols-5 gap-5 text-sm">
-        <div className="col-start-1 col-span-3 space-y-2">
+      <div className="mx-auto grid grid-flow-col-dense grid-cols-1 grid-cols-5 gap-5 text-sm">
+        <div className="col-span-3 col-start-1 space-y-2">
           <InputText
             name="search"
             placeholder="Search products"
@@ -66,7 +66,7 @@ export default function ProductAddSection({
               setShowDialog(true);
             }}
             value=""
-            leftComponent={<SearchIcon className="w-5 h-5 text-gray-500" />}
+            leftComponent={<SearchIcon className="h-5 w-5 text-gray-500" />}
           />
         </div>
 
@@ -84,7 +84,7 @@ export default function ProductAddSection({
         {collectionProducts.map((product, i) => (
           <li
             key={i}
-            className="flex flex-row items-center px-4 space-x-2 space-y-2 cursor-default">
+            className="flex cursor-default flex-row items-center space-x-2 space-y-2 px-4">
             <div className="w-5">{i + 1}.</div>
             <VariantImage image={product.image} onClick={() => {}} />
             <div className="flex-auto">
@@ -94,7 +94,7 @@ export default function ProductAddSection({
               buttonStyle="p-2"
               theme="clear"
               onClick={() => removeProductFromCollection(product)}>
-              <XIcon className="w-5 h-5 text-gray-500" />
+              <XIcon className="h-5 w-5 text-gray-500" />
             </Button>
           </li>
         ))}
@@ -114,7 +114,7 @@ export default function ProductAddSection({
             placeholder={'Search products'}
             onChange={e => onChange('searchTerm', e.target.value)}
             value={searchTerm}
-            leftComponent={<SearchIcon className="w-5 h-5 text-gray-500" />}
+            leftComponent={<SearchIcon className="h-5 w-5 text-gray-500" />}
           />
         </div>
         <Border />
@@ -123,7 +123,7 @@ export default function ProductAddSection({
           return (
             <li
               key={i}
-              className="flex flex-row items-center py-2 px-4 space-x-4 hover:bg-gray-100"
+              className="flex flex-row items-center space-x-4 py-2 px-4 hover:bg-gray-100"
               onClick={() => addRemoveProduct(product)}>
               <Checkbox
                 checked={selectedProductIDs.includes(product.id)}

@@ -25,7 +25,7 @@ export default function StatusSection({onChange, activeStatus}: Props) {
         </Select>
       </div>
 
-      <div className="block text-sm text-gray-500 mb-4">
+      <div className="mb-4 block text-sm text-gray-500">
         This product will be available to 1 sales channel.
       </div>
 

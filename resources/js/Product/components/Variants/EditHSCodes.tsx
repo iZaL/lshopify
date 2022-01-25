@@ -14,11 +14,11 @@ export default function EditHSCodes({variants, onChange, onApplyAll}: Props) {
 
   return (
     <div className="p-5">
-      <p className="text-gray-700 text-sm">HS (Harmonized System) code</p>
+      <p className="text-sm text-gray-700">HS (Harmonized System) code</p>
       <form
         className="flex space-x-4 border-b border-gray-200 py-3  "
         action="#">
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
           <InputText
             name="all"
             onChange={e => setAllText(e.target.value)}
@@ -32,8 +32,8 @@ export default function EditHSCodes({variants, onChange, onApplyAll}: Props) {
 
       {variants.map(variant => {
         return (
-          <div className="flex space-x-4 border-b border-gray-200 py-3 items-center">
-            <div className="flex-1 min-w-0 text-sm text-gray-800">
+          <div className="flex items-center space-x-4 border-b border-gray-200 py-3">
+            <div className="min-w-0 flex-1 text-sm text-gray-800">
               {variant.title}
             </div>
 

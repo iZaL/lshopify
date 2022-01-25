@@ -26,7 +26,7 @@ export default function VariantList({
               key={i}
               className={classNames(
                 v.id === variant?.id ? 'bg-blue-100 text-blue-600' : '',
-                'flex flex-row items-center text-sm box-border position-relative z-1 inline-block min-w-full hover:bg-gray-100 border border-gray-200 border-l-0 border-r-0 cursor-pointer p-2 space-x-2',
+                'position-relative z-1 box-border inline-block flex min-w-full cursor-pointer flex-row items-center space-x-2 border border-l-0 border-r-0 border-gray-200 p-2 text-sm hover:bg-gray-100',
               )}
               onClick={() => onVariantItemClick(v)}>
               <VariantImage

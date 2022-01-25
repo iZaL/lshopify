@@ -28,7 +28,7 @@ export default function DropdownButton({
         <Menu.Button as={'div'}>
           <Button onClick={() => setVisible(!visible)} {...buttonProps}>
             {buttonTitle}
-            {arrowVisible && <ChevronDownIcon className="-mr-1 ml-2 w-5 h-5" />}
+            {arrowVisible && <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" />}
           </Button>
         </Menu.Button>
 
@@ -39,8 +39,8 @@ export default function DropdownButton({
         {/*  leave='transition ease-in duration-100'*/}
         {/*>*/}
         <Menu.Items
-          className={`origin-top-center absolute right-0 ${width} min-w-[10rem] max-w-[22rem] mt-2 bg-white rounded-md shadow-lg max-h-[320px] ring-1 ring-black ring-opacity-5 overflow-y-scroll`}>
-          <ul className="text-sm p-2 text-black ">
+          className={`origin-top-center absolute right-0 ${width} mt-2 max-h-[320px] min-w-[10rem] max-w-[22rem] overflow-y-scroll rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5`}>
+          <ul className="p-2 text-sm text-black ">
             {items.map((item, i) => (
               <Menu.Item key={i}>
                 {({active, disabled}) => (

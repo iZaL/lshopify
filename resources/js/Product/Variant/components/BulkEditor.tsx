@@ -73,18 +73,18 @@ export default function BulkEditor({variants, children}: Props) {
           {defaultAttributes.map((attr, i) => {
             return (
               <div className="mb-2 pr-2" key={i}>
-                <div className="flex flex-row bg-gray-200 rounded rounded-md items-center justify-end h-6 overflow-hidden ">
-                  <div className="px-2 flex-1">{attr}</div>
+                <div className="flex h-6 flex-row items-center justify-end overflow-hidden rounded rounded-md bg-gray-200 ">
+                  <div className="flex-1 px-2">{attr}</div>
                   {selectedAttributes.includes(attr) ? (
                     <XIcon
-                      className="w-6 h-6 hover:bg-gray-300 cursor-pointer hover:rounded hover:rounded-md"
+                      className="h-6 w-6 cursor-pointer hover:rounded hover:rounded-md hover:bg-gray-300"
                       onClick={() => {
                         onAttributesRemove(attr);
                       }}
                     />
                   ) : (
                     <CheckCircleIcon
-                      className="w-6 h-6 hover:bg-gray-300 cursor-pointer hover:rounded hover:rounded-md text-green-500"
+                      className="h-6 w-6 cursor-pointer text-green-500 hover:rounded hover:rounded-md hover:bg-gray-300"
                       onClick={() => {
                         onAttributesAdd(attr);
                       }}
@@ -98,71 +98,71 @@ export default function BulkEditor({variants, children}: Props) {
 
         <div className="overflow-x-scroll">
           <div className="mt-4">
-            <div className="flex flex-row items-center flex-shrink-0 pb-2 space-x-4 border-b border-gray-200 font-semibold">
-              <div className="flex-shrink-0 w-40">Title</div>
+            <div className="flex flex-shrink-0 flex-row items-center space-x-4 border-b border-gray-200 pb-2 font-semibold">
+              <div className="w-40 flex-shrink-0">Title</div>
               {selectedAttributes.includes('price') && (
-                <div className="flex-shrink-0 w-40">Price</div>
+                <div className="w-40 flex-shrink-0">Price</div>
               )}
               {selectedAttributes.includes('compare_at_price') && (
-                <div className="flex-shrink-0 w-40">Compare at price</div>
+                <div className="w-40 flex-shrink-0">Compare at price</div>
               )}
               {selectedAttributes.includes('cost_price') && (
-                <div className="flex-shrink-0 w-40">Cost per item</div>
+                <div className="w-40 flex-shrink-0">Cost per item</div>
               )}
               {selectedAttributes.includes('taxable') && (
-                <div className="flex-shrink-0 w-40">Charge Taxes</div>
+                <div className="w-40 flex-shrink-0">Charge Taxes</div>
               )}
               {selectedAttributes.includes('quantity') && (
-                <div className="flex-shrink-0 w-40">Quantity</div>
+                <div className="w-40 flex-shrink-0">Quantity</div>
               )}
               {selectedAttributes.includes('sku') && (
-                <div className="flex-shrink-0 w-40">SKU</div>
+                <div className="w-40 flex-shrink-0">SKU</div>
               )}
               {selectedAttributes.includes('barcode') && (
-                <div className="flex-shrink-0 w-40">Barcode</div>
+                <div className="w-40 flex-shrink-0">Barcode</div>
               )}
               {selectedAttributes.includes('out_of_stock_sale') && (
-                <div className="flex-shrink-0 w-40">
+                <div className="w-40 flex-shrink-0">
                   Continue selling when out of stock
                 </div>
               )}
               {selectedAttributes.includes('track_quantity') && (
-                <div className="flex-shrink-0 w-40">Track Quantity</div>
+                <div className="w-40 flex-shrink-0">Track Quantity</div>
               )}
               {selectedAttributes.includes('requires_shipping') && (
-                <div className="flex-shrink-0 w-40">Requires Shipping</div>
+                <div className="w-40 flex-shrink-0">Requires Shipping</div>
               )}
               {selectedAttributes.includes('physical_product') && (
-                <div className="flex-shrink-0 w-40">Physical Product</div>
+                <div className="w-40 flex-shrink-0">Physical Product</div>
               )}
               {selectedAttributes.includes('weight') && (
-                <div className="flex-shrink-0 w-40">Weight</div>
+                <div className="w-40 flex-shrink-0">Weight</div>
               )}
               {selectedAttributes.includes('hs_code') && (
-                <div className="flex-shrink-0 w-40">HS Code</div>
+                <div className="w-40 flex-shrink-0">HS Code</div>
               )}
               {selectedAttributes.includes('origin_country_id') && (
-                <div className="flex-shrink-0 w-40">Country of origin</div>
+                <div className="w-40 flex-shrink-0">Country of origin</div>
               )}
             </div>
           </div>
 
-          <ul className="mt-4 space-y-4 mb-10">
+          <ul className="mt-4 mb-10 space-y-4">
             {currentVariants.map((variant, i) => {
               return (
                 <li
-                  className="flex flex-row items-center flex-shrink-0 space-x-4"
+                  className="flex flex-shrink-0 flex-row items-center space-x-4"
                   key={i}>
-                  <div className="flex-shrink-0 w-40">{variant.title}</div>
+                  <div className="w-40 flex-shrink-0">{variant.title}</div>
                   {selectedAttributes.includes('price') && (
-                    <div className="flex-shrink-0 w-40">
+                    <div className="w-40 flex-shrink-0">
                       <InputText
                         name="price"
                         onChange={e =>
                           onAttributeChange(variant, 'price', e.target.value)
                         }
                         leftComponent={
-                          <div className="text-md text-gray-400 text-sm">
+                          <div className="text-md text-sm text-gray-400">
                             OMR
                           </div>
                         }
@@ -173,7 +173,7 @@ export default function BulkEditor({variants, children}: Props) {
                     </div>
                   )}
                   {selectedAttributes.includes('compare_at_price') && (
-                    <div className="flex-shrink-0 w-40">
+                    <div className="w-40 flex-shrink-0">
                       <InputText
                         name="compare_at_price"
                         onChange={e =>
@@ -184,7 +184,7 @@ export default function BulkEditor({variants, children}: Props) {
                           )
                         }
                         leftComponent={
-                          <div className="text-md text-gray-400 text-sm">
+                          <div className="text-md text-sm text-gray-400">
                             OMR
                           </div>
                         }
@@ -195,7 +195,7 @@ export default function BulkEditor({variants, children}: Props) {
                     </div>
                   )}
                   {selectedAttributes.includes('cost_price') && (
-                    <div className="flex-shrink-0 w-40">
+                    <div className="w-40 flex-shrink-0">
                       <InputText
                         name="cost_price"
                         onChange={e =>
@@ -206,7 +206,7 @@ export default function BulkEditor({variants, children}: Props) {
                           )
                         }
                         leftComponent={
-                          <div className="text-md text-gray-400 text-sm">
+                          <div className="text-md text-sm text-gray-400">
                             OMR
                           </div>
                         }
@@ -217,7 +217,7 @@ export default function BulkEditor({variants, children}: Props) {
                     </div>
                   )}
                   {selectedAttributes.includes('taxable') && (
-                    <div className="flex-shrink-0 w-40">
+                    <div className="w-40 flex-shrink-0">
                       <Checkbox
                         name="taxable"
                         checked={variant.taxable}
@@ -233,7 +233,7 @@ export default function BulkEditor({variants, children}: Props) {
                   )}
 
                   {selectedAttributes.includes('quantity') && (
-                    <div className="flex-shrink-0 w-40">
+                    <div className="w-40 flex-shrink-0">
                       <InputText
                         name="quantity"
                         onChange={e =>
@@ -244,7 +244,7 @@ export default function BulkEditor({variants, children}: Props) {
                     </div>
                   )}
                   {selectedAttributes.includes('sku') && (
-                    <div className="flex-shrink-0 w-40">
+                    <div className="w-40 flex-shrink-0">
                       <InputText
                         name="sku"
                         onChange={e =>
@@ -255,7 +255,7 @@ export default function BulkEditor({variants, children}: Props) {
                     </div>
                   )}
                   {selectedAttributes.includes('barcode') && (
-                    <div className="flex-shrink-0 w-40">
+                    <div className="w-40 flex-shrink-0">
                       <InputText
                         name="barcode"
                         onChange={e =>
@@ -266,7 +266,7 @@ export default function BulkEditor({variants, children}: Props) {
                     </div>
                   )}
                   {selectedAttributes.includes('out_of_stock_sale') && (
-                    <div className="flex-shrink-0 w-40 ">
+                    <div className="w-40 flex-shrink-0 ">
                       <Checkbox
                         name="out_of_stock_sale"
                         inputStyle="text-center"
@@ -282,7 +282,7 @@ export default function BulkEditor({variants, children}: Props) {
                     </div>
                   )}
                   {selectedAttributes.includes('track_quantity') && (
-                    <div className="flex-shrink-0 w-40">
+                    <div className="w-40 flex-shrink-0">
                       <Checkbox
                         name="track_quantity"
                         checked={variant.track_quantity}
@@ -297,7 +297,7 @@ export default function BulkEditor({variants, children}: Props) {
                     </div>
                   )}
                   {selectedAttributes.includes('physical_product') && (
-                    <div className="flex-shrink-0 w-40 ">
+                    <div className="w-40 flex-shrink-0 ">
                       <Checkbox
                         name="physical_product"
                         checked={variant.physical_product}
@@ -313,7 +313,7 @@ export default function BulkEditor({variants, children}: Props) {
                   )}
 
                   {selectedAttributes.includes('requires_shipping') && (
-                    <div className="flex-shrink-0 w-40 ">
+                    <div className="w-40 flex-shrink-0 ">
                       <Checkbox
                         name="requires_shipping"
                         checked={variant.requires_shipping}
@@ -329,7 +329,7 @@ export default function BulkEditor({variants, children}: Props) {
                   )}
 
                   {selectedAttributes.includes('weight') && (
-                    <div className="flex-shrink-0 w-40">
+                    <div className="w-40 flex-shrink-0">
                       <InputText
                         name="Weight"
                         value={variant.weight}
@@ -343,7 +343,7 @@ export default function BulkEditor({variants, children}: Props) {
                     </div>
                   )}
                   {selectedAttributes.includes('hs_code') && (
-                    <div className="flex-shrink-0 w-40">
+                    <div className="w-40 flex-shrink-0">
                       <InputText
                         name="hs_code"
                         value={variant.hs_code || ''}
@@ -358,12 +358,12 @@ export default function BulkEditor({variants, children}: Props) {
                     </div>
                   )}
                   {selectedAttributes.includes('origin_country_id') && (
-                    <div className="flex-shrink-0 w-40">
+                    <div className="w-40 flex-shrink-0">
                       <select
                         id="country"
                         name="country"
                         autoComplete="country"
-                        className="mt-1 p-2 block focus:ring-indigo-500 focus:border-indigo-500 w-full sm:text-sm border-2 border-gray-300 rounded-md"
+                        className="mt-1 block w-full rounded-md border-2 border-gray-300 p-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         onChange={e =>
                           onAttributeChange(
                             variant,

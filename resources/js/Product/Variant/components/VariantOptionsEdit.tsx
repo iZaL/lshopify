@@ -48,7 +48,7 @@ export default function VariantOptionsEdit({
   return (
     <Card>
       <Subheader text="Options" />
-      <div className="flex flex-row space-x-4 justify-center">
+      <div className="flex flex-row justify-center space-x-4">
         <ul className="flex-1 space-y-6">
           {options.map((o, i) => {
             return (
@@ -66,7 +66,7 @@ export default function VariantOptionsEdit({
           })}
         </ul>
 
-        <div className="flex flex-col items-center justify-center w-40">
+        <div className="flex w-40 flex-col items-center justify-center">
           <VariantImage
             image={variant?.image}
             imageStyle="h-32 w-32"

@@ -13,10 +13,10 @@ interface Props {
 export default function ProductInfo({product, variant}: Props) {
   return (
     <Card>
-      <div className="flex flex-row space-x-4 items-center justify-center">
+      <div className="flex flex-row items-center justify-center space-x-4">
         {variant && <VariantImage image={variant.image} onClick={() => {}} />}
 
-        <div className="flex-1 text-sm space-y-2">
+        <div className="flex-1 space-y-2 text-sm">
           <div className="">{product.title}</div>
           <div className="">{product.status}</div>
           <div className="">{product.variants?.length} Variants</div>

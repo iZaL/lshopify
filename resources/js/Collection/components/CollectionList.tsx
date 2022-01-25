@@ -18,17 +18,19 @@ export default function CollectionList({collections}: Props) {
   return (
     <div className="flex flex-col">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+          <div className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="">
                 <tr>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-sm tracking-wider"></th>
+                    className="px-6 py-3 text-left text-sm tracking-wider"
+                  />
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-sm tracking-wider"></th>
+                    className="px-6 py-3 text-left text-sm tracking-wider"
+                  />
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-sm tracking-wider">
@@ -45,28 +47,29 @@ export default function CollectionList({collections}: Props) {
                 {collections.map((collection, id) => (
                   <tr
                     key={collection.id}
-                    className={`${id % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
+                    className={`${id % 2 === 0 ? 'bg-white' : 'bg-gray-50'} `}>
                     <td>
-                      <div className="flex justify-center items-center w-12">
+                      <div className="flex w-12 items-center justify-center">
                         <Checkbox checked={false} onChange={() => {}} name="" />
                       </div>
                     </td>
-                    <td className="py-2">
+                    <td className="overflow-hidden py-2">
                       {collection.image && (
                         <VariantImage
                           onClick={() => onCollectionClick(collection)}
                           image={collection.image}
+                          imageStyle="w-16 h-12"
                         />
                       )}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
                       <Button
                         theme="clear"
                         onClick={() => onCollectionClick(collection)}>
                         {collection.name}
                       </Button>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
                       {collection.conditions.map((condition, idx) => (
                         <div key={idx}>{condition.title}</div>
                       ))}

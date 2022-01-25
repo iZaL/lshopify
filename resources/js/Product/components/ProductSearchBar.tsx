@@ -30,11 +30,11 @@ interface Props {
 export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
   return (
     <div className="">
-      <div className="md:hidden p-4">
+      <div className="p-4 md:hidden">
         <select
           id="selected-tab"
           name="selected-tab"
-          className="mt-1 block w-full text-base border-gray-300 border-2 py-2 focus:outline-none focus:ring-0 focus:border-none sm:text-sm rounded-md"
+          className="mt-1 block w-full rounded-md border-2 border-gray-300 py-2 text-base focus:border-none focus:outline-none focus:ring-0 sm:text-sm"
           defaultValue={tabs.find(tab => tab?.current)?.name}>
           {tabs.map(tab => (
             <option key={tab.name}>{tab.name}</option>
@@ -53,7 +53,7 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
                   tab.current
                     ? 'border-green-800 text-green-800'
                     : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
-                  'whitespace-nowrap mx-2 py-3 px-6 border-b-2 font-medium text-sm',
+                  'mx-2 whitespace-nowrap border-b-2 py-3 px-6 text-sm font-medium',
                 )}>
                 {tab.name}
               </a>
@@ -62,11 +62,11 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
         </div>
       </div>
 
-      <div className="px-4 my-5 divide-y divide-gray-200">
+      <div className="my-5 divide-y divide-gray-200 px-4">
         <div className="mt-6 grid grid-cols-12 gap-6">
           <div className="col-span-12 sm:col-span-6">
             <div className="relative rounded-md shadow-sm">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                 <SearchIcon
                   className="h-5 w-5 text-gray-400"
                   aria-hidden="true"
@@ -76,24 +76,24 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
                 type="text"
                 name="search"
                 id="search"
-                className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-10 focus:outline-none focus:blue-500 focus:border-blue-500 sm:text-sm"
+                className="focus:blue-500 block w-full rounded-md border border-gray-300 py-2 px-10 shadow-sm focus:border-blue-500 focus:outline-none sm:text-sm"
                 placeholder="Filter Products"
               />
             </div>
           </div>
 
           <div className="col-span-12 sm:col-span-6">
-            <div className="relative z-0 inline-flex shadow-sm rounded-md sm:shadow-none sm:space-x-3">
+            <div className="relative z-0 inline-flex rounded-md shadow-sm sm:space-x-3 sm:shadow-none">
               <Popover.Group className="flex items-center">
                 <div className="inline-flex sm:shadow-sm">
                   <Popover className="relative inline-block text-left">
                     <Popover.Button
-                      className="hidden group sm:inline-flex justify-center text-sm font-medium hover:text-gray-900
-                       px-4 py-2 rounded-l-md border border-gray-300 text-gray-900 hover:bg-gray-50
+                      className="group hidden justify-center rounded-l-md border border-gray-300 px-4
+                       py-2 text-sm font-medium text-gray-900 hover:bg-gray-50 hover:text-gray-900 sm:inline-flex
                       ">
                       <span>Vendor</span>
                       <ChevronDownIcon
-                        className="flex-shrink-0 -mr-1 ml-1 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                        className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                         aria-hidden="true"
                       />
                     </Popover.Button>
@@ -106,7 +106,7 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
                       leave="transition ease-in duration-75"
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95">
-                      <Popover.Panel className="origin-top-right absolute right-0 mt-2 bg-white rounded-md shadow-2xl p-4 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Popover.Panel className="absolute right-0 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <form className="space-y-4">
                           <div className="flex items-center">
                             <input
@@ -115,11 +115,11 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
                               defaultValue={1}
                               type="checkbox"
                               defaultChecked={false}
-                              className="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
+                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                             />
                             <label
                               htmlFor={`filter-1-1`}
-                              className="ml-3 pr-6 text-sm font-medium text-gray-900 whitespace-nowrap">
+                              className="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">
                               zalsstoredev
                             </label>
                           </div>
@@ -128,10 +128,10 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
                     </Transition>
                   </Popover>
                   <Popover className="relative inline-block text-left">
-                    <Popover.Button className="hidden sm:inline-flex -ml-px relative items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-900 hover:bg-gray-50">
+                    <Popover.Button className="relative -ml-px hidden items-center border border-gray-300 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-50 sm:inline-flex">
                       <span>Tagged</span>
                       <ChevronDownIcon
-                        className="flex-shrink-0 -mr-1 ml-1 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                        className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                         aria-hidden="true"
                       />
                     </Popover.Button>
@@ -144,7 +144,7 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
                       leave="transition ease-in duration-75"
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95">
-                      <Popover.Panel className="origin-top-right absolute right-0 mt-2 bg-white rounded-md shadow-2xl p-4 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Popover.Panel className="absolute right-0 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <form className="space-y-4">
                           <div className="flex items-center">
                             <InputText
@@ -159,10 +159,10 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
                   </Popover>
 
                   <Popover className="relative inline-block text-left">
-                    <Popover.Button className="hidden sm:inline-flex -ml-px relative items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-900 hover:bg-gray-50">
+                    <Popover.Button className="relative -ml-px hidden items-center border border-gray-300 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-50 sm:inline-flex">
                       <span>Status</span>
                       <ChevronDownIcon
-                        className="flex-shrink-0 -mr-1 ml-1 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                        className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                         aria-hidden="true"
                       />
                     </Popover.Button>
@@ -175,7 +175,7 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
                       leave="transition ease-in duration-75"
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95">
-                      <Popover.Panel className="origin-top-right absolute right-0 mt-2 bg-white rounded-md shadow-2xl p-4 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Popover.Panel className="absolute right-0 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <form className="space-y-4">
                           <div className="flex items-center">
                             <input
@@ -184,11 +184,11 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
                               defaultValue={1}
                               type="checkbox"
                               defaultChecked={false}
-                              className="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
+                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                             />
                             <label
                               htmlFor={`filter-1-1`}
-                              className="ml-3 pr-6 text-sm font-medium text-gray-900 whitespace-nowrap">
+                              className="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">
                               Active
                             </label>
                           </div>
@@ -199,11 +199,11 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
                               defaultValue={1}
                               type="checkbox"
                               defaultChecked={false}
-                              className="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
+                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                             />
                             <label
                               htmlFor={`filter-1-1`}
-                              className="ml-3 pr-6 text-sm font-medium text-gray-900 whitespace-nowrap">
+                              className="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">
                               Draft
                             </label>
                           </div>
@@ -215,14 +215,14 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
                   <button
                     type="button"
                     onClick={onMoreFiltersClick}
-                    className="sm:inline-flex -ml-px relative items-center px-4 py-2 md:rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600">
+                    className="relative -ml-px items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 sm:inline-flex md:rounded-r-md">
                     <span>Filters</span>
                   </button>
                 </div>
 
-                <div className="hidden lg:flex space-x-3 ml-4">
+                <div className="ml-4 hidden space-x-3 lg:flex">
                   <Popover className="relative inline-block text-left">
-                    <Popover.Button className="sm:inline-flex -ml-px relative items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600">
+                    <Popover.Button className="relative -ml-px items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 sm:inline-flex">
                       <SortAscendingIcon
                         className="mr-2.5 h-5 w-5 text-gray-400"
                         aria-hidden="true"
@@ -238,7 +238,7 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
                       leave="transition ease-in duration-75"
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95">
-                      <Popover.Panel className="origin-top-right absolute right-0 mt-2 bg-white rounded-md shadow-2xl p-4 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Popover.Panel className="absolute right-0 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <form className="space-y-4">
                           <div className="flex items-center">
                             <input
@@ -246,11 +246,11 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
                               name={`1[]`}
                               type="radio"
                               defaultChecked={false}
-                              className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
                             />
                             <label
                               htmlFor={`filter-1-1`}
-                              className="ml-3 pr-6 text-sm text-gray-900 whitespace-nowrap">
+                              className="ml-3 whitespace-nowrap pr-6 text-sm text-gray-900">
                               Product title A-Z
                             </label>
                           </div>
@@ -260,11 +260,11 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
                               name={`1[]`}
                               type="radio"
                               defaultChecked={false}
-                              className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
                             />
                             <label
                               htmlFor={`filter-1-1`}
-                              className="ml-3 pr-6 text-sm text-gray-900 whitespace-nowrap">
+                              className="ml-3 whitespace-nowrap pr-6 text-sm text-gray-900">
                               Product title Z-A
                             </label>
                           </div>

@@ -32,14 +32,14 @@ export default function FulfillmentItems({
           return (
             <div
               key={i}
-              className="py-2 flex flex-col sm:flex-row sm:space-x-2 text-sm space-y-2 sm:space-y-0">
-              <div className="flex flex-row items-center flex-1 space-x-2">
+              className="flex flex-col space-y-2 py-2 text-sm sm:flex-row sm:space-x-2 sm:space-y-0">
+              <div className="flex flex-1 flex-row items-center space-x-2">
                 <VariantImage
                   image={variant.image}
                   onClick={() => {}}
                   imageStyle="w-12 h-12"
                 />
-                <div className="text-blue-500 flex-1 flex-shrink-0">
+                <div className="flex-1 flex-shrink-0 text-blue-500">
                   {variant.product && (
                     <div className="underline">
                       <ProductTitle product={variant.product} />
@@ -58,7 +58,7 @@ export default function FulfillmentItems({
                 }
                 value={variant.pivot_quantity}
                 rightComponent={
-                  <div className="text-gray-400 text-sm">
+                  <div className="text-sm text-gray-400">
                     of {trueVariant?.pivot_quantity}
                   </div>
                 }

@@ -42,7 +42,7 @@ export default function CustomerSelect({
     <Card>
       <Subheader text="Find or create a customer" />
 
-      <div className="relative w-100" onClick={() => setShowMenu(true)}>
+      <div className="w-100 relative" onClick={() => setShowMenu(true)}>
         <InputText
           name="search"
           placeholder={'Search products'}
@@ -50,7 +50,7 @@ export default function CustomerSelect({
             setSearchTerm(e.target.value);
           }}
           value=""
-          leftComponent={<SearchIcon className="w-5 h-5 text-gray-500" />}
+          leftComponent={<SearchIcon className="h-5 w-5 text-gray-500" />}
           autocomplete="off"
         />
 
@@ -60,9 +60,9 @@ export default function CustomerSelect({
           <div className="bg-white">
             <div className="p-2">
               <div
-                className="flex flex-row items-center space-x-2 rounded-md px-5 py-2 text-sm text-gray-800 hover:bg-gray-100 cursor-pointer"
+                className="flex cursor-pointer flex-row items-center space-x-2 rounded-md px-5 py-2 text-sm text-gray-800 hover:bg-gray-100"
                 onClick={() => setShowDialog('create_customer')}>
-                <PlusCircleIcon className="w-5 h-5 text-gray-500" />
+                <PlusCircleIcon className="h-5 w-5 text-gray-500" />
                 <div>Create new customer</div>
               </div>
             </div>
@@ -73,7 +73,7 @@ export default function CustomerSelect({
               {customers.map((customer, i) => (
                 <li
                   key={i}
-                  className="text-sm text-gray-800 space-x-2 rounded-md px-5 py-2 hover:bg-gray-100 cursor-pointer"
+                  className="cursor-pointer space-x-2 rounded-md px-5 py-2 text-sm text-gray-800 hover:bg-gray-100"
                   onClick={() => onCustomerSelect(customer)}>
                   {customer.full_name}
                 </li>

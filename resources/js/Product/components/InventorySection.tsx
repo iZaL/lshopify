@@ -54,7 +54,7 @@ export default function InventorySection({onChange, variant}: Props) {
 
           <div className="w-full border-t border-gray-300" />
 
-          <div className="flex-1 min-w-0">
+          <div className="min-w-0 flex-1">
             <Subheader text="QUANTITY" headerStyle="text-sm" />
           </div>
 

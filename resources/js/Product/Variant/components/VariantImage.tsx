@@ -12,12 +12,12 @@ export default function VariantImage({image, imageStyle, onClick}: Props) {
 
   return (
     <div
-      className={`flex justify-center items-center  border border-gray-200 rounded cursor-pointer ${style}`}
+      className={`flex cursor-pointer items-center  justify-center overflow-hidden rounded border border-gray-200 ${style}`}
       onClick={onClick}>
       {image ? (
         <img
           src={image.url}
-          className="object-contain pointer-events-none"
+          className="pointer-events-none object-contain"
           alt=""
         />
       ) : (

@@ -18,8 +18,8 @@ export default function ProductsList({products}: Props) {
   return (
     <div className="flex flex-col">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+          <div className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="">
                 <tr>
@@ -62,7 +62,7 @@ export default function ProductsList({products}: Props) {
                     key={product.id}
                     className={`${id % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
                     <td>
-                      <div className="flex justify-center items-center w-12">
+                      <div className="flex w-12 items-center justify-center">
                         <Checkbox checked={false} onChange={() => {}} name="" />
                       </div>
                     </td>
@@ -74,23 +74,23 @@ export default function ProductsList({products}: Props) {
                         />
                       )}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
                       <Button
                         theme="clear"
                         onClick={() => onProductClick(product)}>
                         {product.title}
                       </Button>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                       {product.status}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                       4 in stocks for 5 variants
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                       {product.product_type}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                       zalsstores
                     </td>
                   </tr>

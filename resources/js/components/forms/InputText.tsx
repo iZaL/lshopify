@@ -28,7 +28,7 @@ const Button = ({
     <button
       className={`absolute inset-y-0 ${
         position === 'right' ? 'right-0' : 'left-0'
-      } px-3 focus:outline-none focus:none focus:border-none ${
+      } focus:none px-3 focus:border-none focus:outline-none ${
         !onClick && 'pointer-events-none'
       }  `}
       onClick={onClick}>
@@ -62,9 +62,9 @@ export default function InputText({
         id={name}
         autoComplete={autocomplete ? autocomplete : ''}
         placeholder={placeholder ? placeholder : ''}
-        className={`block w-full border border-gray-300 dark:border-gray-500 rounded-md shadow-sm py-2 pl-4 pr-10 dark:bg-gray-800
+        className={`block w-full rounded-md border border-gray-300 py-2 pl-4 pr-10 shadow-sm dark:border-gray-500 dark:bg-gray-800
         ${leftComponent && 'pl-[3rem]'}
-        focus:outline-none focus:blue-500 focus:border-blue-500 sm:text-sm ${inputStyle}`}
+        focus:blue-500 focus:border-blue-500 focus:outline-none sm:text-sm ${inputStyle}`}
         {...props}
       />
       {rightComponent && (

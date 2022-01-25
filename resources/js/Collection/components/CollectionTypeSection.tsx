@@ -62,20 +62,20 @@ export default function CollectionTypeSection({onChange, collection}: T) {
     <Card>
       <Subheader text="Collection type" />
 
-      <div className="text-sm space-y-2">
+      <div className="space-y-2 text-sm">
         <div>
           <div className="flex flex-row items-center">
             <input
               type="radio"
               value="manual"
               name="type"
-              className="w-3 h-3"
+              className="h-3 w-3"
               checked={collection.type === 'manual'}
               onChange={() => onChange('type', 'manual')}
             />
             <div className="ml-3">Manual</div>
           </div>
-          <p className="text-sm text-gray-500 ml-6">
+          <p className="ml-6 text-sm text-gray-500">
             Add products to this collection one by one. Learn more about
           </p>
         </div>
@@ -86,7 +86,7 @@ export default function CollectionTypeSection({onChange, collection}: T) {
               type="radio"
               value="smart"
               name="type"
-              className="w-3 h-3"
+              className="h-3 w-3"
               checked={collection.type === 'smart'}
               onChange={() => {
                 initializeSmartCollection();
@@ -94,7 +94,7 @@ export default function CollectionTypeSection({onChange, collection}: T) {
             />
             <div className="ml-3">Automated</div>
           </div>
-          <p className="text-sm text-gray-500 ml-6">
+          <p className="ml-6 text-sm text-gray-500">
             Existing and future products that match the conditions you set will
             automatically be added to this collection. Learn more about
             automated collections.
@@ -166,8 +166,8 @@ export default function CollectionTypeSection({onChange, collection}: T) {
                   }
                 />
 
-                <div className="rounded rounded-md border border-gray-400 cursor-pointer hover:bg-gray-200">
-                  <TrashIcon className="w-8 h-8 p-1 text-gray-600" />
+                <div className="cursor-pointer rounded rounded-md border border-gray-400 hover:bg-gray-200">
+                  <TrashIcon className="h-8 w-8 p-1 text-gray-600" />
                 </div>
               </div>
             );

@@ -17,16 +17,16 @@ export default function EditOriginCountry({
 
   return (
     <div className="p-5">
-      <p className="text-gray-700 text-sm">Country/Region of origin</p>
+      <p className="text-sm text-gray-700">Country/Region of origin</p>
       <form
         className="flex space-x-4 border-b border-gray-200 py-3  "
         action="#">
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
           <select
             id="country"
             name="country"
             autoComplete="country"
-            className="mt-1 p-2 block focus:ring-indigo-500 focus:border-indigo-500 w-full sm:text-sm border-2 border-gray-300 rounded-md"
+            className="mt-1 block w-full rounded-md border-2 border-gray-300 p-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             onChange={e => setAllText(e.target.value)}>
             <option value="1">United States</option>
             <option value="2">Canada</option>
@@ -41,9 +41,9 @@ export default function EditOriginCountry({
       {variants.map((variant, i) => {
         return (
           <div
-            className="flex space-x-4 border-b border-gray-200 py-3 items-center"
+            className="flex items-center space-x-4 border-b border-gray-200 py-3"
             key={i}>
-            <div className="flex-1 min-w-0 text-sm text-gray-800">
+            <div className="min-w-0 flex-1 text-sm text-gray-800">
               {variant.title}
             </div>
 
@@ -52,7 +52,7 @@ export default function EditOriginCountry({
                 id="country"
                 name="country"
                 autoComplete="country"
-                className="mt-1 p-2 block focus:ring-indigo-500 focus:border-indigo-500 w-full sm:text-sm border-2 border-gray-300 rounded-md"
+                className="mt-1 block w-full rounded-md border-2 border-gray-300 p-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 value={variant.origin_country_id}
                 onChange={e => onChange(variant, e.target.value)}>
                 <option value="1">United States</option>

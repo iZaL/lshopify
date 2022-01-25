@@ -6,19 +6,19 @@ const DisclosureButton = ({open, title}: {open: boolean; title: string}) => {
   return (
     <h3 className="-mx-2 -my-3 flow-root">
       <Disclosure.Button
-        className={`px-2 py-2 rounded-sm bg-white w-full flex items-center justify-between text-gray-400 ${
+        className={`flex w-full items-center justify-between rounded-sm bg-white px-2 py-2 text-gray-400 ${
           !open && 'focus:ring-2 focus:ring-blue-500'
-        } hover:bg-gray-100 border-radius-2 hover:text-gray-500`}>
+        } border-radius-2 hover:bg-gray-100 hover:text-gray-500`}>
         <span className="font-medium text-gray-900">{title}</span>
         <span className="ml-6 flex items-center">
           {open ? (
             <ChevronUpIcon
-              className="h-6 w-6 text-black-50"
+              className="text-black-50 h-6 w-6"
               aria-hidden="true"
             />
           ) : (
             <ChevronDownIcon
-              className="h-6 w-6 text-black-50"
+              className="text-black-50 h-6 w-6"
               aria-hidden="true"
             />
           )}
@@ -30,7 +30,7 @@ const DisclosureButton = ({open, title}: {open: boolean; title: string}) => {
 
 export default function ProductFiltersPanel() {
   return (
-    <div className="absolute inset-0 px-4 sm:px-6 text-sm">
+    <div className="absolute inset-0 px-4 text-sm sm:px-6">
       <div className="space-y-6">
         <Disclosure as="div" className="">
           {({open}) => (
@@ -45,7 +45,7 @@ export default function ProductFiltersPanel() {
                       defaultValue={1}
                       type="checkbox"
                       defaultChecked={true}
-                      className="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
+                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                     />
                     <label
                       htmlFor={`filter-mobile-1-1`}
@@ -72,7 +72,7 @@ export default function ProductFiltersPanel() {
                       defaultValue={1}
                       type="checkbox"
                       defaultChecked={true}
-                      className="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
+                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                     />
                     <label
                       htmlFor={`filter-mobile-1-1`}
@@ -99,7 +99,7 @@ export default function ProductFiltersPanel() {
                       defaultValue={1}
                       type="checkbox"
                       defaultChecked={true}
-                      className="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
+                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                     />
                     <label
                       htmlFor={`filter-mobile-1-1`}

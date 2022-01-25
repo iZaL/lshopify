@@ -13,7 +13,7 @@ export default function MobileSidebar() {
       <Dialog
         as="div"
         static
-        className="fixed inset-0 flex z-40 md:hidden"
+        className="fixed inset-0 z-40 flex md:hidden"
         open={sidebarOpen}
         onClose={setSidebarOpen}>
         <Transition.Child
@@ -34,7 +34,7 @@ export default function MobileSidebar() {
           leave="transition ease-in-out duration-300 transform"
           leaveFrom="translate-x-0"
           leaveTo="-translate-x-full">
-          <div className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white dark:bg-gray-900">
+          <div className="relative flex w-full max-w-xs flex-1 flex-col bg-white pt-5 pb-4 dark:bg-gray-900">
             <Transition.Child
               as={Fragment}
               enter="ease-in-out duration-300"
@@ -45,21 +45,21 @@ export default function MobileSidebar() {
               leaveTo="opacity-0">
               <div className="absolute top-0 right-0 -mr-12 pt-2">
                 <button
-                  className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                  className="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                   onClick={() => setSidebarOpen(false)}>
                   <XIcon className="h-6 w-6 text-white" aria-hidden="true" />
                 </button>
               </div>
             </Transition.Child>
-            <div className="flex flex-shrink-0 px-4 justify-start">
-              <span className="text-xl text-center">LARAVEL SHOPIFY</span>
+            <div className="flex flex-shrink-0 justify-start px-4">
+              <span className="text-center text-xl">LARAVEL SHOPIFY</span>
             </div>
-            <div className="flex-1 mt-10 flex-1 h-0 overflow-y-auto">
+            <div className="mt-10 h-0 flex-1 flex-1 overflow-y-auto">
               <SidebarNav />
             </div>
           </div>
         </Transition.Child>
-        <div className="flex-shrink-0 w-14" aria-hidden="true">
+        <div className="w-14 flex-shrink-0" aria-hidden="true">
           {/* Dummy element to force sidebar to shrink to fit close icon */}
         </div>
       </Dialog>

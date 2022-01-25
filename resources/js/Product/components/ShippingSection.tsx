@@ -46,8 +46,8 @@ export default function ShippingSection({variant, onChange}: Props) {
 
           <Subheader text="CUSTOMS INFORMATION" headerStyle="text-xs" />
 
-          <div className="flex-1 min-w-0">
-            <span className="block text-sm text-gray-500 py-1">
+          <div className="min-w-0 flex-1">
+            <span className="block py-1 text-sm text-gray-500">
               Customs authorities use this information to calculate duties when
               shipping internationally. Shown on printed customs forms.
             </span>
@@ -59,7 +59,7 @@ export default function ShippingSection({variant, onChange}: Props) {
               id="country"
               name="country"
               autoComplete="country"
-              className="mt-1 p-2 block focus:ring-indigo-500 focus:border-indigo-500 w-full sm:text-sm border-2 border-gray-300 rounded-md"
+              className="mt-1 block w-full rounded-md border-2 border-gray-300 p-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               onChange={e => onChange('origin_country_id', e.target.value)}
               value={variant.origin_country_id || 0}>
               <option value="1">United States</option>
@@ -67,7 +67,7 @@ export default function ShippingSection({variant, onChange}: Props) {
               <option value="3">Mexico</option>
             </select>
             <div className="">
-              <span className="block text-sm text-gray-500 py-1">
+              <span className="block py-1 text-sm text-gray-500">
                 In most cases, where the product is manufactured.
               </span>
             </div>
@@ -87,9 +87,9 @@ export default function ShippingSection({variant, onChange}: Props) {
       )}
 
       {!variant.physical_product && (
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
           <Subheader text="WEIGHT" headerStyle="text-xs" />
-          <span className="block text-sm text-gray-500 py-1">
+          <span className="block py-1 text-sm text-gray-500">
             Used to calculate shipping rates at checkout and label prices during
             fulfillment.
           </span>

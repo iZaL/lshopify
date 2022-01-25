@@ -148,8 +148,8 @@ export default function DraftOrderEdit(props: Props) {
 
         <PageHeader text="Order Edit" />
 
-        <div className="mt-6 max-w-3xl mx-auto grid grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
-          <section className="space-y-6 lg:col-start-1 lg:col-span-2 space-y-6">
+        <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+          <section className="space-y-6 space-y-6 lg:col-span-2 lg:col-start-1">
             <DraftOrderDetailsSection
               searchTerm={searchTerm}
               setSearchTerm={text => setSearchTerm(text)}
@@ -164,7 +164,7 @@ export default function DraftOrderEdit(props: Props) {
             />
           </section>
 
-          <section className="lg:col-start-3 lg:col-span-1 space-y-6">
+          <section className="space-y-6 lg:col-span-1 lg:col-start-3">
             {order.customer ? (
               <CustomerEdit
                 order={data}

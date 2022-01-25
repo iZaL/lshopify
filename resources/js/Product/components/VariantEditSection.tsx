@@ -156,7 +156,7 @@ export default function VariantEditSection({
 
   return (
     <Card>
-      <div className="flex flex-row justify-between items-center text-sm space-x-4">
+      <div className="flex flex-row items-center justify-between space-x-4 text-sm">
         <div className="flex-1">
           <Subheader text="Variants" />
         </div>
@@ -189,7 +189,7 @@ export default function VariantEditSection({
         </div>
       </div>
 
-      <ul className="flex flex-row space-x-4 text-sm flex-wrap">
+      <ul className="flex flex-row flex-wrap space-x-4 text-sm">
         <li className="">Select:</li>
         <li
           className="text-blue-500"
@@ -213,7 +213,7 @@ export default function VariantEditSection({
 
       <div className="overflow-x-auto overflow-y-auto text-sm">
         {checkedVariantIDs.length ? (
-          <div className="flex flex-row items-center w-full py-2 h-12 ">
+          <div className="flex h-12 w-full flex-row items-center py-2 ">
             <Button
               theme="clear"
               buttonStyle="px-4 py-2 rounded-l-md border border-gray-300 font-medium">
@@ -308,16 +308,16 @@ export default function VariantEditSection({
             />
           </div>
         ) : (
-          <div className="flex flex-row items-center w-full py-2 h-12">
+          <div className="flex h-12 w-full flex-row items-center py-2">
             <div className="flex items-center">
-              <div className="flex justify-center items-center w-12">
+              <div className="flex w-12 items-center justify-center">
                 <Checkbox
                   checked={checkedVariantIDs.length === currentVariants.length}
                   onChange={() => onSelectedAllChange()}
                   name=""
                 />
               </div>
-              <div className="flex justify-center items-center w-16 " />
+              <div className="flex w-16 items-center justify-center " />
             </div>
 
             <div className="w-full">
@@ -361,18 +361,18 @@ export default function VariantEditSection({
                   checkedVariantIDs.includes(variant.id)
                     ? 'bg-blue-50 dark:bg-gray-700'
                     : '',
-                  'box-border position-relative inline-block min-w-full hover:bg-gray-100 dark:hover:bg-gray-900 border-t border-gray-200',
+                  'position-relative box-border inline-block min-w-full border-t border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-900',
                 )}>
                 <div className="flex items-center">
                   <div className="flex items-center">
-                    <div className="flex justify-center items-center w-12">
+                    <div className="flex w-12 items-center justify-center">
                       <Checkbox
                         checked={checkedVariantIDs.includes(variant.id)}
                         onChange={() => onCheckboxChange(variant.id)}
                         name=""
                       />
                     </div>
-                    <div className="w-14 mr-2">
+                    <div className="mr-2 w-14">
                       <VariantImage
                         imageStyle="h-12"
                         image={variant.image}
@@ -385,7 +385,7 @@ export default function VariantEditSection({
                   </div>
 
                   <div className="flex items-start">
-                    <div className="min-w-0 max-w-100 self-center ">
+                    <div className="max-w-100 min-w-0 self-center ">
                       <div
                         className={`grid items-center gap-6
                         ${
@@ -461,8 +461,8 @@ export default function VariantEditSection({
                             }
                           />
                         </div>
-                        <div className="hidden sm:block flex sticky top-0 right-0 h-full py-4 px-2 bg-gray-100 dark:bg-gray-900 shadow shadow-md">
-                          <div className="flex flex-row flex-nowrap box-border  items-center space-x-4">
+                        <div className="sticky top-0 right-0 flex hidden h-full bg-gray-100 py-4 px-2 shadow shadow-md dark:bg-gray-900 sm:block">
+                          <div className="box-border flex flex-row flex-nowrap  items-center space-x-4">
                             <Button
                               theme="default"
                               buttonStyle="text-xs"

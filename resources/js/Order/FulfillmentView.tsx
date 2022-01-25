@@ -100,16 +100,16 @@ export default function FulfillmentView({fulfillment, order}: Props) {
   return (
     <Main>
       <div className="p-6">
-        <div className="max-w-7xl mx-auto xl:flex xl:items-center xl:justify-between">
+        <div className="mx-auto max-w-7xl xl:flex xl:items-center xl:justify-between">
           <PageHeader text={`Fulfill Items`} />
         </div>
 
-        <div className="mt-6 max-w-3xl mx-auto grid grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
-          <section className="lg:col-start-1 lg:col-span-2 space-y-6 ">
+        <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+          <section className="space-y-6 lg:col-span-2 lg:col-start-1 ">
             <Card>
-              <div className="pt-5 px-5 flex flex-row items-center space-x-4 ">
+              <div className="flex flex-row items-center space-x-4 px-5 pt-5 ">
                 <div className="font-bold">#1008</div>
-                <div className="rounded rounded-xl opacity-90 bg-yellow-400 px-3 text-sm">
+                <div className="rounded rounded-xl bg-yellow-400 px-3 text-sm opacity-90">
                   Partially fulfilled
                 </div>
               </div>
@@ -130,7 +130,7 @@ export default function FulfillmentView({fulfillment, order}: Props) {
 
               <Border />
 
-              <div className="flex justify-end pb-5 px-5">
+              <div className="flex justify-end px-5 pb-5">
                 <Button buttonStyle="w-full" onClick={() => handleSubmit()}>
                   <div className="w-full text-center">Fulfill Items</div>
                 </Button>
@@ -138,7 +138,7 @@ export default function FulfillmentView({fulfillment, order}: Props) {
             </Card>
           </section>
 
-          <section className="lg:col-start-3 lg:col-span-1 space-y-4">
+          <section className="space-y-4 lg:col-span-1 lg:col-start-3">
             <Card>
               <AddressCard
                 address={order.billing}

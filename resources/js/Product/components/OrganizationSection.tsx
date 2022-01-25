@@ -73,7 +73,7 @@ export default function OrganizationSection({
     <Card>
       <Subheader text={'Organization'} />
 
-      <div className="mt-1 sm:mt-0 sm:col-span-2 py-2 text-sm">
+      <div className="mt-1 py-2 text-sm sm:col-span-2 sm:mt-0">
         <Label title="Product Type" labelStyle="mb-1" />
         <CreatableSelect
           options={productTypes.map(({id, name}) => ({

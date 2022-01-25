@@ -24,11 +24,11 @@ export default function FormSubmitBar({
   }
 
   return (
-    <div className="absolute left-0 top-0 z-30 w-full position-sticky ">
-      <div className="flex justify-end px-20 items-center h-16 space-x-4 bg-gray-900 shadow-sm ">
+    <div className="position-sticky absolute left-0 top-0 z-30 w-full ">
+      <div className="flex h-16 items-center justify-end space-x-4 bg-gray-900 px-20 shadow-sm ">
         <button
           onClick={() => (onDiscard ? onDiscard() : discard())}
-          className="px-4 py-2 rounded-md shadow-sm text-sm font-medium text-white hover:bg-gray-600 border border-gray-500 focus:border-none">
+          className="rounded-md border border-gray-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-600 focus:border-none">
           Discard
         </button>
 

@@ -23,9 +23,9 @@ export default function Dropdown({
   return (
     <OutsideClickHandler onOutsideClick={() => setVisible(!visible)}>
       <div
-        className={`origin-center absolute right-0 ${width} min-w-[10rem] mt-2 bg-white rounded-md shadow-lg max-h-[320px] ring-1 ring-black ring-opacity-5 overflow-y-scroll`}>
+        className={`absolute right-0 origin-center ${width} mt-2 max-h-[320px] min-w-[10rem] overflow-y-scroll rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5`}>
         {items?.length ? (
-          <ul className="text-sm p-2 text-black ">
+          <ul className="p-2 text-sm text-black ">
             {items.map((item, i) => (
               <li
                 key={i}

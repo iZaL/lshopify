@@ -25,18 +25,18 @@ export default function VariantOptionsItem({
   return (
     <>
       <div className="flex flex-row justify-between">
-        <div className="text-sm font-semi-bold">Option {iteration}</div>
+        <div className="font-semi-bold text-sm">Option {iteration}</div>
         {showRemoveItemButton && (
           <Button
             onClick={() => (variant ? onVariantRemove(variant) : null)}
             theme="clear">
-            <div className="text-blue-700 text-sm">Remove</div>
+            <div className="text-sm text-blue-700">Remove</div>
           </Button>
         )}
       </div>
 
       <div className="grid grid-cols-3 gap-5 pb-4">
-        <div className="md:col-span-1 text-sm">
+        <div className="text-sm md:col-span-1">
           <CreatableSelect
             className="basic-multi-select"
             classNamePrefix="select"
