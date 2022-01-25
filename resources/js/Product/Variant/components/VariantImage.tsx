@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function VariantImage({image, imageStyle, onClick}: Props) {
-  let style = imageStyle ? imageStyle : 'w-16 h-16';
+  const style = imageStyle ? imageStyle : 'w-16 h-16';
 
   return (
     <div

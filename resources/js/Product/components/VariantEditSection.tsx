@@ -402,7 +402,7 @@ export default function VariantEditSection({
                         }
                        `}>
                         {variantOptions.map((option: VariantOption, idx) => {
-                          let currentOption = ensure(
+                          const currentOption = ensure(
                             variant.options?.find(v => v.name === option.name),
                           );
                           return (

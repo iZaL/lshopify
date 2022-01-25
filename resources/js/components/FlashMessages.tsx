@@ -1,7 +1,7 @@
 import React, {ReactNode, useEffect, useMemo, useState} from 'react';
 import {usePage} from '@inertiajs/inertia-react';
 import {XIcon} from '@heroicons/react/solid';
-import {Page} from '@inertiajs/inertia';
+import {ErrorBag, Errors, Page} from '@inertiajs/inertia';
 import {Transition} from '@headlessui/react';
 import Button from './Button';
 
@@ -16,9 +16,53 @@ interface Props extends Page {
   props: {
     env: 'local' | 'production' | 'testing';
     flash: FlashMessageType;
-    errors: any;
+    errors: Errors & ErrorBag;
   };
 }
+
+const Content = ({
+  children,
+  type,
+  setVisible,
+}: {
+  children: React.ReactNode;
+  type: keyof FlashMessageType;
+  setVisible: (visibility: boolean) => void;
+}) => {
+  let themeStyle = 'text-white bg-green-500 border-green-300';
+
+  switch (type) {
+    case 'error':
+      themeStyle = `text-white bg-red-500 border-red-700`;
+      break;
+    case 'warning':
+      themeStyle = `text-white bg-yellow-400 border-yellow-300`;
+      break;
+    case 'info':
+      themeStyle = `text-white bg-blue-400 border-blue-700`;
+      break;
+    case 'success':
+      themeStyle = `text-white bg-green-500 border-green-700`;
+      break;
+  }
+
+  return (
+    <div className="relative">
+      <div className={`mx-6 mt-6 border-l-4 p-4  ${themeStyle}`}>
+        <div className="flex items-center">
+          <div className="">{children}</div>
+          <div className="ml-auto pl-3">
+            <div className="">
+              <Button theme="default" onClick={() => setVisible(false)}>
+                <XIcon className="h-5 w-5" aria-hidden="true" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default function FlashMessages() {
   const [visible, setVisible] = useState(false);
@@ -126,47 +170,3 @@ export default function FlashMessages() {
     </Transition>
   );
 }
-
-const Content = ({
-  children,
-  type,
-  setVisible,
-}: {
-  children: any;
-  type: keyof FlashMessageType;
-  setVisible: (visibility: boolean) => void;
-}) => {
-  let themeStyle = 'text-white bg-green-500 border-green-300';
-
-  switch (type) {
-    case 'error':
-      themeStyle = `text-white bg-red-500 border-red-700`;
-      break;
-    case 'warning':
-      themeStyle = `text-white bg-yellow-400 border-yellow-300`;
-      break;
-    case 'info':
-      themeStyle = `text-white bg-blue-400 border-blue-700`;
-      break;
-    case 'success':
-      themeStyle = `text-white bg-green-500 border-green-700`;
-      break;
-  }
-
-  return (
-    <div className="relative">
-      <div className={`mx-6 mt-6 border-l-4 p-4  ${themeStyle}`}>
-        <div className="flex items-center">
-          <div className="">{children}</div>
-          <div className="ml-auto pl-3">
-            <div className="">
-              <Button theme="default" onClick={() => setVisible(false)}>
-                <XIcon className="h-5 w-5" aria-hidden="true" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};

@@ -5,7 +5,7 @@ interface TextAreaProps {
   autocomplete?: string;
   placeholder?: string;
   style?: string;
-  onChange: any;
+  onChange: (value: React.ChangeEvent<HTMLTextAreaElement>) => void;
   value?: string;
 }
 
@@ -14,6 +14,7 @@ export default function TextArea({
   autocomplete,
   placeholder,
   style,
+  onChange,
   ...props
 }: TextAreaProps) {
   return (
@@ -23,6 +24,7 @@ export default function TextArea({
         id={name}
         autoComplete={autocomplete ? autocomplete : ''}
         placeholder={placeholder}
+        onChange={onChange}
         className={`focus:blue-500 block w-full rounded-md border border-gray-300 py-2 px-4 shadow-sm focus:border-blue-500 focus:outline-none dark:border-gray-500 dark:bg-gray-800 sm:text-sm ${style}`}
         {...props}
       />

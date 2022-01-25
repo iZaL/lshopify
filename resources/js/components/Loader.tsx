@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function Loader() {
-  let textColor = 'text-green-500';
+  const textColor = 'text-green-500';
 
   return (
     <svg

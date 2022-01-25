@@ -21,6 +21,49 @@ interface Props extends Page {
   };
 }
 
+const Content = ({
+  children,
+  type,
+  setVisible,
+}: {
+  children: React.ReactNode;
+  type: keyof FlashMessageType;
+  setVisible: (visibility: boolean) => void;
+}) => {
+  let themeStyle = 'text-white bg-green-500 border-green-300';
+
+  switch (type) {
+    case 'error':
+      themeStyle = `text-white bg-red-500 border-red-700`;
+      break;
+    case 'warning':
+      themeStyle = `text-white bg-yellow-400 border-yellow-300`;
+      break;
+    case 'info':
+      themeStyle = `text-white bg-blue-400 border-blue-700`;
+      break;
+    case 'success':
+      themeStyle = `text-white bg-green-500 border-green-700`;
+      break;
+  }
+
+  return (
+    <div
+      className={`fixed right-0 mx-6 mt-6 min-w-[320px] rounded rounded-md border-l-4 p-4 shadow shadow-md  ${themeStyle}`}>
+      <div className="flex items-center">
+        <div className="">{children}</div>
+        <div className="ml-auto pl-3">
+          <div className="">
+            <Button theme="default" onClick={() => setVisible(false)}>
+              <XIcon className="h-5 w-5" aria-hidden="true" />
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function PopMessages() {
   const [visible, setVisible] = useState(false);
   const {flash, errors, env} = usePage<Props>().props;
@@ -116,48 +159,3 @@ export default function PopMessages() {
     </div>
   );
 }
-
-const Content = ({
-  children,
-  type,
-  setVisible,
-}: {
-  children: any;
-  type: keyof FlashMessageType;
-  setVisible: (visibility: boolean) => void;
-}) => {
-  console.log('type', type);
-
-  let themeStyle = 'text-white bg-green-500 border-green-300';
-
-  switch (type) {
-    case 'error':
-      themeStyle = `text-white bg-red-500 border-red-700`;
-      break;
-    case 'warning':
-      themeStyle = `text-white bg-yellow-400 border-yellow-300`;
-      break;
-    case 'info':
-      themeStyle = `text-white bg-blue-400 border-blue-700`;
-      break;
-    case 'success':
-      themeStyle = `text-white bg-green-500 border-green-700`;
-      break;
-  }
-
-  return (
-    <div
-      className={`fixed right-0 mx-6 mt-6 min-w-[320px] rounded rounded-md border-l-4 p-4 shadow shadow-md  ${themeStyle}`}>
-      <div className="flex items-center">
-        <div className="">{children}</div>
-        <div className="ml-auto pl-3">
-          <div className="">
-            <Button theme="default" onClick={() => setVisible(false)}>
-              <XIcon className="h-5 w-5" aria-hidden="true" />
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};

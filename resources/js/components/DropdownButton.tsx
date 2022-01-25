@@ -10,7 +10,7 @@ interface Props {
   arrowVisible?: boolean;
   buttonTitle: string;
   width?: string;
-  buttonProps?: Object;
+  buttonProps?: Record<string, unknown>;
 }
 
 export default function DropdownButton({

@@ -11,7 +11,7 @@ interface Props {
   description: string;
 }
 
-interface T extends Props {}
+type T = Props;
 
 export default function TitleSection({onChange, title, description}: T) {
   return (
@@ -31,9 +31,7 @@ export default function TitleSection({onChange, title, description}: T) {
         <TextArea
           name="description"
           placeholder="Short sleeve t-shirt"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            onChange('description', e.target.value)
-          }
+          onChange={e => onChange('description', e.target.value)}
           value={description || undefined}
         />
       </div>

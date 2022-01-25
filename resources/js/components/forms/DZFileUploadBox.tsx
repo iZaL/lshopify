@@ -46,7 +46,7 @@ const DZFileUploadBox = React.memo(
     };
 
     const thumbs = images.map((image, i) => {
-      let checked = selectedImages.map(img => img.id).includes(image.id);
+      const checked = selectedImages.map(img => img.id).includes(image.id);
       const checkbox = isMulti ? (
         <input
           name="image"

@@ -1,19 +1,18 @@
 import React from 'react';
 import {XCircleIcon} from '@heroicons/react/solid';
+import {ErrorBag, Errors} from '@inertiajs/inertia';
 
 interface Props {
-  errors: object;
+  errors: Errors & ErrorBag;
 }
 
 export default function ErrorBox({errors}: Props) {
-  // @ts-ignore
   if (Object.entries(errors).length === 0) {
     return null;
   }
 
   const totalErrors = Object.entries(errors).length;
   const errorMessages = Object.keys(errors).map(key => {
-    // @ts-ignore
     return errors[key];
   });
 

@@ -89,7 +89,6 @@ export default function Refund({order}: Props) {
       };
     });
 
-    // @ts-ignore
     Inertia.post(route('lshopify.orders.refund', [order.id]), {
       variants: postData,
     });

@@ -22,6 +22,16 @@ export default function VariantSection({
   const pendingVariants = defaultVariants.filter(
     ({id}) => !currentVariants.some(v => v.id === id),
   );
+  const onVariantAdd = () => {
+    const variantKeys = currentVariants.map(({id}) => id);
+    const randomVariant = defaultVariants.find(
+      ({id}) => !variantKeys.includes(id),
+    );
+    if (randomVariant) {
+      const variants = [...currentVariants, {...randomVariant, options: []}];
+      onChange('options', variants);
+    }
+  };
 
   const onVariantsHideShow = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHasVariants(e.target.checked);
@@ -44,17 +54,6 @@ export default function VariantSection({
       {...newVariant, options: oldVariant.options},
     ];
     onChange('options', newVariants);
-  };
-
-  const onVariantAdd = () => {
-    const variantKeys = currentVariants.map(({id}) => id);
-    const randomVariant = defaultVariants.find(
-      ({id}) => !variantKeys.includes(id),
-    );
-    if (randomVariant) {
-      const variants = [...currentVariants, {...randomVariant, options: []}];
-      onChange('options', variants);
-    }
   };
 
   const onVariantRemove = (variant: VariantOption) => {

@@ -16,19 +16,9 @@ interface Props {
   collection: Collection;
 }
 
-interface T extends Props {}
+type T = Props;
 
 export default function CollectionTypeSection({onChange, collection}: T) {
-  useEffect(() => {
-    if (!collection.conditions.length) {
-      addNewCondition();
-    }
-  }, [collection.conditions]);
-
-  const initializeSmartCollection = () => {
-    onChange('type', 'smart');
-  };
-
   const addNewCondition = () => {
     onChange('conditions', [
       ...collection.conditions,
@@ -39,6 +29,16 @@ export default function CollectionTypeSection({onChange, collection}: T) {
         value: '',
       },
     ]);
+  };
+
+  useEffect(() => {
+    if (!collection.conditions.length) {
+      addNewCondition();
+    }
+  }, [collection.conditions]);
+
+  const initializeSmartCollection = () => {
+    onChange('type', 'smart');
   };
 
   const onConditionChange = (

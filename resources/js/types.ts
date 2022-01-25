@@ -166,13 +166,13 @@ export interface CustomerAddress {
   phone: string;
 }
 
-export interface Shipping extends CustomerAddress {}
+export type Shipping = CustomerAddress;
 
-export interface Billing extends CustomerAddress {}
+export type Billing = CustomerAddress;
 
 export interface Fulfillment {
   id: number;
   variants: VariantPivot[];
 }
 
-export interface FulfillmentVariant extends VariantPivot {}
+export type FulfillmentVariant = VariantPivot;

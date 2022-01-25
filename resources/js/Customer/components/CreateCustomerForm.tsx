@@ -17,7 +17,7 @@ interface Props {
 }
 
 export default function CreateCustomerForm({customer, children}: Props) {
-  let customerForm: CustomerForm = {
+  const customerForm: CustomerForm = {
     first_name: customer?.first_name || '',
     last_name: customer?.last_name || '',
     email: customer?.email || '',
@@ -26,7 +26,7 @@ export default function CreateCustomerForm({customer, children}: Props) {
     accepts_marketing: customer?.accepts_marketing || false,
   };
 
-  let addressForm: CustomerAddress = {
+  const addressForm: CustomerAddress = {
     first_name: customer?.first_name || '',
     last_name: customer?.last_name || '',
     company: '',

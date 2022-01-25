@@ -48,9 +48,6 @@ export default function FulfillmentView({fulfillment, order}: Props) {
     variant: VariantPivot,
     value: number,
   ) => {
-    // const trueVariant = fulfillment.variants.find(({id}) => id === variant.id);
-
-    // if (trueVariant) {
     if (value <= trueVariant.pivot_quantity) {
       const newVariants = data.fulfillment.variants.map(v => {
         if (v.id === variant.id) {
@@ -69,7 +66,6 @@ export default function FulfillmentView({fulfillment, order}: Props) {
         },
       });
     }
-    // }
   };
 
   const onCustomerAddressSave = (
@@ -85,7 +81,6 @@ export default function FulfillmentView({fulfillment, order}: Props) {
   const handleSubmit = () => {
     Inertia.post(
       route('lshopify.orders.fulfill', [order.id, fulfillment.id]),
-      // `/orders/${order.id}/fulfillments/${fulfillment.id}/fulfill`,
       {
         ...data.fulfillment,
       },
