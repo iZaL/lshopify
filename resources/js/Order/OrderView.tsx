@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Main from '../Main';
 import PageHeader from './../components/PageHeader';
-import {Billing, Customer, Fulfillment, Order, Shipping} from '../types';
+import { Billing, Customer, CustomerAddress, Fulfillment, Order, Shipping } from '../types'
 import OrderItems from './components/OrderItems';
 import Card from '../components/Card';
 import Button from '../components/Button';
@@ -16,6 +16,7 @@ import PaymentPaid from './Payment/components/PaymentPaid';
 import PaymentPending from './Payment/components/PaymentPending';
 import OrderViewActionButtons from './components/OrderViewActionButtons';
 import route from 'ziggy-js';
+import { CustomerForm } from '../form_types'
 
 interface Props {
   order: Order;
@@ -40,12 +41,9 @@ export default function OrderView(props: Props) {
   }, [order]);
 
   const onCustomerCreate = (
-    customerData: any,
-    addressData: any,
-    // customerData: CustomerForm,
-    // addressData: CustomerAddress,
+    customerData: CustomerForm,
+    addressData: CustomerAddress,
   ) => {
-    // @ts-ignore
     Inertia.post(
       route('lshopify.customers.store'),
       {
@@ -78,14 +76,12 @@ export default function OrderView(props: Props) {
     type: 'shipping' | 'billing',
     address: Shipping | Billing,
   ) => {
-    // @ts-ignore
     Inertia.patch(route('lshopify.orders.update', [order.id]), {
       [type]: address,
     });
   };
 
   const updateOrderAttributes = (attributes: Partial<Order>) => {
-    // @ts-ignore
     Inertia.patch(route('lshopify.orders.update', [order.id]), {
       ...attributes,
     });

@@ -5,7 +5,7 @@ import FormSubmitBar from '../../components/FormSubmitBar';
 import {useForm} from '@inertiajs/inertia-react';
 import {Inertia} from '@inertiajs/inertia';
 import DraftOrderDetailsSection from './components/DraftOrderDetailsSection';
-import {Cart, Product} from '../../types';
+import { Cart, CartDiscount, CartItem, Product } from '../../types'
 import route from 'ziggy-js';
 
 interface Props {
@@ -38,27 +38,21 @@ export default function DraftOrderCreate(props: Props) {
     });
   };
 
-  const onVariantEdit = (rowId: string, item: any) => {
-    // const onVariantEdit = (rowId: string, item: CartItem) => {
-    // @ts-ignore
+  const onVariantEdit = (rowId: string, item: CartItem) => {
     Inertia.post(route('lshopify.cart.update'), {
       rowId: rowId,
       item: item,
     });
   };
 
-  const onApplyDiscount = (discount: any, item?: any) => {
-    // const onApplyDiscount = (discount: CartDiscount, item?: CartItem) => {
-    // @ts-ignore
+  const onApplyDiscount = (discount: CartDiscount, item?: CartItem) => {
     Inertia.post(route('lshopify.cart.discount.add'), {
       discount: discount,
       item: item,
     });
   };
 
-  const onRemoveDiscount = (discount: any, item?: any) => {
-    // const onRemoveDiscount = (discount: CartDiscount, item?: CartItem) => {
-    // @ts-ignore
+  const onRemoveDiscount = (discount: CartDiscount, item?: CartItem) => {
     Inertia.post(route('lshopify.cart.discount.remove'), {
       discount: discount,
       item: item,
@@ -68,7 +62,6 @@ export default function DraftOrderCreate(props: Props) {
   const onCreateOrder = () => {};
 
   const handleSubmit = () => {
-    // @ts-ignore
     Inertia.post(route('lshopify.orders.draft.store'), data, {
       onSuccess: () => {
         console.log('success');

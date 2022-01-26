@@ -129,7 +129,6 @@ export default function ProductCreate(props: Props) {
   };
 
   const handleSubmit = (): void => {
-    // @ts-ignore
     Inertia.post(route('lshopify.products.store'), data, {
       preserveScroll: false,
       onSuccess: () => {},

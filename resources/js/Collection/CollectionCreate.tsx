@@ -25,7 +25,6 @@ export default function CollectionCreate() {
 
   const handleSubmit = () => {
     const url = route('lshopify.collections.store');
-    // @ts-ignore
     Inertia.post(url, data, {
       onSuccess: () => {
         Inertia.reload();

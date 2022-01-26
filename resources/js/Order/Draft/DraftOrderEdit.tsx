@@ -4,7 +4,7 @@ import PageHeader from '../../components/PageHeader';
 import FormSubmitBar from '../../components/FormSubmitBar';
 import {Inertia} from '@inertiajs/inertia';
 import {useForm} from '@inertiajs/inertia-react';
-import {Billing, Cart, Customer, Order, Product, Shipping} from '../../types';
+import { Billing, Cart, CartItem, Customer, Order, Product, Shipping } from '../../types'
 import DraftOrderDetailsSection from './components/DraftOrderDetailsSection';
 import CustomerSelect from './components/CustomerSelect';
 import CustomerEdit from './components/CustomerEdit';
@@ -49,9 +49,7 @@ export default function DraftOrderEdit(props: Props) {
     });
   };
 
-  const onCartItemEdit = (rowId: string, item: any) => {
-    // const onCartItemEdit = (rowId: string, item: CartItem) => {
-    // @ts-ignore
+  const onCartItemEdit = (rowId: string, item: CartItem) => {
     Inertia.post(route('lshopify.cart.update'), {
       rowId: rowId,
       item: item,
@@ -133,7 +131,6 @@ export default function DraftOrderEdit(props: Props) {
         ...extraData,
       };
     }
-    // @ts-ignore
     Inertia.post(route('lshopify.orders.draft.update', [order.id]), postData, {
       onSuccess: () => {
         console.log('success');

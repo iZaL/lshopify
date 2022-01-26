@@ -72,7 +72,6 @@ export default function FulfillmentView({fulfillment, order}: Props) {
     type: 'shipping' | 'billing',
     address: Shipping | Billing,
   ) => {
-    // @ts-ignore
     Inertia.patch(route('lshopify.orders.update', [order.id]), {
       [type]: address,
     });
