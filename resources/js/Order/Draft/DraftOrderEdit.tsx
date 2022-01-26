@@ -6,18 +6,20 @@ import {Inertia} from '@inertiajs/inertia';
 import {useForm} from '@inertiajs/inertia-react';
 import {
   Billing,
-  Cart, CartDiscount,
+  Cart,
+  CartDiscount,
   CartItem,
-  Customer, CustomerAddress,
+  Customer,
+  CustomerAddress,
   Order,
   Product,
   Shipping,
-} from '../../types'
+} from '../../types';
 import DraftOrderDetailsSection from './components/DraftOrderDetailsSection';
 import CustomerSelect from './components/CustomerSelect';
 import CustomerEdit from './components/CustomerEdit';
 import route from 'ziggy-js';
-import { CustomerForm } from '../../form_types'
+import {CustomerForm} from '../../form_types';
 
 interface Props {
   products: Product[];
