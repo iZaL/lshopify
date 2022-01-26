@@ -4,7 +4,15 @@ import PageHeader from '../../components/PageHeader';
 import FormSubmitBar from '../../components/FormSubmitBar';
 import {Inertia} from '@inertiajs/inertia';
 import {useForm} from '@inertiajs/inertia-react';
-import { Billing, Cart, CartItem, Customer, Order, Product, Shipping } from '../../types'
+import {
+  Billing,
+  Cart,
+  CartItem,
+  Customer,
+  Order,
+  Product,
+  Shipping,
+} from '../../types';
 import DraftOrderDetailsSection from './components/DraftOrderDetailsSection';
 import CustomerSelect from './components/CustomerSelect';
 import CustomerEdit from './components/CustomerEdit';
@@ -108,17 +116,6 @@ export default function DraftOrderEdit(props: Props) {
     );
   };
 
-  const onCustomerAddressSave = (
-    type: 'shipping' | 'billing',
-    address: Shipping | Billing,
-  ) => {
-    handleSubmit({
-      [type]: {
-        ...address,
-      },
-    });
-  };
-
   const onCreateOrder = () => {
     Inertia.post(route('lshopify.orders.draft.confirm', [order.id]));
   };
@@ -134,6 +131,17 @@ export default function DraftOrderEdit(props: Props) {
     Inertia.post(route('lshopify.orders.draft.update', [order.id]), postData, {
       onSuccess: () => {
         console.log('success');
+      },
+    });
+  };
+
+  const onCustomerAddressSave = (
+    type: 'shipping' | 'billing',
+    address: Shipping | Billing,
+  ) => {
+    handleSubmit({
+      [type]: {
+        ...address,
       },
     });
   };

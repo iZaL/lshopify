@@ -1,7 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import Main from '../Main';
 import PageHeader from './../components/PageHeader';
-import { Billing, Customer, CustomerAddress, Fulfillment, Order, Shipping } from '../types'
+import {
+  Billing,
+  Customer,
+  CustomerAddress,
+  Fulfillment,
+  Order,
+  Shipping,
+} from '../types';
 import OrderItems from './components/OrderItems';
 import Card from '../components/Card';
 import Button from '../components/Button';
@@ -16,7 +23,7 @@ import PaymentPaid from './Payment/components/PaymentPaid';
 import PaymentPending from './Payment/components/PaymentPending';
 import OrderViewActionButtons from './components/OrderViewActionButtons';
 import route from 'ziggy-js';
-import { CustomerForm } from '../form_types'
+import {CustomerForm} from '../form_types';
 
 interface Props {
   order: Order;

@@ -6,7 +6,7 @@ interface Props {
   autocomplete?: string;
   placeholder?: string;
   inputStyle?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement> ) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string | number;
   rightComponent?: ReactNode;
   leftComponent?: ReactNode;

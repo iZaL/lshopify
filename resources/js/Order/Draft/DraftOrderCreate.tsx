@@ -5,7 +5,7 @@ import FormSubmitBar from '../../components/FormSubmitBar';
 import {useForm} from '@inertiajs/inertia-react';
 import {Inertia} from '@inertiajs/inertia';
 import DraftOrderDetailsSection from './components/DraftOrderDetailsSection';
-import { Cart, CartDiscount, CartItem, Product } from '../../types'
+import {Cart, CartDiscount, CartItem, Product} from '../../types';
 import route from 'ziggy-js';
 
 interface Props {
