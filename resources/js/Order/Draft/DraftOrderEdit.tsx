@@ -6,17 +6,18 @@ import {Inertia} from '@inertiajs/inertia';
 import {useForm} from '@inertiajs/inertia-react';
 import {
   Billing,
-  Cart,
+  Cart, CartDiscount,
   CartItem,
-  Customer,
+  Customer, CustomerAddress,
   Order,
   Product,
   Shipping,
-} from '../../types';
+} from '../../types'
 import DraftOrderDetailsSection from './components/DraftOrderDetailsSection';
 import CustomerSelect from './components/CustomerSelect';
 import CustomerEdit from './components/CustomerEdit';
 import route from 'ziggy-js';
+import { CustomerForm } from '../../form_types'
 
 interface Props {
   products: Product[];
@@ -65,16 +66,14 @@ export default function DraftOrderEdit(props: Props) {
     });
   };
 
-  const onApplyDiscount = (discount: any, item?: any) => {
-    // const onApplyDiscount = (discount: CartDiscount, item?: CartItem) => {
+  const onApplyDiscount = (discount: CartDiscount, item?: CartItem) => {
     Inertia.post(route('lshopify.cart.discount.add'), {
       discount: discount,
       item: item,
     });
   };
 
-  const onRemoveDiscount = (discount: any, item?: any) => {
-    // const onRemoveDiscount = (discount: CartDiscount, item?: CartItem) => {
+  const onRemoveDiscount = (discount: CartDiscount, item?: CartItem) => {
     Inertia.post(route('lshopify.cart.discount.remove'), {
       discount: discount,
       item: item,
@@ -82,10 +81,8 @@ export default function DraftOrderEdit(props: Props) {
   };
 
   const onCustomerCreate = (
-    customerData: any,
-    addressData: any,
-    // customerData: CustomerForm,
-    // addressData: CustomerAddress,
+    customerData: CustomerForm,
+    addressData: CustomerAddress,
   ) => {
     Inertia.post(
       route('lshopify.customers.store'),
@@ -104,7 +101,6 @@ export default function DraftOrderEdit(props: Props) {
   const onAttachCustomer = (customer?: Customer) => {
     Inertia.post(
       route('lshopify.orders.draft.customer.update', [order.id]),
-      // `/draft_orders/${order.id}/customer`,
       {
         customer_id: customer ? customer.id : null,
       },
