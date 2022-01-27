@@ -65,10 +65,6 @@ export default function ProductEdit(props: Props) {
   const [isTagsLoading, setIsTagsLoading] = useState(false);
 
   useEffect(() => {
-    // console.log('data changed', data);
-  }, [data]);
-
-  useEffect(() => {
     setData({
       ...data,
       ...product,

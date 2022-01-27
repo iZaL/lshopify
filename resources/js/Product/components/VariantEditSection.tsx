@@ -101,7 +101,7 @@ export default function VariantEditSection({
     onChange(variants);
   };
 
-  const ensure = <T extends {}>(argument: T | undefined | null) => {
+  const ensure = <T extends unknown>(argument: T | undefined | null) => {
     if (argument === undefined || argument === null) {
       throw new TypeError('invalid value');
     }
@@ -184,7 +184,7 @@ export default function VariantEditSection({
                 },
               },
             ]}
-            buttonProps={{theme: 'clear', style: 'text-blue-500'}}
+            buttonProps={{theme: 'clear', buttonStyle: 'text-blue-500'}}
           />
         </div>
       </div>
@@ -238,7 +238,8 @@ export default function VariantEditSection({
               width="w-[16rem]"
               buttonProps={{
                 theme: 'clear',
-                style: 'px-4 py-2 border border-gray-300 rounded-r-md',
+                buttonStyle:
+                  '-ml-px px-4 py-2 border border-gray-300 rounded-r-md',
               }}
               items={[
                 {

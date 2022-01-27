@@ -97,7 +97,7 @@ export default function PopMessages() {
     if (flashMessage.message || errorMessages.length) {
       setVisible(true);
     }
-  }, [flashMessage, errorMessages]);
+  }, []);
 
   let message: string | ReactNode = flashMessage.message;
   let flashMessageType: keyof FlashMessageType = flashMessage.type;

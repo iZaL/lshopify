@@ -24,8 +24,6 @@ class Variant extends BaseModel
         'options' => 'array',
     ];
 
-//    protected $with = ['product','image'];
-
     protected $fillable = [
         'product_id',
         'price',

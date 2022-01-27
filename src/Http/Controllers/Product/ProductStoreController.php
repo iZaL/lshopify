@@ -23,11 +23,9 @@ class ProductStoreController extends Controller
 
         try {
             $action = $productCreateAction->create($product, collect($request->all()));
-
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-
             return redirect()
                 ->back()
                 ->with('error', $e->getMessage());

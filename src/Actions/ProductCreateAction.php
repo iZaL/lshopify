@@ -15,19 +15,13 @@ class ProductCreateAction
      * @var VariantCreateAction
      */
     private $variantCreateAction;
-    /**
-     * @var VariantUpdateAction
-     */
-    private $variantUpdateAction;
 
     public function __construct(
         ImageUploadAction $imageUploadAction,
         VariantCreateAction $variantCreateAction,
-        VariantUpdateAction $variantUpdateAction
     ) {
         $this->imageUploadAction = $imageUploadAction;
         $this->variantCreateAction = $variantCreateAction;
-        $this->variantUpdateAction = $variantUpdateAction;
     }
 
     public function create(Product $product, Collection $requestData): Product
@@ -35,7 +29,6 @@ class ProductCreateAction
         $product = $product->create($requestData->only($product->getFillable())->toArray());
 
         $defaultVariantAttributes = $requestData->get('default_variant');
-
         $defaultVariantAttributes['default'] = true;
         $defaultVariantAttributes['product_id'] = $product->id;
         $this->variantCreateAction->create($defaultVariantAttributes, true);
