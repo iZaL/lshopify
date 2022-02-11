@@ -8,6 +8,9 @@ import {Collection} from '../types';
 import CollectionTypeSection from './components/CollectionTypeSection';
 import {Inertia} from '@inertiajs/inertia';
 import route from 'ziggy-js';
+import Subheader from '../components/Subheader';
+import Card from '../components/Card';
+import Border from '../components/Border';
 
 export default function CollectionCreate() {
   const collection: Collection = {
@@ -46,10 +49,59 @@ export default function CollectionCreate() {
               description={data.description || ''}
               onChange={(field, value) => setData(field, value)}
             />
-            <CollectionTypeSection
-              collection={data}
-              onChange={(field, value) => setData(field, value)}
-            />
+
+            <Card>
+              <Subheader text="Collection type" />
+
+              <div className="space-y-2 text-sm">
+                <div>
+                  <div className="flex flex-row items-center">
+                    <input
+                      type="radio"
+                      value="manual"
+                      name="type"
+                      className="h-3 w-3"
+                      checked={data.type === 'manual'}
+                      onChange={() => setData('type', 'manual')}
+                    />
+                    <div className="ml-3">Manual</div>
+                  </div>
+                  <p className="ml-6 text-sm text-gray-500">
+                    Add products to this collection one by one. Learn more about
+                  </p>
+                </div>
+
+                <div>
+                  <div className="flex flex-row items-center">
+                    <input
+                      type="radio"
+                      value="smart"
+                      name="type"
+                      className="h-3 w-3"
+                      checked={data.type === 'smart'}
+                      onChange={() => setData('type', 'smart')}
+                    />
+                    <div className="ml-3">Automated</div>
+                  </div>
+                  <p className="ml-6 text-sm text-gray-500">
+                    Existing and future products that match the conditions you
+                    set will automatically be added to this collection. Learn
+                    more about automated collections.
+                  </p>
+                </div>
+              </div>
+
+              {data.type === 'smart' && (
+                <>
+                  <Border />
+
+                  <CollectionTypeSection
+                    collection={data}
+                    onChange={(field, value) => setData(field, value)}
+                  />
+                </>
+              )}
+            </Card>
           </section>
         </div>
       </div>

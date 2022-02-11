@@ -11,6 +11,8 @@ import ProductAddSection from './components/ProductAddSection';
 import route from 'ziggy-js';
 import BackButton from '../components/BackButton';
 import ImageSelect from '../components/ImageSelect';
+import CollectionTypeSection from './components/CollectionTypeSection';
+import Card from '../components/Card';
 
 interface Props {
   collection: Collection;
@@ -96,7 +98,7 @@ export default function CollectionEdit(props: Props) {
               description={data.description || ''}
               onChange={(field, value) => setData(field, value)}
             />
-            {collection.type === 'manual' ? (
+            {data.type === 'manual' ? (
               <ProductAddSection
                 searchTerm={data.searchTerm}
                 sortTerm={data.sortTerm}
@@ -106,10 +108,19 @@ export default function CollectionEdit(props: Props) {
                 onAddProducts={onAddProductsToCollection}
               />
             ) : (
-              <ProductSection
-                sortTerm={data.sortTerm}
-                collectionProducts={data.products || []}
-              />
+              <>
+                <Card>
+                  <CollectionTypeSection
+                    collection={data}
+                    onChange={(field, value) => setData(field, value)}
+                  />
+                </Card>
+
+                <ProductSection
+                  sortTerm={data.sortTerm}
+                  collectionProducts={data.products || []}
+                />
+              </>
             )}
           </section>
           <section className="space-y-6 lg:col-span-1 lg:col-start-3">

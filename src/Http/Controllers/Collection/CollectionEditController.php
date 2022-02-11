@@ -14,6 +14,7 @@ class CollectionEditController extends Controller
     public function __invoke($id): \Inertia\Response
     {
         $collection = new CollectionResource(Collection::with(['conditions', 'products.image'])->find($id));
+
         $data = [
             'collection' => $collection,
             'products' => ProductResource::collection(Product::all()),

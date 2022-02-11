@@ -3,10 +3,8 @@ import Card from '../../components/Card';
 import {Collection, CollectionCondition} from '../../types';
 import Subheader from '../../components/Subheader';
 import Border from '../../components/Border';
-import InputText from '../../components/forms/InputText';
-import Select from '../../components/forms/Select';
-import {TrashIcon} from '@heroicons/react/outline';
 import Button from '../../components/Button';
+import CollectionConditionItem from './CollectionConditionItem';
 
 interface Props {
   onChange: <T extends keyof Collection>(
@@ -19,6 +17,7 @@ interface Props {
 type T = Props;
 
 export default function CollectionTypeSection({onChange, collection}: T) {
+
   const addNewCondition = () => {
     onChange('conditions', [
       ...collection.conditions,
@@ -36,10 +35,6 @@ export default function CollectionTypeSection({onChange, collection}: T) {
       addNewCondition();
     }
   }, [collection.conditions]);
-
-  const initializeSmartCollection = () => {
-    onChange('type', 'smart');
-  };
 
   const onConditionChange = (
     selectedCondition: CollectionCondition,
@@ -59,53 +54,9 @@ export default function CollectionTypeSection({onChange, collection}: T) {
   };
 
   return (
-    <Card>
-      <Subheader text="Collection type" />
-
-      <div className="space-y-2 text-sm">
-        <div>
-          <div className="flex flex-row items-center">
-            <input
-              type="radio"
-              value="manual"
-              name="type"
-              className="h-3 w-3"
-              checked={collection.type === 'manual'}
-              onChange={() => onChange('type', 'manual')}
-            />
-            <div className="ml-3">Manual</div>
-          </div>
-          <p className="ml-6 text-sm text-gray-500">
-            Add products to this collection one by one. Learn more about
-          </p>
-        </div>
-
-        <div>
-          <div className="flex flex-row items-center">
-            <input
-              type="radio"
-              value="smart"
-              name="type"
-              className="h-3 w-3"
-              checked={collection.type === 'smart'}
-              onChange={() => {
-                initializeSmartCollection();
-              }}
-            />
-            <div className="ml-3">Automated</div>
-          </div>
-          <p className="ml-6 text-sm text-gray-500">
-            Existing and future products that match the conditions you set will
-            automatically be added to this collection. Learn more about
-            automated collections.
-          </p>
-        </div>
-      </div>
-
+    <div className="space-y-4">
       {collection.type === 'smart' && (
         <>
-          <Border />
-
           <Subheader text="CONDITIONS" headerStyle="text-xs" />
 
           <div className="flex flex-row items-center text-sm">
@@ -132,44 +83,19 @@ export default function CollectionTypeSection({onChange, collection}: T) {
 
           {collection.conditions.map((condition, i) => {
             return (
-              <div className="flex flex-row items-center space-x-5" key={i}>
-                <Select
-                  name="title"
-                  value={condition.field}
-                  inputStyle="flex-1"
-                  onChange={e =>
-                    onConditionChange(condition, 'field', e.target.value)
-                  }>
-                  <option value="product_title">Product title</option>
-                  <option value="product_type">Product type</option>
-                  <option value="product_vendor">Product vendor</option>
-                </Select>
-
-                <Select
-                  name="criteria"
-                  value={condition.criteria}
-                  inputStyle="flex-1"
-                  onChange={e =>
-                    onConditionChange(condition, 'criteria', e.target.value)
-                  }>
-                  <option value="is_equal_to">is equal to</option>
-                  <option value="is_not_equal_to">is not equal to</option>
-                  <option value="is_greather_than">is greather than</option>
-                </Select>
-
-                <InputText
-                  name="value"
-                  value={condition.value}
-                  inputStyle="flex-1"
-                  onChange={e =>
-                    onConditionChange(condition, 'value', e.target.value)
-                  }
-                />
-
-                <div className="cursor-pointer rounded rounded-md border border-gray-400 hover:bg-gray-200">
-                  <TrashIcon className="h-8 w-8 p-1 text-gray-600" />
-                </div>
-              </div>
+              <CollectionConditionItem
+                key={i}
+                condition={condition}
+                onFieldChange={e =>
+                  onConditionChange(condition, 'field', e.target.value)
+                }
+                onCriteriaChange={e =>
+                  onConditionChange(condition, 'criteria', e.target.value)
+                }
+                onValueChange={e =>
+                  onConditionChange(condition, 'value', e.target.value)
+                }
+              />
             );
           })}
 
@@ -182,6 +108,6 @@ export default function CollectionTypeSection({onChange, collection}: T) {
           </Button>
         </>
       )}
-    </Card>
+    </div>
   );
 }

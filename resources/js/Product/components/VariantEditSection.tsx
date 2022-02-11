@@ -101,7 +101,7 @@ export default function VariantEditSection({
     onChange(variants);
   };
 
-  const ensure = <T extends unknown>(argument: T | undefined | null) => {
+  const ensure = <T extends {}>(argument: T | undefined | null) => {
     if (argument === undefined || argument === null) {
       throw new TypeError('invalid value');
     }

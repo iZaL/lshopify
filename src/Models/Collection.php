@@ -4,6 +4,8 @@ namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use IZal\Lshopify\Database\Factories\CollectionFactory;
+use IZal\Lshopify\Managers\CollectionCriteriaManager;
+use IZal\Lshopify\Managers\ConditionFieldManager;
 
 class Collection extends BaseModel
 {
@@ -32,11 +34,45 @@ class Collection extends BaseModel
 
     public function smart_products()
     {
-        return Product::all();
+        $conditions = $this->conditions;
+
+        $products = Product::query();
+
+//        foreach ($conditions as $condition) {
+//            $field = ConditionFieldManager::resolve($condition->field);
+//            $criteria = CollectionCriteriaManager::resolve($condition->criteria);
+//            $value = $condition->value;
+//            if($field === 'type') {
+//                if($criteria === 'contains') {
+//                    $products = $products
+//                        ->join('categories as c','c.id', '=', 'products.category_id')
+//                        ->where('c.name', 'LIKE', '%'.$value.'%'  )
+//                    ;
+//                }
+//            } else {
+//                $products = $products->where($field,$criteria,$value);
+//            }
+//        }
+
+        $products = $products->get();
+
+        return $products;
+
     }
 
-    public function manual(): bool
+    public function isManual(): bool
     {
         return $this->type === 'manual';
     }
+
+    public function isAuto(): bool
+    {
+        return $this->type === 'auto';
+    }
+
+    public function getCriteriaSymbol()
+    {
+        $criterias = [];
+    }
+
 }

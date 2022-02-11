@@ -36,6 +36,8 @@ class CollectionUpdateController extends Controller
                 $collectionCondition = $collection->conditions()->firstWhere('id', $condition['id']);
                 if ($collectionCondition) {
                     $collectionCondition->update($condition);
+                } else {
+                    $collection->conditions()->create($condition);
                 }
             }
         }

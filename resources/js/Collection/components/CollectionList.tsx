@@ -33,6 +33,10 @@ export default function CollectionList({collections}: Props) {
                   />
                   <th
                     scope="col"
+                    className="px-6 py-3 text-left text-sm tracking-wider"
+                  />
+                  <th
+                    scope="col"
                     className="px-6 py-3 text-left text-sm tracking-wider">
                     Title
                   </th>
@@ -68,6 +72,9 @@ export default function CollectionList({collections}: Props) {
                         onClick={() => onCollectionClick(collection)}>
                         {collection.name}
                       </Button>
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
+                      {collection.type}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
                       {collection.conditions.map((condition, idx) => (
