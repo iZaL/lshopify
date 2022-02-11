@@ -32,32 +32,17 @@ class Collection extends BaseModel
         return $this->belongsToMany(Product::class, 'collection_products', 'collection_id', 'product_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @throws \Exception
+     */
     public function smart_products()
     {
-        $conditions = $this->conditions;
-
         $products = Product::query();
-
-//        foreach ($conditions as $condition) {
-//            $field = ConditionFieldManager::resolve($condition->field);
-//            $criteria = CollectionCriteriaManager::resolve($condition->criteria);
-//            $value = $condition->value;
-//            if($field === 'type') {
-//                if($criteria === 'contains') {
-//                    $products = $products
-//                        ->join('categories as c','c.id', '=', 'products.category_id')
-//                        ->where('c.name', 'LIKE', '%'.$value.'%'  )
-//                    ;
-//                }
-//            } else {
-//                $products = $products->where($field,$criteria,$value);
-//            }
-//        }
-
-        $products = $products->get();
-
-        return $products;
-
+        foreach ($this->conditions as $condition) {
+            $products = $this->getProductsForCondition($products, $condition, $this->determiner);
+        }
+        return $products->get();
     }
 
     public function isManual(): bool
@@ -70,9 +55,36 @@ class Collection extends BaseModel
         return $this->type === 'auto';
     }
 
-    public function getCriteriaSymbol()
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $products
+     * @param $condition
+     * @param string $determiner
+     * @throws \Exception
+     */
+    public function getProductsForCondition(\Illuminate\Database\Eloquent\Builder $products, $condition, string $determiner = 'all'): \Illuminate\Database\Eloquent\Builder
     {
-        $criterias = [];
+        $conditionManager = new CollectionCriteriaManager($condition);
+
+        $field = $conditionManager->resolveField();
+        $criteria = $conditionManager->resolveCriteria();
+        $value = $conditionManager->resolveValue();
+
+        $where = $determiner === 'all' ? 'where' : 'orWhere';
+        $whereHas = $determiner === 'all' ? 'whereHas' : 'orWhereHas';
+
+        if ($field === 'product_tag') {
+            $products->$whereHas('tags', function ($query) use ($value, $criteria, $where) {
+                $query->where('name', $criteria, $value);
+            });
+        } elseif ($field === 'product_type') {
+            $products
+                ->join('categories', 'categories.id', '=', 'products.category_id')
+                ->$where('categories.name', $criteria, $value);
+        } else {
+            $products->$where('title', $criteria, $value);
+        }
+
+        return $products;
     }
 
 }

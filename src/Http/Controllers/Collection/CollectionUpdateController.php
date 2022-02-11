@@ -32,6 +32,11 @@ class CollectionUpdateController extends Controller
         }
 
         if ($request->type === 'smart') {
+
+            $deletedConditions = array_diff($collection->conditions->pluck('id')->toArray(), collect($request->conditions)->pluck('id')->toArray());
+
+            $collection->conditions()->delete($deletedConditions);
+
             foreach ($request->conditions as $condition) {
                 $collectionCondition = $collection->conditions()->firstWhere('id', $condition['id']);
                 if ($collectionCondition) {

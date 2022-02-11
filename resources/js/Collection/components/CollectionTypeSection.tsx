@@ -95,6 +95,12 @@ export default function CollectionTypeSection({onChange, collection}: T) {
                 onValueChange={e =>
                   onConditionChange(condition, 'value', e.target.value)
                 }
+                onDelete={() => {
+                  const newConditions = collection.conditions.filter(
+                    c => c.id !== condition.id,
+                  );
+                  onChange('conditions', newConditions);
+                }}
               />
             );
           })}

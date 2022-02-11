@@ -9,14 +9,15 @@ class ConditionFieldManager
 
     public static function resolve(string $field): string
     {
-        switch ($field) {
-            case 'product_title':
-                return 'title';
-            case 'product_type':
-                return 'type';
-            default:
-                throw new \Exception('Invalid field '.$field. ' passed into condition resolver');
+
+        $allowedFields = ['product_title','product_type','product_tag','price','compare_at_price', 'weight', 'stock', 'variant_title'];
+
+        if(!in_array($field, $allowedFields)){
+            throw new \Exception('Invalid field '.$field. ' passed into condition resolver');
         }
+
+        return $field;
+
     }
 
 }

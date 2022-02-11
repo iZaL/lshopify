@@ -51,17 +51,22 @@ class ProductUpdateAction
         // update default variant
         $defaultVariantAttributes = $requestData->get('default_variant');
         $defaultVariant = $product->default_variant;
-        $defaultVariant->update(
-            collect($defaultVariantAttributes)
-                ->only($defaultVariant->getFillable())
-                ->toArray()
-        );
-        if (isset($defaultVariantAttributes['options']) && ! empty($defaultVariantAttributes['options'])) {
-            $this->variantCreateAction->createVariantsWithOptions(
-                $defaultVariant,
-                $defaultVariantAttributes['options']
+
+        if($defaultVariant) {
+            $defaultVariant->update(
+                collect($defaultVariantAttributes)
+                    ->only($defaultVariant->getFillable())
+                    ->toArray()
             );
+
+            if (isset($defaultVariantAttributes['options']) && ! empty($defaultVariantAttributes['options'])) {
+                $this->variantCreateAction->createVariantsWithOptions(
+                    $defaultVariant,
+                    $defaultVariantAttributes['options']
+                );
+            }
         }
+
 
         if (! empty($requestData->get('variants'))) {
             foreach ($requestData->get('variants') as $variantAttribute) {

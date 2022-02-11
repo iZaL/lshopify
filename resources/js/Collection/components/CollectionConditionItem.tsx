@@ -9,6 +9,7 @@ interface Props {
   onFieldChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   onCriteriaChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   onValueChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onDelete:() => void;
 }
 
 export default function CollectionConditionItem(props: Props) {
@@ -20,14 +21,14 @@ export default function CollectionConditionItem(props: Props) {
         inputStyle="flex-1"
         onChange={props.onFieldChange}>
         <option value="title">Product title</option>
-        <option value="category.name">Product type</option>
-        <option value="vendor">Product vendor</option>
-        <option value="tag.name">Product tag</option>
+        <option value="product_type">Product type</option>
+        {/*<option value="vendor">Product vendor</option>*/}
+        <option value="product_tag">Product tag</option>
         <option value="price">Price</option>
-        <option value="compare_price">Compare at price</option>
+        <option value="compare_at_price">Compare at price</option>
         <option value="weight">Weight</option>
         <option value="stock">Inventory stock</option>
-        <option value="variant.title">Variant's title</option>
+        <option value="variant_title">Variant's title</option>
       </Select>
 
       <Select
@@ -54,7 +55,7 @@ export default function CollectionConditionItem(props: Props) {
         onChange={props.onValueChange}
       />
 
-      <div className="cursor-pointer rounded rounded-md border border-gray-400 hover:bg-gray-200">
+      <div className="cursor-pointer rounded rounded-md border border-gray-400 hover:bg-gray-200" onClick={() => props.onDelete()}>
         <TrashIcon className="h-8 w-8 p-1 text-gray-600" />
       </div>
     </div>
