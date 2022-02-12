@@ -18,6 +18,7 @@ import {
   ProductType,
   Tag,
   VariantOption,
+  // Options
 } from '../types';
 import {Inertia} from '@inertiajs/inertia';
 import route from 'ziggy-js';
@@ -27,6 +28,7 @@ interface Props {
   variants: VariantOption[];
   product_types: ProductType[];
   tags: Tag[];
+  // options:Options[]
 }
 
 export default function ProductCreate(props: Props) {

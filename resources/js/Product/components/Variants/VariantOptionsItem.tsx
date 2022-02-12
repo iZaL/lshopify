@@ -25,7 +25,7 @@ export default function VariantOptionsItem({
   return (
     <>
       <div className="flex flex-row justify-between">
-        <div className="font-semi-bold text-sm">Option {iteration}</div>
+        <div className="font-semi-bold text-sm">VariantOption {iteration}</div>
         {showRemoveItemButton && (
           <Button
             onClick={() => (variant ? onVariantRemove(variant) : null)}

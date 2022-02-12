@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
         'orders',
         'order_variants',
         'customers',
+        'options',
+        'variant_options'
     ];
 
     /**
