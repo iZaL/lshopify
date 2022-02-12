@@ -17,7 +17,6 @@ interface Props {
 type T = Props;
 
 export default function CollectionTypeSection({onChange, collection}: T) {
-
   const addNewCondition = () => {
     onChange('conditions', [
       ...collection.conditions,

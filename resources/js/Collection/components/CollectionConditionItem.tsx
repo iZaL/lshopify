@@ -9,7 +9,7 @@ interface Props {
   onFieldChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   onCriteriaChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   onValueChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onDelete:() => void;
+  onDelete: () => void;
 }
 
 export default function CollectionConditionItem(props: Props) {
@@ -55,7 +55,9 @@ export default function CollectionConditionItem(props: Props) {
         onChange={props.onValueChange}
       />
 
-      <div className="cursor-pointer rounded rounded-md border border-gray-400 hover:bg-gray-200" onClick={() => props.onDelete()}>
+      <div
+        className="cursor-pointer rounded rounded-md border border-gray-400 hover:bg-gray-200"
+        onClick={() => props.onDelete()}>
         <TrashIcon className="h-8 w-8 p-1 text-gray-600" />
       </div>
     </div>
