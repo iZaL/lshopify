@@ -7,6 +7,7 @@ import CollectionList from './components/CollectionList';
 import RightSidebar from '../components/RightSidebar';
 import ProductFiltersPanel from '../Product/components/ProductFiltersPanel';
 import ProductSearchBar from '../Product/components/ProductSearchBar';
+import CollectionSearchBar from './components/CollectionSearchBar';
 
 interface Props {
   collections: Collection[];
@@ -20,9 +21,6 @@ interface TabProps {
 
 const tabs: TabProps[] = [
   {name: 'All', href: '#', current: true},
-  {name: 'Active', href: '#', current: false},
-  {name: 'Draft', href: '#', current: false},
-  {name: 'Archived', href: '#', current: false},
 ];
 
 export default function CollectionIndex(props: Props) {
@@ -45,7 +43,7 @@ export default function CollectionIndex(props: Props) {
               title={'More Filters'}>
               <ProductFiltersPanel />
             </RightSidebar>
-            <ProductSearchBar
+            <CollectionSearchBar
               tabs={tabs}
               onMoreFiltersClick={() => setSidebarOpen(!sidebarOpen)}
             />
