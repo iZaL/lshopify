@@ -73,6 +73,12 @@ Route::post('draft_orders/{id}/customer', [\IZal\Lshopify\Http\Controllers\Order
 Route::post('draft_orders/{id}/confirm', \IZal\Lshopify\Http\Controllers\Order\Draft\DraftOrderConfirmController::class)->name('orders.draft.confirm');
 
 /*
+ * Inventories Controllers
+ *
+ */
+Route::get('inventories', \IZal\Lshopify\Http\Controllers\Variant\InventoriesIndexController::class)->name('inventories.index');
+
+/*
  * Customers Controller
  */
 Route::post('customers', \IZal\Lshopify\Http\Controllers\Customer\CustomerStoreController::class)->name('customers.store');

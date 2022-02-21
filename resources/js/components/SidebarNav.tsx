@@ -24,6 +24,11 @@ export default function SidebarNav() {
           active={route().current('lshopify.products.*')}
         />
         <Navigator.SubItem
+          name="Inventory"
+          href={route('lshopify.inventories.index')}
+          active={route().current('lshopify.inventories.*')}
+        />
+        <Navigator.SubItem
           name="Collections"
           href={route('lshopify.collections.index')}
           active={route().current('lshopify.collections.*')}

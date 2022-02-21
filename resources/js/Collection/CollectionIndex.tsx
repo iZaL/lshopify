@@ -19,9 +19,7 @@ interface TabProps {
   current: boolean;
 }
 
-const tabs: TabProps[] = [
-  {name: 'All', href: '#', current: true},
-];
+const tabs: TabProps[] = [{name: 'All', href: '#', current: true}];
 
 export default function CollectionIndex(props: Props) {
   const {collections} = props;
