@@ -4,62 +4,45 @@ import {ChevronDownIcon, SortAscendingIcon} from '@heroicons/react/solid';
 import classNames from 'classnames';
 import {Popover, Transition} from '@headlessui/react';
 import InputText from '../../components/forms/InputText';
-
-interface TabProps {
-  name: string;
-  href: string;
-  current: boolean;
-}
+import { ProductStatus } from '../../types'
+import Button from '../../components/Button'
 
 interface Props {
-  tabs: TabProps[];
+  tabs:ProductStatus[];
+  onStatusChange:(status:ProductStatus)=>void;
+  status:ProductStatus;
   onMoreFiltersClick: () => void;
+  searchTerm:string;
+  onSearch:(searchTerm:string)=>void;
 }
-// const filters = [
-//   {
-//     id: 'category',
-//     name: 'Category',
-//     options: [
-//       { value: 'new-arrivals', label: 'All New Arrivals', checked: false },
-//       { value: 'tees', label: 'Tees', checked: false },
-//       { value: 'objects', label: 'Objects', checked: true },
-//     ],
-//   }
-// ]
 
-export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
+export default function ProductSearchBar({onMoreFiltersClick, searchTerm, onSearch, tabs, onStatusChange,status}: Props) {
   return (
     <div className="">
-      <div className="p-4 md:hidden">
-        <select
-          id="selected-tab"
-          name="selected-tab"
-          className="mt-1 block w-full rounded-md border-2 border-gray-300 py-2 text-base focus:border-none focus:outline-none focus:ring-0 sm:text-sm"
-          defaultValue={tabs.find(tab => tab?.current)?.name}>
-          {tabs.map(tab => (
-            <option key={tab.name}>{tab.name}</option>
-          ))}
-        </select>
-      </div>
 
-      <div className="hidden md:block">
-        <div className="border-b border-gray-200">
-          <nav className="-mb-px flex space-x-2">
-            {tabs.map(tab => (
-              <a
-                key={tab.name}
-                href={tab.href}
-                className={classNames(
-                  tab.current
+      <div className="border-b border-gray-200">
+        <nav className="-mb-px flex space-x-2">
+          {tabs.map(tab => {
+            let active = tab === status;
+            return (
+              <Button
+                theme='clear'
+                key={tab}
+                buttonStyle={classNames(
+                  active
                     ? 'border-green-800 text-green-800'
                     : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
                   'mx-2 whitespace-nowrap border-b-2 py-3 px-6 text-sm font-medium',
-                )}>
-                {tab.name}
-              </a>
-            ))}
-          </nav>
-        </div>
+                )}
+                onClick={() => onStatusChange(tab)}
+              >
+                {tab}
+              </Button>
+            )
+          }
+
+          )}
+        </nav>
       </div>
 
       <div className="my-5 divide-y divide-gray-200 px-4">
@@ -72,13 +55,14 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
                   aria-hidden="true"
                 />
               </div>
-              <input
-                type="text"
-                name="search"
-                id="search"
-                className="focus:blue-500 block w-full rounded-md border border-gray-300 py-2 px-10 shadow-sm focus:border-blue-500 focus:outline-none sm:text-sm"
-                placeholder="Filter Products"
-              />
+              <InputText name='search' onChange={(event) => onSearch(event.target.value)} value={searchTerm}  />
+              {/*<input*/}
+              {/*  type="text"*/}
+              {/*  name="search"*/}
+              {/*  id="search"*/}
+              {/*  className="focus:blue-500 block w-full rounded-md border border-gray-300 py-2 px-10 shadow-sm focus:border-blue-500 focus:outline-none sm:text-sm"*/}
+              {/*  placeholder="Filter Products"*/}
+              {/*/>*/}
             </div>
           </div>
 

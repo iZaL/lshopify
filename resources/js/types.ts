@@ -77,11 +77,13 @@ export interface Variant {
   product?: Product;
 }
 
+export type ProductStatus = 'All' | 'Active' | 'Draft' | 'Archive';
+
 export interface Product {
   id: number;
   title: string;
   description: string;
-  status: 'active' | 'draft' | 'archive';
+  status: ProductStatus;
   product_type: ProductType | null;
   default_variant: Variant;
   variants?: Variant[];

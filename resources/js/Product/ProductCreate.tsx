@@ -60,7 +60,7 @@ export default function ProductCreate(props: Props) {
       physical_product: true,
       requires_shipping: true,
     },
-    status: 'draft',
+    status: 'Draft',
     product_type: null,
     collections: [],
     images: [],
