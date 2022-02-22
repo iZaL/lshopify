@@ -88,7 +88,7 @@ export default function InventoryList({
                     <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
                       {variant.sku}
                     </td>
-                    <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 w-20 ">
+                    <td className="w-20 whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 ">
                       <InputText
                         value={variant.quantity}
                         name="quantity"

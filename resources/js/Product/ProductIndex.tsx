@@ -1,48 +1,40 @@
 import React, {useState} from 'react';
 import Main from '../Main';
 import PageHeader from '../components/PageHeader';
-import { Product, ProductStatus } from '../types'
+import {Product, ProductStatus} from '../types';
 import ProductIndexActionButtons from './components/ProductIndexActionButtons';
 import ProductSearchBar from './components/ProductSearchBar';
 import ProductsList from './components/ProductsList';
 import RightSidebar from '../components/RightSidebar';
 import ProductFiltersPanel from './components/ProductFiltersPanel';
-import { Inertia } from '@inertiajs/inertia';
+import {Inertia} from '@inertiajs/inertia';
 import route from 'ziggy-js';
-import { useForm } from '@inertiajs/inertia-react'
+import {useForm} from '@inertiajs/inertia-react';
 
 interface Props {
   products: Product[];
-  statuses:ProductStatus[];
-  search:string;
-  status:ProductStatus;
+  statuses: ProductStatus[];
+  status: ProductStatus;
+  search: string;
 }
 
 export default function ProductIndex(props: Props) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
   const {products} = props;
-
-  const {data,setData} = useForm({
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const {data, setData} = useForm({
     search: props.search,
-    status: props.status
+    status: props.status,
   });
 
-  const onSearch = (term: string) => {
+  const onChange = (field: keyof Props, value: string) => {
     const newData = {
       ...data,
-      search: term
-    }
-    Inertia.get(route('lshopify.products.index'), newData, {preserveState: true, replace: false});
-    setData(newData);
-  };
-
-  const onStatusChange = (status:ProductStatus) => {
-    const newData = {
-      ...data,
-      status: status
-    }
-    Inertia.get(route('lshopify.products.index'), newData, {preserveState: true, replace: true});
+      [field]: value,
+    };
+    Inertia.get(route('lshopify.products.index'), newData, {
+      preserveState: true,
+      replace: true,
+    });
     setData(newData);
   };
 
@@ -64,14 +56,12 @@ export default function ProductIndex(props: Props) {
             </RightSidebar>
             <ProductSearchBar
               onMoreFiltersClick={() => setSidebarOpen(!sidebarOpen)}
-              onSearch={onSearch}
               searchTerm={data.search}
-              tabs={props.statuses || []}
-              onStatusChange={onStatusChange}
               status={data.status}
+              tabs={props.statuses || []}
+              onChange={onChange}
             />
-            <ProductsList products={products}
-            />
+            <ProductsList products={products} />
           </section>
         </div>
       </div>

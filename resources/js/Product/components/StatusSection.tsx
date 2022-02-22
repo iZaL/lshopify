@@ -2,7 +2,7 @@ import React from 'react';
 import Card from '../../components/Card';
 import Subheader from '../../components/Subheader';
 import Checkbox from '../../components/forms/Checkbox';
-import { Product, ProductStatus } from '../../types'
+import {Product, ProductStatus} from '../../types';
 import Select from '../../components/forms/Select';
 
 interface Props {
