@@ -14,7 +14,8 @@ export default function SidebarNav() {
         name="Products"
         active={
           route().current('lshopify.products.*') ||
-          route().current('lshopify.collections.*')
+          route().current('lshopify.collections.*') ||
+          route().current('lshopify.inventories.*')
         }
         href={route('lshopify.products.index')}
         dropdown={true}>

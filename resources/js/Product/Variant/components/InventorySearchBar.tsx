@@ -65,7 +65,7 @@ export default function InventorySearchBar({tabs, onMoreFiltersClick}: Props) {
                 name="search"
                 id="search"
                 className="focus:blue-500 block w-full rounded-md border border-gray-300 py-2 px-10 shadow-sm focus:border-blue-500 focus:outline-none sm:text-sm"
-                placeholder="Filter collections"
+                placeholder="Search inventory"
               />
             </div>
           </div>
