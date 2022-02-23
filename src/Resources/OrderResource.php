@@ -16,6 +16,7 @@ class OrderResource extends JsonResource
             [
                 'id' => $this->id,
                 'total' => $this->total,
+                'total_formatted' => $this->total_formatted,
                 'subtotal' => $this->subtotal,
                 'quantity' => $this->quantity,
                 'customer' => new CustomerResource($this->customer),
@@ -32,6 +33,8 @@ class OrderResource extends JsonResource
                 'payments'=> TransactionResource::collection($this->whenLoaded('success_payments')),
                 'returns'=> OrderReturnResource::collection($this->whenLoaded('returns')),
                 'is_payment_pending' => $this->isPaymentPending(),
+                'date' => $this->date,
+                'status' => ucfirst($this->status),
             ],
             ['shipping' => $this->getShippingAddress()],
             ['billing' => $this->getBillingAddress()]

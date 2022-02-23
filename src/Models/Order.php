@@ -2,13 +2,17 @@
 
 namespace IZal\Lshopify\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use IZal\Lshopify\Database\Factories\OrderFactory;
+use IZal\Lshopify\Helpers\MoneyFormatter;
 
 class Order extends BaseModel
 {
     use HasFactory;
+    use MoneyFormatter;
+
     protected $table = 'orders';
 
     protected $casts = [
@@ -184,6 +188,11 @@ class Order extends BaseModel
     public function getBillingFullNameAttribute()
     {
         return $this->billing_first_name ? \Str::title($this->billing_first_name.' '.$this->billing_last_name) : null;
+    }
+
+    public function getDateAttribute()
+    {
+        return Carbon::parse($this->created_at)->format('M d, Y');
     }
 
     public function draft(): bool

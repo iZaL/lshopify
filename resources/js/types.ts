@@ -104,6 +104,7 @@ export interface VariantPivot extends Variant {
 export interface Order extends OrderForm {
   id: number;
   total: string;
+  total_formatted: string;
   subtotal: string;
   quantity: number;
   shipping_full_name: string;
@@ -116,6 +117,8 @@ export interface Order extends OrderForm {
   fulfillments: Fulfillment[];
   payments: Payment[];
   is_payment_pending: boolean;
+  date:string;
+  status:string;
 }
 
 export interface CartItem {

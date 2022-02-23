@@ -5,6 +5,7 @@ import route from 'ziggy-js';
 import Checkbox from '../../components/forms/Checkbox';
 import Button from '../../components/Button';
 import VariantImage from '../../Product/Variant/components/VariantImage';
+import THead from '../../components/THead'
 
 interface Props {
   collections: Collection[];
@@ -21,30 +22,12 @@ export default function CollectionList({collections}: Props) {
         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
           <div className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="">
+              <thead>
                 <tr>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-sm tracking-wider"
-                  />
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-sm tracking-wider"
-                  />
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-sm tracking-wider"
-                  />
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-sm tracking-wider">
-                    Title
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-sm tracking-wider">
-                    Product conditions
-                  </th>
+                  <THead />
+                  <THead />
+                  <THead title='Title' />
+                  <THead title='Product conditions' />
                 </tr>
               </thead>
               <tbody>
