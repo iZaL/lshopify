@@ -70,6 +70,19 @@ export default function CollectionEdit(props: Props) {
     );
   };
 
+  const onSearch = (searchTerm: string) => {
+    Inertia.get(route('lshopify.collections.edit',[collection.id]), {
+      searchTerm,
+    },{
+      preserveState: true,
+      replace:true
+    });
+    setData({
+      ...data,
+      searchTerm,
+    });
+  };
+
   const onImageSubmit = (img?: Image) => {
     setData({
       ...data,
@@ -106,6 +119,7 @@ export default function CollectionEdit(props: Props) {
                 collectionProducts={data.products || []}
                 onChange={(field, value) => setData(field, value)}
                 onAddProducts={onAddProductsToCollection}
+                onSearch={onSearch}
               />
             ) : (
               <>

@@ -18,6 +18,7 @@ interface Props {
   products: Product[];
   searchTerm: string;
   sortTerm: string;
+  onSearch:(searchTerm: string) => void;
   onAddProducts: (productIDs: Array<number>) => void;
 }
 
@@ -27,6 +28,7 @@ export default function ProductAddSection({
   collectionProducts,
   products,
   onAddProducts,
+  onSearch
 }: Props) {
   const [showDialog, setShowDialog] = useState(false);
 
@@ -112,7 +114,7 @@ export default function ProductAddSection({
           <InputText
             name="product_search"
             placeholder={'Search products'}
-            onChange={e => onChange('searchTerm', e.target.value)}
+            onChange={e => onSearch(e.target.value)}
             value={searchTerm}
             leftComponent={<SearchIcon className="h-5 w-5 text-gray-500" />}
           />

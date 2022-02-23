@@ -26,7 +26,7 @@ export default function ProductIndex(props: Props) {
     status: props.status,
   });
 
-  const onChange = (field: keyof Props, value: string) => {
+  const onChange = (field: 'search'|'status', value: string) => {
     const newData = {
       ...data,
       [field]: value,
