@@ -20,8 +20,7 @@ export default function ProductsList({products}: Props) {
     <Table>
       <thead>
         <Table.Row>
-          <Table.Head />
-          <Table.Head />
+          <Table.Head headerStyle="w-16" />
           <Table.Head title="Product" />
           <Table.Head title="Status" />
           <Table.Head title="Inventory" />
@@ -37,16 +36,16 @@ export default function ProductsList({products}: Props) {
                 <Checkbox checked={false} onChange={() => {}} name="" />
               </div>
             </Table.Col>
-            <Table.Col>
-              {product.image && (
-                <VariantImage
-                  onClick={() => onProductClick(product)}
-                  image={product.image}
-                />
-              )}
-            </Table.Col>
+
             <Table.Col>
               <Button theme="clear" onClick={() => onProductClick(product)}>
+                {product.image && (
+                  <VariantImage
+                    onClick={() => onProductClick(product)}
+                    image={product.image}
+                    imageStyle={'w-14 h-14 mr-2'}
+                  />
+                )}
                 {product.title}
               </Button>
             </Table.Col>

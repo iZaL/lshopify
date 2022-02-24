@@ -20,47 +20,42 @@ export default function CollectionList({collections}: Props) {
     <Table>
       <thead>
         <tr>
-          <Table.Head />
-          <Table.Head />
+          <Table.Head headerStyle="w-16" />
           <Table.Head title="Title" />
           <Table.Head title="Product conditions" />
+          <Table.Head />
         </tr>
       </thead>
       <tbody>
         {collections.map((collection, id) => (
-          <tr
-            key={collection.id}
-            className={`${id % 2 === 0 ? 'bg-white' : 'bg-gray-50'} `}>
-            <td>
+          <Table.Row key={id} idx={id}>
+            <Table.Col>
               <div className="flex w-12 items-center justify-center">
                 <Checkbox checked={false} onChange={() => {}} name="" />
               </div>
-            </td>
-            <td className="overflow-hidden py-2">
-              {collection.image && (
-                <VariantImage
-                  onClick={() => onCollectionClick(collection)}
-                  image={collection.image}
-                  imageStyle="w-16 h-12"
-                />
-              )}
-            </td>
-            <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
+            </Table.Col>
+
+            <Table.Col>
               <Button
                 theme="clear"
                 onClick={() => onCollectionClick(collection)}>
+                {collection.image && (
+                  <VariantImage
+                    onClick={() => onCollectionClick(collection)}
+                    image={collection.image}
+                    imageStyle="w-16 h-16 mr-2"
+                  />
+                )}
                 {collection.name}
               </Button>
-            </td>
-            <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
-              {collection.type}
-            </td>
-            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
+            </Table.Col>
+            <Table.Col>{collection.type}</Table.Col>
+            <Table.Col>
               {collection.conditions.map((condition, idx) => (
                 <div key={idx}>{condition.title}</div>
               ))}
-            </td>
-          </tr>
+            </Table.Col>
+          </Table.Row>
         ))}
       </tbody>
     </Table>

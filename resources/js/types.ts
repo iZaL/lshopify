@@ -118,7 +118,11 @@ export interface Order extends OrderForm {
   payments: Payment[];
   is_payment_pending: boolean;
   date: string;
+  date_time: string;
   status: string;
+  payment_status: string;
+  fulfillment_status: string;
+  items_count: string;
 }
 
 export interface CartItem {

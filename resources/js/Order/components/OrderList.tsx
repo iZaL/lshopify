@@ -13,7 +13,7 @@ export default function OrderList({orders, onItemClick}: Props) {
     <Table>
       <thead>
         <Table.Row>
-          <Table.Head />
+          <Table.Head headerStyle="w-16" />
           <Table.Head title="Order" />
           <Table.Head title="Date" />
           <Table.Head title="Customer" />
@@ -34,10 +34,16 @@ export default function OrderList({orders, onItemClick}: Props) {
               </div>
             </Table.Col>
             <Table.Col>#{order.id}</Table.Col>
-            <Table.Col>{order.date}</Table.Col>
+            <Table.Col>{order.date_time}</Table.Col>
             <Table.Col>{order.customer?.first_name || '--'}</Table.Col>
-            <Table.Col>{order.status}</Table.Col>
             <Table.Col>{order.total_formatted}</Table.Col>
+            <Table.Col>{order.payment_status}</Table.Col>
+            <Table.Col>{order.fulfillment_status}</Table.Col>
+            <Table.Col>{order.items_count}</Table.Col>
+            <Table.Col></Table.Col>
+            <Table.Col></Table.Col>
+            {/*<Table.Col>{order.delivery_method}</Table.Col>*/}
+            {/*<Table.Col>{order.tags}</Table.Col>*/}
           </Table.Row>
         ))}
       </tbody>

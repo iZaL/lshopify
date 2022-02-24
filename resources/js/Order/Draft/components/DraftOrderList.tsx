@@ -13,7 +13,7 @@ export default function DraftOrderList({orders, onItemClick}: Props) {
     <Table>
       <thead>
         <Table.Row>
-          <Table.Head />
+          <Table.Head headerStyle="w-16" />
           <Table.Head title="Draft order" />
           <Table.Head title="Date" />
           <Table.Head title="Customer" />

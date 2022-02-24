@@ -34,7 +34,11 @@ class OrderResource extends JsonResource
                 'returns'=> OrderReturnResource::collection($this->whenLoaded('returns')),
                 'is_payment_pending' => $this->isPaymentPending(),
                 'date' => $this->date,
+                'date_time' => $this->date_time,
                 'status' => ucfirst($this->status),
+                'payment_status' => 'Pending',
+                'fulfillment_status' => 'Pending',
+                'items_count' => 5
             ],
             ['shipping' => $this->getShippingAddress()],
             ['billing' => $this->getBillingAddress()]

@@ -195,6 +195,12 @@ class Order extends BaseModel
         return Carbon::parse($this->created_at)->format('M d, Y');
     }
 
+    public function getDateTimeAttribute()
+    {
+        // format Sep 6 at 5:24 pm
+        return Carbon::parse($this->created_at)->format('M d \a\t h:i a');
+    }
+
     public function draft(): bool
     {
         return $this->draft === 1;

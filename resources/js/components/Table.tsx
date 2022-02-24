@@ -6,13 +6,14 @@ interface Props {
 }
 
 interface TDProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   colStyle?: string;
 }
 
 interface THeadProps {
   title?: string;
   children?: React.ReactNode;
+  headerStyle?: string;
 }
 
 interface TRProps {
@@ -25,10 +26,10 @@ interface TRProps {
 const Table = ({children}: Props) => {
   return (
     <div className="flex flex-col">
-      <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div className="-my-2 flex-grow overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
           <div className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="relative min-w-full divide-y divide-gray-200">
               {children}
             </table>
           </div>
@@ -63,11 +64,10 @@ const Col = ({children, colStyle}: TDProps) => {
   );
 };
 
-const Head = ({title, children = null}: THeadProps) => {
+const Head = ({title, children = null, headerStyle}: THeadProps) => {
   return (
     <th
-      scope="col"
-      className="px-6 py-3 text-left font-medium tracking-wider text-gray-900">
+      className={`px-6 py-3 text-left text-sm font-medium tracking-wider text-gray-900 ${headerStyle}`}>
       {title ? title : children}
     </th>
   );
