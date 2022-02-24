@@ -7,7 +7,7 @@ interface Props {
 
 interface TDProps {
   children: React.ReactNode;
-  colStyle?:string;
+  colStyle?: string;
 }
 
 interface THeadProps {
@@ -54,9 +54,10 @@ const Row = ({children, striped = true, idx, onClick}: TRProps) => {
   );
 };
 
-const Col = ({children,colStyle}: TDProps) => {
+const Col = ({children, colStyle}: TDProps) => {
   return (
-    <td className={`whitespace-nowrap px-6 py-4 text-sm text-gray-500 ${colStyle}`}>
+    <td
+      className={`whitespace-nowrap px-6 py-4 text-sm text-gray-500 ${colStyle}`}>
       {children}
     </td>
   );

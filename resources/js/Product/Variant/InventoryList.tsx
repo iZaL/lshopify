@@ -20,7 +20,6 @@ export default function InventoryList({
   onQuantityChange,
   onSave,
 }: Props) {
-
   const onCollectionClick = (variant: Variant) => {
     // return Inertia.get(route('lshopify.variants.edit', [collection.id]));
   };
@@ -39,7 +38,7 @@ export default function InventoryList({
       </thead>
       <tbody>
         {variants.map((variant, id) => (
-          <Table.Row key={id} idx={id} onClick={()=>{}}>
+          <Table.Row key={id} idx={id} onClick={() => {}}>
             <Table.Col>
               <div className="flex w-12 items-center justify-center">
                 <Checkbox checked={false} onChange={() => {}} name="" />
@@ -64,7 +63,7 @@ export default function InventoryList({
               {variant.title}
             </Table.Col>
             <Table.Col>{variant.sku}</Table.Col>
-            <Table.Col colStyle='w-16'>
+            <Table.Col colStyle="w-16">
               <InputText
                 value={variant.quantity}
                 name="quantity"
@@ -73,11 +72,11 @@ export default function InventoryList({
                 }
               />
             </Table.Col>
-            <Table.Col colStyle='w-16'>
+            <Table.Col colStyle="w-16">
               {variant.isDirty ? (
-                  <Button onClick={() => onSave(variant)} theme="success">
-                    Save
-                  </Button>
+                <Button onClick={() => onSave(variant)} theme="success">
+                  Save
+                </Button>
               ) : null}
             </Table.Col>
           </Table.Row>
