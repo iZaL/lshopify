@@ -15,7 +15,10 @@ interface Props {
   onMoreFiltersClick: () => void;
 }
 
-export default function DraftOrdersSearchBar({tabs, onMoreFiltersClick}: Props) {
+export default function DraftOrdersSearchBar({
+  tabs,
+  onMoreFiltersClick,
+}: Props) {
   return (
     <div className="">
       <div className="p-4 md:hidden">

@@ -117,8 +117,8 @@ export interface Order extends OrderForm {
   fulfillments: Fulfillment[];
   payments: Payment[];
   is_payment_pending: boolean;
-  date:string;
-  status:string;
+  date: string;
+  status: string;
 }
 
 export interface CartItem {

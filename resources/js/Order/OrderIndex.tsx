@@ -3,9 +3,9 @@ import Main from '../Main';
 import PageHeader from './../components/PageHeader';
 import {Order} from '../types';
 import DraftOrderIndexActionButtons from './Draft/components/DraftOrderIndexActionButtons';
-import DraftOrderList from './Draft/components/DraftOrderList';
 import {Inertia} from '@inertiajs/inertia';
 import route from 'ziggy-js';
+import OrderList from './components/OrderList';
 
 interface Props {
   orders: Order[];
@@ -28,7 +28,7 @@ export default function OrderIndex(props: Props) {
 
         <div className="mx-auto max-w-7xl py-6 ">
           <section className="overflow-hidden rounded-lg bg-white shadow dark:bg-gray-900">
-            <DraftOrderList orders={orders} onItemClick={onOrderClick} />
+            <OrderList orders={orders} onItemClick={onOrderClick} />
           </section>
         </div>
       </div>

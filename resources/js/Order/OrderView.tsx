@@ -24,6 +24,7 @@ import PaymentPending from './Payment/components/PaymentPending';
 import OrderViewActionButtons from './components/OrderViewActionButtons';
 import route from 'ziggy-js';
 import {CustomerForm} from '../form_types';
+import BackButton from '../components/BackButton';
 
 interface Props {
   order: Order;
@@ -109,8 +110,16 @@ export default function OrderView(props: Props) {
   return (
     <Main>
       <div className="p-6">
-        <div className="mx-auto max-w-7xl xl:flex xl:items-center xl:justify-between">
-          <PageHeader text={`Order ${order.id}`} />
+        <div className="flex flex-row space-x-2 xl:justify-between">
+          <div className="flex flex-row space-x-2">
+            <BackButton
+              onClick={() => {
+                Inertia.get(route('lshopify.orders.index'));
+              }}
+            />
+            <PageHeader text={`Order Edit`} />
+          </div>
+
           <OrderViewActionButtons onRefundClick={() => refund()} />
         </div>
 

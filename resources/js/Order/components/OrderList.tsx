@@ -1,24 +1,28 @@
 import React from 'react';
-import {Order} from '../../../types';
-import Checkbox from '../../../components/forms/Checkbox';
-import Table from '../../../components/Table';
+import {Order} from '../../types';
+import Checkbox from '../../components/forms/Checkbox';
+import Table from '../../components/Table';
 
 interface Props {
   orders: Order[];
   onItemClick: (order: Order) => void;
 }
 
-export default function DraftOrderList({orders, onItemClick}: Props) {
+export default function OrderList({orders, onItemClick}: Props) {
   return (
     <Table>
       <thead>
         <Table.Row>
           <Table.Head />
-          <Table.Head title="Draft order" />
+          <Table.Head title="Order" />
           <Table.Head title="Date" />
           <Table.Head title="Customer" />
-          <Table.Head title="Status" />
           <Table.Head title="Total" />
+          <Table.Head title="Payment status" />
+          <Table.Head title="Fulfillment status" />
+          <Table.Head title="Items" />
+          <Table.Head title="Delivery method" />
+          <Table.Head title="Tags" />
         </Table.Row>
       </thead>
       <tbody>

@@ -20,6 +20,7 @@ import CustomerSelect from './components/CustomerSelect';
 import CustomerEdit from './components/CustomerEdit';
 import route from 'ziggy-js';
 import {CustomerForm} from '../../form_types';
+import BackButton from '../../components/BackButton';
 
 interface Props {
   products: Product[];
@@ -149,7 +150,14 @@ export default function DraftOrderEdit(props: Props) {
       <div className="p-6">
         <FormSubmitBar onSubmit={handleSubmit} />
 
-        <PageHeader text="Order Edit" />
+        <div className="flex flex-row items-center space-x-2">
+          <BackButton
+            onClick={() => {
+              Inertia.get(route('lshopify.orders.draft.index'));
+            }}
+          />
+          <PageHeader text={`Order Edit`} />
+        </div>
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
           <section className="space-y-6 space-y-6 lg:col-span-2 lg:col-start-1">

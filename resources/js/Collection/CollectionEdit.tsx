@@ -71,12 +71,16 @@ export default function CollectionEdit(props: Props) {
   };
 
   const onSearch = (searchTerm: string) => {
-    Inertia.get(route('lshopify.collections.edit',[collection.id]), {
-      searchTerm,
-    },{
-      preserveState: true,
-      replace:true
-    });
+    Inertia.get(
+      route('lshopify.collections.edit', [collection.id]),
+      {
+        searchTerm,
+      },
+      {
+        preserveState: true,
+        replace: true,
+      },
+    );
     setData({
       ...data,
       searchTerm,

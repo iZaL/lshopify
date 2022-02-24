@@ -60,6 +60,7 @@ export default function ProductSearchBar({
                 name="search"
                 onChange={event => onChange('search', event.target.value)}
                 value={searchTerm}
+                placeholder="Search products"
               />
             </div>
           </div>

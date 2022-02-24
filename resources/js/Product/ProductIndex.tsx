@@ -26,15 +26,17 @@ export default function ProductIndex(props: Props) {
     status: props.status,
   });
 
-  const onChange = (field: 'search'|'status', value: string) => {
+  const onChange = (field: 'search' | 'status', value: string) => {
     const newData = {
       ...data,
       [field]: value,
     };
+
     Inertia.get(route('lshopify.products.index'), newData, {
       preserveState: true,
       replace: true,
     });
+
     setData(newData);
   };
 

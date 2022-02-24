@@ -18,7 +18,7 @@ interface Props {
   products: Product[];
   searchTerm: string;
   sortTerm: string;
-  onSearch:(searchTerm: string) => void;
+  onSearch: (searchTerm: string) => void;
   onAddProducts: (productIDs: Array<number>) => void;
 }
 
@@ -28,7 +28,7 @@ export default function ProductAddSection({
   collectionProducts,
   products,
   onAddProducts,
-  onSearch
+  onSearch,
 }: Props) {
   const [showDialog, setShowDialog] = useState(false);
 
