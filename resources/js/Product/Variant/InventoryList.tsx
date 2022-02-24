@@ -39,7 +39,7 @@ export default function InventoryList({
       </thead>
       <tbody>
         {variants.map((variant, id) => (
-          <Table.Row key={id} idx={id}>
+          <Table.Row key={id} idx={id} onClick={()=>{}}>
             <Table.Col>
               <div className="flex w-12 items-center justify-center">
                 <Checkbox checked={false} onChange={() => {}} name="" />
