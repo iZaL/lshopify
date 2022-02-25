@@ -2,6 +2,7 @@
 
 namespace IZal\Lshopify\Actions;
 
+use IZal\Lshopify\Managers\FulfillmentManager;
 use IZal\Lshopify\Models\DraftOrder;
 use IZal\Lshopify\Models\Fulfillment;
 use IZal\Lshopify\Models\Order;
@@ -23,6 +24,9 @@ class OrderCreateAction
         abort_if($order->draft(), 403);
 
         $fulfillment = $order->fulfillments()->create();
+        $fulfillmentService = new FulfillmentManager($fulfillment);
+
+
 
         $this->createFulfillmentVariants($fulfillment);
     }

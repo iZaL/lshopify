@@ -5,7 +5,7 @@ namespace IZal\Lshopify\Managers;
 use IZal\Lshopify\Models\Fulfillment;
 use IZal\Lshopify\Models\Variant;
 
-class FulfillmentManager
+class FulfillmentManagerOld
 {
 
     /**

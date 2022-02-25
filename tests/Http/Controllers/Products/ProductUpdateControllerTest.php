@@ -36,7 +36,7 @@ class ProductUpdateControllerTest extends TestCase
             $data['variants'][] = $v->toArray();
         }
 
-        $response = $this->patch('/products/'.$product->id, $data);
+        $response = $this->patch(route('lshopify.products.update',[$product->id]), $data);
 
         $this->assertDatabaseHas('products', $productData);
         $this->assertDatabaseCount('variants', 4);

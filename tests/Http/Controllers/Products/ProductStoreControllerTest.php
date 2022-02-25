@@ -120,7 +120,7 @@ class ProductStoreControllerTest extends TestCase
             ],
         ]);
 
-        $response = $this->post('/products', $data->toArray());
+        $response = $this->post(route('lshopify.products.store'), $data->toArray());
 
         $productData = $data->only(['title', 'description'])
             ->put('category_id', $category->id);

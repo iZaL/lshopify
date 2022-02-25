@@ -53,12 +53,12 @@ class VariantUpdateControllerTest extends TestCase
 
         $optionsAfterUpdate = [
             [
-                'id'=> 'M',
                 'name'=> 'Size',
+                'id'=> 'M',
             ],
             [
-                'id'=> 'Blue',
                 'name'=> 'Color',
+                'id'=> 'Blue',
             ],
         ];
 
@@ -89,7 +89,7 @@ class VariantUpdateControllerTest extends TestCase
 
         $variantData = collect($data)
             ->except('options', 'image', 'id')
-            ->put('options', $this->castToJson($optionsAfterUpdate))
+            ->put('options', json_encode($optionsAfterUpdate))
             ->toArray();
 
         $this->assertDatabaseCount('variants', 1);

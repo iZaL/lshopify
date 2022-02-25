@@ -82,7 +82,7 @@ class VariantStoreControllerTest extends TestCase
 
         $variantData = collect($data)
             ->except('options', 'image', 'id')
-            ->put('options', $this->castToJson($data['options']))
+            ->put('options', json_encode($data['options']))
             ->toArray();
 
         $this->assertDatabaseCount('variants', 1);

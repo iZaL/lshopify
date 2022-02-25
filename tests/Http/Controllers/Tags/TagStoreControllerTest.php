@@ -9,7 +9,7 @@ class TagStoreControllerTest extends TestCase
     public function test_can_create_tags()
     {
         $tag = 'ABC';
-        $this->post('tags', ['name' => $tag]);
+        $this->post(route('lshopify.tags.store'), ['name' => $tag]);
         $this->assertDatabaseHas('tags', ['name' => $tag]);
     }
 }
