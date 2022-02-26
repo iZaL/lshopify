@@ -7,8 +7,8 @@ import {
   CustomerAddress,
   Fulfillment,
   Order,
-  Shipping,
-} from '../types';
+  Shipping, VariantPivot,
+} from '../types'
 import OrderItems from './components/OrderItems';
 import Card from '../components/Card';
 import Button from '../components/Button';
@@ -29,9 +29,11 @@ import BackButton from '../components/BackButton';
 interface Props {
   order: Order;
   customers: Customer[];
+  pending_fulfillments:VariantPivot[]
 }
 
 export default function OrderView(props: Props) {
+  console.log('props',props.pending_fulfillments);
   const {order, customers} = props;
 
   const [customerSearchTerm, setCustomerSearchTerm] = useState('');
@@ -125,62 +127,78 @@ export default function OrderView(props: Props) {
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
           <section className="space-y-6 lg:col-span-2 lg:col-start-1 ">
-            {order.pending_fulfillments?.map((fulfillment, i) => (
-              <Card cardStyle="p-0" key={i}>
+
+              <Card cardStyle="p-0" >
                 <Subheader text="Unfulfilled" />
                 <OrderItems
-                  variants={fulfillment.variants}
+                  variants={props.pending_fulfillments}
                   onItemClick={() => {}}
                 />
                 <Border />
                 <div className="flex justify-end">
-                  <Button onClick={() => markAsFulfilled(fulfillment)}>
+                  <Button onClick={() => {}}>
                     Fulfill items
                   </Button>
                 </div>
               </Card>
-            ))}
 
-            {order.success_fulfillments?.map((fulfillment, i) => (
-              <Card cardStyle="p-0" key={i}>
-                <Subheader text={`Fulfilled #${fulfillment.id}`} />
-                <OrderItems
-                  variants={fulfillment.variants}
-                  onItemClick={() => {}}
-                />
-                <Border />
 
-                <div className="flex justify-end space-x-4">
-                  <Button onClick={() => markAsFulfilled(fulfillment)}>
-                    Add tracking
-                  </Button>
-                </div>
-              </Card>
-            ))}
+            {/*{order.pending_fulfillments?.map((fulfillment, i) => (*/}
+            {/*  <Card cardStyle="p-0" key={i}>*/}
+            {/*    <Subheader text="Unfulfilled" />*/}
+            {/*    <OrderItems*/}
+            {/*      variants={fulfillment.variants}*/}
+            {/*      onItemClick={() => {}}*/}
+            {/*    />*/}
+            {/*    <Border />*/}
+            {/*    <div className="flex justify-end">*/}
+            {/*      <Button onClick={() => markAsFulfilled(fulfillment)}>*/}
+            {/*        Fulfill items*/}
+            {/*      </Button>*/}
+            {/*    </div>*/}
+            {/*  </Card>*/}
+            {/*))}*/}
 
-            {order.returns.length ? (
-              <Card cardStyle="p-0">
-                <Subheader text={`Returned`} />
-                <OrderItems variants={order.returns} onItemClick={() => {}} />
-                <Border />
+            {/*{order.success_fulfillments?.map((fulfillment, i) => (*/}
+            {/*  <Card cardStyle="p-0" key={i}>*/}
+            {/*    <Subheader text={`Fulfilled #${fulfillment.id}`} />*/}
+            {/*    <OrderItems*/}
+            {/*      variants={fulfillment.variants}*/}
+            {/*      onItemClick={() => {}}*/}
+            {/*    />*/}
+            {/*    <Border />*/}
 
-                <div className="flex justify-end space-x-4">
-                  <DropdownButton
-                    buttonTitle="More"
-                    items={[
-                      {title: 'View', onClick: () => {}},
-                      {title: 'Cancel', onClick: () => {}},
-                    ]}
-                    buttonProps={{
-                      theme: 'default',
-                    }}
-                    arrowVisible={true}
-                  />
+            {/*    <div className="flex justify-end space-x-4">*/}
+            {/*      <Button onClick={() => markAsFulfilled(fulfillment)}>*/}
+            {/*        Add tracking*/}
+            {/*      </Button>*/}
+            {/*    </div>*/}
+            {/*  </Card>*/}
+            {/*))}*/}
 
-                  <Button onClick={() => {}}>Add Tracking</Button>
-                </div>
-              </Card>
-            ) : null}
+            {/*{order.returns.length ? (*/}
+            {/*  <Card cardStyle="p-0">*/}
+            {/*    <Subheader text={`Returned`} />*/}
+            {/*    <OrderItems variants={order.returns} onItemClick={() => {}} />*/}
+            {/*    <Border />*/}
+
+            {/*    <div className="flex justify-end space-x-4">*/}
+            {/*      <DropdownButton*/}
+            {/*        buttonTitle="More"*/}
+            {/*        items={[*/}
+            {/*          {title: 'View', onClick: () => {}},*/}
+            {/*          {title: 'Cancel', onClick: () => {}},*/}
+            {/*        ]}*/}
+            {/*        buttonProps={{*/}
+            {/*          theme: 'default',*/}
+            {/*        }}*/}
+            {/*        arrowVisible={true}*/}
+            {/*      />*/}
+
+            {/*      <Button onClick={() => {}}>Add Tracking</Button>*/}
+            {/*    </div>*/}
+            {/*  </Card>*/}
+            {/*) : null}*/}
 
             {order.is_payment_pending && (
               <Card>

@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use IZal\Lshopify\Models\Order;
 
 class WorkflowManager {
+
     private Order $order;
 
     /**
@@ -16,33 +17,15 @@ class WorkflowManager {
         $this->order = $order;
     }
 
-    public function getUnfulfilledVariants():array
+    public function getUnfulfilledVariants():Collection
     {
         $orderVariants = $this->getOrderVariantsWithQuantity();
-
         $workflowVariants = $this->getWorkflowVariantsWithQuantity();
-
-        // compare order variants with workflow variants and find the quantity difference
-        $unfulfilledVariants = $orderVariants->map(function($pivot) use ($workflowVariants) {
-            $workflowVariant = $workflowVariants->firstWhere('variant_id',$pivot['variant_id']);
-            if ($workflowVariant) {
-                return [
-                    'variant_id' => $pivot['variant_id'],
-                    'quantity' => $pivot['quantity'] - $workflowVariant['quantity'],
-                ];
-            }
-            return [
-                'variant_id' => $pivot['variant_id'],
-                'quantity' => $pivot['quantity'],
-            ];
-        })->reject(function ($item) {
-            return $item['quantity'] <= 0;
-        })->values()->all();
-
-        return $unfulfilledVariants;
+        $unfulfilledVariants = $this->getUnfulfilledVariantsWithQuantity($orderVariants, $workflowVariants);
+        return $this->resolveVariants($unfulfilledVariants);
     }
 
-    public function getOrderVariantsWithQuantity():Collection
+    private function getOrderVariantsWithQuantity():Collection
     {
         $orderVariants = $this->order->variants()->get()->pluck('pivot.quantity', 'id')->map(function ($qty,$id) {
             return [
@@ -54,7 +37,7 @@ class WorkflowManager {
         return $orderVariants;
     }
 
-    public function getWorkflowVariantsWithQuantity():Collection
+    private function getWorkflowVariantsWithQuantity():Collection
     {
         $workflows = $this->order->workflows()->with('variants')->get();
         $workflowVariants = collect();
@@ -76,6 +59,45 @@ class WorkflowManager {
         })->values();
 
         return $workflowVariants;
+    }
+
+    /**
+     * @param Collection $unfulfilledVariants
+     * @return Collection
+     */
+    public function resolveVariants(Collection $unfulfilledVariants): Collection
+    {
+        return $unfulfilledVariants->map(function ($item) {
+            $variant = $this->order->variants()->firstWhere('variants.id', $item['variant_id']);
+            if ($variant) {
+                $variant->pivot->quantity = $item['quantity'];
+            }
+            return $variant;
+        })->reject(null);
+    }
+
+    /**
+     * @param Collection $orderVariants
+     * @param Collection $workflowVariants
+     * @return Collection
+     */
+    private function getUnfulfilledVariantsWithQuantity(Collection $orderVariants, Collection $workflowVariants): Collection
+    {
+        return $orderVariants->map(function ($pivot) use ($workflowVariants) {
+            $workflowVariant = $workflowVariants->firstWhere('variant_id', $pivot['variant_id']);
+            if ($workflowVariant) {
+                return [
+                    'variant_id' => $pivot['variant_id'],
+                    'quantity' => $pivot['quantity'] - $workflowVariant['quantity'],
+                ];
+            }
+            return [
+                'variant_id' => $pivot['variant_id'],
+                'quantity' => $pivot['quantity'],
+            ];
+        })->reject(function ($item) {
+            return $item['quantity'] <= 0;
+        })->values();
     }
 
 

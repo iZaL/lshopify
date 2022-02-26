@@ -45,13 +45,24 @@ class WorkflowManagerTest extends TestCase
         $workflowManager = new WorkflowManager($order);
         $unfulfilledVariants = $workflowManager->getUnfulfilledVariants();
 
-        $expectedUnfulfilledVariants = [
-            ['variant_id' => $variant1->id, 'quantity' => 2],
-            ['variant_id' => $variant2->id, 'quantity' => 3],
-            ['variant_id' => $variant3->id, 'quantity' => 1],
-        ];
+        $firstUnfulfilledVariant = $unfulfilledVariants->first();
+        $secondUnfulfilledVariant = $unfulfilledVariants->firstWhere('id', $variant2->id);
 
-        $this->assertEquals($expectedUnfulfilledVariants, $unfulfilledVariants);
+        $thirdUnfulfilledVariant = $unfulfilledVariants->firstWhere('id', $variant3->id);
+
+        $expectedFirstUnfulfilledVariant = ['id' => 1, 'quantity' => 2];
+        $expectedSecondUnfulfilledVariant = ['id' => 2, 'quantity' => 3];
+        $expectedThirdUnfulfilledVariant = ['id' => 3, 'quantity' => 1];
+
+        $this->assertEquals($expectedFirstUnfulfilledVariant['id'], $firstUnfulfilledVariant->id);
+        $this->assertEquals($expectedFirstUnfulfilledVariant['quantity'], $firstUnfulfilledVariant->pivot->quantity);
+
+        $this->assertEquals($expectedSecondUnfulfilledVariant['id'], $secondUnfulfilledVariant->id);
+        $this->assertEquals($expectedSecondUnfulfilledVariant['quantity'], $secondUnfulfilledVariant->pivot->quantity);
+
+        $this->assertEquals($expectedThirdUnfulfilledVariant['id'], $thirdUnfulfilledVariant->id);
+        $this->assertEquals($expectedThirdUnfulfilledVariant['quantity'], $thirdUnfulfilledVariant->pivot->quantity);
+
 
     }
 }

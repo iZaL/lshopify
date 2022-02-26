@@ -16,7 +16,7 @@ class OrderCreateAction
         $draftOrder->forceFill(['draft' => 0]);
         $draftOrder->save();
 
-        $this->createOrderFulfillment($draftOrder);
+//        $this->createOrderFulfillment($draftOrder);
     }
 
     public function createOrderFulfillment(Order $order)
@@ -25,8 +25,6 @@ class OrderCreateAction
 
         $fulfillment = $order->fulfillments()->create();
         $fulfillmentService = new FulfillmentManager($fulfillment);
-
-
 
         $this->createFulfillmentVariants($fulfillment);
     }
