@@ -3,6 +3,7 @@
 namespace IZal\Lshopify\Models;
 
 use Carbon\Carbon;
+use Dflydev\DotAccessData\Data;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use IZal\Lshopify\Database\Factories\OrderFactory;
@@ -90,18 +91,18 @@ class Order extends BaseModel
         return $this->hasMany(Discount::class, 'order_id')->where('name', '!=', 'cart');
     }
 
-    public function returns()
-    {
-        return $this->belongsToMany(Variant::class, 'order_returns', 'order_id', 'variant_id')->withPivot([
-            'id',
-            'quantity',
-            'price',
-            'unit_price',
-            'subtotal',
-            'total',
-            'restock',
-        ]);
-    }
+//    public function returns()
+//    {
+//        return $this->belongsToMany(Variant::class, 'order_returns', 'order_id', 'variant_id')->withPivot([
+//            'id',
+//            'quantity',
+//            'price',
+//            'unit_price',
+//            'subtotal',
+//            'total',
+//            'restock',
+//        ]);
+//    }
 
     public function cart_discount()
     {
@@ -144,24 +145,44 @@ class Order extends BaseModel
         return $paidAmount < $paymentOwed;
     }
 
+    public function workflows()
+    {
+        return $this->hasMany(Workflow::class, 'order_id');
+    }
+
     public function fulfillments()
     {
-        return $this->hasMany(Fulfillment::class, 'order_id');
+        return $this->hasMany(Workflow::class, 'order_id')->where('type', Workflow::TYPE_FULFILLMENT);
     }
 
-    public function pending_fulfillments()
+    public function refunds()
     {
-        return $this->fulfillments()->whereHas('variants', function ($q) {
-            $q->where('status', 'pending');
-        });
+        return $this->hasMany(Workflow::class, 'order_id')->where('type', Workflow::TYPE_REFUND);
     }
 
-    public function success_fulfillments()
+    public function returns()
     {
-        return $this->fulfillments()->whereHas('variants', function ($q) {
-            $q->where('status', 'success');
-        });
+        return $this->hasMany(Workflow::class, 'order_id')->where('type', Workflow::TYPE_RETURN);
     }
+
+//    public function fulfillments()
+//    {
+//        return $this->hasMany(Fulfillment::class, 'order_id');
+//    }
+//
+//    public function pending_fulfillments()
+//    {
+//        return $this->fulfillments()->whereHas('variants', function ($q) {
+//            $q->where('status', 'pending');
+//        });
+//    }
+//
+//    public function success_fulfillments()
+//    {
+//        return $this->fulfillments()->whereHas('variants', function ($q) {
+//            $q->where('status', 'success');
+//        });
+//    }
 
 //    public function fulfillment_variants()
 //    {

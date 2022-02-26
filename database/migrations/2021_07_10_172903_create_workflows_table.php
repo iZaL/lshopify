@@ -17,9 +17,12 @@ class CreateWorkflowsTable extends Migration
             $table->id();
             $table->unsignedInteger('order_id');
             $table->unsignedInteger('location_id')->nullable();
-            $table->boolean('restocked')->default(1);
-            $table->string('price_adjustment_term')->default('increment'); // increment, decrement, or none
-            $table->string('status')->default('unfulfilled'); // unfulfilled,fulfilled, refunded, cancelled, returned
+            $table->decimal('subtotal', 8, 2)->default(0.00);
+            $table->decimal('total', 8, 2)->default(0.00);
+            $table->string('adjustment_term')->default('increment'); // increment, decrement, or none
+            $table->boolean('restock')->default(1);
+            $table->string('type')->default('fulfill'); // fulfill, refund, cancel, return
+            $table->string('status')->default('pending'); // pending, processing, completed, failed
             $table->timestamps();
         });
     }

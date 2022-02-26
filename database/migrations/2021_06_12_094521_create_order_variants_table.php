@@ -18,10 +18,10 @@ class CreateOrderVariantsTable extends Migration
             $table->unsignedInteger('order_id');
             $table->unsignedInteger('variant_id');
             $table->integer('quantity')->default(1);
-            $table->decimal('price');
-            $table->decimal('unit_price');
-            $table->decimal('total');
-            $table->decimal('subtotal');
+            $table->decimal('price')->default(0.00);
+            $table->decimal('unit_price')->default(0.00);
+            $table->decimal('total')->default(0.00);
+            $table->decimal('subtotal')->default(0.00);
             $table->timestamps();
         });
     }
