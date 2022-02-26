@@ -21,17 +21,18 @@ import route from 'ziggy-js';
 
 interface Props {
   order: Order;
-  fulfillment: Fulfillment;
+  // fulfillment: Fulfillment;
+  pending_fulfillments:VariantPivot[];
   customers: Customer[];
 }
 
-export default function FulfillmentView({fulfillment, order}: Props) {
+export default function FulfillmentView({ order, pending_fulfillments}: Props) {
   const {data, setData} = useForm<{
     order: Order;
-    fulfillment: Fulfillment;
+    // fulfillment: Fulfillment;
   }>({
     order: order,
-    fulfillment: fulfillment,
+    // fulfillment: fulfillment,
   });
 
   useEffect(() => {
@@ -49,22 +50,22 @@ export default function FulfillmentView({fulfillment, order}: Props) {
     value: number,
   ) => {
     if (value <= trueVariant.pivot_quantity) {
-      const newVariants = data.fulfillment.variants.map(v => {
-        if (v.id === variant.id) {
-          return {
-            ...v,
-            pivot_quantity: value,
-          };
-        }
-        return v;
-      });
-      setData({
-        ...data,
-        fulfillment: {
-          ...data.fulfillment,
-          variants: newVariants,
-        },
-      });
+      // const newVariants = data.fulfillment.variants.map(v => {
+      //   if (v.id === variant.id) {
+      //     return {
+      //       ...v,
+      //       pivot_quantity: value,
+      //     };
+      //   }
+      //   return v;
+      // });
+      // setData({
+      //   ...data,
+      //   fulfillment: {
+      //     ...data.fulfillment,
+      //     variants: newVariants,
+      //   },
+      // });
     }
   };
 
@@ -78,17 +79,17 @@ export default function FulfillmentView({fulfillment, order}: Props) {
   };
 
   const handleSubmit = () => {
-    Inertia.post(
-      route('lshopify.orders.fulfill', [order.id, fulfillment.id]),
-      {
-        ...data.fulfillment,
-      },
-      {
-        onSuccess: () => {
-          console.log('success');
-        },
-      },
-    );
+    // Inertia.post(
+      // route('lshopify.orders.fulfill', [order.id, fulfillment.id]),
+      // {
+      //   ...data.fulfillment,
+      // },
+      // {
+      //   onSuccess: () => {
+      //     console.log('success');
+      //   },
+      // },
+    // );
   };
 
   return (
@@ -112,8 +113,9 @@ export default function FulfillmentView({fulfillment, order}: Props) {
 
               <div className="px-5">
                 <FulfillmentItems
-                  variants={data.fulfillment.variants || []}
-                  currentVariants={fulfillment.variants}
+                  variants={pending_fulfillments || []}
+                  currentVariants={pending_fulfillments || []}
+                  // currentVariants={fulfillment.variants}
                   onVariantQuantityChange={onVariantQuantityChange}
                 />
               </div>

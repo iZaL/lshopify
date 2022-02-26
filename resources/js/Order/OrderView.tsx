@@ -105,6 +105,11 @@ export default function OrderView(props: Props) {
     Inertia.get(route('lshopify.orders.fulfill', [order.id, fulfillment.id]));
   };
 
+  const fulfill = () => {
+    return Inertia.get(route('lshopify.orders.fulfill', [order.id]));
+    // return Inertia.get(route('lshopify.orders.fulfill', [order.id]));
+  }
+
   const refund = () => {
     Inertia.get(route('lshopify.orders.refund', [order.id]));
   };
@@ -136,7 +141,7 @@ export default function OrderView(props: Props) {
                 />
                 <Border />
                 <div className="flex justify-end">
-                  <Button onClick={() => {}}>
+                  <Button onClick={() => fulfill()}>
                     Fulfill items
                   </Button>
                 </div>
