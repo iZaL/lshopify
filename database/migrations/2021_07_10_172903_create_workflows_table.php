@@ -21,7 +21,7 @@ class CreateWorkflowsTable extends Migration
             $table->decimal('total', 8, 2)->default(0.00);
             $table->string('adjustment_term')->default('increment'); // increment, decrement, or none
             $table->boolean('restock')->default(1);
-            $table->string('type')->default('fulfill'); // fulfill, refund, cancel, return
+            $table->string('type')->default('fulfilled'); // fulfill, refund, cancel, return
             $table->string('status')->default('pending'); // pending, processing, completed, failed
             $table->timestamps();
         });

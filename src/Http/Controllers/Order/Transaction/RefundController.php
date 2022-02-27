@@ -19,7 +19,7 @@ class RefundController extends Controller
 
         if($pendingFulfillments->count() > 0) {
             $removedWorkflow = $order->workflows()->create([
-                'type' => 'unfulfill',
+                'type' => 'removed',
             ]);
 
             foreach ($pendingFulfillments as $pendingFulfillment) {
@@ -27,8 +27,6 @@ class RefundController extends Controller
                 if ($variant) {
                     $refundingQuantity = $pendingFulfillment['pivot_quantity'];
                     if ($refundingQuantity > 0) {
-                        $variant->pivot->quantity -= $refundingQuantity;
-//                    $variant->pivot->save();
                         $removedWorkflow->variants()->attach($variant->id, [
                             'quantity' => $refundingQuantity,
                             'price' => $variant->pivot->price,
@@ -55,9 +53,6 @@ class RefundController extends Controller
                 if ($variant) {
                     $refundingQuantity = $fulfillment['pivot_quantity'];
                     if ($refundingQuantity > 0) {
-                        // create refund
-                        // create remove workflow
-
                         $removedWorkflow->variants()->attach($variant->id, [
                             'quantity' => $refundingQuantity,
                             'price' => $variant->pivot->price,

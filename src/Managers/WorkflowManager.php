@@ -47,7 +47,7 @@ class WorkflowManager
         $fulfilledWorkflows = $this->order
             ->workflows()
             ->where(function ($q) {
-                $q->where('type', 'fulfill')->orWhere('type', 'refund');
+                $q->where('type', 'fulfilled')->orWhere('type', 'refund');
             })
             ->where('order_id', $this->order->id)
             ->get();
@@ -166,8 +166,7 @@ class WorkflowManager
     {
         return $variants
             ->map(function ($item) {
-                $variant = $this
-                    ->order
+                $variant = $this->order
                     ->variants()
                     ->firstWhere('variants.id', $item['variant_id']);
                 if ($variant) {
