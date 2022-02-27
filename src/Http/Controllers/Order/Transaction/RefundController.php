@@ -17,28 +17,26 @@ class RefundController extends Controller
             return $fulfillment['pivot_quantity'] == 0;
         });
 
-        foreach ($pendingFulfillments as $pendingFulfillment) {
-            $variant = $order->variants->firstWhere('id', $pendingFulfillment['id']);
-            if($variant) {
-                $refundingQuantity = $pendingFulfillment['pivot_quantity'];
-                if($refundingQuantity > 0) {
-                    $variant->pivot->quantity -= $refundingQuantity;
-                    $variant->pivot->save();
+        if($pendingFulfillments->count() > 0) {
+            $removedWorkflow = $order->workflows()->create([
+                'type' => 'remove',
+            ]);
 
-                    // create refund
-                    // create remove workflow
-                    $removedWorkflow = $order->workflows()->create([
-                        'type' => 'remove',
-                    ]);
-
-                    $removedWorkflow->variants()->attach($variant->id, [
-                        'quantity' => $refundingQuantity,
-                        'price' => $variant->pivot->price,
-                        'unit_price' => $variant->pivot->unit_price,
-                        'total' => $refundingQuantity * $variant->pivot->unit_price,
-                        'subtotal' => $refundingQuantity * $variant->pivot->unit_price,
-                    ]);
-
+            foreach ($pendingFulfillments as $pendingFulfillment) {
+                $variant = $order->variants->firstWhere('id', $pendingFulfillment['id']);
+                if ($variant) {
+                    $refundingQuantity = $pendingFulfillment['pivot_quantity'];
+                    if ($refundingQuantity > 0) {
+                        $variant->pivot->quantity -= $refundingQuantity;
+//                    $variant->pivot->save();
+                        $removedWorkflow->variants()->attach($variant->id, [
+                            'quantity' => $refundingQuantity,
+                            'price' => $variant->pivot->price,
+                            'unit_price' => $variant->pivot->unit_price,
+                            'total' => $refundingQuantity * $variant->pivot->unit_price,
+                            'subtotal' => $refundingQuantity * $variant->pivot->unit_price,
+                        ]);
+                    }
                 }
             }
         }

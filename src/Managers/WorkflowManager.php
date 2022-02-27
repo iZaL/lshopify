@@ -38,20 +38,15 @@ class WorkflowManager {
 
     public function getFulfilledVariantsWithQuantity():Collection
     {
-        $fulfilledWorkflows = $this->order->workflows;
-        $variants = $fulfilledWorkflows->map(function ($workflow) {
-            $variants = $workflow->variants()->get()->pluck('pivot.quantity', 'id');
-            return $variants;
-        })->values()->pop();
-
-        $fulfilledVariants = $variants->map(function ($qty,$id) {
-            return [
-                'variant_id' => $id,
-                'quantity' => $qty
-            ];
-        });
-
-        return $fulfilledVariants;
+        $fulfilledWorkflows = $this->order->workflows()->where('type','fulfill')->get()->map(function ($workflow) {
+            return $workflow->variants->map(function ($variant) {
+                return [
+                    'variant_id' => $variant->id,
+                    'quantity' => $variant->pivot->quantity
+                ];
+            });
+        })->collapse();
+        return $fulfilledWorkflows;
     }
 
     private function getFulfillableVariantsWithQuantity(Collection $fulfilledVariants, Collection $allVariants): Collection
@@ -144,6 +139,7 @@ class WorkflowManager {
      */
     private function getUnfulfilledVariantsWithQuantity(Collection $orderVariants, Collection $workflowVariants): Collection
     {
+
         return $orderVariants->map(function ($pivot) use ($workflowVariants) {
             $workflowVariant = $workflowVariants->firstWhere('variant_id', $pivot['variant_id']);
             if ($workflowVariant) {
