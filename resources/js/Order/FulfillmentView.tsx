@@ -21,26 +21,21 @@ import route from 'ziggy-js';
 
 interface Props {
   order: Order;
-  // fulfillment: Fulfillment;
   pending_fulfillments:VariantPivot[];
   customers: Customer[];
 }
 
 export default function FulfillmentView({ order, pending_fulfillments}: Props) {
   const {data, setData} = useForm<{
-    order: Order;
-    // fulfillment: Fulfillment;
+    pending_fulfillments:VariantPivot[]
   }>({
-    order: order,
-    // fulfillment: fulfillment,
+    pending_fulfillments:pending_fulfillments,
   });
 
   useEffect(() => {
     setData({
       ...data,
-      order: {
-        ...order,
-      },
+      pending_fulfillments: pending_fulfillments,
     });
   }, [order]);
 
@@ -49,23 +44,21 @@ export default function FulfillmentView({ order, pending_fulfillments}: Props) {
     variant: VariantPivot,
     value: number,
   ) => {
+    console.log('v',variant);
     if (value <= trueVariant.pivot_quantity) {
-      // const newVariants = data.fulfillment.variants.map(v => {
-      //   if (v.id === variant.id) {
-      //     return {
-      //       ...v,
-      //       pivot_quantity: value,
-      //     };
-      //   }
-      //   return v;
-      // });
-      // setData({
-      //   ...data,
-      //   fulfillment: {
-      //     ...data.fulfillment,
-      //     variants: newVariants,
-      //   },
-      // });
+      const newVariants = data.pending_fulfillments.map(v => {
+        if (v.id === variant.id) {
+          return {
+            ...v,
+            pivot_quantity: value,
+          };
+        }
+        return v;
+      });
+      setData({
+        ...data,
+        pending_fulfillments:newVariants
+      });
     }
   };
 
@@ -79,17 +72,17 @@ export default function FulfillmentView({ order, pending_fulfillments}: Props) {
   };
 
   const handleSubmit = () => {
-    // Inertia.post(
-      // route('lshopify.orders.fulfill', [order.id, fulfillment.id]),
-      // {
-      //   ...data.fulfillment,
-      // },
-      // {
-      //   onSuccess: () => {
-      //     console.log('success');
-      //   },
-      // },
-    // );
+    Inertia.post(
+      route('lshopify.orders.fulfill', [order.id]),
+      {
+        variants:data.pending_fulfillments,
+      },
+      {
+        onSuccess: () => {
+          console.log('success');
+        },
+      },
+    );
   };
 
   return (
@@ -113,9 +106,8 @@ export default function FulfillmentView({ order, pending_fulfillments}: Props) {
 
               <div className="px-5">
                 <FulfillmentItems
-                  variants={pending_fulfillments || []}
+                  variants={data.pending_fulfillments || []}
                   currentVariants={pending_fulfillments || []}
-                  // currentVariants={fulfillment.variants}
                   onVariantQuantityChange={onVariantQuantityChange}
                 />
               </div>

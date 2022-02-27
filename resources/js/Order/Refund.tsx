@@ -125,14 +125,15 @@ export default function Refund({order}: Props) {
                         )?.variants || []
                       }
                       currentVariants={fulfillment.variants || []}
-                      onVariantQuantityChange={(trueVariant, variant, value) =>
-                        onVariantQuantityChange(
-                          fulfillment,
-                          trueVariant,
-                          variant,
-                          value,
-                        )
-                      }
+                      onVariantQuantityChange={() => {}}
+                      // onVariantQuantityChange={(trueVariant, variant, value) =>
+                      //   onVariantQuantityChange(
+                      //     fulfillment,
+                      //     trueVariant,
+                      //     variant,
+                      //     value,
+                      //   )
+                      // }
                     />
                     <div className="py-4 text-sm text-gray-500">
                       Refunded items will be removed from the order.

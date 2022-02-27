@@ -8,18 +8,17 @@ use IZal\Lshopify\Managers\FulfillmentManager;
 use IZal\Lshopify\Managers\OrderManager;
 use IZal\Lshopify\Models\Fulfillment;
 use IZal\Lshopify\Models\Order;
+use IZal\Lshopify\Models\Workflow;
 
 class FulfillmentFulfillController extends Controller
 {
-    public function __invoke($orderID, $fulfillmentID, OrderFulfillmentFulfillRequest $request)
+    public function __invoke($orderID, OrderFulfillmentFulfillRequest $request)
     {
         $order = Order::find($orderID);
 
-        $fulfillment = Fulfillment::with(['variants'])->find($fulfillmentID);
+        $fulfillment = Workflow::create(['order_id' => $orderID, 'status' => 'fulfill']);
 
-        $newFulfillment = Fulfillment::create(['order_id' => $orderID]);
-
-        $fulfillmentManager = new FulfillmentManager($newFulfillment);
+        $fulfillmentManager = new FulfillmentManager($fulfillment);
 
         foreach ($request->get('variants') as $variantAttribute) {
             $fulfillmentManager->fulfillItems($fulfillment, $variantAttribute);

@@ -37,7 +37,6 @@ class FulfillmentShowController extends Controller
         return Inertia::render(
             'Order/FulfillmentView',
             [
-//                'fulfillment' => $fulfillmentResource,
                 'pending_fulfillments' => $pendingFulfillments,
                 'order' => $orderResource,
                 'customers' => $customers,

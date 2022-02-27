@@ -29,12 +29,13 @@ import BackButton from '../components/BackButton';
 interface Props {
   order: Order;
   customers: Customer[];
+  workflows: Fulfillment[];
   pending_fulfillments:VariantPivot[]
 }
 
 export default function OrderView(props: Props) {
   console.log('props',props.pending_fulfillments);
-  const {order, customers} = props;
+  const {order, workflows, customers} = props;
 
   const [customerSearchTerm, setCustomerSearchTerm] = useState('');
 
@@ -164,22 +165,22 @@ export default function OrderView(props: Props) {
             {/*  </Card>*/}
             {/*))}*/}
 
-            {/*{order.success_fulfillments?.map((fulfillment, i) => (*/}
-            {/*  <Card cardStyle="p-0" key={i}>*/}
-            {/*    <Subheader text={`Fulfilled #${fulfillment.id}`} />*/}
-            {/*    <OrderItems*/}
-            {/*      variants={fulfillment.variants}*/}
-            {/*      onItemClick={() => {}}*/}
-            {/*    />*/}
-            {/*    <Border />*/}
+            {workflows.map((fulfillment, i) => (
+              <Card cardStyle="p-0" key={i}>
+                <Subheader text={`Fulfilled #${fulfillment.id}`} />
+                <OrderItems
+                  variants={fulfillment.variants}
+                  onItemClick={() => {}}
+                />
+                <Border />
 
-            {/*    <div className="flex justify-end space-x-4">*/}
-            {/*      <Button onClick={() => markAsFulfilled(fulfillment)}>*/}
-            {/*        Add tracking*/}
-            {/*      </Button>*/}
-            {/*    </div>*/}
-            {/*  </Card>*/}
-            {/*))}*/}
+                <div className="flex justify-end space-x-4">
+                  <Button onClick={() => markAsFulfilled(fulfillment)}>
+                    Add tracking
+                  </Button>
+                </div>
+              </Card>
+            ))}
 
             {/*{order.returns.length ? (*/}
             {/*  <Card cardStyle="p-0">*/}

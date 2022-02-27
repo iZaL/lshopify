@@ -4,6 +4,7 @@ namespace IZal\Lshopify\Managers;
 
 use IZal\Lshopify\Models\Fulfillment;
 use IZal\Lshopify\Models\Variant;
+use IZal\Lshopify\Models\Workflow;
 
 class FulfillmentManager
 {
@@ -17,7 +18,7 @@ class FulfillmentManager
 
     protected $quantity;
 
-    public function __construct(Fulfillment $fulfillment)
+    public function __construct(Workflow $fulfillment)
     {
         $this->fulfillment = $fulfillment;
     }
@@ -43,18 +44,17 @@ class FulfillmentManager
      * Field $id
      * Field $pivot_quantity
      */
-    public function fulfillItems(Fulfillment $pendingFulfillment,$variantAttribute)
+    public function fulfillItems(Workflow $fulfillment,$variantAttribute)
     {
-        $this->variant = $pendingFulfillment->variants()->firstWhere('variant_id',$variantAttribute['id']);
-        if($this->variant) {
-            $this->quantity = $variantAttribute['pivot_quantity'];
-            if ($this->quantity != 0) {
-                $this
-                    ->createFulfillment()
-                    ->adjustQuantity($pendingFulfillment)
-                ;
-            }
-        }
+        $fulfillment->variants()->attach(
+            $variantAttribute['id'],
+        [
+            'quantity' => $variantAttribute['pivot_quantity'],
+            'price' => $variantAttribute['pivot_price'],
+            'unit_price' => $variantAttribute['pivot_unit_price'],
+            'total' => $variantAttribute['pivot_total'],
+            'subtotal' => $variantAttribute['pivot_subtotal'],
+        ]);
     }
 
     /**
@@ -67,10 +67,10 @@ class FulfillmentManager
             $variant->id,
             [
                 'quantity' => $this->quantity,
-                'price' => $variant->pivot->price,
-                'unit_price' => $variant->pivot->unit_price,
-                'total' => $variant->pivot->total,
-                'subtotal' => $variant->pivot->subtotal,
+                'price' => $variant->pivot_price,
+                'unit_price' => $variant->pivot_unit_price,
+                'total' => $variant->pivot_total,
+                'subtotal' => $variant->pivot_subtotal,
                 'status' => 'success',
             ]
         );

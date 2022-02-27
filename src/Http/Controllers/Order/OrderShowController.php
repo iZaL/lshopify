@@ -26,6 +26,8 @@ class OrderShowController extends Controller
 
         $pendingFulfillments = WorkflowVariantResource::collection($unfulfilledVariants);
 
-        return Inertia::render('Order/OrderView', ['order' => $orderResource,'pending_fulfillments' => $pendingFulfillments]);
+        $workflows = $order->workflows()->with(['variants.product'])->get();
+
+        return Inertia::render('Order/OrderView', ['order' => $orderResource,'pending_fulfillments' => $pendingFulfillments, 'workflows' => $workflows]);
     }
 }

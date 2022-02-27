@@ -42,7 +42,7 @@ export default function FulfillmentItems({
                 <div className="flex-1 flex-shrink-0 text-blue-500">
                   {variant.product && (
                     <div className="underline">
-                      <ProductTitle product={variant.product} />
+                      <ProductTitle product={variant.product}/>
                     </div>
                   )}
                   <div className="space-x-2 text-gray-500 dark:text-gray-100">
@@ -54,12 +54,12 @@ export default function FulfillmentItems({
               <InputText
                 name={`quantity${variant.id}`}
                 onChange={e =>
-                  onVariantQuantityChange(trueVariant, variant, e.target.value)
+                  onVariantQuantityChange(trueVariant,variant, e.target.value)
                 }
                 value={variant.pivot_quantity}
                 rightComponent={
                   <div className="text-sm text-gray-400">
-                    of {trueVariant?.pivot_quantity}
+                    of {trueVariant.pivot_quantity}
                   </div>
                 }
               />
