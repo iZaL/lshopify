@@ -7,9 +7,8 @@ class RefundRequest extends BaseFormRequest
     public function rules()
     {
         return [
-//            'variants' => 'required|array',
-//            'variants.*.id' => 'required|exists:variants,id',
-//            'variants.*.pivot_quantity' => 'required|integer',
+            'pending_fulfillments' => 'array',
+            'fulfillments' => 'array',
             'restock' => 'boolean',
         ];
     }

@@ -162,7 +162,7 @@ export default function OrderView(props: Props) {
 
             {order.workflows.map((fulfillment, i) => (
               <Card cardStyle="p-0" key={i}>
-                <Subheader text={`Fulfilled #${fulfillment.id}`} />
+                <Subheader text={`${fulfillment.type} #${fulfillment.id}`} />
                 <OrderItems
                   variants={fulfillment.variants}
                   onItemClick={() => {}}

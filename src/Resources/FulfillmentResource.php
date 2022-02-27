@@ -12,6 +12,8 @@ class FulfillmentResource extends JsonResource
     {
         return  [
             'id' => $this->id,
+            'type' => ucfirst($this->type),
+            'status' => $this->status,
             'variants' => FulfillmentVariantResource::collection($this->variants),
             'order' => new OrderResource($this->whenLoaded('order')),
         ];

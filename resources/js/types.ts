@@ -183,6 +183,7 @@ export type Billing = CustomerAddress;
 export interface Fulfillment {
   id: number;
   type: string;
+  status:'removed'|'success'|'pending'|'failed'|'cancelled';
   variants: VariantPivot[];
 }
 

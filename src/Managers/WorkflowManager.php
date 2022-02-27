@@ -18,6 +18,56 @@ class WorkflowManager {
         $this->order = $order;
     }
 
+    public function getFulfilledVariantsWithPivot():Collection
+    {
+        $fulfilledVariants = $this->getFulfilledVariants();
+        return $fulfilledVariants->map(function ($variant) {
+            $v = Variant::with(['product'])->find($variant->id)
+                ->setAttribute('pivot', $variant->pivot);
+            return $v;
+        });
+    }
+
+    public function getFulfilledVariants():Collection
+    {
+        $fulfilledVariants = $this->getFulfilledVariantsWithQuantity();
+        $workflowVariants = $this->getWorkflowVariantsWithQuantity();
+        $remainingFulfillableVariants = $this->getFulfillableVariantsWithQuantity($fulfilledVariants, $workflowVariants);
+        return $this->resolveVariants($remainingFulfillableVariants);
+    }
+
+    public function getFulfilledVariantsWithQuantity():Collection
+    {
+        $fulfilledWorkflows = $this->order->workflows;
+        $variants = $fulfilledWorkflows->map(function ($workflow) {
+            $variants = $workflow->variants()->get()->pluck('pivot.quantity', 'id');
+            return $variants;
+        })->values()->pop();
+
+        $fulfilledVariants = $variants->map(function ($qty,$id) {
+            return [
+                'variant_id' => $id,
+                'quantity' => $qty
+            ];
+        });
+
+        return $fulfilledVariants;
+    }
+
+    private function getFulfillableVariantsWithQuantity(Collection $fulfilledVariants, Collection $allVariants): Collection
+    {
+        $fulfilledVariants=  $fulfilledVariants->groupBy('variant_id')->map(function ($item, $key) {
+            return [
+                'variant_id' => $key,
+                'quantity' => $item->sum('quantity'),
+            ];
+        })->reject(function ($item) {
+            return $item['quantity'] <= 0;
+        })->values();
+
+        return $fulfilledVariants;
+    }
+
     public function getUnfulfilledVariantsWithPivot():Collection
     {
         $unfulfilledVariants = $this->getUnfulfilledVariants();
@@ -110,6 +160,5 @@ class WorkflowManager {
             return $item['quantity'] <= 0;
         })->values();
     }
-
 
 }

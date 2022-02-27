@@ -4,9 +4,6 @@ namespace IZal\Lshopify\Http\Controllers\Order\Transaction;
 
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\RefundRequest;
-use IZal\Lshopify\Managers\OrderManager;
-use IZal\Lshopify\Models\Fulfillment;
-use IZal\Lshopify\Models\FulfillmentVariant;
 use IZal\Lshopify\Models\Order;
 
 class RefundController extends Controller
@@ -14,21 +11,60 @@ class RefundController extends Controller
 
     public function __invoke($orderID, RefundRequest $request)
     {
-        $order = Order::find($orderID);
+        $order = Order::with(['variants','workflows.variants'])->find($orderID);
 
-//        $fulfillments = $order->fulfillments()->pluck('id')->toArray();
+        $pendingFulfillments = collect($request->pending_fulfillments)->reject(function ($fulfillment) {
+            return $fulfillment['pivot_quantity'] == 0;
+        });
 
-        $successFulfillments = $order->success_fulfillments()->get();
+        foreach ($pendingFulfillments as $pendingFulfillment) {
+            $variant = $order->variants->firstWhere('id', $pendingFulfillment['id']);
+            if($variant) {
+                $refundingQuantity = $pendingFulfillment['pivot_quantity'];
+                if($refundingQuantity > 0) {
+                    $variant->pivot->quantity -= $refundingQuantity;
+                    $variant->pivot->save();
 
-        // get all order variants
-        // get all order fulfillments
-        // get all pending fulfillment variants where fulfillment id
+                    // create refund
+                    // create remove workflow
+                    $removedWorkflow = $order->workflows()->create([
+                        'type' => 'remove',
+                    ]);
 
-        if ($order->isPaymentPending()) {
-            $orderManager = new OrderManager($order);
+                    $removedWorkflow->variants()->attach($variant->id, [
+                        'quantity' => $refundingQuantity,
+                        'price' => $variant->pivot->price,
+                        'unit_price' => $variant->pivot->unit_price,
+                        'total' => $refundingQuantity * $variant->pivot->unit_price,
+                        'subtotal' => $refundingQuantity * $variant->pivot->unit_price,
+                    ]);
 
-            foreach ($request->variants as $variants) {
-                $orderManager->returnItems($variants, $request->has('restock') ?? false);
+                }
+            }
+        }
+
+        $fulfillments = collect($request->fulfillments)->reject(function ($fulfillment) {
+            return $fulfillment['pivot_quantity'] == 0;
+        });
+
+        foreach ($fulfillments as $fulfillment) {
+            $variant = $order->variants->firstWhere('id', $fulfillment['id']);
+            if($variant) {
+                $refundingQuantity = $fulfillment['pivot_quantity'];
+                if ($refundingQuantity > 0) {
+                    // create refund
+                    // create remove workflow
+                    $removedWorkflow = $order->workflows()->create([
+                        'type' => 'remove',
+                    ]);
+                    $removedWorkflow->variants()->attach($variant->id, [
+                        'quantity' => $refundingQuantity,
+                        'price' => $variant->pivot->price,
+                        'unit_price' => $variant->pivot->unit_price,
+                        'total' => $refundingQuantity * $variant->pivot->unit_price,
+                        'subtotal' => $refundingQuantity * $variant->pivot->unit_price,
+                    ]);
+                }
             }
         }
 

@@ -9,6 +9,7 @@ class FulfillmentVariantResource extends VariantResource
     public function toArray($request)
     {
         $variantArray = parent::toArray($request);
+
         return  array_merge($variantArray, [
             'pivot_id' => $this->pivot->id,
             'pivot_quantity' => $this->pivot->quantity,
