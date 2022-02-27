@@ -30,6 +30,8 @@ class OrderResource extends JsonResource
                 'success_fulfillments' => FulfillmentResource::collection($this->whenLoaded('success_fulfillments')),
                 'fulfillments' => FulfillmentResource::collection($this->whenLoaded('fulfillments')),
 
+                'workflows' => FulfillmentResource::collection($this->whenLoaded('workflows')),
+
                 'payments'=> TransactionResource::collection($this->whenLoaded('success_payments')),
                 'returns'=> OrderReturnResource::collection($this->whenLoaded('returns')),
                 'is_payment_pending' => $this->isPaymentPending(),

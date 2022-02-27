@@ -29,13 +29,12 @@ import BackButton from '../components/BackButton';
 interface Props {
   order: Order;
   customers: Customer[];
-  workflows: Fulfillment[];
   pending_fulfillments:VariantPivot[]
 }
 
 export default function OrderView(props: Props) {
   console.log('props',props.pending_fulfillments);
-  const {order, workflows, customers} = props;
+  const {order, customers} = props;
 
   const [customerSearchTerm, setCustomerSearchTerm] = useState('');
 
@@ -165,7 +164,7 @@ export default function OrderView(props: Props) {
             {/*  </Card>*/}
             {/*))}*/}
 
-            {workflows.map((fulfillment, i) => (
+            {order.workflows.map((fulfillment, i) => (
               <Card cardStyle="p-0" key={i}>
                 <Subheader text={`Fulfilled #${fulfillment.id}`} />
                 <OrderItems

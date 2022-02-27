@@ -15,7 +15,7 @@ class OrderShowController extends Controller
 {
     public function __invoke($id): \Inertia\Response
     {
-        $order = Order::find($id);
+        $order = Order::with(['workflows.variants.product'])->find($id);
         $orderResource = new OrderResource($order);
 
         $unfulfilledVariants = (new WorkflowManager($order))->getUnfulfilledVariants()->map(function ($variant) {
@@ -26,8 +26,6 @@ class OrderShowController extends Controller
 
         $pendingFulfillments = WorkflowVariantResource::collection($unfulfilledVariants);
 
-        $workflows = $order->workflows()->with(['variants.product'])->get();
-
-        return Inertia::render('Order/OrderView', ['order' => $orderResource,'pending_fulfillments' => $pendingFulfillments, 'workflows' => $workflows]);
+        return Inertia::render('Order/OrderView', ['order' => $orderResource,'pending_fulfillments' => $pendingFulfillments]);
     }
 }
