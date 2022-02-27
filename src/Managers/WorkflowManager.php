@@ -34,7 +34,7 @@ class WorkflowManager
         return $variants;
     }
 
-    public function getFulfilledVariants(): Collection
+    private function getFulfilledVariants(): Collection
     {
         $fulfilledVariants = $this->getFulfilledVariantsForOrder();
         $remainingFulfillableVariants = $this->getFulfillableVariantsWithQuantity(
@@ -43,7 +43,7 @@ class WorkflowManager
         return $this->resolveVariants($remainingFulfillableVariants);
     }
 
-    public function getFulfilledVariantsForOrder(): Collection
+    private function getFulfilledVariantsForOrder(): Collection
     {
         $fulfilledWorkflows = $this->order
             ->workflows()
@@ -107,7 +107,7 @@ class WorkflowManager
         return $variants;
     }
 
-    public function getUnfulfilledVariants(): Collection
+    private function getUnfulfilledVariants(): Collection
     {
         $orderVariants = $this->getOrderVariantsWithQuantity();
         $workflowVariants = $this->getWorkflowVariantsWithQuantity();
@@ -163,7 +163,7 @@ class WorkflowManager
      * @param Collection $variants
      * @return Collection
      */
-    public function resolveVariants(Collection $variants): Collection
+    private function resolveVariants(Collection $variants): Collection
     {
         return $variants
             ->map(function ($item) {
@@ -211,27 +211,25 @@ class WorkflowManager
             ->values();
     }
 
-    public function createPendingFulfillments($fulfillments)
+    public function createRemovedFulfillments($fulfillments):Workflow
     {
-        if($fulfillments->count() > 0) {
             $removedWorkflow = $this->order->workflows()->create([
                 'type' => Workflow::TYPE_REMOVED,
             ]);
-            $this->attachFulfillment($removedWorkflow,$fulfillments);
-        }
+            $this->createFulfillment($removedWorkflow,$fulfillments);
+            return $removedWorkflow;
     }
 
-    public function createFulfillments($fulfillments)
+    public function createFulfillments($fulfillments):Workflow
     {
-        if($fulfillments->count() > 0) {
             $removedWorkflow = $this->order->workflows()->create([
                 'type' => Workflow::TYPE_REFUND,
             ]);
-            $this->attachFulfillment($removedWorkflow,$fulfillments);
-        }
+            $this->createFulfillment($removedWorkflow,$fulfillments);
+            return $removedWorkflow;
     }
 
-    public function attachFulfillment($workflow,$fulfillments)
+    private function createFulfillment($workflow,$fulfillments)
     {
         foreach ($fulfillments as $fulfillment) {
             $variant = $this->order->variants->firstWhere('id', $fulfillment['id']);
