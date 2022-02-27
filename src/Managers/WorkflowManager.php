@@ -38,23 +38,32 @@ class WorkflowManager {
 
     public function getFulfilledVariantsWithQuantity():Collection
     {
-        $fulfilledWorkflows = $this->order->workflows()->where('type','fulfill')->get()->map(function ($workflow) {
-            return $workflow->variants->map(function ($variant) {
-                return [
-                    'variant_id' => $variant->id,
-                    'quantity' => $variant->pivot->quantity
-                ];
-            });
-        })->collapse();
+        $fulfilledWorkflows = $this->order->workflows()
+            ->where('type','fulfill')
+            ->orWhere('type','refund')
+            ->get()
+            ->map(function ($workflow) {
+                $adjustmentTerm = $workflow->type === 'refund' ? '-' : '+';
+                return $workflow->variants->map(function ($variant) use ($adjustmentTerm) {
+                    return [
+                        'variant_id' => $variant->id,
+                        'quantity' => $variant->pivot->quantity,
+                        'adjustment' => $adjustmentTerm
+                    ];
+                });
+            })->collapse();
         return $fulfilledWorkflows;
     }
 
     private function getFulfillableVariantsWithQuantity(Collection $fulfilledVariants, Collection $allVariants): Collection
     {
         $fulfilledVariants=  $fulfilledVariants->groupBy('variant_id')->map(function ($item, $key) {
+            $incrementingVariants = $item->where('adjustment','+')->sum('quantity');
+            $decrementingVariants = $item->where('adjustment', '-')->sum('quantity');
+
             return [
                 'variant_id' => $key,
-                'quantity' => $item->sum('quantity'),
+                'quantity' => $incrementingVariants - $decrementingVariants
             ];
         })->reject(function ($item) {
             return $item['quantity'] <= 0;
@@ -95,7 +104,7 @@ class WorkflowManager {
 
     private function getWorkflowVariantsWithQuantity():Collection
     {
-        $workflows = $this->order->workflows()->with('variants')->get();
+        $workflows = $this->order->workflows()->with('variants')->where('type','!=','refund')->get();
         $workflowVariants = collect();
         foreach ($workflows as $workflow) {
             $variants = $workflow->variants()->get()->pluck('pivot.quantity', 'pivot.variant_id')->map(function ($qty,$id) {

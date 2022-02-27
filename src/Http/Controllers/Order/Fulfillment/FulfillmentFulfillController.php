@@ -16,7 +16,7 @@ class FulfillmentFulfillController extends Controller
     {
         $order = Order::find($orderID);
 
-        $fulfillment = Workflow::create(['order_id' => $orderID, 'status' => 'fulfill']);
+        $fulfillment = Workflow::create(['order_id' => $orderID, 'type' => 'fulfill']);
 
         $fulfillmentManager = new FulfillmentManager($fulfillment);
 
