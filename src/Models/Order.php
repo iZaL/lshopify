@@ -23,10 +23,6 @@ class Order extends BaseModel
         'unit_price' => 'decimal:2',
     ];
 
-    public const STATUS_OPEN = 'open';
-    public const STATUS_ARCHIVED = 'archived';
-    public const STATUS_CANCELLED = 'cancelled';
-
     protected $fillable = [
         'total',
         'subtotal',
@@ -182,7 +178,7 @@ class Order extends BaseModel
     {
         return $this->hasMany(Workflow::class, 'order_id')->where(
             'type',
-            Workflow::TYPE_RETURN
+            Workflow::TYPE_RETURNED
         );
     }
 

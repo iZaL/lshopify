@@ -5,6 +5,7 @@ namespace IZal\Lshopify\Managers;
 use Illuminate\Support\Collection;
 use IZal\Lshopify\Models\Order;
 use IZal\Lshopify\Models\Variant;
+use IZal\Lshopify\Models\Workflow;
 
 class WorkflowManager
 {
@@ -209,4 +210,45 @@ class WorkflowManager
             })
             ->values();
     }
+
+    public function createPendingFulfillments($fulfillments)
+    {
+        if($fulfillments->count() > 0) {
+            $removedWorkflow = $this->order->workflows()->create([
+                'type' => Workflow::TYPE_REMOVED,
+            ]);
+            $this->attachFulfillment($removedWorkflow,$fulfillments);
+        }
+    }
+
+    public function createFulfillments($fulfillments)
+    {
+        if($fulfillments->count() > 0) {
+            $removedWorkflow = $this->order->workflows()->create([
+                'type' => Workflow::TYPE_REFUND,
+            ]);
+            $this->attachFulfillment($removedWorkflow,$fulfillments);
+        }
+    }
+
+    public function attachFulfillment($workflow,$fulfillments)
+    {
+        foreach ($fulfillments as $fulfillment) {
+            $variant = $this->order->variants->firstWhere('id', $fulfillment['id']);
+            if ($variant) {
+                $refundingQuantity = $fulfillment['pivot_quantity'];
+                if ($refundingQuantity > 0) {
+                    $workflow->variants()->attach($variant->id, [
+                        'quantity' => $refundingQuantity,
+                        'price' => $variant->pivot->price,
+                        'unit_price' => $variant->pivot->unit_price,
+                        'total' => $refundingQuantity * $variant->pivot->unit_price,
+                        'subtotal' => $refundingQuantity * $variant->pivot->unit_price,
+                    ]);
+                }
+            }
+        }
+
+    }
+
 }

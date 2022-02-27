@@ -9,9 +9,10 @@ class Workflow extends BaseModel
 {
     use HasFactory;
 
-    public const TYPE_FULFILLMENT = 'fulfill';
+    public const TYPE_FULFILLMENT = 'fulfilled';
     public const TYPE_REFUND = 'refund';
-    public const TYPE_RETURN = 'return';
+    public const TYPE_RETURNED = 'returned';
+    public const TYPE_REMOVED = 'removed';
 
     protected $table = 'workflows';
 
