@@ -21,15 +21,15 @@ import route from 'ziggy-js';
 
 interface Props {
   order: Order;
-  pending_fulfillments:VariantPivot[];
+  pending_fulfillments: VariantPivot[];
   customers: Customer[];
 }
 
-export default function FulfillmentView({ order, pending_fulfillments}: Props) {
+export default function FulfillmentView({order, pending_fulfillments}: Props) {
   const {data, setData} = useForm<{
-    pending_fulfillments:VariantPivot[]
+    pending_fulfillments: VariantPivot[];
   }>({
-    pending_fulfillments:pending_fulfillments,
+    pending_fulfillments: pending_fulfillments,
   });
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function FulfillmentView({ order, pending_fulfillments}: Props) {
     variant: VariantPivot,
     value: number,
   ) => {
-    console.log('v',variant);
+    console.log('v', variant);
     if (value <= trueVariant.pivot_quantity) {
       const newVariants = data.pending_fulfillments.map(v => {
         if (v.id === variant.id) {
@@ -57,7 +57,7 @@ export default function FulfillmentView({ order, pending_fulfillments}: Props) {
       });
       setData({
         ...data,
-        pending_fulfillments:newVariants
+        pending_fulfillments: newVariants,
       });
     }
   };
@@ -75,7 +75,7 @@ export default function FulfillmentView({ order, pending_fulfillments}: Props) {
     Inertia.post(
       route('lshopify.orders.fulfill', [order.id]),
       {
-        variants:data.pending_fulfillments,
+        variants: data.pending_fulfillments,
       },
       {
         onSuccess: () => {

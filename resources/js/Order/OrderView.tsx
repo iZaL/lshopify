@@ -7,8 +7,9 @@ import {
   CustomerAddress,
   Fulfillment,
   Order,
-  Shipping, VariantPivot,
-} from '../types'
+  Shipping,
+  VariantPivot,
+} from '../types';
 import OrderItems from './components/OrderItems';
 import Card from '../components/Card';
 import Button from '../components/Button';
@@ -29,11 +30,10 @@ import BackButton from '../components/BackButton';
 interface Props {
   order: Order;
   customers: Customer[];
-  pending_fulfillments:VariantPivot[]
+  pending_fulfillments: VariantPivot[];
 }
 
 export default function OrderView(props: Props) {
-  console.log('props',props.pending_fulfillments);
   const {order, customers} = props;
 
   const [customerSearchTerm, setCustomerSearchTerm] = useState('');
@@ -108,7 +108,7 @@ export default function OrderView(props: Props) {
   const fulfill = () => {
     return Inertia.get(route('lshopify.orders.fulfill', [order.id]));
     // return Inertia.get(route('lshopify.orders.fulfill', [order.id]));
-  }
+  };
 
   const refund = () => {
     Inertia.get(route('lshopify.orders.refund', [order.id]));
@@ -132,21 +132,17 @@ export default function OrderView(props: Props) {
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
           <section className="space-y-6 lg:col-span-2 lg:col-start-1 ">
-
-              <Card cardStyle="p-0" >
-                <Subheader text="Unfulfilled" />
-                <OrderItems
-                  variants={props.pending_fulfillments}
-                  onItemClick={() => {}}
-                />
-                <Border />
-                <div className="flex justify-end">
-                  <Button onClick={() => fulfill()}>
-                    Fulfill items
-                  </Button>
-                </div>
-              </Card>
-
+            <Card cardStyle="p-0">
+              <Subheader text="Unfulfilled" />
+              <OrderItems
+                variants={props.pending_fulfillments}
+                onItemClick={() => {}}
+              />
+              <Border />
+              <div className="flex justify-end">
+                <Button onClick={() => fulfill()}>Fulfill items</Button>
+              </div>
+            </Card>
 
             {/*{order.pending_fulfillments?.map((fulfillment, i) => (*/}
             {/*  <Card cardStyle="p-0" key={i}>*/}

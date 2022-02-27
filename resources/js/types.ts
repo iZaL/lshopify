@@ -182,7 +182,7 @@ export type Billing = CustomerAddress;
 
 export interface Fulfillment {
   id: number;
-  type:string;
+  type: string;
   variants: VariantPivot[];
 }
 

@@ -18,20 +18,12 @@ class FulfillmentShowController extends Controller
 {
     public function __invoke($orderID): \Inertia\Response
     {
-//        $fulfillment = Fulfillment::with(['variants.product'])->find($fulfillmentID);
-//        $fulfillmentResource = new FulfillmentResource($fulfillment);
-
         $order = Order::with(['customer'])->find($orderID);
         $orderResource = new OrderResource($order);
 
         $customers = CustomerResource::collection(Customer::all());
 
-        $unfulfilledVariants = (new WorkflowManager($order))->getUnfulfilledVariants()->map(function ($variant) {
-            $v = Variant::with(['product'])->find($variant->id)
-                ->setAttribute('pivot',$variant->pivot);
-            return $v;
-        });
-
+        $unfulfilledVariants = (new WorkflowManager($order))->getUnfulfilledVariantsWithPivot();
         $pendingFulfillments = WorkflowVariantResource::collection($unfulfilledVariants);
 
         return Inertia::render(

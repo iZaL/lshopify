@@ -4,6 +4,7 @@ namespace IZal\Lshopify\Managers;
 
 use Illuminate\Support\Collection;
 use IZal\Lshopify\Models\Order;
+use IZal\Lshopify\Models\Variant;
 
 class WorkflowManager {
 
@@ -15,6 +16,16 @@ class WorkflowManager {
     public function __construct(Order $order)
     {
         $this->order = $order;
+    }
+
+    public function getUnfulfilledVariantsWithPivot():Collection
+    {
+        $unfulfilledVariants = $this->getUnfulfilledVariants();
+        return $unfulfilledVariants->map(function ($variant) {
+            $v = Variant::with(['product'])->find($variant->id)
+                ->setAttribute('pivot', $variant->pivot);
+            return $v;
+        });
     }
 
     public function getUnfulfilledVariants():Collection

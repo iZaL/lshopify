@@ -4,9 +4,12 @@ namespace IZal\Lshopify\Http\Controllers\Order\Transaction;
 
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\PaymentStoreRequest;
+use IZal\Lshopify\Managers\WorkflowManager;
 use IZal\Lshopify\Models\Order;
+use IZal\Lshopify\Models\Variant;
 use IZal\Lshopify\Resources\OrderResource;
 use Inertia\Inertia;
+use IZal\Lshopify\Resources\WorkflowVariantResource;
 
 class RefundShowController extends Controller
 {
@@ -14,6 +17,11 @@ class RefundShowController extends Controller
     {
         $order = Order::with(['fulfillments.variants.product'])->find($orderID);
         $orderResource = new OrderResource($order);
-        return Inertia::render('Order/Refund', ['order' => $orderResource]);
+
+        $unfulfilledVariants = (new WorkflowManager($order))->getUnfulfilledVariantsWithPivot();
+
+        $pendingFulfillments = WorkflowVariantResource::collection($unfulfilledVariants);
+
+        return Inertia::render('Order/Refund', ['order' => $orderResource,'pending_fulfillments' => $pendingFulfillments]);
     }
 }

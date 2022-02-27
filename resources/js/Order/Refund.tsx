@@ -15,30 +15,42 @@ import route from 'ziggy-js';
 
 interface Props {
   order: Order;
+  pending_fulfillments: VariantPivot[];
   customers: Customer[];
 }
 
-export default function Refund({order}: Props) {
+export default function Refund({order, pending_fulfillments}: Props) {
   const {data, setData} = useForm<{
     order: Order;
     restock: boolean;
+    pending_fulfillments: VariantPivot[];
   }>({
-    order: {
-      ...order,
-      fulfillments: order.fulfillments.map(f => {
-        return {
-          ...f,
-          variants: f.variants.map(v => {
-            return {
-              ...v,
-              pivot_quantity: 0,
-            };
-          }),
-        };
-      }),
-    },
+    order: order,
+    pending_fulfillments: pending_fulfillments,
     restock: true,
   });
+
+  const onPendingVariantQuantityChange = (
+    trueVariant: VariantPivot,
+    variant: VariantPivot,
+    value: number,
+  ) => {
+    if (value <= trueVariant.pivot_quantity) {
+      const newVariants = data.pending_fulfillments.map(v => {
+        if (v.id === variant.id) {
+          return {
+            ...v,
+            pivot_quantity: value,
+          };
+        }
+        return v;
+      });
+      setData({
+        ...data,
+        pending_fulfillments: newVariants,
+      });
+    }
+  };
 
   const onVariantQuantityChange = (
     fulfillment: Fulfillment,
@@ -103,37 +115,60 @@ export default function Refund({order}: Props) {
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
           <section className="space-y-6 lg:col-span-2 lg:col-start-1 ">
-            {order.fulfillments.map((fulfillment, i) => {
+            <Card>
+              <div className="flex flex-row items-center space-x-4 px-5 pt-5 ">
+                <div className="font-bold">Unfulfilled</div>
+              </div>
+
+              <Border />
+
+              <div className="px-5">
+                <FulfillmentItems
+                  variants={data.pending_fulfillments || []}
+                  currentVariants={pending_fulfillments || []}
+                  onVariantQuantityChange={onPendingVariantQuantityChange}
+                />
+                <div className="py-4 text-sm text-gray-500">
+                  Refunded items will be removed from the order.
+                </div>
+              </div>
+
+              <Border />
+
+              <Checkbox
+                name="restock"
+                checked={data.restock}
+                onChange={e => setData('restock', e.target.checked)}
+                label="Restock items"
+              />
+
+              <Border />
+            </Card>
+
+            {data.order.fulfillments.map((workflow, i) => {
               return (
                 <Card key={i}>
                   <div className="flex flex-row items-center space-x-4 px-5 pt-5 ">
-                    <div className="font-bold">
-                      Fulfillment #{fulfillment.id}
-                    </div>
-                    {/*<div className='rounded rounded-xl opacity-90 bg-yellow-400 px-3 text-sm'>*/}
-                    {/*  Partially fulfilled*/}
-                    {/*</div>*/}
+                    <div className="font-bold">Fulfilled</div>
                   </div>
 
                   <Border />
 
                   <div className="px-5">
                     <FulfillmentItems
-                      variants={
-                        data.order.fulfillments.find(
-                          f => f.id === fulfillment.id,
-                        )?.variants || []
+                      variants={workflow.variants || []}
+                      currentVariants={
+                        order.fulfillments.find(w => w.id === workflow.id)
+                          ?.variants || []
                       }
-                      currentVariants={fulfillment.variants || []}
-                      onVariantQuantityChange={() => {}}
-                      // onVariantQuantityChange={(trueVariant, variant, value) =>
-                      //   onVariantQuantityChange(
-                      //     fulfillment,
-                      //     trueVariant,
-                      //     variant,
-                      //     value,
-                      //   )
-                      // }
+                      onVariantQuantityChange={(trueVariant, variant, value) =>
+                        onVariantQuantityChange(
+                          workflow,
+                          trueVariant,
+                          variant,
+                          value,
+                        )
+                      }
                     />
                     <div className="py-4 text-sm text-gray-500">
                       Refunded items will be removed from the order.

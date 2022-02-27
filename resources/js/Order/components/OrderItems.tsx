@@ -13,7 +13,7 @@ export default function OrderItems({variants}: Props) {
     return null;
   }
 
-  console.log('v',variants);
+  console.log('v', variants);
   return (
     <div className="divide-y">
       {variants.map((variant, i) => (

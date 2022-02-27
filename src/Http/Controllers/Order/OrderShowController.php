@@ -18,12 +18,7 @@ class OrderShowController extends Controller
         $order = Order::with(['workflows.variants.product'])->find($id);
         $orderResource = new OrderResource($order);
 
-        $unfulfilledVariants = (new WorkflowManager($order))->getUnfulfilledVariants()->map(function ($variant) {
-            $v = Variant::with(['product'])->find($variant->id)
-                ->setAttribute('pivot',$variant->pivot);
-            return $v;
-        });
-
+        $unfulfilledVariants = (new WorkflowManager($order))->getUnfulfilledVariantsWithPivot();
         $pendingFulfillments = WorkflowVariantResource::collection($unfulfilledVariants);
 
         return Inertia::render('Order/OrderView', ['order' => $orderResource,'pending_fulfillments' => $pendingFulfillments]);
