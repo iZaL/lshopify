@@ -45,11 +45,13 @@ class CustomerAddress extends BaseModel
      * @param array $fillables
      * @return array
      */
-    public static function parseShippingAddress(array $attributes, array $fillables): array
-    {
+    public static function parseShippingAddress(
+        array $attributes,
+        array $fillables
+    ): array {
         $shippingAttributes = [];
         foreach ($attributes as $key => $value) {
-            $shippingAttributes['shipping_'.$key] = $value;
+            $shippingAttributes['shipping_' . $key] = $value;
         }
 
         return Arr::only($shippingAttributes, $fillables);
@@ -60,11 +62,13 @@ class CustomerAddress extends BaseModel
      * @param  array  $fillables
      * @return array
      */
-    public static function parseBillingAddress(array $attributes, array $fillables): array
-    {
+    public static function parseBillingAddress(
+        array $attributes,
+        array $fillables
+    ): array {
         $billingAttributes = [];
         foreach ($attributes as $key => $value) {
-            $billingAttributes['billing_'.$key] = $value;
+            $billingAttributes['billing_' . $key] = $value;
         }
 
         return Arr::only($billingAttributes, $fillables);

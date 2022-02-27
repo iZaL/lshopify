@@ -16,7 +16,7 @@ class OrderCreateAction
         $draftOrder->forceFill(['draft' => 0]);
         $draftOrder->save();
 
-//        $this->createOrderFulfillment($draftOrder);
+        //        $this->createOrderFulfillment($draftOrder);
     }
 
     public function createOrderFulfillment(Order $order)
@@ -35,16 +35,13 @@ class OrderCreateAction
         $orderVariants = $order->variants;
 
         foreach ($orderVariants as $variant) {
-            $fulfillment->variants()->attach(
-                $variant->id,
-                [
-                    'quantity' => $variant->pivot->quantity,
-                    'price' => $variant->pivot->price,
-                    'unit_price' => $variant->pivot->unit_price,
-                    'total' => $variant->pivot->total,
-                    'subtotal' => $variant->pivot->subtotal,
-                ]
-            );
+            $fulfillment->variants()->attach($variant->id, [
+                'quantity' => $variant->pivot->quantity,
+                'price' => $variant->pivot->price,
+                'unit_price' => $variant->pivot->unit_price,
+                'total' => $variant->pivot->total,
+                'subtotal' => $variant->pivot->subtotal,
+            ]);
         }
     }
 
@@ -57,16 +54,28 @@ class OrderCreateAction
         $customer = optional($order->customer);
         $defaultAddress = optional($customer->default_address);
 
-        $fields = ['company', 'address1', 'address2', 'city', 'province', 'street', 'zip', 'country', 'phone'];
+        $fields = [
+            'company',
+            'address1',
+            'address2',
+            'city',
+            'province',
+            'street',
+            'zip',
+            'country',
+            'phone',
+        ];
 
         $attributes = [
             'full_name' => $order->shipping_full_name ?? $customer->full_name,
-            'first_name' => $order->shipping_first_name ?? $customer->first_name,
+            'first_name' =>
+                $order->shipping_first_name ?? $customer->first_name,
             'last_name' => $order->shipping_last_name ?? $customer->last_name,
         ];
 
         foreach ($fields as $field) {
-            $attributes[$field] = $order->{'shipping_'.$field} ?? $defaultAddress->{$field};
+            $attributes[$field] =
+                $order->{'shipping_' . $field} ?? $defaultAddress->{$field};
         }
 
         return $attributes;
@@ -78,13 +87,27 @@ class OrderCreateAction
      */
     protected function getBillingAddress(Model $order): array
     {
-        $fields = ['full_name', 'first_name', 'last_name', 'company', 'address1', 'address2', 'city', 'province', 'street', 'zip', 'country', 'phone'];
+        $fields = [
+            'full_name',
+            'first_name',
+            'last_name',
+            'company',
+            'address1',
+            'address2',
+            'city',
+            'province',
+            'street',
+            'zip',
+            'country',
+            'phone',
+        ];
 
         $shippingAttributes = $this->getShippingAddress($order);
 
         $attributes = [];
         foreach ($fields as $field) {
-            $attributes[$field] = $order->{'billing_'.$field} ?? $shippingAttributes[$field];
+            $attributes[$field] =
+                $order->{'billing_' . $field} ?? $shippingAttributes[$field];
         }
 
         return $attributes;

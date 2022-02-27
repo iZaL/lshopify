@@ -11,7 +11,15 @@ class FulfillmentVariant extends BaseModel
 
     protected $table = 'fulfillment_variants';
 
-    protected $fillable = ['order_id', 'variant_id', 'unit_price', 'total', 'subtotal', 'quantity', 'status'];
+    protected $fillable = [
+        'order_id',
+        'variant_id',
+        'unit_price',
+        'total',
+        'subtotal',
+        'quantity',
+        'status',
+    ];
 
     public static function newFactory()
     {

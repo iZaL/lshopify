@@ -29,5 +29,4 @@ class Tag extends BaseModel
     {
         return $this->morphedByMany(Product::class, 'taggable');
     }
-
 }

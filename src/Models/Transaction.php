@@ -21,7 +21,21 @@ class Transaction extends BaseModel
 
     protected $table = 'transactions';
 
-    protected $fillable = ['amount', 'parent_id', 'user_id', 'order_id', 'kind', 'gateway', 'currency', 'reference', 'payment_details', 'source', 'error_code', 'message', 'status'];
+    protected $fillable = [
+        'amount',
+        'parent_id',
+        'user_id',
+        'order_id',
+        'kind',
+        'gateway',
+        'currency',
+        'reference',
+        'payment_details',
+        'source',
+        'error_code',
+        'message',
+        'status',
+    ];
 
     protected $casts = [
         'amount' => 'decimal:2',

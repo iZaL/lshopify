@@ -7,7 +7,6 @@ use IZal\Lshopify\Models\Variant;
 
 class FulfillmentManagerOld
 {
-
     /**
      * @var Fulfillment
      */
@@ -43,16 +42,17 @@ class FulfillmentManagerOld
      * Field $id
      * Field $pivot_quantity
      */
-    public function fulfillItems(Fulfillment $pendingFulfillment,$variantAttribute)
-    {
-        $this->variant = $pendingFulfillment->variants()->firstWhere('variant_id',$variantAttribute['id']);
-        if($this->variant) {
+    public function fulfillItems(
+        Fulfillment $pendingFulfillment,
+        $variantAttribute
+    ) {
+        $this->variant = $pendingFulfillment
+            ->variants()
+            ->firstWhere('variant_id', $variantAttribute['id']);
+        if ($this->variant) {
             $this->quantity = $variantAttribute['pivot_quantity'];
             if ($this->quantity != 0) {
-                $this
-                    ->createFulfillment()
-                    ->adjustQuantity($pendingFulfillment)
-                ;
+                $this->createFulfillment()->adjustQuantity($pendingFulfillment);
             }
         }
     }
@@ -63,17 +63,14 @@ class FulfillmentManagerOld
     public function createFulfillment(): FulfillmentManager
     {
         $variant = $this->variant;
-        $this->fulfillment->variants()->attach(
-            $variant->id,
-            [
-                'quantity' => $this->quantity,
-                'price' => $variant->pivot->price,
-                'unit_price' => $variant->pivot->unit_price,
-                'total' => $variant->pivot->total,
-                'subtotal' => $variant->pivot->subtotal,
-                'status' => 'success',
-            ]
-        );
+        $this->fulfillment->variants()->attach($variant->id, [
+            'quantity' => $this->quantity,
+            'price' => $variant->pivot->price,
+            'unit_price' => $variant->pivot->unit_price,
+            'total' => $variant->pivot->total,
+            'subtotal' => $variant->pivot->subtotal,
+            'status' => 'success',
+        ]);
         return $this;
     }
 
@@ -92,5 +89,4 @@ class FulfillmentManagerOld
             $variant->pivot->save();
         }
     }
-
 }

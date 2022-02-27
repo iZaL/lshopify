@@ -27,6 +27,12 @@ class CollectionCondition extends BaseModel
 
     public function getTitleAttribute()
     {
-        return ucfirst(strtolower(Str::headline($this->field . ' ' . $this->criteria . ' ' . $this->value)));
+        return ucfirst(
+            strtolower(
+                Str::headline(
+                    $this->field . ' ' . $this->criteria . ' ' . $this->value
+                )
+            )
+        );
     }
 }

@@ -10,7 +10,6 @@ use IZal\Lshopify\Cart\CartServiceProvider;
 
 class LshopifyServiceProvider extends ServiceProvider
 {
-
     /**
      * Bootstrap any package services.
      *
@@ -19,8 +18,7 @@ class LshopifyServiceProvider extends ServiceProvider
 
     public function boot()
     {
-
-        if (! config('lshopify.enabled')) {
+        if (!config('lshopify.enabled')) {
             return;
         }
 
@@ -38,9 +36,7 @@ class LshopifyServiceProvider extends ServiceProvider
 
         $this->registerMigrations();
 
-        $this->loadViewsFrom(
-            __DIR__.'/../../resources/views', 'lshopify'
-        );
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'lshopify');
     }
 
     /**
@@ -51,7 +47,7 @@ class LshopifyServiceProvider extends ServiceProvider
     private function registerRoutes()
     {
         Route::group($this->routeConfiguration(), function () {
-            $this->loadRoutesFrom(__DIR__.'/../../routes/lshopify.php');
+            $this->loadRoutesFrom(__DIR__ . '/../../routes/lshopify.php');
         });
     }
 
@@ -64,10 +60,10 @@ class LshopifyServiceProvider extends ServiceProvider
     {
         return [
             'domain' => config('lshopify.dashboard.domain', null),
-//            'namespace' => 'Laravel\Telescope\Http\Controllers',
+            //            'namespace' => 'Laravel\Telescope\Http\Controllers',
             'middleware' => 'lshopify',
             'prefix' => config('lshopify.dashboard.prefix'),
-            'as' => config('lshopify.dashboard.alias')
+            'as' => config('lshopify.dashboard.alias'),
         ];
     }
 
@@ -79,7 +75,7 @@ class LshopifyServiceProvider extends ServiceProvider
     private function registerMigrations()
     {
         if ($this->app->runningInConsole() && $this->shouldMigrate()) {
-            $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+            $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         }
     }
 
@@ -90,30 +86,51 @@ class LshopifyServiceProvider extends ServiceProvider
      */
     private function registerPublishing()
     {
-
         if ($this->app->runningInConsole()) {
+            $this->publishes(
+                [
+                    __DIR__ .
+                    '/../../resources/views/app.blade.php' => resource_path(
+                        'views/lshopify.blade.php'
+                    ),
+                ],
+                'lshopify-stubs'
+            );
 
-            $this->publishes([
-                __DIR__.'/../../resources/views/app.blade.php' => resource_path('views/lshopify.blade.php'),
-            ],'lshopify-stubs');
+            $this->publishes(
+                [
+                    __DIR__ . '/../../public' => public_path(),
+                ],
+                ['lshopify-assets']
+            );
 
-            $this->publishes([
-                __DIR__.'/../../public' => public_path(),
-            ], ['lshopify-assets']);
+            $this->publishes(
+                [
+                    __DIR__ . '/../../config/lshopify.php' => config_path(
+                        'lshopify.php'
+                    ),
+                ],
+                'lshopify-config'
+            );
 
-            $this->publishes([
-                __DIR__.'/../../config/lshopify.php' => config_path('lshopify.php'),
-            ], 'lshopify-config');
-
-            if(config('lshopify.enable_local_development')) {
-                $this->publishes([
-                    __DIR__.'/../../database/migrations' => database_path('migrations'),
-                ], 'lshopify-migrations');
-                $this->publishes([
-                    __DIR__.'/../../stubs/webpack.mix.js' => base_path('webpack.mix.js'),
-                ],'lshopify-stubs');
+            if (config('lshopify.enable_local_development')) {
+                $this->publishes(
+                    [
+                        __DIR__ . '/../../database/migrations' => database_path(
+                            'migrations'
+                        ),
+                    ],
+                    'lshopify-migrations'
+                );
+                $this->publishes(
+                    [
+                        __DIR__ . '/../../stubs/webpack.mix.js' => base_path(
+                            'webpack.mix.js'
+                        ),
+                    ],
+                    'lshopify-stubs'
+                );
             }
-
         }
     }
 
@@ -125,8 +142,7 @@ class LshopifyServiceProvider extends ServiceProvider
     protected function registerCommands()
     {
         if ($this->app->runningInConsole()) {
-            $this->commands([
-            ]);
+            $this->commands([]);
         }
     }
 
@@ -140,11 +156,10 @@ class LshopifyServiceProvider extends ServiceProvider
         $this->app->register(CartServiceProvider::class);
 
         $this->mergeConfigFrom(
-            __DIR__.'/../../config/lshopify.php', 'lshopify'
+            __DIR__ . '/../../config/lshopify.php',
+            'lshopify'
         );
-
     }
-
 
     /**
      * Determine if we should register the migrations.

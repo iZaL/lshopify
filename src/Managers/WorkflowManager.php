@@ -6,8 +6,8 @@ use Illuminate\Support\Collection;
 use IZal\Lshopify\Models\Order;
 use IZal\Lshopify\Models\Variant;
 
-class WorkflowManager {
-
+class WorkflowManager
+{
     private Order $order;
 
     /**
@@ -18,130 +18,164 @@ class WorkflowManager {
         $this->order = $order;
     }
 
-    public function getFulfilledVariantsWithPivot():Collection
+    public function getFulfilledVariantsWithPivot(): Collection
     {
         $fulfilledVariants = $this->getFulfilledVariants();
-        return $fulfilledVariants->map(function ($variant) {
-            $v = Variant::with(['product'])->find($variant->id)
-                ->setAttribute('pivot', $variant->pivot);
-            return $v;
-        });
+        $variants = Variant::with(['product.image'])
+            ->whereIn('id', $fulfilledVariants->pluck('id'))
+            ->get();
+        foreach ($variants as $variant) {
+            $variant->setAttribute(
+                'pivot',
+                $fulfilledVariants->where('id', $variant->id)->first()->pivot
+            );
+        }
+        return $variants;
     }
 
-    public function getFulfilledVariants():Collection
+    public function getFulfilledVariants(): Collection
     {
-        $fulfilledVariants = $this->getFulfilledVariantsWithQuantity();
-        $remainingFulfillableVariants = $this->getFulfillableVariantsWithQuantity($fulfilledVariants);
+        $fulfilledVariants = $this->getFulfilledVariantsForOrder();
+        $remainingFulfillableVariants = $this->getFulfillableVariantsWithQuantity(
+            $fulfilledVariants
+        );
         return $this->resolveVariants($remainingFulfillableVariants);
     }
 
-    public function getFulfilledVariantsWithQuantity():Collection
+    public function getFulfilledVariantsForOrder(): Collection
     {
-        $fulfilledWorkflows = $this->order->workflows()
-            ->where(function($q) {
-                $q->where('type','fulfill')
-                ->orWhere('type','refund');
-            })->where('order_id',$this->order->id);
+        $fulfilledWorkflows = $this->order
+            ->workflows()
+            ->where(function ($q) {
+                $q->where('type', 'fulfill')->orWhere('type', 'refund');
+            })
+            ->where('order_id', $this->order->id)
+            ->get();
 
-        $fulfilledWorkflows = $fulfilledWorkflows->get()
+        return $fulfilledWorkflows
             ->map(function ($workflow) {
                 $adjustmentTerm = $workflow->type === 'refund' ? '-' : '+';
-                return $workflow->variants->map(function ($variant) use ($adjustmentTerm) {
+                return $workflow->variants->map(function ($variant) use (
+                    $adjustmentTerm
+                ) {
                     return [
                         'variant_id' => $variant->id,
                         'quantity' => $variant->pivot->quantity,
-                        'adjustment' => $adjustmentTerm
+                        'adjustment' => $adjustmentTerm,
                     ];
                 });
-            })->collapse();
-
-        return $fulfilledWorkflows;
+            })
+            ->collapse();
     }
 
-    private function getFulfillableVariantsWithQuantity(Collection $fulfilledVariants): Collection
-    {
-        $fulfilledVariants=  $fulfilledVariants->groupBy('variant_id')->map(function ($item, $key) {
-            $incrementingVariants = $item->where('adjustment','+')->sum('quantity');
-            $decrementingVariants = $item->where('adjustment', '-')->sum('quantity');
-
-            return [
-                'variant_id' => $key,
-                'quantity' => $incrementingVariants - $decrementingVariants
-            ];
-        })->reject(function ($item) {
-            return $item['quantity'] <= 0;
-        })->values();
-
-        return $fulfilledVariants;
+    private function getFulfillableVariantsWithQuantity(
+        Collection $fulfilledVariants
+    ): Collection {
+        return $fulfilledVariants
+            ->groupBy('variant_id')
+            ->map(function ($item, $key) {
+                $incrementingVariants = $item
+                    ->where('adjustment', '+')
+                    ->sum('quantity');
+                $decrementingVariants = $item
+                    ->where('adjustment', '-')
+                    ->sum('quantity');
+                return [
+                    'variant_id' => $key,
+                    'quantity' => $incrementingVariants - $decrementingVariants,
+                ];
+            })
+            ->reject(function ($item) {
+                return $item['quantity'] <= 0;
+            })
+            ->values();
     }
 
-    public function getUnfulfilledVariantsWithPivot():Collection
+    public function getUnfulfilledVariantsWithPivot(): Collection
     {
         $unfulfilledVariants = $this->getUnfulfilledVariants();
-        return $unfulfilledVariants->map(function ($variant) {
-            $v = Variant::with(['product'])->find($variant->id)
-                ->setAttribute('pivot', $variant->pivot);
-            return $v;
-        });
+        $variants = Variant::with(['product.image'])
+            ->whereIn('id', $unfulfilledVariants->pluck('id'))
+            ->get();
+        foreach ($variants as $variant) {
+            $variant->setAttribute(
+                'pivot',
+                $unfulfilledVariants->where('id', $variant->id)->first()->pivot
+            );
+        }
+        return $variants;
     }
 
-    public function getUnfulfilledVariants():Collection
+    public function getUnfulfilledVariants(): Collection
     {
         $orderVariants = $this->getOrderVariantsWithQuantity();
         $workflowVariants = $this->getWorkflowVariantsWithQuantity();
-        $unfulfilledVariants = $this->getUnfulfilledVariantsWithQuantity($orderVariants, $workflowVariants);
+        $unfulfilledVariants = $this->getUnfulfilledVariantsWithQuantity(
+            $orderVariants,
+            $workflowVariants
+        );
         return $this->resolveVariants($unfulfilledVariants);
     }
 
-    private function getOrderVariantsWithQuantity():Collection
+    private function getOrderVariantsWithQuantity(): Collection
     {
-        $orderVariants = $this->order->variants()->get()->pluck('pivot.quantity', 'id')->map(function ($qty,$id) {
-            return [
-                'variant_id' => $id,
-                'quantity' => $qty,
-            ];
-        })->values();
-
-        return $orderVariants;
-    }
-
-    private function getWorkflowVariantsWithQuantity():Collection
-    {
-        $workflows = $this->order->workflows()->with('variants')->where('type','!=','refund')->get();
-        $workflowVariants = collect();
-        foreach ($workflows as $workflow) {
-            $variants = $workflow->variants()->get()->pluck('pivot.quantity', 'pivot.variant_id')->map(function ($qty,$id) {
+        return $this->order->variants
+            ->pluck('pivot.quantity', 'id')
+            ->map(function ($qty, $id) {
                 return [
                     'variant_id' => $id,
                     'quantity' => $qty,
                 ];
-            })->toArray();
+            })
+            ->values();
+    }
+
+    private function getWorkflowVariantsWithQuantity(): Collection
+    {
+        $workflows = $this->order->workflows->where('type', '!=', 'refund');
+        $workflowVariants = collect();
+        foreach ($workflows as $workflow) {
+            $variants = $workflow->variants
+                ->pluck('pivot.quantity', 'pivot.variant_id')
+                ->map(function ($qty, $id) {
+                    return [
+                        'variant_id' => $id,
+                        'quantity' => $qty,
+                    ];
+                })
+                ->toArray();
             $workflowVariants = $workflowVariants->merge($variants);
         }
 
-        $workflowVariants = $workflowVariants->groupBy('variant_id')->map(function ($item, $key) {
-            return [
-                'variant_id' => $key,
-                'quantity' => $item->sum('quantity'),
-            ];
-        })->values();
-
-        return $workflowVariants;
+        return $workflowVariants
+            ->groupBy('variant_id')
+            ->map(function ($item, $key) {
+                return [
+                    'variant_id' => $key,
+                    'quantity' => $item->sum('quantity'),
+                ];
+            })
+            ->values();
     }
 
     /**
-     * @param Collection $unfulfilledVariants
+     * @param Collection $variants
      * @return Collection
      */
-    public function resolveVariants(Collection $unfulfilledVariants): Collection
+    public function resolveVariants(Collection $variants): Collection
     {
-        return $unfulfilledVariants->map(function ($item) {
-            $variant = $this->order->variants()->firstWhere('variants.id', $item['variant_id']);
-            if ($variant) {
-                $variant->pivot->quantity = $item['quantity'];
-            }
-            return $variant;
-        })->reject(null);
+        return $variants
+            ->map(function ($item) {
+                $variant = $this
+                    ->order
+                    ->variants()
+                    ->firstWhere('variants.id', $item['variant_id']);
+                if ($variant) {
+                    $variant->pivot->quantity = $item['quantity'];
+                }
+                return $variant;
+            })
+            ->reject(null);
     }
 
     /**
@@ -149,24 +183,31 @@ class WorkflowManager {
      * @param Collection $workflowVariants
      * @return Collection
      */
-    private function getUnfulfilledVariantsWithQuantity(Collection $orderVariants, Collection $workflowVariants): Collection
-    {
-
-        return $orderVariants->map(function ($pivot) use ($workflowVariants) {
-            $workflowVariant = $workflowVariants->firstWhere('variant_id', $pivot['variant_id']);
-            if ($workflowVariant) {
+    private function getUnfulfilledVariantsWithQuantity(
+        Collection $orderVariants,
+        Collection $workflowVariants
+    ): Collection {
+        return $orderVariants
+            ->map(function ($pivot) use ($workflowVariants) {
+                $workflowVariant = $workflowVariants->firstWhere(
+                    'variant_id',
+                    $pivot['variant_id']
+                );
+                if ($workflowVariant) {
+                    return [
+                        'variant_id' => $pivot['variant_id'],
+                        'quantity' =>
+                            $pivot['quantity'] - $workflowVariant['quantity'],
+                    ];
+                }
                 return [
                     'variant_id' => $pivot['variant_id'],
-                    'quantity' => $pivot['quantity'] - $workflowVariant['quantity'],
+                    'quantity' => $pivot['quantity'],
                 ];
-            }
-            return [
-                'variant_id' => $pivot['variant_id'],
-                'quantity' => $pivot['quantity'],
-            ];
-        })->reject(function ($item) {
-            return $item['quantity'] <= 0;
-        })->values();
+            })
+            ->reject(function ($item) {
+                return $item['quantity'] <= 0;
+            })
+            ->values();
     }
-
 }

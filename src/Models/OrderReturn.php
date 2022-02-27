@@ -11,7 +11,16 @@ class OrderReturn extends BaseModel
     protected $table = 'order_returns';
     public $timestamps = false;
 
-    protected $fillable = ['order_id', 'variant_id', 'restock', 'price', 'unit_price', 'total', 'subtotal', 'quantity'];
+    protected $fillable = [
+        'order_id',
+        'variant_id',
+        'restock',
+        'price',
+        'unit_price',
+        'total',
+        'subtotal',
+        'quantity',
+    ];
 
     public static function newFactory()
     {

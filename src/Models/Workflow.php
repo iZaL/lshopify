@@ -29,18 +29,18 @@ class Workflow extends BaseModel
 
     public function variants()
     {
-        return $this
-            ->belongsToMany(Variant::class, 'workflow_variants', 'workflow_id', 'variant_id')
-            ->withPivot(
-                'id',
-                'quantity',
-                'price',
-                'unit_price',
-                'subtotal',
-                'total',
-            );
+        return $this->belongsToMany(
+            Variant::class,
+            'workflow_variants',
+            'workflow_id',
+            'variant_id'
+        )->withPivot(
+            'id',
+            'quantity',
+            'price',
+            'unit_price',
+            'subtotal',
+            'total'
+        );
     }
-
-
-
 }

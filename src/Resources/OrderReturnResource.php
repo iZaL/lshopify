@@ -10,7 +10,7 @@ class OrderReturnResource extends VariantResource
     {
         $variantArray = parent::toArray($request);
 
-        return  array_merge($variantArray, [
+        return array_merge($variantArray, [
             'pivot_id' => $this->pivot->id,
             'pivot_quantity' => $this->pivot->quantity,
             'pivot_subtotal' => $this->pivot->subtotal,

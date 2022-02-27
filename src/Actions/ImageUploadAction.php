@@ -32,7 +32,7 @@ class ImageUploadAction
     {
         $fileNames = [];
         foreach ($images as $image) {
-            if (! $image instanceof UploadedFile) {
+            if (!$image instanceof UploadedFile) {
                 continue;
             }
             $fileNames[] = $this->storeImage($image);
@@ -56,15 +56,15 @@ class ImageUploadAction
 
     private function generateFileName($extension): string
     {
-        if (! $extension || ! in_array($extension, $this->allowedExtensions)) {
+        if (!$extension || !in_array($extension, $this->allowedExtensions)) {
             $extension = $this->defaultExtension;
         }
 
         $randomString = Str::random(16);
 
-        $fileName = $randomString.'.'.$extension;
+        $fileName = $randomString . '.' . $extension;
 
-        $filePath = $this->path.'/'.$fileName;
+        $filePath = $this->path . '/' . $fileName;
 
         return $filePath;
     }
@@ -80,14 +80,17 @@ class ImageUploadAction
 
     private function storeImage(UploadedFile $image): string
     {
-        $disk = config('lshopify.storage.disk','public');
-        $imagePath = \Storage::disk($disk)->putFile('images', new File($image->getRealPath()));
+        $disk = config('lshopify.storage.disk', 'public');
+        $imagePath = \Storage::disk($disk)->putFile(
+            'images',
+            new File($image->getRealPath())
+        );
         return $imagePath;
     }
 
     public function deleteImage(Image $image)
     {
-        $file = storage_path('app/'.$image->name);
+        $file = storage_path('app/' . $image->name);
         if (is_file($file)) {
             @unlink($file);
         }

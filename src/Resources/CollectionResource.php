@@ -16,9 +16,13 @@ class CollectionResource extends JsonResource
             'determiner' => $this->determiner,
             'type' => $this->type,
             'image' => new ImageResource($this->image),
-            'conditions' => CollectionConditionResource::collection($this->whenLoaded('conditions')),
+            'conditions' => CollectionConditionResource::collection(
+                $this->whenLoaded('conditions')
+            ),
             'products' => ProductResource::collection(
-                $this->isManual() ? $this->whenLoaded('products') : $this->smart_products()
+                $this->isManual()
+                    ? $this->whenLoaded('products')
+                    : $this->smart_products()
             ),
         ];
     }

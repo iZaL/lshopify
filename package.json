@@ -9,6 +9,7 @@
     "prod": "npm run production",
     "production": "mix --production",
     "prettier": "prettier --write './resources/js/**/*.{js,ts,tsx}'",
+    "prettier:php": "prettier --write ./src/**/*.php",
     "lint": "eslint './resources/js/**/*{.ts,.tsx}'",
     "lint:fix": "eslint './resources/js/**/*{.ts,.tsx}' --fix"
   },
@@ -16,7 +17,7 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.4",
-    "@prettier/plugin-php": "^0.17.6",
+    "@prettier/plugin-php": "^0.18.2",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
     "@types/react-helmet": "^6.1.5",

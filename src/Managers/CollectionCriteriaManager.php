@@ -4,7 +4,6 @@ namespace IZal\Lshopify\Managers;
 
 class CollectionCriteriaManager
 {
-
     protected $condition;
 
     /**
@@ -17,22 +16,30 @@ class CollectionCriteriaManager
 
     public function resolveField(): string
     {
-
         $field = $this->condition->field;
 
-        $allowedFields = ['product_title','product_type','product_tag','price','compare_at_price', 'weight', 'stock', 'variant_title'];
+        $allowedFields = [
+            'product_title',
+            'product_type',
+            'product_tag',
+            'price',
+            'compare_at_price',
+            'weight',
+            'stock',
+            'variant_title',
+        ];
 
-        if(!in_array($field, $allowedFields)){
-            throw new \Exception('Invalid field '.$field. ' passed into condition resolver');
+        if (!in_array($field, $allowedFields)) {
+            throw new \Exception(
+                'Invalid field ' . $field . ' passed into condition resolver'
+            );
         }
 
         return $field;
-
     }
 
     public function resolveCriteria()
     {
-
         $criteria = $this->condition->criteria;
 
         switch ($criteria) {
@@ -55,7 +62,9 @@ class CollectionCriteriaManager
             case 'is_empty':
                 return 'IS NULL';
             default:
-                throw new \Exception('Invalid criteria '.$criteria. ' passed to the resolver');
+                throw new \Exception(
+                    'Invalid criteria ' . $criteria . ' passed to the resolver'
+                );
         }
     }
 
@@ -65,32 +74,28 @@ class CollectionCriteriaManager
         $value = $this->condition->value;
         switch ($criteria) {
             case 'ends_with':
-                return '%'.$value;
+                return '%' . $value;
             case 'contains':
-                return '%'.$value.'%';
+                return '%' . $value . '%';
             case 'starts_with':
-                return $value.'%';
+                return $value . '%';
             default:
                 return $value;
         }
-
     }
 
     public function getClause($determiner = 'all')
     {
-
         $field = $this->resolveField();
         $criteria = $this->resolveCriteria();
         $value = $this->resolveValue();
 
-        $clause = $field.' '.$criteria.' '.$value;
+        $clause = $field . ' ' . $criteria . ' ' . $value;
 
-        if($determiner == 'any'){
-            $clause = 'OR '.$clause;
+        if ($determiner == 'any') {
+            $clause = 'OR ' . $clause;
         }
 
         return $clause;
-
     }
-
 }

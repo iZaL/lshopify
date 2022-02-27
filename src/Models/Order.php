@@ -88,30 +88,42 @@ class Order extends BaseModel
     public function discounts()
     {
         //@todo: convert to belongsToMany Variant
-        return $this->hasMany(Discount::class, 'order_id')->where('name', '!=', 'cart');
+        return $this->hasMany(Discount::class, 'order_id')->where(
+            'name',
+            '!=',
+            'cart'
+        );
     }
 
-//    public function returns()
-//    {
-//        return $this->belongsToMany(Variant::class, 'order_returns', 'order_id', 'variant_id')->withPivot([
-//            'id',
-//            'quantity',
-//            'price',
-//            'unit_price',
-//            'subtotal',
-//            'total',
-//            'restock',
-//        ]);
-//    }
+    //    public function returns()
+    //    {
+    //        return $this->belongsToMany(Variant::class, 'order_returns', 'order_id', 'variant_id')->withPivot([
+    //            'id',
+    //            'quantity',
+    //            'price',
+    //            'unit_price',
+    //            'subtotal',
+    //            'total',
+    //            'restock',
+    //        ]);
+    //    }
 
     public function cart_discount()
     {
-        return $this->hasOne(Discount::class, 'order_id')->where('name', 'cart');
+        return $this->hasOne(Discount::class, 'order_id')->where(
+            'name',
+            'cart'
+        );
     }
 
     public function variants()
     {
-        return $this->belongsToMany(Variant::class, 'order_variants', 'order_id', 'variant_id')->withPivot([
+        return $this->belongsToMany(
+            Variant::class,
+            'order_variants',
+            'order_id',
+            'variant_id'
+        )->withPivot([
             'id',
             'quantity',
             'price',
@@ -152,63 +164,80 @@ class Order extends BaseModel
 
     public function fulfillments()
     {
-        return $this->hasMany(Workflow::class, 'order_id')->where('type', Workflow::TYPE_FULFILLMENT);
+        return $this->hasMany(Workflow::class, 'order_id')->where(
+            'type',
+            Workflow::TYPE_FULFILLMENT
+        );
     }
 
     public function refunds()
     {
-        return $this->hasMany(Workflow::class, 'order_id')->where('type', Workflow::TYPE_REFUND);
+        return $this->hasMany(Workflow::class, 'order_id')->where(
+            'type',
+            Workflow::TYPE_REFUND
+        );
     }
 
     public function returns()
     {
-        return $this->hasMany(Workflow::class, 'order_id')->where('type', Workflow::TYPE_RETURN);
+        return $this->hasMany(Workflow::class, 'order_id')->where(
+            'type',
+            Workflow::TYPE_RETURN
+        );
     }
 
-//    public function fulfillments()
-//    {
-//        return $this->hasMany(Fulfillment::class, 'order_id');
-//    }
-//
-//    public function pending_fulfillments()
-//    {
-//        return $this->fulfillments()->whereHas('variants', function ($q) {
-//            $q->where('status', 'pending');
-//        });
-//    }
-//
-//    public function success_fulfillments()
-//    {
-//        return $this->fulfillments()->whereHas('variants', function ($q) {
-//            $q->where('status', 'success');
-//        });
-//    }
+    //    public function fulfillments()
+    //    {
+    //        return $this->hasMany(Fulfillment::class, 'order_id');
+    //    }
+    //
+    //    public function pending_fulfillments()
+    //    {
+    //        return $this->fulfillments()->whereHas('variants', function ($q) {
+    //            $q->where('status', 'pending');
+    //        });
+    //    }
+    //
+    //    public function success_fulfillments()
+    //    {
+    //        return $this->fulfillments()->whereHas('variants', function ($q) {
+    //            $q->where('status', 'success');
+    //        });
+    //    }
 
-//    public function fulfillment_variants()
-//    {
-//        return $this->hasManyThrough(FulfillmentVariant::class,Fulfillment::class);
-//    }
+    //    public function fulfillment_variants()
+    //    {
+    //        return $this->hasManyThrough(FulfillmentVariant::class,Fulfillment::class);
+    //    }
 
-//    public function pending_fulfillments()
-//    {
-//        return $this->hasManyThrough(FulfillmentVariant::class,Fulfillment::class)
-//            ->where('status', 'pending');
-//    }
-//
-//    public function success_fulfillments()
-//    {
-//        return $this->hasManyThrough(FulfillmentVariant::class,Fulfillment::class)
-//            ->where('status', 'success');
-//    }
+    //    public function pending_fulfillments()
+    //    {
+    //        return $this->hasManyThrough(FulfillmentVariant::class,Fulfillment::class)
+    //            ->where('status', 'pending');
+    //    }
+    //
+    //    public function success_fulfillments()
+    //    {
+    //        return $this->hasManyThrough(FulfillmentVariant::class,Fulfillment::class)
+    //            ->where('status', 'success');
+    //    }
 
     public function getShippingFullNameAttribute()
     {
-        return $this->shipping_first_name ? \Str::title($this->shipping_first_name.' '.$this->shipping_last_name) : null;
+        return $this->shipping_first_name
+            ? \Str::title(
+                $this->shipping_first_name . ' ' . $this->shipping_last_name
+            )
+            : null;
     }
 
     public function getBillingFullNameAttribute()
     {
-        return $this->billing_first_name ? \Str::title($this->billing_first_name.' '.$this->billing_last_name) : null;
+        return $this->billing_first_name
+            ? \Str::title(
+                $this->billing_first_name . ' ' . $this->billing_last_name
+            )
+            : null;
     }
 
     public function getDateAttribute()

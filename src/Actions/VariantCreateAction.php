@@ -17,17 +17,25 @@ class VariantCreateAction
         $this->variant = $variant;
     }
 
-    public function create(array $variantAttributes, $parseOptions = false): Variant
-    {
+    public function create(
+        array $variantAttributes,
+        $parseOptions = false
+    ): Variant {
         $variant = $this->variant->create(
             collect($variantAttributes)
                 ->only($this->getFillable())
                 ->toArray()
         );
 
-        if (isset($variantAttributes['options']) && ! empty($variantAttributes['options'])) {
+        if (
+            isset($variantAttributes['options']) &&
+            !empty($variantAttributes['options'])
+        ) {
             if ($parseOptions) {
-                $this->createVariantsWithOptions($variant, $variantAttributes['options']);
+                $this->createVariantsWithOptions(
+                    $variant,
+                    $variantAttributes['options']
+                );
             } else {
                 $variant->options = $variantAttributes['options'];
                 $variant->save();
@@ -37,8 +45,10 @@ class VariantCreateAction
         return $variant;
     }
 
-    public function createVariantsWithOptions(Variant $variant, $variantAttributes): self
-    {
+    public function createVariantsWithOptions(
+        Variant $variant,
+        $variantAttributes
+    ): self {
         $variantOptions = $this->prepareOptions($variantAttributes);
         foreach ($variantOptions as $variantOption) {
             $newVariant = $variant->replicate(['default']);
@@ -63,7 +73,10 @@ class VariantCreateAction
             $variant1Array = $variant1['options'];
 
             foreach ($variant1Array as $variant1Arr) {
-                $variant1Options[] = ['name' => $variant1['name'], 'id' => $variant1Arr['id']];
+                $variant1Options[] = [
+                    'name' => $variant1['name'],
+                    'id' => $variant1Arr['id'],
+                ];
             }
         }
 
@@ -75,7 +88,10 @@ class VariantCreateAction
             $variant2Array = $variant2['options'];
 
             foreach ($variant2Array as $variant2Arr) {
-                $variant2Options[] = ['name' => $variant2['name'], 'id' => $variant2Arr['id']];
+                $variant2Options[] = [
+                    'name' => $variant2['name'],
+                    'id' => $variant2Arr['id'],
+                ];
             }
         }
 
@@ -87,7 +103,10 @@ class VariantCreateAction
             $variant3Array = $variant3['options'];
 
             foreach ($variant3Array as $variant3Arr) {
-                $variant3Options[] = ['name' => $variant3['name'], 'id' => $variant3Arr['id']];
+                $variant3Options[] = [
+                    'name' => $variant3['name'],
+                    'id' => $variant3Arr['id'],
+                ];
             }
         }
 

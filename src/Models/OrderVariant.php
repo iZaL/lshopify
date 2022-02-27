@@ -13,7 +13,15 @@ class OrderVariant extends BaseModel
 
     protected $casts = [];
 
-    protected $fillable = ['order_id', 'variant_id', 'total', 'subtotal', 'unit_price', 'quantity', 'price'];
+    protected $fillable = [
+        'order_id',
+        'variant_id',
+        'total',
+        'subtotal',
+        'unit_price',
+        'quantity',
+        'price',
+    ];
 
     public static function newFactory()
     {
@@ -34,5 +42,4 @@ class OrderVariant extends BaseModel
     {
         return $this->hasMany(Discount::class, 'variant_id');
     }
-
 }

@@ -42,25 +42,36 @@ class OrderManager
      */
     public function createPayment($data)
     {
-        $payload = array_merge([
-            'amount' => $this->order->amount(),
-            'currency' => 'OMR',
-            'status' => Transaction::STATUS_SUCCESS,
-        ], $data);
-        $this->order->transactions()->create(\Arr::only($payload, (new Transaction())->getFillable()));
+        $payload = array_merge(
+            [
+                'amount' => $this->order->amount(),
+                'currency' => 'OMR',
+                'status' => Transaction::STATUS_SUCCESS,
+            ],
+            $data
+        );
+        $this->order
+            ->transactions()
+            ->create(\Arr::only($payload, (new Transaction())->getFillable()));
     }
 
-    public function returnItems(array $variantAttributes, bool $restock = true, string $status = 'success')
-    {
+    public function returnItems(
+        array $variantAttributes,
+        bool $restock = true,
+        string $status = 'success'
+    ) {
         foreach ($variantAttributes as $variantAttribute) {
-            $variant = $this->order->variants()
+            $variant = $this->order
+                ->variants()
                 ->wherePivot('variant_id', $variantAttribute['id'])
                 ->first();
 
             $returnQuantity = $variantAttribute['pivot_quantity'];
             if ($variant && $returnQuantity != 0) {
                 $this->createItemReturn($variant, $returnQuantity, $restock);
-                $fulfillmentVariant = FulfillmentVariant::find($variantAttribute['pivot_id']);
+                $fulfillmentVariant = FulfillmentVariant::find(
+                    $variantAttribute['pivot_id']
+                );
                 $actualQuantity = $fulfillmentVariant->quantity;
                 $fulfillingQuantity = $variantAttribute['pivot_quantity'];
                 $remainingQuantity = $actualQuantity - $fulfillingQuantity;
@@ -70,26 +81,30 @@ class OrderManager
                     $fulfillmentVariant->quantity = $remainingQuantity;
                     $fulfillmentVariant->save();
                 }
-                $this->adjustOrderItemQuantities($variant, $returnQuantity, $status);
+                $this->adjustOrderItemQuantities(
+                    $variant,
+                    $returnQuantity,
+                    $status
+                );
             }
         }
     }
 
-    private function createItemReturn($variant, int $returnQuantity, $restock = true)
-    {
+    private function createItemReturn(
+        $variant,
+        int $returnQuantity,
+        $restock = true
+    ) {
         $order = $this->order;
 
-        $order->returns()->attach(
-            $variant->id,
-            [
-                'quantity' => $returnQuantity,
-                'price' => $variant->pivot->price,
-                'unit_price' => $variant->pivot->unit_price,
-                'total' => $variant->pivot->total,
-                'subtotal' => $variant->pivot->subtotal,
-                'restock' => 1,
-            ]
-        );
+        $order->returns()->attach($variant->id, [
+            'quantity' => $returnQuantity,
+            'price' => $variant->pivot->price,
+            'unit_price' => $variant->pivot->unit_price,
+            'total' => $variant->pivot->total,
+            'subtotal' => $variant->pivot->subtotal,
+            'restock' => 1,
+        ]);
 
         if ($restock) {
             $this->restock($variant, $returnQuantity);
@@ -99,26 +114,30 @@ class OrderManager
     private function restock($variant, $returnQuantity)
     {
         $actualQuantity = $variant->quantity;
-        $remainingQuantityInStockAfterReturning = $actualQuantity + $returnQuantity;
+        $remainingQuantityInStockAfterReturning =
+            $actualQuantity + $returnQuantity;
         $variant->quantity = $remainingQuantityInStockAfterReturning;
         $variant->save();
     }
 
-    private function adjustOrderItemQuantities(Variant $variant, $returningQuantity, $status)
-    {
+    private function adjustOrderItemQuantities(
+        Variant $variant,
+        $returningQuantity,
+        $status
+    ) {
         $actualQuantity = $variant->pivot->quantity;
-        $remainingQuantityInStockAfterReturning = $actualQuantity - $returningQuantity;
+        $remainingQuantityInStockAfterReturning =
+            $actualQuantity - $returningQuantity;
 
         if ($remainingQuantityInStockAfterReturning <= 0) {
             $this->removeItemFromOrder($variant);
-//            $this->removeItemFromDiscount($variant);
+            //            $this->removeItemFromDiscount($variant);
         } else {
             $variant->pivot->quantity = $remainingQuantityInStockAfterReturning;
             $variant->pivot->save();
         }
 
         $this->cancelFulfillment($variant, $returningQuantity, $status);
-
     }
 
     private function removeItemFromOrder(Variant $variant)
@@ -129,5 +148,4 @@ class OrderManager
         //@todo: remove variant from discount
         //@todo: remove variant from fulfillment
     }
-
 }

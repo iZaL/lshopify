@@ -15,7 +15,7 @@ class CollectionConditionResource extends JsonResource
             'criteria' => $this->criteria,
             'field' => $this->field,
             'value' => $this->value,
-            'title' => $this->title
+            'title' => $this->title,
         ];
     }
 }

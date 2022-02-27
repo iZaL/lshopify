@@ -12,16 +12,15 @@ trait MoneyFormatter
     {
         $hasFormatter = Str::contains($key, '_formatted');
 
-        if($hasFormatter) {
+        if ($hasFormatter) {
             $key = Str::replaceLast('_formatted', '', $key);
-            if($this->attributes[$key]) {
+            if ($this->attributes[$key]) {
                 return $this->formatMoney($key);
             }
             return parent::__get($key);
         }
 
         return parent::__get($key);
-
     }
 
     public function formatMoney($key)
