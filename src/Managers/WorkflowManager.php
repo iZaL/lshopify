@@ -31,17 +31,19 @@ class WorkflowManager {
     public function getFulfilledVariants():Collection
     {
         $fulfilledVariants = $this->getFulfilledVariantsWithQuantity();
-        $workflowVariants = $this->getWorkflowVariantsWithQuantity();
-        $remainingFulfillableVariants = $this->getFulfillableVariantsWithQuantity($fulfilledVariants, $workflowVariants);
+        $remainingFulfillableVariants = $this->getFulfillableVariantsWithQuantity($fulfilledVariants);
         return $this->resolveVariants($remainingFulfillableVariants);
     }
 
     public function getFulfilledVariantsWithQuantity():Collection
     {
         $fulfilledWorkflows = $this->order->workflows()
-            ->where('type','fulfill')
-            ->orWhere('type','refund')
-            ->get()
+            ->where(function($q) {
+                $q->where('type','fulfill')
+                ->orWhere('type','refund');
+            })->where('order_id',$this->order->id);
+
+        $fulfilledWorkflows = $fulfilledWorkflows->get()
             ->map(function ($workflow) {
                 $adjustmentTerm = $workflow->type === 'refund' ? '-' : '+';
                 return $workflow->variants->map(function ($variant) use ($adjustmentTerm) {
@@ -52,10 +54,11 @@ class WorkflowManager {
                     ];
                 });
             })->collapse();
+
         return $fulfilledWorkflows;
     }
 
-    private function getFulfillableVariantsWithQuantity(Collection $fulfilledVariants, Collection $allVariants): Collection
+    private function getFulfillableVariantsWithQuantity(Collection $fulfilledVariants): Collection
     {
         $fulfilledVariants=  $fulfilledVariants->groupBy('variant_id')->map(function ($item, $key) {
             $incrementingVariants = $item->where('adjustment','+')->sum('quantity');
