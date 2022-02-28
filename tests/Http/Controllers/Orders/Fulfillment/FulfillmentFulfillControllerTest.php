@@ -2,8 +2,10 @@
 
 namespace IZal\Lshopify\Tests\Http\Controllers\Order\Fulfillment;
 
-use IZal\Lshopify\Models\Fulfillment;
-use IZal\Lshopify\Models\FulfillmentVariant;
+use IZal\Lshopify\Models\Order;
+use IZal\Lshopify\Models\OrderVariant;
+use IZal\Lshopify\Models\Workflow;
+use IZal\Lshopify\Models\WorkflowVariant;
 use IZal\Lshopify\Tests\TestCase;
 
 class FulfillmentFulfillControllerTest extends TestCase
@@ -20,9 +22,9 @@ class FulfillmentFulfillControllerTest extends TestCase
         $fulfillQuantity3 = 2;
         $fulfillQuantity4 = 0;
 
-        $fulfillment = Fulfillment::factory()
+        $order = Order::factory()
             ->hasAttached(
-                FulfillmentVariant::factory()->create(),
+                OrderVariant::factory()->create(),
                 [
                     'quantity' => $quantity1,
                     'price' => 100,
@@ -33,7 +35,7 @@ class FulfillmentFulfillControllerTest extends TestCase
                 'variants',
             )
             ->hasAttached(
-                FulfillmentVariant::factory()->create(),
+                OrderVariant::factory()->create(),
                 [
                     'quantity' => $quantity2,
                     'price' => 100,
@@ -44,7 +46,7 @@ class FulfillmentFulfillControllerTest extends TestCase
                 'variants'
             )
             ->hasAttached(
-                FulfillmentVariant::factory()->create(),
+                OrderVariant::factory()->create(),
                 [
                     'quantity' => $quantity3,
                     'price' => 100,
@@ -55,7 +57,7 @@ class FulfillmentFulfillControllerTest extends TestCase
                 'variants'
             )
             ->hasAttached(
-                FulfillmentVariant::factory()->create(),
+                OrderVariant::factory()->create(),
                 [
                     'quantity' => $quantity4,
                     'price' => 100,
@@ -67,12 +69,12 @@ class FulfillmentFulfillControllerTest extends TestCase
             )
             ->create();
 
-        $variants = $fulfillment->variants;
+        $orderVariants = $order->variants;
 
-        $variant1 = $variants[0];
-        $variant2 = $variants[1];
-        $variant3 = $variants[2];
-        $variant4 = $variants[3];
+        $variant1 = $orderVariants[0];
+        $variant2 = $orderVariants[1];
+        $variant3 = $orderVariants[2];
+        $variant4 = $orderVariants[3];
 
         $postData = [
             'variants' => [
@@ -95,21 +97,14 @@ class FulfillmentFulfillControllerTest extends TestCase
             ],
         ];
 
-        $req = $this->post(route('lshopify.orders.fulfill', [$fulfillment->order->id, $fulfillment->id]), $postData);
+        $req = $this->post(route('lshopify.orders.fulfill', [$order->id]), $postData);
 
-        $this->assertDatabaseHas('fulfillment_variants', ['fulfillment_id' => $fulfillment->id, 'variant_id' => $variant1->id, 'quantity' => $quantity1 - $fulfillQuantity1, 'status' => 'pending']);
-        $this->assertDatabaseHas('fulfillment_variants', ['fulfillment_id' => $fulfillment->id, 'variant_id' => $variant2->id, 'quantity' => $quantity2 - $fulfillQuantity2, 'status' => 'pending']);
-        $this->assertDatabaseHas('fulfillment_variants', ['fulfillment_id' => $fulfillment->id, 'variant_id' => $variant4->id, 'quantity' => $quantity4 - $fulfillQuantity4, 'status' => 'pending']);
-        $this->assertDatabaseMissing('fulfillment_variants', ['fulfillment_id' => $fulfillment->id, 'variant_id' => $variant3->id, 'status' => 'pending']);
+        $workflow = Workflow::all()->last();
 
-        $newFulfillment = Fulfillment::all()->last();
+        $this->assertDatabaseHas('workflows', ['id' => $workflow->id,'type' => 'fulfilled']);
 
-        $this->assertDatabaseHas('fulfillments', ['id' => $newFulfillment->id]);
-
-        $this->assertNotEquals($fulfillment->id, $newFulfillment->id);
-
-        $this->assertDatabaseHas('fulfillment_variants', ['fulfillment_id' => $newFulfillment->id, 'variant_id' => $variant1->id, 'quantity' => $fulfillQuantity1, 'status' => 'success']);
-        $this->assertDatabaseHas('fulfillment_variants', ['fulfillment_id' => $newFulfillment->id, 'variant_id' => $variant2->id, 'quantity' => $fulfillQuantity2, 'status' => 'success']);
-        $this->assertDatabaseHas('fulfillment_variants', ['fulfillment_id' => $newFulfillment->id, 'variant_id' => $variant3->id, 'quantity' => $fulfillQuantity3, 'status' => 'success']);
+        $this->assertDatabaseHas('workflow_variants', ['workflow_id' => $workflow->id, 'variant_id' => $variant1->id, 'quantity' => $fulfillQuantity1]);
+        $this->assertDatabaseHas('workflow_variants', ['workflow_id' => $workflow->id, 'variant_id' => $variant2->id, 'quantity' => $fulfillQuantity2]);
+        $this->assertDatabaseHas('workflow_variants', ['workflow_id' => $workflow->id, 'variant_id' => $variant3->id, 'quantity' => $fulfillQuantity3]);
     }
 }

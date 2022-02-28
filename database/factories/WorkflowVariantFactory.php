@@ -2,21 +2,20 @@
 
 namespace IZal\Lshopify\Database\Factories;
 
-use IZal\Lshopify\Models\Fulfillment;
-use IZal\Lshopify\Models\FulfillmentVariant;
-use IZal\Lshopify\Models\Variant;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use IZal\Lshopify\Models\Variant;
+use IZal\Lshopify\Models\Workflow;
+use IZal\Lshopify\Models\WorkflowVariant;
 
-class FulfillmentVariantFactory extends Factory
+class WorkflowVariantFactory extends Factory
 {
-    protected $model = FulfillmentVariant::class;
+    protected $model = WorkflowVariant::class;
 
     public function definition()
     {
         return [
-            'fulfillment_id' => Fulfillment::factory()->create(),
+            'workflow_id' => Workflow::factory()->create(),
             'variant_id' => Variant::factory()->create(),
-            'status' => 'pending',
             'price' => 100,
             'unit_price' => 100,
             'total' => 100,

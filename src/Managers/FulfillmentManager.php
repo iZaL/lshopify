@@ -7,27 +7,36 @@ use IZal\Lshopify\Models\Workflow;
 
 class FulfillmentManager
 {
+    private Workflow $workflow;
+
+    /**
+     * @param Workflow $workflow
+     */
+    public function __construct(Workflow $workflow)
+    {
+        $this->workflow = $workflow;
+    }
+
     /**
      * @param $variantAttribute
      * Field $id
      * Field $pivot_quantity
      */
-    public function fulfillItems(Workflow $fulfillment, $variantAttribute)
+    public function fulfillItems($variantAttribute)
     {
         $quantity = $variantAttribute['pivot_quantity'];
         if ($quantity > 0 && $variantAttribute['id'] != null) {
             $variant = Variant::find($variantAttribute['id']);
             if ($variant) {
-                $fulfillment->variants()->attach($variantAttribute['id'], [
-                    'quantity' => $variantAttribute['pivot_quantity'],
-                    'price' => $variantAttribute['pivot_price'],
-                    'unit_price' => $variantAttribute['pivot_unit_price'],
-                    'total' =>
-                        $variantAttribute['pivot_quantity'] *
-                        $variantAttribute['pivot_price'],
-                    'subtotal' =>
-                        $variantAttribute['pivot_quantity'] *
-                        $variantAttribute['pivot_unit_price'],
+                $qty = $variantAttribute['pivot_quantity'] ?? 1;
+                $price = $variantAttribute['pivot_price'] ?? 0.00;
+                $unitPrice = $variantAttribute['pivot_unit_price'] ?? 0.00;
+                $this->workflow->variants()->attach($variantAttribute['id'], [
+                    'quantity' => $qty,
+                    'price' => $price,
+                    'unit_price' => $unitPrice,
+                    'total' => $qty * $price,
+                    'subtotal' => $qty * $unitPrice,
                 ]);
             }
         }

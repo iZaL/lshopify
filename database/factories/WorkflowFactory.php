@@ -2,18 +2,19 @@
 
 namespace IZal\Lshopify\Database\Factories;
 
-use IZal\Lshopify\Models\Fulfillment;
 use IZal\Lshopify\Models\Order;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use IZal\Lshopify\Models\Workflow;
 
-class FulfillmentFactory extends Factory
+class WorkflowFactory extends Factory
 {
-    protected $model = Fulfillment::class;
+    protected $model = Workflow::class;
 
     public function definition()
     {
         return [
             'order_id' => Order::factory()->create(),
+            'type' => Workflow::TYPE_FULFILLMENT
         ];
     }
 }

@@ -21,7 +21,7 @@ class FulfillmentFulfillController extends Controller
         $fulfillmentManager = new FulfillmentManager($fulfillment);
 
         foreach ($request->get('variants') as $variantAttribute) {
-            $fulfillmentManager->fulfillItems($fulfillment, $variantAttribute);
+            $fulfillmentManager->fulfillItems($variantAttribute);
         }
 
         return redirect()->route('lshopify.orders.show', $order->id)->with('success', 'Saved');

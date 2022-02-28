@@ -3,7 +3,7 @@
 namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use IZal\Lshopify\Database\Factories\FulfillmentFactory;
+use IZal\Lshopify\Database\Factories\WorkflowFactory;
 
 class Workflow extends BaseModel
 {
@@ -20,7 +20,7 @@ class Workflow extends BaseModel
 
     public static function newFactory()
     {
-        return FulfillmentFactory::new();
+        return WorkflowFactory::new();
     }
 
     public function order()

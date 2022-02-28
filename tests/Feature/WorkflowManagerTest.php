@@ -3,11 +3,8 @@
 namespace IZal\Lshopify\Tests\Feature;
 
 use IZal\Lshopify\Managers\WorkflowManager;
-use IZal\Lshopify\Models\DraftOrder;
-use IZal\Lshopify\Models\Fulfillment;
 use IZal\Lshopify\Models\Order;
 use IZal\Lshopify\Models\Variant;
-use IZal\Lshopify\Models\Workflow;
 use IZal\Lshopify\Tests\TestCase;
 
 class WorkflowManagerTest extends TestCase
