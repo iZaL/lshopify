@@ -48,7 +48,7 @@ class WorkflowManager
         $fulfilledWorkflows = $this->order
             ->workflows()
             ->where(function ($q) {
-                $q->where('type', 'fulfilled')->orWhere('type', 'refund');
+                $q->where('type', Workflow::TYPE_FULFILLMENT)->orWhere('type', Workflow::TYPE_REFUND);
             })
             ->where('order_id', $this->order->id)
             ->get();
@@ -81,6 +81,7 @@ class WorkflowManager
                 $decrementingVariants = $item
                     ->where('adjustment', '-')
                     ->sum('quantity');
+
                 return [
                     'variant_id' => $key,
                     'quantity' => $incrementingVariants - $decrementingVariants,

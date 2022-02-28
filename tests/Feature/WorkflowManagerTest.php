@@ -19,9 +19,11 @@ class WorkflowManagerTest extends TestCase
      */
     public function test_get_unfulfilled_variants()
     {
-        $variant1Qty = 5;
-        $variant2Qty = 3;
-        $variant3Qty = 1;
+
+        // create order with 3 variants
+        $orderVariantQty1 = 5;
+        $orderVariantQty2 = 3;
+        $orderVariantQty3 = 1;
 
         $order = Order::factory()->create();
 
@@ -29,26 +31,26 @@ class WorkflowManagerTest extends TestCase
         $variant2 = Variant::factory()->create();
         $variant3 = Variant::factory()->create();
 
-        $order->variants()->attach($variant1->id, ['quantity' => $variant1Qty]);
-        $order->variants()->attach($variant2->id, ['quantity' => $variant2Qty]);
-        $order->variants()->attach($variant3->id, ['quantity' => $variant3Qty]);
+        $order->variants()->attach($variant1->id, ['quantity' => $orderVariantQty1]);
+        $order->variants()->attach($variant2->id, ['quantity' => $orderVariantQty2]);
+        $order->variants()->attach($variant3->id, ['quantity' => $orderVariantQty3]);
 
+        // create order workflow
         $orderWorkflows = $order->workflows();
 
-        $fulfillmentWorkflow = $orderWorkflows->create(['type' => 'fulfill']);
-        $fulfillmentWorkflow1 = $orderWorkflows->create(['type' => 'refund']);
-        $fulfillmentWorkflow2 = $orderWorkflows->create(['type' => 'fulfill']);
+        $fulfillmentWorkflow1 = $orderWorkflows->create(['type' => 'fulfilled']);
+        $refundWorkflow = $orderWorkflows->create(['type' => 'refund']);
+        $fulfillmentWorkflow3 = $orderWorkflows->create(['type' => 'fulfilled']);
 
-        $fulfillmentWorkflow->variants()->attach($variant1);
-        $fulfillmentWorkflow1->variants()->attach($variant1);
-        $fulfillmentWorkflow2->variants()->attach($variant1);
+        $fulfillmentWorkflow1->variants()->attach($variant1,['quantity' => 2]); // 5-2 = 3
+        $fulfillmentWorkflow3->variants()->attach($variant1,['quantity' => 1]); // 3-1 = 2
+        $refundWorkflow->variants()->attach($variant1); // should exclude
 
         $workflowManager = new WorkflowManager($order);
-        $unfulfilledVariants = $workflowManager->getUnfulfilledVariants();
+        $unfulfilledVariants = $workflowManager->getUnfulfilledVariantsWithPivot();
 
-        $firstUnfulfilledVariant = $unfulfilledVariants->first();
+        $firstUnfulfilledVariant = $unfulfilledVariants->firstWhere('id', $variant1->id);
         $secondUnfulfilledVariant = $unfulfilledVariants->firstWhere('id', $variant2->id);
-
         $thirdUnfulfilledVariant = $unfulfilledVariants->firstWhere('id', $variant3->id);
 
         $expectedFirstUnfulfilledVariant = ['id' => 1, 'quantity' => 2];
@@ -90,34 +92,35 @@ class WorkflowManagerTest extends TestCase
 
         $orderWorkflows = $order->workflows();
 
-        $fulfillmentWorkflow1 = $orderWorkflows->create(['type' => 'fulfill']); // variant1
+        $fulfillmentWorkflow1 = $orderWorkflows->create(['type' => 'fulfilled']); // variant1
         $fulfillmentWorkflow1->variants()->attach($variant1,['quantity' => $fulfill1Qty]); //3
 
-        $fulfillmentWorkflow2 = $orderWorkflows->create(['type' => 'fulfill']); // variant 1
-        $fulfillmentWorkflow2->variants()->attach($variant1,['quantity' => $fulfill2Qty]); //2
+        $fulfillmentWorkflow2 = $orderWorkflows->create(['type' => 'fulfilled']); // variant 1
+        $fulfillmentWorkflow2->variants()->attach($variant1,['quantity' => $fulfill2Qty]); //3 + 2 = 5
 
         $refundWorkflow1 = $orderWorkflows->create(['type' => 'refund']);// variant 1
-        $refundWorkflow1->variants()->attach($variant1,['quantity' => $refundQty]); //1
+        $refundWorkflow1->variants()->attach($variant1,['quantity' => $refundQty]); //5 - 1 = 4
+        $refundWorkflow1->variants()->attach($variant1,['quantity' => $refundQty]); //4 - 1 = 3
 
-        $removeWorkflow1 = $orderWorkflows->create(['type' => 'remove']);// variant 1
-        $removeWorkflow1->variants()->attach($variant1,['quantity' => $removeQty]); //1
+        $removeWorkflow1 = $orderWorkflows->create(['type' => 'removed']);// variant 1
+        $removeWorkflow1->variants()->attach($variant1,['quantity' => $removeQty]); //should exclude
 
-        $fulfillmentWorkflow3 = $orderWorkflows->create(['type' => 'fulfill']); //  variant 2
+        $fulfillmentWorkflow3 = $orderWorkflows->create(['type' => 'fulfilled']); //  variant 2
         $fulfillmentWorkflow3->variants()->attach($variant2,['quantity' => $fulfill3Qty]); //2
 
-        $fulfillmentWorkflow4 = $orderWorkflows->create(['type' => 'fulfill']);// variant 3
+        $fulfillmentWorkflow4 = $orderWorkflows->create(['type' => 'fulfilled']);// variant 3
         $fulfillmentWorkflow4->variants()->attach($variant3,['quantity' => $fulfill3Qty]); //2
 
         $workflowManager = new WorkflowManager($order);
-        $fulfilledVariants = $workflowManager->getFulfilledVariants();
+        $fulfilledVariants = $workflowManager->getFulfilledVariantsWithPivot();
 
-        $firstFulfilledVariant = $fulfilledVariants->first();
+        $firstFulfilledVariant = $fulfilledVariants->firstWhere('id',$variant1->id);
         $secondFulfilledVariant = $fulfilledVariants->firstWhere('id', $variant2->id);
         $thirdFulfilledVariant = $fulfilledVariants->firstWhere('id', $variant3->id);
 
         $expectedFirstFilledVariant = ['id' => 1, 'quantity' => 3];
-        $expectedSecondFulfilledVariant = ['id' => 2, 'quantity' => 7];
-        $expectedThirdFulfilledVariant = ['id' => 3, 'quantity' => 6];
+        $expectedSecondFulfilledVariant = ['id' => 2, 'quantity' => 2];
+        $expectedThirdFulfilledVariant = ['id' => 3, 'quantity' => 2];
 
         $this->assertEquals($expectedFirstFilledVariant['id'], $firstFulfilledVariant->id);
         $this->assertEquals($expectedFirstFilledVariant['quantity'], $firstFulfilledVariant->pivot->quantity);
