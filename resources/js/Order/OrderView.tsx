@@ -113,6 +113,10 @@ export default function OrderView(props: Props) {
     Inertia.get(route('lshopify.orders.refund', [order.id]));
   };
 
+  const returnItems = () => {
+    Inertia.get(route('lshopify.orders.return', [order.id]));
+  };
+
   return (
     <Main>
       <div className="p-6">
@@ -126,7 +130,10 @@ export default function OrderView(props: Props) {
             <PageHeader text={`Order Edit`} />
           </div>
 
-          <OrderViewActionButtons onRefundClick={() => refund()} />
+          <OrderViewActionButtons
+            onRefundClick={() => refund()}
+            onReturnClick={() => returnItems()}
+          />
         </div>
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">

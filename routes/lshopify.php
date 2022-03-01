@@ -54,8 +54,9 @@ Route::get('orders/{id}', \IZal\Lshopify\Http\Controllers\Order\OrderShowControl
 Route::post('orders', \IZal\Lshopify\Http\Controllers\Order\OrderStoreController::class)->name('orders.store');
 Route::patch('orders/{id}', \IZal\Lshopify\Http\Controllers\Order\OrderUpdateController::class)->name('orders.update');
 Route::get('orders/{id}/fulfill', \IZal\Lshopify\Http\Controllers\Order\Fulfillment\FulfillmentShowController::class)->name('orders.fulfill');
-//Route::get('orders/{id}/fulfillments/{fulfillment_id}/fulfill', \IZal\Lshopify\Http\Controllers\Order\Fulfillment\FulfillmentShowController::class)->name('orders.fulfill');
 Route::post('orders/{id}/fulfill', \IZal\Lshopify\Http\Controllers\Order\Fulfillment\FulfillmentFulfillController::class)->name('orders.fulfill');
+Route::get('orders/{id}/return', \IZal\Lshopify\Http\Controllers\Order\Fulfillment\ReturnShowController::class)->name('orders.return');
+Route::post('orders/{id}/return', \IZal\Lshopify\Http\Controllers\Order\Fulfillment\ReturnController::class)->name('orders.return');
 
 Route::post('orders/{id}/payments', \IZal\Lshopify\Http\Controllers\Order\Transaction\PaymentStoreController::class)->name('orders.payments.store');
 Route::get('orders/{id}/refund', \IZal\Lshopify\Http\Controllers\Order\Transaction\RefundShowController::class)->name('orders.refund.show');

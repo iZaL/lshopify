@@ -36,9 +36,9 @@ class WorkflowManagerTest extends TestCase
         // create order workflow
         $orderWorkflows = $order->workflows();
 
-        $fulfillmentWorkflow1 = $orderWorkflows->create(['type' => 'fulfilled']);
-        $refundWorkflow = $orderWorkflows->create(['type' => 'refund']);
-        $fulfillmentWorkflow3 = $orderWorkflows->create(['type' => 'fulfilled']);
+        $fulfillmentWorkflow1 = $orderWorkflows->create(['type' => Workflow::TYPE_FULFILLMENT,'success' => Workflow::STATUS_SUCCESS]);
+        $refundWorkflow = $orderWorkflows->create(['type' => Workflow::TYPE_REFUND,'success' => Workflow::STATUS_SUCCESS]);
+        $fulfillmentWorkflow3 = $orderWorkflows->create(['type' => Workflow::TYPE_FULFILLMENT,'success' => Workflow::STATUS_SUCCESS]);
 
         $fulfillmentWorkflow1->variants()->attach($variant1,['quantity' => 2]); // 5-2 = 3
         $fulfillmentWorkflow3->variants()->attach($variant1,['quantity' => 1]); // 3-1 = 2

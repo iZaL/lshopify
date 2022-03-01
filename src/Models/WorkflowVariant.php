@@ -18,4 +18,9 @@ class WorkflowVariant extends BaseModel
     {
         return WorkflowVariantFactory::new();
     }
+
+    public function workflow()
+    {
+        return $this->belongsTo(Workflow::class, 'workflow_id');
+    }
 }

@@ -4,94 +4,56 @@ namespace IZal\Lshopify\Tests\Http\Controllers\Order\Transaction;
 
 use IZal\Lshopify\Models\Order;
 use IZal\Lshopify\Models\OrderVariant;
+use IZal\Lshopify\Models\Workflow;
+use IZal\Lshopify\Models\WorkflowVariant;
 use IZal\Lshopify\Tests\TestCase;
 
 class RefundControllerTest extends TestCase
 {
-    public function test_can_restock_items()
+    public function test_can_refund_items()
     {
-        $quantity1 = 5;
-        $quantity2 = 8;
-        $quantity3 = 2;
-        $quantity4 = 1;
+        $quantity = 10;
+        $fulfillQuantity = 8;
 
-        $fulfillQuantity1 = 4;
-        $fulfillQuantity2 = 6;
-        $fulfillQuantity3 = 2;
-        $fulfillQuantity4 = 0;
+        $order = Order::factory()->create();
+        $variant1 = OrderVariant::factory()->create(['order_id' => $order->id, 'quantity' => $quantity]);
+        $variant2 = OrderVariant::factory()->create(['order_id' => $order->id, 'quantity' => $quantity]);
+        $variant3 = OrderVariant::factory()->create(['order_id' => $order->id, 'quantity' => $quantity]);
+        $variant4 = OrderVariant::factory()->create(['order_id' => $order->id, 'quantity' => $quantity]);
 
-        $order = Order::factory()
-             ->hasAttached(
-                 OrderVariant::factory()->create(),
-                 [
-                     'quantity' => $quantity1,
-                     'price' => 100,
-                     'unit_price' => 100,
-                     'total' => 100,
-                     'subtotal' => 100,
-                 ],
-                 'variants',
-             )
-            ->hasAttached(
-                OrderVariant::factory()->create(),
-                [
-                    'quantity' => $quantity2,
-                    'price' => 100,
-                    'unit_price' => 100,
-                    'total' => 100,
-                    'subtotal' => 100,
-                ],
-                'variants',
-            )
-            ->hasAttached(
-                OrderVariant::factory()->create(),
-                [
-                    'quantity' => $quantity3,
-                    'price' => 100,
-                    'unit_price' => 100,
-                    'total' => 100,
-                    'subtotal' => 100,
-                ],
-                'variants',
-            )
-            ->hasAttached(
-                OrderVariant::factory()->create(),
-                [
-                    'quantity' => $quantity4,
-                    'price' => 100,
-                    'unit_price' => 100,
-                    'total' => 100,
-                    'subtotal' => 100,
-                ],
-                'variants',
-            )
-            ->create();
+        // pending fulfillments
 
         $variants = $order->variants;
 
-        $variant1 = $variants[0];
+        $workflow = $order->workflows();
+        $workflow1 = $workflow->create(['type'=>Workflow::TYPE_FULFILLMENT, 'status'=>Workflow::STATUS_SUCCESS]);
+        $workflow1->variants()->attach($variant1->id, ['quantity'=>$fulfillQuantity]);
 
-        $variant2 = $variants[1];
-        $variant3 = $variants[2];
-        $variant4 = $variants[3];
+        $workflow2 = $workflow->create(['type'=>Workflow::TYPE_FULFILLMENT, 'status'=>Workflow::STATUS_SUCCESS]);
+        $workflow2->variants()->attach($variant2->id, ['quantity'=>$fulfillQuantity]);
+
+        // variant 1,variant 1 fulfilled
+        // variant 3,variant 4 unfulfilled
 
         $postData = [
-            'variants' => [
+            'fulfillments' => [
                 [
-                    'id' => $variant1->id,
-                    'pivot_quantity' => $fulfillQuantity1, // remaining 1
+                    'id' => $variant1->variant_id,
+                    'pivot_quantity' => $fulfillQuantity - 1,
                 ],
                 [
                     'id' => $variant2->id,
-                    'pivot_quantity' => $fulfillQuantity2, // remaining 2
+                    'pivot_quantity' => $fulfillQuantity - 2,
                 ],
+            ],
+            'pending_fulfillments' => [
                 [
                     'id' => $variant3->id,
-                    'pivot_quantity' =>$fulfillQuantity3, // remaining 0
+                    'pivot_quantity' =>$fulfillQuantity - 3,
                 ],
                 [
                     'id' => $variant4->id,
-                    'pivot_quantity' => $fulfillQuantity4, // remaining 1
+                    'pivot_quantity' => $fulfillQuantity - 4,
                 ],
             ],
             'restock' => 1,
@@ -99,17 +61,36 @@ class RefundControllerTest extends TestCase
 
         $req = $this->post(route('lshopify.orders.refund', $order->id), $postData);
 
-//        $this->assertDatabaseHas('order_variants', ['order_id' => $order->id, 'variant_id' => $variant1->id, 'quantity' => $quantity1 - $fulfillQuantity1]);
-//        $this->assertDatabaseHas('order_variants', ['order_id' => $order->id, 'variant_id' => $variant2->id, 'quantity' => $quantity2 - $fulfillQuantity2]);
-//        $this->assertDatabaseMissing('order_variants', ['order_id' => $order->id, 'variant_id' => $variant3->id]);
-//        $this->assertDatabaseHas('order_variants', ['order_id' => $order->id, 'variant_id' => $variant4->id, 'quantity' => $quantity4 - $fulfillQuantity4]);
+        $workflowVariant1 = WorkflowVariant::where('variant_id', $variant1->id)->where('quantity', $fulfillQuantity - 1)->first();
+        $workflowVariant2 = WorkflowVariant::where('variant_id', $variant2->id)->where('quantity', $fulfillQuantity - 2)->first();
+        $workflowVariant3 = WorkflowVariant::where('variant_id', $variant3->id)->where('quantity', $fulfillQuantity - 3)->first();
+        $workflowVariant4 = WorkflowVariant::where('variant_id', $variant4->id)->where('quantity', $fulfillQuantity - 4)->first();
 
-//        $this->assertDatabaseHas('order_returns', ['order_id' => $order->id, 'variant_id' => $variant1->id, 'quantity' => $fulfillQuantity1]);
-//        $this->assertDatabaseHas('order_returns', ['order_id' => $order->id, 'variant_id' => $variant2->id, 'quantity' => $fulfillQuantity2]);
-//        $this->assertDatabaseHas('order_returns', ['order_id' => $order->id, 'variant_id' => $variant3->id, 'quantity' => $fulfillQuantity3]);
-//        $this->assertDatabaseMissing('order_returns', ['order_id' => $order->id, 'variant_id' => $variant4->id]);
+        $this->assertDatabaseHas('workflow_variants', [
+            'variant_id' => $workflowVariant1->variant_id,
+            'quantity' => $workflowVariant1->quantity,
+        ]);
 
-        // check restocked
-//        $this->assertDatabaseHas('variants', ['id' => $variant1->id, 'quantity' => $variant1->quantity + $fulfillQuantity1]);
+
+        $this->assertDatabaseHas('workflow_variants', [
+            'variant_id' => $workflowVariant2->variant_id,
+            'quantity' => $workflowVariant2->quantity,
+        ]);
+
+        $this->assertDatabaseHas('workflow_variants', [
+            'variant_id' => $workflowVariant3->variant_id,
+            'quantity' => $workflowVariant3->quantity,
+        ]);
+
+        $this->assertDatabaseHas('workflow_variants', [
+            'variant_id' => $workflowVariant4->variant_id,
+            'quantity' => $workflowVariant4->quantity,
+        ]);
+
+        $this->assertEquals($workflowVariant1->workflow->type, Workflow::TYPE_REFUND);
+        $this->assertEquals($workflowVariant2->workflow->type, Workflow::TYPE_REFUND);
+        $this->assertEquals($workflowVariant3->workflow->type, Workflow::TYPE_REMOVED);
+        $this->assertEquals($workflowVariant4->workflow->type, Workflow::TYPE_REMOVED);
+
     }
 }

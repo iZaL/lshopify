@@ -19,14 +19,14 @@ class RefundController extends Controller
             return $fulfillment['pivot_quantity'] == 0;
         });
         if($pendingFulfillments->count() > 0) {
-            (new WorkflowManager($order))->createRemovedFulfillments($pendingFulfillments);
+            (new WorkflowManager($order))->createRemovedWorkflow($pendingFulfillments);
         }
 
         $fulfillments = collect($request->fulfillments)->reject(function ($fulfillment) {
             return $fulfillment['pivot_quantity'] == 0;
         });
         if($fulfillments->count() > 0) {
-            (new WorkflowManager($order))->createFulfillments($fulfillments);
+            (new WorkflowManager($order))->createRefundWorkflow($fulfillments);
         }
 
         return redirect()->route('lshopify.orders.show', $order->id)->with('success', 'Saved');

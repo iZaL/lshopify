@@ -43,10 +43,9 @@ class WorkflowManager
         $fulfilledWorkflows = $this->order
             ->workflows()
             ->where(function ($q) {
-                $q
-                    ->where('type', Workflow::TYPE_FULFILLMENT)
+                $q->where('type', Workflow::TYPE_FULFILLMENT)
                     ->orWhere('type', Workflow::TYPE_REFUND)
-                    ->where('status',Workflow::STATUS_SUCCESS);
+                    ->where('status', Workflow::STATUS_SUCCESS);
             })
             ->where('order_id', $this->order->id)
             ->get();
@@ -87,9 +86,7 @@ class WorkflowManager
     public function getUnfulfilledVariantsWithPivot(): Collection
     {
         $unfulfilledVariants = $this->getUnfulfilledVariants();
-        $variants = Variant::with(['product.image'])
-            ->whereIn('id', $unfulfilledVariants->pluck('id'))
-            ->get();
+        $variants = Variant::whereIn('id', $unfulfilledVariants->pluck('id'))->get();
         foreach ($variants as $variant) {
             $variant->setAttribute('pivot', $unfulfilledVariants->where('id', $variant->id)->first()->pivot);
         }
@@ -119,7 +116,15 @@ class WorkflowManager
 
     private function getWorkflowVariantsWithQuantity(): Collection
     {
-        $workflows = $this->order->workflows->where('type', '!=', 'refund');
+        $workflows = $this->order
+            ->workflows()
+
+            ->where('order_id', $this->order->id)
+            ->where(function ($q) {
+                return $q->where('type', '!=', Workflow::TYPE_REFUND);
+                //                    ->orWhere('type', '!=', Workflow::TYPE_REMOVED)
+            })
+            ->get();
         $workflowVariants = collect();
         foreach ($workflows as $workflow) {
             $variants = $workflow->variants
@@ -191,25 +196,25 @@ class WorkflowManager
             ->values();
     }
 
-    public function createRemovedFulfillments($fulfillments): Workflow
+    public function createRemovedWorkflow($fulfillments): Workflow
     {
-        $removedWorkflow = $this->order->workflows()->create([
+        $workflow = $this->order->workflows()->create([
             'type' => Workflow::TYPE_REMOVED,
         ]);
-        $this->createFulfillment($removedWorkflow, $fulfillments);
-        return $removedWorkflow;
+        $this->attachWorkflowVariants($workflow, $fulfillments);
+        return $workflow;
     }
 
-    public function createFulfillments($fulfillments): Workflow
+    public function createRefundWorkflow($fulfillments): Workflow
     {
-        $removedWorkflow = $this->order->workflows()->create([
+        $workflow = $this->order->workflows()->create([
             'type' => Workflow::TYPE_REFUND,
         ]);
-        $this->createFulfillment($removedWorkflow, $fulfillments);
-        return $removedWorkflow;
+        $this->attachWorkflowVariants($workflow, $fulfillments);
+        return $workflow;
     }
 
-    private function createFulfillment($workflow, $fulfillments)
+    private function attachWorkflowVariants($workflow, $fulfillments)
     {
         foreach ($fulfillments as $fulfillment) {
             $variant = $this->order->variants->firstWhere('id', $fulfillment['id']);
