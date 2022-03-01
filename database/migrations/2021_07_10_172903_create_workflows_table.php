@@ -16,13 +16,16 @@ class CreateWorkflowsTable extends Migration
         Schema::create('workflows', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('order_id');
+            $table->unsignedInteger('shipment_id')->nullable();
             $table->unsignedInteger('location_id')->nullable();
-            $table->decimal('subtotal', 8, 2)->default(0.00);
-            $table->decimal('total', 8, 2)->default(0.00);
-            $table->string('adjustment_term')->default('increment'); // increment, decrement, or none
-            $table->boolean('restock')->default(1);
             $table->string('type')->default('fulfilled'); // fulfill, refund, cancel, return
-            $table->string('status')->default('pending'); // pending, processing, completed, failed
+            //pending: App has created the fulfillment and is waiting for the third-party fulfillment service to transition it to 'open' or 'success'.
+            //open: The fulfillment has been acknowledged by the service and is in processing.
+            //success: The fulfillment was successful.
+            //cancelled: The fulfillment was cancelled.
+            //error: There was an error with the fulfillment request.
+            //failure: The fulfillment request failed.
+            $table->boolean('restock')->default(1);
             $table->timestamps();
         });
     }
