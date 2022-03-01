@@ -3,33 +3,48 @@
 namespace IZal\Lshopify\Http\Controllers\Order\Fulfillment;
 
 use IZal\Lshopify\Http\Controllers\Controller;
+use IZal\Lshopify\Http\Requests\ReturnRequest;
 use IZal\Lshopify\Managers\WorkflowManager;
-use IZal\Lshopify\Models\Customer;
 use IZal\Lshopify\Models\Order;
-use IZal\Lshopify\Resources\CustomerResource;
+use IZal\Lshopify\Models\Workflow;
 use IZal\Lshopify\Resources\OrderResource;
-use Inertia\Inertia;
-use IZal\Lshopify\Resources\WorkflowVariantResource;
 
 class ReturnController extends Controller
 {
-    public function __invoke($orderID): \Inertia\Response
+    public function __invoke($orderID,ReturnRequest $request)
     {
-        $order = Order::with(['customer'])->find($orderID);
-        $orderResource = new OrderResource($order);
-//
-//        $customers = CustomerResource::collection(Customer::all());
-//
-//        $unfulfilledVariants = (new WorkflowManager($order))->getUnfulfilledVariantsWithPivot();
-//        $pendingFulfillments = WorkflowVariantResource::collection($unfulfilledVariants);
-//
-//        return Inertia::render(
-//            'Order/FulfillmentView',
-//            [
-//                'pending_fulfillments' => $pendingFulfillments,
-//                'order' => $orderResource,
-//                'customers' => $customers,
-//            ]
-//        );
+        $order = Order::with(['workflows'])->find($orderID);
+
+
+        $fulfillments = $request->fulfillments;
+
+        foreach ($fulfillments as $fulfillment) {
+            $workflow = $order->workflows->where('id',$fulfillment['id'])->first();
+            if($workflow) {
+                // loop through fulfillment variants and subtract the pivot quantity
+                // add those pivot quantity to new workflow called returned
+
+                $fulfillmentVariants = collect($fulfillment['variants'])->reject(function ($variant) {
+                    return $variant['pivot_quantity'] == 0;
+                });
+
+                if($fulfillmentVariants->count() > 0 ) {
+                    $newWorkflow = $order->workflows()->create(['type' => Workflow::TYPE_RETURNED]);
+                    foreach ($fulfillmentVariants as $fulfillmentVariant) {
+                        $workflowVariant = $workflow->variants->where('id',$fulfillmentVariant['id'])->first();
+                        if($workflowVariant) {
+                            $workflowVariant->pivot->quantity = $workflowVariant->pivot->quantity - $fulfillmentVariant['pivot_quantity'];
+                            $workflowVariant->pivot->save();
+
+                            // create new workflow variant
+                            $newWorkflow->variants()->attach($fulfillmentVariant['id'],['quantity' => $fulfillmentVariant['pivot_quantity']]);
+                        }
+                    }
+                }
+            }
+        }
+
+        return  redirect()->route('lshopify.orders.show',$orderID)->with('success','Return created successfully');
+
     }
 }

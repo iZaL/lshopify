@@ -2,7 +2,7 @@ import React from 'react';
 import Main from '../Main';
 import PageHeader from '../components/PageHeader';
 import Border from '../components/Border';
-import {Order, VariantPivot} from '../types';
+import { Fulfillment, Order, VariantPivot } from '../types'
 import {useForm} from '@inertiajs/inertia-react';
 import {Inertia} from '@inertiajs/inertia';
 import FulfillmentItems from './components/FulfillmentItems';
@@ -15,45 +15,55 @@ import Select from '../components/forms/Select';
 import route from 'ziggy-js';
 
 interface Props {
-  order: Order;
-  fulfillments: VariantPivot[];
+  order:Order;
 }
 
-export default function Refund({order, fulfillments}: Props) {
+export default function Refund({order}: Props) {
   const {data, setData} = useForm<{
-    fulfillments: VariantPivot[];
+    fulfillments: Fulfillment[];
   }>({
-    fulfillments: fulfillments.map(v => ({
-      ...v,
-      pivot_quantity: 0,
-    })),
+    fulfillments: order.fulfillments?.map(fulfillment => ({
+      ...fulfillment,
+      variants:fulfillment.variants.map((v) => ({
+        ...v,
+        pivot_quantity:0
+      }))
+    })) || [],
   });
 
-  const onPendingVariantQuantityChange = (
-    type: 'pending_fulfillments' | 'fulfillments',
+  const onVariantQuantityChange = (
+    fulfillment: Fulfillment,
     trueVariant: VariantPivot,
     variant: VariantPivot,
     value: number,
   ) => {
     if (value <= trueVariant.pivot_quantity) {
-      const newVariants = data.fulfillments.map(v => {
-        if (v.id === variant.id) {
+      const fulfillments = data.fulfillments.map(f => {
+        if (f.id === fulfillment.id) {
           return {
-            ...v,
-            pivot_quantity: value,
+            ...f,
+            variants: f.variants.map(v => {
+              if (v.id === variant.id) {
+                return {
+                  ...v,
+                  pivot_quantity: value,
+                };
+              }
+              return v;
+            }),
           };
         }
-        return v;
+        return f;
       });
       setData({
         ...data,
-        [type]: newVariants,
+        fulfillments: fulfillments,
       });
     }
   };
 
   const handleSubmit = () => {
-    Inertia.post(route('lshopify.orders.refund', [order.id]), {
+    Inertia.post(route('lshopify.orders.return', [order.id]), {
       fulfillments: data.fulfillments || [],
     });
   };
@@ -74,60 +84,57 @@ export default function Refund({order, fulfillments}: Props) {
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
           <section className="space-y-6 lg:col-span-2 lg:col-start-1 ">
-            <Card>
-              <div className="flex flex-row items-center space-x-4 px-5 pt-5 ">
-                <div className="font-bold">Fulfillments</div>
-              </div>
-
-              <Border />
-
-              <div className="px-5">
-                <FulfillmentItems
-                  variants={data.fulfillments || []}
-                  currentVariants={fulfillments || []}
-                  onVariantQuantityChange={(trueVariant, variant, value) =>
-                    onPendingVariantQuantityChange(
-                      'fulfillments',
-                      trueVariant,
-                      variant,
-                      value,
-                    )
-                  }
-                />
-
-                <div className="mt-4 py-2 text-sm text-gray-500">
-                  Select a reason to return.
-                </div>
-                <div className="flex flex-row space-x-2">
-                  <div className="flex-1">
-                    <Select name={'reason'} onChange={() => {}}>
-                      <option value={'unknown'}>Unknown</option>
-                      <option value={'wrong_item'}>Received wrong item</option>
-                      <option value={'change_mind'}>
-                        Customer changed their mind
-                      </option>
-                      <option value={'not_as_described'}>
-                        Item not as described
-                      </option>
-                      <option value={'other'}>Other</option>
-                    </Select>
+            {
+              data.fulfillments?.map(fulfillment => (
+                <Card key={fulfillment.id}>
+                  <div className="flex flex-row items-center space-x-4 px-5 pt-5 ">
+                    <div className="font-bold">Fulfillments</div>
                   </div>
-                  <div className="flex-1">
-                    <InputText
-                      inputStyle="flex-1"
-                      name={'other_reason'}
-                      onChange={() => {}}
+
+                  <Border />
+
+                  <div className="px-5">
+                    <FulfillmentItems
+                      variants={fulfillment.variants || []}
+                      currentVariants={order.fulfillments.find(f => f.id === fulfillment.id)?.variants || []}
+                      onVariantQuantityChange={(trueVariant,variant,value) => onVariantQuantityChange(fulfillment,trueVariant,variant,value)}
                     />
+
+                    <div className="mt-4 py-2 text-sm text-gray-500">
+                      Select a reason to return.
+                    </div>
+                    <div className="flex flex-row space-x-2">
+                      <div className="flex-1">
+                        <Select name={'reason'} onChange={() => {}}>
+                          <option value={'unknown'}>Unknown</option>
+                          <option value={'wrong_item'}>Received wrong item</option>
+                          <option value={'change_mind'}>
+                            Customer changed their mind
+                          </option>
+                          <option value={'not_as_described'}>
+                            Item not as described
+                          </option>
+                          <option value={'other'}>Other</option>
+                        </Select>
+                      </div>
+                      <div className="flex-1">
+                        <InputText
+                          inputStyle="flex-1"
+                          name={'other_reason'}
+                          onChange={() => {}}
+                        />
+                      </div>
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      Some items have already been refunded and can’t be returned.
+
+                    </div>
                   </div>
-                </div>
-                <div className="text-sm text-gray-500">
-                  Some items have already been refunded and can’t be returned.
 
-                </div>
-              </div>
-
-              <Border />
-            </Card>
+                  <Border />
+                </Card>
+              ))
+            }
 
             <Card>
               <Subheader text="Reason for refund" />

@@ -15,19 +15,13 @@ class ReturnShowController extends Controller
 {
     public function __invoke($orderID): \Inertia\Response
     {
-        $order = Order::find($orderID);
+        $order = Order::with(['fulfillments'])->find($orderID);
         $orderResource = new OrderResource($order);
 
-        $unfulfilledVariants = (new WorkflowManager($order))->getUnfulfilledVariantsWithPivot();
-        $unfulfilledVariants = WorkflowVariantResource::collection($unfulfilledVariants);
-
-        $fulfilledVariants = (new WorkflowManager($order))->getFulfilledVariantsWithPivot();
-        $fulfilledVariants = WorkflowVariantResource::collection($fulfilledVariants);
         return Inertia::render(
             'Order/ReturnView',
             [
                 'order' => $orderResource,
-                'fulfillments' => $fulfilledVariants
             ]
         );
     }

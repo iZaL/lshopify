@@ -148,7 +148,9 @@ class Order extends BaseModel
 
     public function fulfillments()
     {
-        return $this->hasMany(Workflow::class, 'order_id')->where('type', Workflow::TYPE_FULFILLMENT);
+        return $this->hasMany(Workflow::class, 'order_id')
+            ->where('type', Workflow::TYPE_FULFILLMENT)
+            ->where('status', Workflow::STATUS_SUCCESS);
     }
 
     public function refunds()

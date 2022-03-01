@@ -214,6 +214,15 @@ class WorkflowManager
         return $workflow;
     }
 
+    public function createReturnWorkflow($fulfillments): Workflow
+    {
+        $workflow = $this->order->workflows()->create([
+            'type' => Workflow::TYPE_RETURNED,
+        ]);
+        $this->attachWorkflowVariants($workflow, $fulfillments);
+        return $workflow;
+    }
+
     private function attachWorkflowVariants($workflow, $fulfillments)
     {
         foreach ($fulfillments as $fulfillment) {
