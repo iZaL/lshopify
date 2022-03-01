@@ -30,9 +30,7 @@ class CollectionCriteriaManager
         ];
 
         if (!in_array($field, $allowedFields)) {
-            throw new \Exception(
-                'Invalid field ' . $field . ' passed into condition resolver'
-            );
+            throw new \Exception('Invalid field ' . $field . ' passed into condition resolver');
         }
 
         return $field;
@@ -62,9 +60,7 @@ class CollectionCriteriaManager
             case 'is_empty':
                 return 'IS NULL';
             default:
-                throw new \Exception(
-                    'Invalid criteria ' . $criteria . ' passed to the resolver'
-                );
+                throw new \Exception('Invalid criteria ' . $criteria . ' passed to the resolver');
         }
     }
 

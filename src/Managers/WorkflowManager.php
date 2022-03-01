@@ -26,10 +26,7 @@ class WorkflowManager
             ->whereIn('id', $fulfilledVariants->pluck('id'))
             ->get();
         foreach ($variants as $variant) {
-            $variant->setAttribute(
-                'pivot',
-                $fulfilledVariants->where('id', $variant->id)->first()->pivot
-            );
+            $variant->setAttribute('pivot', $fulfilledVariants->where('id', $variant->id)->first()->pivot);
         }
         return $variants;
     }
@@ -37,9 +34,7 @@ class WorkflowManager
     private function getFulfilledVariants(): Collection
     {
         $fulfilledVariants = $this->getFulfilledVariantsForOrder();
-        $remainingFulfillableVariants = $this->getFulfillableVariantsWithQuantity(
-            $fulfilledVariants
-        );
+        $remainingFulfillableVariants = $this->getFulfillableVariantsWithQuantity($fulfilledVariants);
         return $this->resolveVariants($remainingFulfillableVariants);
     }
 
@@ -56,9 +51,7 @@ class WorkflowManager
         return $fulfilledWorkflows
             ->map(function ($workflow) {
                 $adjustmentTerm = $workflow->type === 'refund' ? '-' : '+';
-                return $workflow->variants->map(function ($variant) use (
-                    $adjustmentTerm
-                ) {
+                return $workflow->variants->map(function ($variant) use ($adjustmentTerm) {
                     return [
                         'variant_id' => $variant->id,
                         'quantity' => $variant->pivot->quantity,
@@ -69,18 +62,13 @@ class WorkflowManager
             ->collapse();
     }
 
-    private function getFulfillableVariantsWithQuantity(
-        Collection $fulfilledVariants
-    ): Collection {
+    private function getFulfillableVariantsWithQuantity(Collection $fulfilledVariants): Collection
+    {
         return $fulfilledVariants
             ->groupBy('variant_id')
             ->map(function ($item, $key) {
-                $incrementingVariants = $item
-                    ->where('adjustment', '+')
-                    ->sum('quantity');
-                $decrementingVariants = $item
-                    ->where('adjustment', '-')
-                    ->sum('quantity');
+                $incrementingVariants = $item->where('adjustment', '+')->sum('quantity');
+                $decrementingVariants = $item->where('adjustment', '-')->sum('quantity');
 
                 return [
                     'variant_id' => $key,
@@ -100,10 +88,7 @@ class WorkflowManager
             ->whereIn('id', $unfulfilledVariants->pluck('id'))
             ->get();
         foreach ($variants as $variant) {
-            $variant->setAttribute(
-                'pivot',
-                $unfulfilledVariants->where('id', $variant->id)->first()->pivot
-            );
+            $variant->setAttribute('pivot', $unfulfilledVariants->where('id', $variant->id)->first()->pivot);
         }
         return $variants;
     }
@@ -112,10 +97,7 @@ class WorkflowManager
     {
         $orderVariants = $this->getOrderVariantsWithQuantity();
         $workflowVariants = $this->getWorkflowVariantsWithQuantity();
-        $unfulfilledVariants = $this->getUnfulfilledVariantsWithQuantity(
-            $orderVariants,
-            $workflowVariants
-        );
+        $unfulfilledVariants = $this->getUnfulfilledVariantsWithQuantity($orderVariants, $workflowVariants);
         return $this->resolveVariants($unfulfilledVariants);
     }
 
@@ -168,9 +150,7 @@ class WorkflowManager
     {
         return $variants
             ->map(function ($item) {
-                $variant = $this->order
-                    ->variants()
-                    ->firstWhere('variants.id', $item['variant_id']);
+                $variant = $this->order->variants()->firstWhere('variants.id', $item['variant_id']);
                 if ($variant) {
                     $variant->pivot->quantity = $item['quantity'];
                 }
@@ -190,15 +170,11 @@ class WorkflowManager
     ): Collection {
         return $orderVariants
             ->map(function ($pivot) use ($workflowVariants) {
-                $workflowVariant = $workflowVariants->firstWhere(
-                    'variant_id',
-                    $pivot['variant_id']
-                );
+                $workflowVariant = $workflowVariants->firstWhere('variant_id', $pivot['variant_id']);
                 if ($workflowVariant) {
                     return [
                         'variant_id' => $pivot['variant_id'],
-                        'quantity' =>
-                            $pivot['quantity'] - $workflowVariant['quantity'],
+                        'quantity' => $pivot['quantity'] - $workflowVariant['quantity'],
                     ];
                 }
                 return [
@@ -212,25 +188,25 @@ class WorkflowManager
             ->values();
     }
 
-    public function createRemovedFulfillments($fulfillments):Workflow
+    public function createRemovedFulfillments($fulfillments): Workflow
     {
-            $removedWorkflow = $this->order->workflows()->create([
-                'type' => Workflow::TYPE_REMOVED,
-            ]);
-            $this->createFulfillment($removedWorkflow,$fulfillments);
-            return $removedWorkflow;
+        $removedWorkflow = $this->order->workflows()->create([
+            'type' => Workflow::TYPE_REMOVED,
+        ]);
+        $this->createFulfillment($removedWorkflow, $fulfillments);
+        return $removedWorkflow;
     }
 
-    public function createFulfillments($fulfillments):Workflow
+    public function createFulfillments($fulfillments): Workflow
     {
-            $removedWorkflow = $this->order->workflows()->create([
-                'type' => Workflow::TYPE_REFUND,
-            ]);
-            $this->createFulfillment($removedWorkflow,$fulfillments);
-            return $removedWorkflow;
+        $removedWorkflow = $this->order->workflows()->create([
+            'type' => Workflow::TYPE_REFUND,
+        ]);
+        $this->createFulfillment($removedWorkflow, $fulfillments);
+        return $removedWorkflow;
     }
 
-    private function createFulfillment($workflow,$fulfillments)
+    private function createFulfillment($workflow, $fulfillments)
     {
         foreach ($fulfillments as $fulfillment) {
             $variant = $this->order->variants->firstWhere('id', $fulfillment['id']);
@@ -247,7 +223,5 @@ class WorkflowManager
                 }
             }
         }
-
     }
-
 }

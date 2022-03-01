@@ -17,10 +17,8 @@ class ProductUpdateAction
      */
     private $variantUpdateAction;
 
-    public function __construct(
-        VariantCreateAction $variantCreateAction,
-        VariantUpdateAction $variantUpdateAction
-    ) {
+    public function __construct(VariantCreateAction $variantCreateAction, VariantUpdateAction $variantUpdateAction)
+    {
         $this->variantCreateAction = $variantCreateAction;
         $this->variantUpdateAction = $variantUpdateAction;
     }
@@ -59,10 +57,7 @@ class ProductUpdateAction
                     ->toArray()
             );
 
-            if (
-                isset($defaultVariantAttributes['options']) &&
-                !empty($defaultVariantAttributes['options'])
-            ) {
+            if (isset($defaultVariantAttributes['options']) && !empty($defaultVariantAttributes['options'])) {
                 $this->variantCreateAction->createVariantsWithOptions(
                     $defaultVariant,
                     $defaultVariantAttributes['options']
@@ -74,12 +69,8 @@ class ProductUpdateAction
             foreach ($requestData->get('variants') as $variantAttribute) {
                 $variant = $product->variants()->find($variantAttribute['id']);
                 if ($variant) {
-                    if (
-                        isset($variantAttribute['image']) &&
-                        !($variantAttribute['image'] instanceof UploadedFile)
-                    ) {
-                        $variantAttribute['image_id'] =
-                            $variantAttribute['image']['id'] ?? null;
+                    if (isset($variantAttribute['image']) && !($variantAttribute['image'] instanceof UploadedFile)) {
+                        $variantAttribute['image_id'] = $variantAttribute['image']['id'] ?? null;
                     }
                     $variant->update(
                         collect($variantAttribute)
@@ -87,10 +78,7 @@ class ProductUpdateAction
                             ->toArray()
                     );
                     if (isset($variantAttribute['options'])) {
-                        $this->variantUpdateAction->updateVariantOptions(
-                            $variant,
-                            $variantAttribute['options']
-                        );
+                        $this->variantUpdateAction->updateVariantOptions($variant, $variantAttribute['options']);
                     }
                 }
             }

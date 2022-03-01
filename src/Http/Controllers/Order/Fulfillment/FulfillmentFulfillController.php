@@ -5,8 +5,6 @@ namespace IZal\Lshopify\Http\Controllers\Order\Fulfillment;
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\OrderFulfillmentFulfillRequest;
 use IZal\Lshopify\Managers\FulfillmentManager;
-use IZal\Lshopify\Managers\OrderManager;
-use IZal\Lshopify\Models\Fulfillment;
 use IZal\Lshopify\Models\Order;
 use IZal\Lshopify\Models\Workflow;
 

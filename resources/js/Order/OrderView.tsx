@@ -16,7 +16,6 @@ import Button from '../components/Button';
 import Border from '../components/Border';
 import Subheader from '../components/Subheader';
 import {Inertia} from '@inertiajs/inertia';
-import DropdownButton from '../components/DropdownButton';
 import CustomerEdit from './Draft/components/CustomerEdit';
 import CustomerSelect from './Draft/components/CustomerSelect';
 import {useForm} from '@inertiajs/inertia-react';
@@ -144,22 +143,6 @@ export default function OrderView(props: Props) {
               </div>
             </Card>
 
-            {/*{order.pending_fulfillments?.map((fulfillment, i) => (*/}
-            {/*  <Card cardStyle="p-0" key={i}>*/}
-            {/*    <Subheader text="Unfulfilled" />*/}
-            {/*    <OrderItems*/}
-            {/*      variants={fulfillment.variants}*/}
-            {/*      onItemClick={() => {}}*/}
-            {/*    />*/}
-            {/*    <Border />*/}
-            {/*    <div className="flex justify-end">*/}
-            {/*      <Button onClick={() => markAsFulfilled(fulfillment)}>*/}
-            {/*        Fulfill items*/}
-            {/*      </Button>*/}
-            {/*    </div>*/}
-            {/*  </Card>*/}
-            {/*))}*/}
-
             {order.workflows.map((fulfillment, i) => (
               <Card cardStyle="p-0" key={i}>
                 <Subheader text={`${fulfillment.type} #${fulfillment.id}`} />
@@ -176,30 +159,6 @@ export default function OrderView(props: Props) {
                 </div>
               </Card>
             ))}
-
-            {/*{order.returns.length ? (*/}
-            {/*  <Card cardStyle="p-0">*/}
-            {/*    <Subheader text={`Returned`} />*/}
-            {/*    <OrderItems variants={order.returns} onItemClick={() => {}} />*/}
-            {/*    <Border />*/}
-
-            {/*    <div className="flex justify-end space-x-4">*/}
-            {/*      <DropdownButton*/}
-            {/*        buttonTitle="More"*/}
-            {/*        items={[*/}
-            {/*          {title: 'View', onClick: () => {}},*/}
-            {/*          {title: 'Cancel', onClick: () => {}},*/}
-            {/*        ]}*/}
-            {/*        buttonProps={{*/}
-            {/*          theme: 'default',*/}
-            {/*        }}*/}
-            {/*        arrowVisible={true}*/}
-            {/*      />*/}
-
-            {/*      <Button onClick={() => {}}>Add Tracking</Button>*/}
-            {/*    </div>*/}
-            {/*  </Card>*/}
-            {/*) : null}*/}
 
             {order.is_payment_pending && (
               <Card>

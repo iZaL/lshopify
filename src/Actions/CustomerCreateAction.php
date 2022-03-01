@@ -20,10 +20,8 @@ class CustomerCreateAction
     /**
      * CategoryCreateAction constructor.
      */
-    public function __construct(
-        Customer $customer,
-        CustomerAddress $customerAddress
-    ) {
+    public function __construct(Customer $customer, CustomerAddress $customerAddress)
+    {
         $this->customer = $customer;
         $this->customerAddress = $customerAddress;
     }
@@ -37,14 +35,8 @@ class CustomerCreateAction
         );
     }
 
-    public function createCustomerAddress(
-        Customer $customer,
-        array $attributes
-    ): \Illuminate\Database\Eloquent\Model {
-        return $customer
-            ->addresses()
-            ->create(
-                Arr::only($attributes, $this->customerAddress->getFillable())
-            );
+    public function createCustomerAddress(Customer $customer, array $attributes): \Illuminate\Database\Eloquent\Model
+    {
+        return $customer->addresses()->create(Arr::only($attributes, $this->customerAddress->getFillable()));
     }
 }

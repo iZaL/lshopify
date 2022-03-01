@@ -20,9 +20,7 @@ class ConditionFieldManager
         ];
 
         if (!in_array($field, $allowedFields)) {
-            throw new \Exception(
-                'Invalid field ' . $field . ' passed into condition resolver'
-            );
+            throw new \Exception('Invalid field ' . $field . ' passed into condition resolver');
         }
 
         return $field;

@@ -31,10 +31,8 @@ class Cart
      *
      * @return void
      */
-    public function __construct(
-        StorageInterface $storage,
-        Dispatcher $dispatcher
-    ) {
+    public function __construct(StorageInterface $storage, Dispatcher $dispatcher)
+    {
         $this->storage = $storage;
 
         $this->dispatcher = $dispatcher;

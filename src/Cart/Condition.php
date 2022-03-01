@@ -150,11 +150,7 @@ class Condition extends Collection
 
         if ($this->validate($collection, $this->subtotal)) {
             foreach ($this->get('actions', []) as $action) {
-                $this->result = $this->applyAction(
-                    $collection,
-                    $action,
-                    $this->result
-                );
+                $this->result = $this->applyAction($collection, $action, $this->result);
             }
 
             $callback = $this->validCallback;
@@ -191,10 +187,8 @@ class Condition extends Collection
      *
      * @return bool
      */
-    public function validate(
-        Collection $collection,
-        ?float $target = null
-    ): bool {
+    public function validate(Collection $collection, ?float $target = null): bool
+    {
         $target = $target ?: $collection->get($this->get('target'));
 
         foreach ($this->get('rules', []) as $rule) {
@@ -234,24 +228,15 @@ class Condition extends Collection
      * @param float $target
      * @return float
      */
-    protected function applyAction(
-        Collection $collection,
-        Collection $action,
-        float $target
-    ): float {
+    protected function applyAction(Collection $collection, Collection $action, float $target): float
+    {
         $max = $action->get('max') ?: 0;
 
         $operation = $action->get('value');
 
-        $multiplier = $action->get('multiplier')
-            ? $collection->get($action->get('multiplier'))
-            : 1;
+        $multiplier = $action->get('multiplier') ? $collection->get($action->get('multiplier')) : 1;
 
-        [$operator, $percentage, $value] = $this->parseAction(
-            $operation,
-            $collection,
-            $target
-        );
+        [$operator, $percentage, $value] = $this->parseAction($operation, $collection, $target);
 
         if ($inclusive = $action->get('inclusive')) {
             $ratio = 1 + $value / 100;
@@ -273,11 +258,8 @@ class Condition extends Collection
      *
      * @return bool
      */
-    protected function validateRule(
-        Collection $collection,
-        $rule,
-        float $target
-    ): bool {
+    protected function validateRule(Collection $collection, $rule, float $target): bool
+    {
         if ($this->isCallable($rule)) {
             return $rule($collection, $target);
         }
@@ -288,12 +270,7 @@ class Condition extends Collection
 
         $values = array_map('trim', preg_split('/[=\<\>\!]+/', $rule));
 
-        return $this->operatorCheck(
-            $collection->get($values[0], ''),
-            $operator,
-            $values[1]
-        ) ?:
-            false;
+        return $this->operatorCheck($collection->get($values[0], ''), $operator, $values[1]) ?: false;
     }
 
     /**
@@ -306,30 +283,18 @@ class Condition extends Collection
      *
      * @return float
      */
-    protected function calculate(
-        string $target,
-        string $operator,
-        string $value,
-        int $max = 0
-    ): float {
+    protected function calculate(string $target, string $operator, string $value, int $max = 0): float
+    {
         switch ($operator) {
             default:
             case '+':
-                return $max
-                    ? min($target + $max, $target + $value)
-                    : $target + $value;
+                return $max ? min($target + $max, $target + $value) : $target + $value;
             case '*':
-                return $max
-                    ? min($target + $max, $target * $value)
-                    : $target * $value;
+                return $max ? min($target + $max, $target * $value) : $target * $value;
             case '-':
-                return $max
-                    ? max($target + $max, $target - $value)
-                    : $target - $value;
+                return $max ? max($target + $max, $target - $value) : $target - $value;
             case '/':
-                return $max
-                    ? max($target + $max, $target / $value)
-                    : $target / $value;
+                return $max ? max($target + $max, $target / $value) : $target / $value;
         }
     }
 
@@ -342,11 +307,8 @@ class Condition extends Collection
      *
      * @return bool
      */
-    protected function operatorCheck(
-        string $target,
-        string $operator,
-        string $value
-    ): bool {
+    protected function operatorCheck(string $target, string $operator, string $value): bool
+    {
         switch ($operator) {
             default:
             case '=':
@@ -373,11 +335,8 @@ class Condition extends Collection
      *
      * @return array
      */
-    protected function parseAction(
-        $value,
-        Collection $collection,
-        float $target
-    ): array {
+    protected function parseAction($value, Collection $collection, float $target): array
+    {
         if ($this->isCallable($value)) {
             $value = $value($collection, $target);
         }
@@ -398,9 +357,7 @@ class Condition extends Collection
      */
     protected function isCallable($object): bool
     {
-        $isClosure =
-            $object instanceof Closure ||
-            $object instanceof SerializableClosure;
+        $isClosure = $object instanceof Closure || $object instanceof SerializableClosure;
 
         return $isClosure || $object instanceof Callback;
     }

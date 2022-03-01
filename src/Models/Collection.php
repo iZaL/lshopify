@@ -29,12 +29,7 @@ class Collection extends BaseModel
 
     public function products()
     {
-        return $this->belongsToMany(
-            Product::class,
-            'collection_products',
-            'collection_id',
-            'product_id'
-        );
+        return $this->belongsToMany(Product::class, 'collection_products', 'collection_id', 'product_id');
     }
 
     /**
@@ -45,11 +40,7 @@ class Collection extends BaseModel
     {
         $products = Product::query();
         foreach ($this->conditions as $condition) {
-            $products = $this->getProductsForCondition(
-                $products,
-                $condition,
-                $this->determiner
-            );
+            $products = $this->getProductsForCondition($products, $condition, $this->determiner);
         }
         return $products->get();
     }
@@ -85,21 +76,12 @@ class Collection extends BaseModel
         $whereHas = $determiner === 'all' ? 'whereHas' : 'orWhereHas';
 
         if ($field === 'product_tag') {
-            $products->$whereHas('tags', function ($query) use (
-                $value,
-                $criteria,
-                $where
-            ) {
+            $products->$whereHas('tags', function ($query) use ($value, $criteria, $where) {
                 $query->where('name', $criteria, $value);
             });
         } elseif ($field === 'product_type') {
             $products
-                ->join(
-                    'categories',
-                    'categories.id',
-                    '=',
-                    'products.category_id'
-                )
+                ->join('categories', 'categories.id', '=', 'products.category_id')
                 ->$where('categories.name', $criteria, $value);
         } else {
             $products->$where('title', $criteria, $value);

@@ -17,25 +17,17 @@ class VariantCreateAction
         $this->variant = $variant;
     }
 
-    public function create(
-        array $variantAttributes,
-        $parseOptions = false
-    ): Variant {
+    public function create(array $variantAttributes, $parseOptions = false): Variant
+    {
         $variant = $this->variant->create(
             collect($variantAttributes)
                 ->only($this->getFillable())
                 ->toArray()
         );
 
-        if (
-            isset($variantAttributes['options']) &&
-            !empty($variantAttributes['options'])
-        ) {
+        if (isset($variantAttributes['options']) && !empty($variantAttributes['options'])) {
             if ($parseOptions) {
-                $this->createVariantsWithOptions(
-                    $variant,
-                    $variantAttributes['options']
-                );
+                $this->createVariantsWithOptions($variant, $variantAttributes['options']);
             } else {
                 $variant->options = $variantAttributes['options'];
                 $variant->save();
@@ -45,10 +37,8 @@ class VariantCreateAction
         return $variant;
     }
 
-    public function createVariantsWithOptions(
-        Variant $variant,
-        $variantAttributes
-    ): self {
+    public function createVariantsWithOptions(Variant $variant, $variantAttributes): self
+    {
         $variantOptions = $this->prepareOptions($variantAttributes);
         foreach ($variantOptions as $variantOption) {
             $newVariant = $variant->replicate(['default']);

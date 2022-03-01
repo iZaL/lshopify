@@ -16,19 +16,15 @@ class ProductCreateAction
      */
     private $variantCreateAction;
 
-    public function __construct(
-        ImageUploadAction $imageUploadAction,
-        VariantCreateAction $variantCreateAction
-    ) {
+    public function __construct(ImageUploadAction $imageUploadAction, VariantCreateAction $variantCreateAction)
+    {
         $this->imageUploadAction = $imageUploadAction;
         $this->variantCreateAction = $variantCreateAction;
     }
 
     public function create(Product $product, Collection $requestData): Product
     {
-        $product = $product->create(
-            $requestData->only($product->getFillable())->toArray()
-        );
+        $product = $product->create($requestData->only($product->getFillable())->toArray());
 
         $defaultVariantAttributes = $requestData->get('default_variant');
         $defaultVariantAttributes['default'] = true;
@@ -54,12 +50,10 @@ class ProductCreateAction
         );
 
         if (!empty($requestData->get('images'))) {
-            $this->imageUploadAction
-                ->uploadToServer($requestData->get('images'))
-                ->saveInDB([
-                    'imageable_id' => $product->id,
-                    'imageable_type' => get_class($product),
-                ]);
+            $this->imageUploadAction->uploadToServer($requestData->get('images'))->saveInDB([
+                'imageable_id' => $product->id,
+                'imageable_type' => get_class($product),
+            ]);
         }
 
         return $product;

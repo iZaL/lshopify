@@ -9,11 +9,7 @@ use Countable;
 use IteratorAggregate;
 use JsonSerializable;
 
-class Collection implements
-    ArrayAccess,
-    Countable,
-    IteratorAggregate,
-    JsonSerializable
+class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSerializable
 {
     /**
      * The items contained in the collection.
@@ -227,11 +223,8 @@ class Collection implements
      * @param  bool  $descending
      * @return $this
      */
-    public function sortBy(
-        $callback,
-        $options = SORT_REGULAR,
-        $descending = false
-    ) {
+    public function sortBy($callback, $options = SORT_REGULAR, $descending = false)
+    {
         $results = [];
 
         if (is_string($callback)) {

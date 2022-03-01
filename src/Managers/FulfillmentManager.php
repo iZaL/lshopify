@@ -29,8 +29,8 @@ class FulfillmentManager
             $variant = Variant::find($variantAttribute['id']);
             if ($variant) {
                 $qty = $variantAttribute['pivot_quantity'] ?? 1;
-                $price = $variantAttribute['pivot_price'] ?? 0.00;
-                $unitPrice = $variantAttribute['pivot_unit_price'] ?? 0.00;
+                $price = $variantAttribute['pivot_price'] ?? 0.0;
+                $unitPrice = $variantAttribute['pivot_unit_price'] ?? 0.0;
                 $this->workflow->variants()->attach($variantAttribute['id'], [
                     'quantity' => $qty,
                     'price' => $price,

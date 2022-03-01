@@ -9,7 +9,7 @@
     "prod": "npm run production",
     "production": "mix --production",
     "prettier": "prettier --write './resources/js/**/*.{js,ts,tsx}'",
-    "prettier:php": "prettier --write ./src/**/*.php",
+    "prettier:php": "prettier --print-width 120 --write ./src/**/*.php",
     "lint": "eslint './resources/js/**/*{.ts,.tsx}'",
     "lint:fix": "eslint './resources/js/**/*{.ts,.tsx}' --fix"
   },

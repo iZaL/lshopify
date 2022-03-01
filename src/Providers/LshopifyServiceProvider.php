@@ -89,10 +89,7 @@ class LshopifyServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes(
                 [
-                    __DIR__ .
-                    '/../../resources/views/app.blade.php' => resource_path(
-                        'views/lshopify.blade.php'
-                    ),
+                    __DIR__ . '/../../resources/views/app.blade.php' => resource_path('views/lshopify.blade.php'),
                 ],
                 'lshopify-stubs'
             );
@@ -106,9 +103,7 @@ class LshopifyServiceProvider extends ServiceProvider
 
             $this->publishes(
                 [
-                    __DIR__ . '/../../config/lshopify.php' => config_path(
-                        'lshopify.php'
-                    ),
+                    __DIR__ . '/../../config/lshopify.php' => config_path('lshopify.php'),
                 ],
                 'lshopify-config'
             );
@@ -116,17 +111,13 @@ class LshopifyServiceProvider extends ServiceProvider
             if (config('lshopify.enable_local_development')) {
                 $this->publishes(
                     [
-                        __DIR__ . '/../../database/migrations' => database_path(
-                            'migrations'
-                        ),
+                        __DIR__ . '/../../database/migrations' => database_path('migrations'),
                     ],
                     'lshopify-migrations'
                 );
                 $this->publishes(
                     [
-                        __DIR__ . '/../../stubs/webpack.mix.js' => base_path(
-                            'webpack.mix.js'
-                        ),
+                        __DIR__ . '/../../stubs/webpack.mix.js' => base_path('webpack.mix.js'),
                     ],
                     'lshopify-stubs'
                 );
@@ -155,10 +146,7 @@ class LshopifyServiceProvider extends ServiceProvider
     {
         $this->app->register(CartServiceProvider::class);
 
-        $this->mergeConfigFrom(
-            __DIR__ . '/../../config/lshopify.php',
-            'lshopify'
-        );
+        $this->mergeConfigFrom(__DIR__ . '/../../config/lshopify.php', 'lshopify');
     }
 
     /**

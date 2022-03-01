@@ -18,5 +18,4 @@ class WorkflowVariant extends BaseModel
     {
         return WorkflowVariantFactory::new();
     }
-
 }

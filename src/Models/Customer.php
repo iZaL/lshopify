@@ -14,14 +14,7 @@ class Customer extends BaseModel
 
     protected $casts = [];
 
-    protected $fillable = [
-        'first_name',
-        'last_name',
-        'email',
-        'phone',
-        'accepts_marketing',
-        'tax_exempted',
-    ];
+    protected $fillable = ['first_name', 'last_name', 'email', 'phone', 'accepts_marketing', 'tax_exempted'];
 
     public static function newFactory()
     {

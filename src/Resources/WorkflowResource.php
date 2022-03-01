@@ -4,7 +4,7 @@ namespace IZal\Lshopify\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FulfillmentResource extends JsonResource
+class WorkflowResource extends JsonResource
 {
     public static $wrap = false;
 
@@ -14,9 +14,7 @@ class FulfillmentResource extends JsonResource
             'id' => $this->id,
             'type' => ucfirst($this->type),
             'status' => $this->status,
-            'variants' => FulfillmentVariantResource::collection(
-                $this->variants
-            ),
+            'variants' => WorkflowVariantResource::collection($this->variants),
             'order' => new OrderResource($this->whenLoaded('order')),
         ];
     }

@@ -13,15 +13,7 @@ class OrderVariant extends BaseModel
 
     protected $casts = [];
 
-    protected $fillable = [
-        'order_id',
-        'variant_id',
-        'total',
-        'subtotal',
-        'unit_price',
-        'quantity',
-        'price',
-    ];
+    protected $fillable = ['order_id', 'variant_id', 'total', 'subtotal', 'unit_price', 'quantity', 'price'];
 
     public static function newFactory()
     {

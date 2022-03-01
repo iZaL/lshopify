@@ -54,12 +54,7 @@ class DraftOrderCreateAction extends OrderCreateAction
      */
     public function update(DraftOrder $order, Cart $cart, array $attributes)
     {
-        $order->update(
-            array_merge(
-                $this->getCartData($cart),
-                Arr::only($attributes, $order->getFillable())
-            )
-        );
+        $order->update(array_merge($this->getCartData($cart), Arr::only($attributes, $order->getFillable())));
         $this->createCartCondition($order, $cart);
         $this->createVariants($order, $cart);
     }
@@ -69,17 +64,12 @@ class DraftOrderCreateAction extends OrderCreateAction
      * @param  Cart  $cart
      * @param  ItemCollection  $cartItem
      */
-    public function createVariant(
-        DraftOrder $order,
-        Cart $cart,
-        ItemCollection $cartItem
-    ) {
+    public function createVariant(DraftOrder $order, Cart $cart, ItemCollection $cartItem)
+    {
         $variant = $this->variant->find($cartItem->id);
 
         if ($variant) {
-            $order
-                ->variants()
-                ->attach($variant->id, $this->getCartItemData($cartItem));
+            $order->variants()->attach($variant->id, $this->getCartItemData($cartItem));
             $this->createCartItemCondition($order, $cartItem, $variant->id);
         }
     }
@@ -109,9 +99,7 @@ class DraftOrderCreateAction extends OrderCreateAction
         if ($cartCondition) {
             if ($cartCondition->type === 'discount') {
                 $order->cart_discount()->delete();
-                $order
-                    ->cart_discount()
-                    ->create(Arr::except($cartCondition->all(), ['actions']));
+                $order->cart_discount()->create(Arr::except($cartCondition->all(), ['actions']));
             }
         }
     }
@@ -121,11 +109,8 @@ class DraftOrderCreateAction extends OrderCreateAction
      * @param  ItemCollection  $cartItem
      * @param  int  $variantID
      */
-    private function createCartItemCondition(
-        DraftOrder $order,
-        ItemCollection $cartItem,
-        int $variantID
-    ): void {
+    private function createCartItemCondition(DraftOrder $order, ItemCollection $cartItem, int $variantID): void
+    {
         $itemCondition = $cartItem->getConditionByName($variantID);
 
         if ($itemCondition) {
@@ -138,10 +123,7 @@ class DraftOrderCreateAction extends OrderCreateAction
                 $order
                     ->discounts()
                     ->create(
-                        array_merge(
-                            Arr::except($itemCondition->all(), ['actions']),
-                            ['variant_id' => $variantID]
-                        )
+                        array_merge(Arr::except($itemCondition->all(), ['actions']), ['variant_id' => $variantID])
                     );
             }
         }
@@ -172,17 +154,10 @@ class DraftOrderCreateAction extends OrderCreateAction
      * @param  DraftOrder  $order
      * @param  array  $attributes
      */
-    public function updateShippingAddress(
-        DraftOrder $order,
-        array $attributes = []
-    ) {
-        $shippingAttributes = empty($attributes)
-            ? $this->getShippingAddress($order)
-            : $attributes;
-        $attributes = CustomerAddress::parseShippingAddress(
-            $shippingAttributes,
-            $this->order->getFillable()
-        );
+    public function updateShippingAddress(DraftOrder $order, array $attributes = [])
+    {
+        $shippingAttributes = empty($attributes) ? $this->getShippingAddress($order) : $attributes;
+        $attributes = CustomerAddress::parseShippingAddress($shippingAttributes, $this->order->getFillable());
         $order->update($attributes);
     }
 
@@ -190,17 +165,10 @@ class DraftOrderCreateAction extends OrderCreateAction
      * @param  DraftOrder  $order
      * @param  array  $attributes
      */
-    public function updateBillingAddress(
-        DraftOrder $order,
-        array $attributes = []
-    ) {
-        $billingAttributes = empty($attributes)
-            ? $this->getBillingAddress($order)
-            : $attributes;
-        $attributes = CustomerAddress::parseBillingAddress(
-            $billingAttributes,
-            $this->order->getFillable()
-        );
+    public function updateBillingAddress(DraftOrder $order, array $attributes = [])
+    {
+        $billingAttributes = empty($attributes) ? $this->getBillingAddress($order) : $attributes;
+        $attributes = CustomerAddress::parseBillingAddress($billingAttributes, $this->order->getFillable());
         $order->update($attributes);
     }
 

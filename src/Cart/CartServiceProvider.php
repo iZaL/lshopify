@@ -58,11 +58,7 @@ class CartServiceProvider extends ServiceProvider
         $this->app->singleton('cart.session', function ($app) {
             $config = $app['config']->get('cart');
 
-            return new IlluminateSession(
-                $app['session.store'],
-                $config['instance'],
-                $config['session_key']
-            );
+            return new IlluminateSession($app['session.store'], $config['instance'], $config['session_key']);
         });
     }
 
@@ -76,9 +72,7 @@ class CartServiceProvider extends ServiceProvider
         $this->app->bind('cart', function ($app) {
             $cart = new Cart($app['cart.session'], $app['events']);
 
-            $cart->setRequiredIndexes(
-                $app['config']->get('cart.requiredIndexes', [])
-            );
+            $cart->setRequiredIndexes($app['config']->get('cart.requiredIndexes', []));
 
             return $cart;
         });

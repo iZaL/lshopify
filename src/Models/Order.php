@@ -84,11 +84,7 @@ class Order extends BaseModel
     public function discounts()
     {
         //@todo: convert to belongsToMany Variant
-        return $this->hasMany(Discount::class, 'order_id')->where(
-            'name',
-            '!=',
-            'cart'
-        );
+        return $this->hasMany(Discount::class, 'order_id')->where('name', '!=', 'cart');
     }
 
     //    public function returns()
@@ -106,20 +102,12 @@ class Order extends BaseModel
 
     public function cart_discount()
     {
-        return $this->hasOne(Discount::class, 'order_id')->where(
-            'name',
-            'cart'
-        );
+        return $this->hasOne(Discount::class, 'order_id')->where('name', 'cart');
     }
 
     public function variants()
     {
-        return $this->belongsToMany(
-            Variant::class,
-            'order_variants',
-            'order_id',
-            'variant_id'
-        )->withPivot([
+        return $this->belongsToMany(Variant::class, 'order_variants', 'order_id', 'variant_id')->withPivot([
             'id',
             'quantity',
             'price',
@@ -160,26 +148,17 @@ class Order extends BaseModel
 
     public function fulfillments()
     {
-        return $this->hasMany(Workflow::class, 'order_id')->where(
-            'type',
-            Workflow::TYPE_FULFILLMENT
-        );
+        return $this->hasMany(Workflow::class, 'order_id')->where('type', Workflow::TYPE_FULFILLMENT);
     }
 
     public function refunds()
     {
-        return $this->hasMany(Workflow::class, 'order_id')->where(
-            'type',
-            Workflow::TYPE_REFUND
-        );
+        return $this->hasMany(Workflow::class, 'order_id')->where('type', Workflow::TYPE_REFUND);
     }
 
     public function returns()
     {
-        return $this->hasMany(Workflow::class, 'order_id')->where(
-            'type',
-            Workflow::TYPE_RETURNED
-        );
+        return $this->hasMany(Workflow::class, 'order_id')->where('type', Workflow::TYPE_RETURNED);
     }
 
     //    public function fulfillments()
@@ -221,18 +200,14 @@ class Order extends BaseModel
     public function getShippingFullNameAttribute()
     {
         return $this->shipping_first_name
-            ? \Str::title(
-                $this->shipping_first_name . ' ' . $this->shipping_last_name
-            )
+            ? \Str::title($this->shipping_first_name . ' ' . $this->shipping_last_name)
             : null;
     }
 
     public function getBillingFullNameAttribute()
     {
         return $this->billing_first_name
-            ? \Str::title(
-                $this->billing_first_name . ' ' . $this->billing_last_name
-            )
+            ? \Str::title($this->billing_first_name . ' ' . $this->billing_last_name)
             : null;
     }
 

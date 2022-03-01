@@ -22,32 +22,10 @@ class OrderResource extends JsonResource
                 'customer' => new CustomerResource($this->customer),
                 'contact_email' => $this->contact_email ?? $customer->email,
                 'contact_phone' => $this->contact_phone ?? $customer->phone,
-                'variants' => OrderVariantResource::collection(
-                    $this->whenLoaded('variants')
-                ),
-                //                'pending_fulfillments' => FulfillmentVariantResource::collection($this->whenLoaded('pending_fulfillments')),
-                //                'success_fulfillments' => FulfillmentVariantResource::collection($this->whenLoaded('success_fulfillments')),
-
-                'pending_fulfillments' => FulfillmentResource::collection(
-                    $this->whenLoaded('pending_fulfillments')
-                ),
-                'success_fulfillments' => FulfillmentResource::collection(
-                    $this->whenLoaded('success_fulfillments')
-                ),
-                'fulfillments' => FulfillmentResource::collection(
-                    $this->whenLoaded('fulfillments')
-                ),
-
-                'workflows' => FulfillmentResource::collection(
-                    $this->whenLoaded('workflows')
-                ),
-
-                'payments' => TransactionResource::collection(
-                    $this->whenLoaded('success_payments')
-                ),
-                'returns' => OrderReturnResource::collection(
-                    $this->whenLoaded('returns')
-                ),
+                'variants' => OrderVariantResource::collection($this->whenLoaded('variants')),
+                'workflows' => WorkflowResource::collection($this->whenLoaded('workflows')),
+                'payments' => TransactionResource::collection($this->whenLoaded('success_payments')),
+                'returns' => OrderReturnResource::collection($this->whenLoaded('returns')),
                 'is_payment_pending' => $this->isPaymentPending(),
                 'date' => $this->date,
                 'date_time' => $this->date_time,

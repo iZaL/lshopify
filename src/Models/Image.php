@@ -25,9 +25,7 @@ class Image extends BaseModel
 
     public function getUrlAttribute()
     {
-        $link = \Storage::disk(config('lshopify.storage.disk', 'public'))->url(
-            $this->attributes['name']
-        );
+        $link = \Storage::disk(config('lshopify.storage.disk', 'public'))->url($this->attributes['name']);
         return $link;
     }
 }
