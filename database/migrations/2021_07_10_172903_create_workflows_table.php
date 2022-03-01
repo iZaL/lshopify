@@ -18,9 +18,9 @@ class CreateWorkflowsTable extends Migration
             $table->unsignedInteger('order_id');
             $table->unsignedInteger('shipment_id')->nullable();
             $table->unsignedInteger('location_id')->nullable();
-            $table->string('type')->default('fulfilled'); // fulfill, refund, cancel, return
+            $table->string('type')->default('fulfilled'); // fulfillment, refund, cancel, returned
+            $table->string('status')->default('pending'); // pending, success, error, failure, cancelled
             //pending: App has created the fulfillment and is waiting for the third-party fulfillment service to transition it to 'open' or 'success'.
-            //open: The fulfillment has been acknowledged by the service and is in processing.
             //success: The fulfillment was successful.
             //cancelled: The fulfillment was cancelled.
             //error: There was an error with the fulfillment request.

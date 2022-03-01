@@ -14,6 +14,11 @@ class Workflow extends BaseModel
     public const TYPE_RETURNED = 'returned';
     public const TYPE_REMOVED = 'removed';
 
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_SUCCESS = 'success';
+    public const STATUS_CANCELLED = 'cancelled';
+
+
     protected $table = 'workflows';
 
     protected $guarded = ['id'];

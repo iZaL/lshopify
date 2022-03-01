@@ -5,6 +5,7 @@ namespace IZal\Lshopify\Tests\Feature;
 use IZal\Lshopify\Managers\WorkflowManager;
 use IZal\Lshopify\Models\Order;
 use IZal\Lshopify\Models\Variant;
+use IZal\Lshopify\Models\Workflow;
 use IZal\Lshopify\Tests\TestCase;
 
 class WorkflowManagerTest extends TestCase
@@ -89,23 +90,23 @@ class WorkflowManagerTest extends TestCase
 
         $orderWorkflows = $order->workflows();
 
-        $fulfillmentWorkflow1 = $orderWorkflows->create(['type' => 'fulfilled']); // variant1
+        $fulfillmentWorkflow1 = $orderWorkflows->create(['type' => Workflow::TYPE_FULFILLMENT,'status' => Workflow::STATUS_SUCCESS]); // variant1
         $fulfillmentWorkflow1->variants()->attach($variant1,['quantity' => $fulfill1Qty]); //3
 
-        $fulfillmentWorkflow2 = $orderWorkflows->create(['type' => 'fulfilled']); // variant 1
+        $fulfillmentWorkflow2 = $orderWorkflows->create(['type' => Workflow::TYPE_FULFILLMENT,'status' => Workflow::STATUS_SUCCESS]); // variant 1
         $fulfillmentWorkflow2->variants()->attach($variant1,['quantity' => $fulfill2Qty]); //3 + 2 = 5
 
-        $refundWorkflow1 = $orderWorkflows->create(['type' => 'refund']);// variant 1
+        $refundWorkflow1 = $orderWorkflows->create(['type' => Workflow::TYPE_REFUND,'status' => Workflow::STATUS_SUCCESS]);// variant 1
         $refundWorkflow1->variants()->attach($variant1,['quantity' => $refundQty]); //5 - 1 = 4
         $refundWorkflow1->variants()->attach($variant1,['quantity' => $refundQty]); //4 - 1 = 3
 
-        $removeWorkflow1 = $orderWorkflows->create(['type' => 'removed']);// variant 1
+        $removeWorkflow1 = $orderWorkflows->create(['type' => Workflow::TYPE_REMOVED,'status' => Workflow::STATUS_SUCCESS]);// variant 1
         $removeWorkflow1->variants()->attach($variant1,['quantity' => $removeQty]); //should exclude
 
-        $fulfillmentWorkflow3 = $orderWorkflows->create(['type' => 'fulfilled']); //  variant 2
+        $fulfillmentWorkflow3 = $orderWorkflows->create(['type' => Workflow::TYPE_FULFILLMENT,'status' => Workflow::STATUS_SUCCESS]); //  variant 2
         $fulfillmentWorkflow3->variants()->attach($variant2,['quantity' => $fulfill3Qty]); //2
 
-        $fulfillmentWorkflow4 = $orderWorkflows->create(['type' => 'fulfilled']);// variant 3
+        $fulfillmentWorkflow4 = $orderWorkflows->create(['type' => Workflow::TYPE_FULFILLMENT,'status' => Workflow::STATUS_SUCCESS]);// variant 3
         $fulfillmentWorkflow4->variants()->attach($variant3,['quantity' => $fulfill3Qty]); //2
 
         $workflowManager = new WorkflowManager($order);

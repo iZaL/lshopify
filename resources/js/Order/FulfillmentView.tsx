@@ -18,6 +18,7 @@ import FulfillmentItems from './components/FulfillmentItems';
 import ShippingInfo from './components/ShippingInfo';
 import Button from '../components/Button';
 import route from 'ziggy-js';
+import BackButton from '../components/BackButton'
 
 interface Props {
   order: Order;
@@ -88,8 +89,16 @@ export default function FulfillmentView({order, pending_fulfillments}: Props) {
   return (
     <Main>
       <div className="p-6">
-        <div className="mx-auto max-w-7xl xl:flex xl:items-center xl:justify-between">
-          <PageHeader text={`Fulfill Items`} />
+
+        <div className="flex flex-row space-x-2 xl:justify-between">
+          <div className="flex flex-row space-x-2">
+            <BackButton
+              onClick={() => {
+                Inertia.get(route('lshopify.orders.show',[order.id]));
+              }}
+            />
+            <PageHeader text={'Fulfillment Items'} />
+          </div>
         </div>
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">

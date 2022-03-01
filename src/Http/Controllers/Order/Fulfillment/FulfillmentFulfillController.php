@@ -13,15 +13,11 @@ class FulfillmentFulfillController extends Controller
     public function __invoke($orderID, OrderFulfillmentFulfillRequest $request)
     {
         $order = Order::find($orderID);
-
-        $fulfillment = Workflow::create(['order_id' => $orderID, 'type' => 'fulfilled']);
-
+        $fulfillment = Workflow::create(['order_id' => $orderID, 'type' => Workflow::TYPE_FULFILLMENT, 'status' => Workflow::STATUS_SUCCESS]);
         $fulfillmentManager = new FulfillmentManager($fulfillment);
-
         foreach ($request->get('variants') as $variantAttribute) {
             $fulfillmentManager->fulfillItems($variantAttribute);
         }
-
         return redirect()->route('lshopify.orders.show', $order->id)->with('success', 'Saved');
     }
 }

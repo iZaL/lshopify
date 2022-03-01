@@ -12,6 +12,8 @@ import Subheader from '../components/Subheader';
 import Button from '../components/Button';
 import InputText from '../components/forms/InputText';
 import route from 'ziggy-js';
+import BackButton from '../components/BackButton'
+import OrderViewActionButtons from './components/OrderViewActionButtons'
 
 interface Props {
   order: Order;
@@ -73,9 +75,21 @@ export default function Refund({order, pending_fulfillments, fulfillments}: Prop
   return (
     <Main>
       <div className="p-6">
-        <div className="mx-auto max-w-7xl xl:flex xl:items-center xl:justify-between">
-          <PageHeader text={order.is_payment_pending ? 'Restock' : 'Refund'} />
+
+        <div className="flex flex-row space-x-2 xl:justify-between">
+          <div className="flex flex-row space-x-2">
+            <BackButton
+              onClick={() => {
+                Inertia.get(route('lshopify.orders.show',[order.id]));
+              }}
+            />
+            <PageHeader text={order.is_payment_pending ? 'Restock' : 'Refund'} />
+          </div>
         </div>
+
+        {/*<div className="mx-auto max-w-7xl xl:flex xl:items-center xl:justify-between">*/}
+        {/*  <PageHeader text={order.is_payment_pending ? 'Restock' : 'Refund'} />*/}
+        {/*</div>*/}
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
           <section className="space-y-6 lg:col-span-2 lg:col-start-1 ">
