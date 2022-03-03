@@ -25,23 +25,26 @@ import OrderViewActionButtons from './components/OrderViewActionButtons';
 import route from 'ziggy-js';
 import {CustomerForm} from '../form_types';
 import BackButton from '../components/BackButton';
-import DropdownButton from '../components/DropdownButton'
-import { DotsHorizontalIcon, DotsVerticalIcon, SupportIcon } from '@heroicons/react/outline'
-import { Warning } from 'postcss'
-import { CheckCircleIcon } from '@heroicons/react/outline'
+import DropdownButton from '../components/DropdownButton';
+import {
+  DotsHorizontalIcon,
+  DotsVerticalIcon,
+  SupportIcon,
+} from '@heroicons/react/outline';
+import {Warning} from 'postcss';
+import {CheckCircleIcon} from '@heroicons/react/outline';
 
 interface Props {
   order: Order;
   customers: Customer[];
   pending_fulfillments: {
-    data:VariantPivot[];
-    unfulfilled_variants_count:string
+    data: VariantPivot[];
+    unfulfilled_variants_count: string;
   };
 }
 
 export default function OrderView(props: Props) {
-
-  console.log('props',props);
+  console.log('props', props);
 
   const {order, customers} = props;
 
@@ -111,16 +114,18 @@ export default function OrderView(props: Props) {
   };
 
   const markAsFulfilled = (fulfillment: Fulfillment) => {
-    Inertia.get(route('lshopify.orders.fulfillments', [order.id, fulfillment.id]));
+    Inertia.get(
+      route('lshopify.orders.fulfillments', [order.id, fulfillment.id]),
+    );
   };
 
   const fulfill = () => {
     return Inertia.get(route('lshopify.orders.fulfillments', [order.id]));
   };
 
-  const cancelFulfillment = (fulfillment:Fulfillment) => {
-    console.log('f',fulfillment);
-  }
+  const cancelFulfillment = (fulfillment: Fulfillment) => {
+    console.log('f', fulfillment);
+  };
 
   const refund = () => {
     Inertia.get(route('lshopify.orders.refund', [order.id]));
@@ -151,68 +156,70 @@ export default function OrderView(props: Props) {
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
           <section className="space-y-6 lg:col-span-2 lg:col-start-1 ">
-
-            {
-              props.pending_fulfillments.data?.length ? (
-                <Card cardStyle="p-0">
-                  <div className='flex flex-row items-center space-x-2'>
-                    <SupportIcon className='w-7 h-7 text-orange-400' />
-                    <Subheader text={`Unfulfilled (${props.pending_fulfillments.unfulfilled_variants_count})`} />
-                  </div>
-                  <OrderItems
-                    variants={props.pending_fulfillments.data}
-                    onItemClick={() => {}}
+            {props.pending_fulfillments.data?.length ? (
+              <Card cardStyle="p-0">
+                <div className="flex flex-row items-center space-x-2">
+                  <SupportIcon className="h-7 w-7 text-orange-400" />
+                  <Subheader
+                    text={`Unfulfilled (${props.pending_fulfillments.unfulfilled_variants_count})`}
                   />
-                  <Border />
-                  <div className="flex justify-end">
-                    <Button onClick={() => fulfill()}>Fulfill items</Button>
-                  </div>
-                </Card>
-              ):null
-            }
+                </div>
+                <OrderItems
+                  variants={props.pending_fulfillments.data}
+                  onItemClick={() => {}}
+                />
+                <Border />
+                <div className="flex justify-end">
+                  <Button onClick={() => fulfill()}>Fulfill items</Button>
+                </div>
+              </Card>
+            ) : null}
 
             {order.workflows.map((fulfillment, i) => (
               <Card cardStyle="p-0" key={i}>
-
-                <div className='flex flex-row justify-between'>
-
-                  <div className='flex flex-row space-x-2 items-center'>
-                    {
-                      fulfillment.status === 'success' ? (
-                        <CheckCircleIcon className='w-7 h-7 text-green-500' />
-                      ) : (
-                        <SupportIcon className='w-7 h-7 text-orange-400' />
-                      )
-                    }
+                <div className="flex flex-row justify-between">
+                  <div className="flex flex-row items-center space-x-2">
+                    {fulfillment.status === 'success' ? (
+                      <CheckCircleIcon className="h-7 w-7 text-green-500" />
+                    ) : (
+                      <SupportIcon className="h-7 w-7 text-orange-400" />
+                    )}
                     <Subheader text={`${fulfillment.title}`} />
                     <div>#{fulfillment.id}</div>
                   </div>
 
                   <div>
-                    {
-                      fulfillment.can_cancel &&
+                    {fulfillment.can_cancel && (
                       <div className="relative">
                         <DropdownButton
-                          buttonIcon={<DotsHorizontalIcon className="h-5 w-5 font-bold text-gray-500 hover:text-gray-800" aria-hidden="true" />}
+                          buttonIcon={
+                            <DotsHorizontalIcon
+                              className="h-5 w-5 font-bold text-gray-500 hover:text-gray-800"
+                              aria-hidden="true"
+                            />
+                          }
                           items={[
                             {
                               title: 'Print packing slip',
                               onClick: () => {
-                                {}
+                                {
+                                }
                               },
                             },
                             {
                               title: 'Cancel fulfillment',
                               onClick: () => cancelFulfillment(fulfillment),
-                              itemStyle:'text-red-500'
+                              itemStyle: 'text-red-500',
                             },
                           ]}
-                          buttonProps={{theme: 'clear', buttonStyle: 'text-blue-500'}}
+                          buttonProps={{
+                            theme: 'clear',
+                            buttonStyle: 'text-blue-500',
+                          }}
                         />
                       </div>
-                    }
+                    )}
                   </div>
-
                 </div>
 
                 <OrderItems
@@ -223,18 +230,14 @@ export default function OrderView(props: Props) {
                 <Border />
 
                 <div className="flex justify-end space-x-4">
-                  {
-                    fulfillment.can_add_tracking &&
+                  {fulfillment.can_add_tracking && (
                     <Button onClick={() => markAsFulfilled(fulfillment)}>
                       Add tracking
                     </Button>
-                  }
-                  {
-                    fulfillment.can_mark_as_returned &&
-                    <Button onClick={() => {}}>
-                      Mark as returned
-                    </Button>
-                  }
+                  )}
+                  {fulfillment.can_mark_as_returned && (
+                    <Button onClick={() => {}}>Mark as returned</Button>
+                  )}
                 </div>
               </Card>
             ))}

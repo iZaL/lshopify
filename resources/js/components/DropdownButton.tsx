@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import Button from './Button';
-import { ChevronDownIcon, DotsVerticalIcon } from '@heroicons/react/solid'
+import {ChevronDownIcon, DotsVerticalIcon} from '@heroicons/react/solid';
 import {Menu} from '@headlessui/react';
 import classNames from 'classnames';
 import OutsideClickHandler from './OutsideClickHandler';
 
 interface Props {
-  items: Array<{title: string; onClick: () => void; itemStyle?:string}>;
+  items: Array<{title: string; onClick: () => void; itemStyle?: string}>;
   arrowVisible?: boolean;
   buttonTitle?: string;
   buttonIcon?: React.ReactNode;
@@ -27,10 +27,10 @@ export default function DropdownButton({
   return (
     <OutsideClickHandler onOutsideClick={() => {}}>
       <Menu as="div" className="relative z-20 ">
-        <Menu.Button as={'div'} className=''>
+        <Menu.Button as={'div'} className="">
           <Button onClick={() => setVisible(!visible)} {...buttonProps}>
             {buttonIcon ? buttonIcon : buttonTitle}
-            {arrowVisible && <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5"/>}
+            {arrowVisible && <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" />}
           </Button>
         </Menu.Button>
         <Menu.Items
@@ -45,7 +45,7 @@ export default function DropdownButton({
                       active ? 'bg-gray-100' : '',
                       disabled ? 'bg-gray-50 text-gray-300' : '',
                       'block p-2 ',
-                      item.itemStyle
+                      item.itemStyle,
                     )}>
                     {item.title}
                   </li>

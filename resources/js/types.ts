@@ -182,15 +182,15 @@ export type Billing = CustomerAddress;
 
 export interface Fulfillment {
   id: number;
-  title:string;
+  title: string;
   type: string;
   status: 'removed' | 'success' | 'pending' | 'failed' | 'cancelled';
-  can_cancel:boolean;
-  can_mark_as_returned:boolean;
-  can_add_tracking:boolean;
-  total_variants_count:string;
+  can_cancel: boolean;
+  can_mark_as_returned: boolean;
+  can_add_tracking: boolean;
+  total_variants_count: string;
   variants: VariantPivot[];
-  order?:Order;
+  order?: Order;
 }
 
 export type FulfillmentVariant = VariantPivot;

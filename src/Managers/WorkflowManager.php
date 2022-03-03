@@ -86,7 +86,9 @@ class WorkflowManager
     public function getUnfulfilledVariantsWithPivot(): Collection
     {
         $unfulfilledVariants = $this->getUnfulfilledVariants();
-        $variants = Variant::with(['product.image'])->whereIn('id', $unfulfilledVariants->pluck('id'))->get();
+        $variants = Variant::with(['product.image'])
+            ->whereIn('id', $unfulfilledVariants->pluck('id'))
+            ->get();
         foreach ($variants as $variant) {
             $variant->setAttribute('pivot', $unfulfilledVariants->where('id', $variant->id)->first()->pivot);
         }
@@ -200,7 +202,7 @@ class WorkflowManager
     {
         $workflow = $this->order->workflows()->create([
             'type' => Workflow::TYPE_FULFILLMENT,
-            'status' => Workflow::STATUS_SUCCESS
+            'status' => Workflow::STATUS_SUCCESS,
         ]);
         $this->attachWorkflowVariants($workflow, $fulfillments);
         return $workflow;

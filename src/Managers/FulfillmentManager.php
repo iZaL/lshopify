@@ -22,5 +22,4 @@ class FulfillmentManager
      * Field $id
      * Field $pivot_quantity
      */
-
 }

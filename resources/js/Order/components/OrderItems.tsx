@@ -30,20 +30,16 @@ export default function OrderItems({variants}: Props) {
                 <ProductTitle product={variant.product} />
               </div>
             )}
-            <div>
-              {variant.title}
-            </div>
+            <div>{variant.title}</div>
             <div>{variant.sku && `SKU: ${variant.sku}`}</div>
           </div>
 
-
-          <div className='inline-flex text-gray-600 space-x-6'>
+          <div className="inline-flex space-x-6 text-gray-600">
             <div>
               OMR {variant.pivot_price} x {variant.pivot_quantity}
             </div>
             <div>OMR {variant.pivot_total}</div>
           </div>
-
         </div>
       ))}
     </div>

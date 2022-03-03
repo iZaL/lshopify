@@ -35,7 +35,7 @@ class Workflow extends BaseModel
 
     public function getVariantsCountAttribute()
     {
-//        dd($this->variants()->withPivot('quantity')->sum('pivot.quantity'));
+        //        dd($this->variants()->withPivot('quantity')->sum('pivot.quantity'));
         return $this->variants()->sum('workflow_variants.quantity');
     }
 
@@ -56,13 +56,13 @@ class Workflow extends BaseModel
         $type = $this->type;
         $status = $this->status;
         $title = $type;
-        $variantsCount = ' ('.$this->variants_count.')';
+        $variantsCount = ' (' . $this->variants_count . ')';
         switch ($type) {
             case self::TYPE_RETURNED:
-                $title = $status === self::STATUS_SUCCESS ? $title : 'Return in progress '. $variantsCount;
+                $title = $status === self::STATUS_SUCCESS ? $title : 'Return in progress ' . $variantsCount;
                 break;
             default:
-                $title = $title. $variantsCount;
+                $title = $title . $variantsCount;
                 break;
         }
         return ucfirst($title);
