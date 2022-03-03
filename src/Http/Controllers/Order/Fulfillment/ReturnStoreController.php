@@ -11,7 +11,7 @@ class ReturnStoreController extends Controller
 {
     public function __invoke($orderID,ReturnRequest $request)
     {
-        $order = Order::with(['workflows'])->find($orderID);
+        $order = Order::with(['workflows.variants'])->find($orderID);
 
         $fulfillments = $request->fulfillments;
 

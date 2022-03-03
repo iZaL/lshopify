@@ -120,6 +120,22 @@ export default function OrderView(props: Props) {
     Inertia.get(route('lshopify.orders.return', [order.id]));
   };
 
+  const markAsReturned = (fulfillment: Fulfillment) => {
+    console.log('fff',fulfillment);
+    Inertia.post(route('lshopify.orders.return.edit', [order.id,fulfillment.id]),{
+      ...fulfillment,
+      status:'success'
+    });
+  }
+
+  const markAsProgress = (fulfillment: Fulfillment) => {
+    console.log('fff',fulfillment);
+    Inertia.post(route('lshopify.orders.return.edit', [order.id,fulfillment.id]),{
+      ...fulfillment,
+      status:'pending'
+    });
+  }
+
   return (
     <Main>
       <div className="p-6">
@@ -176,69 +192,112 @@ export default function OrderView(props: Props) {
               </Card>
             ) : null}
 
-            {order.workflows?.filter((f) => f.status !== 'cancelled').map((fulfillment, i) => (
-              <Card cardStyle="p-0" key={i}>
-                <div className="flex flex-row justify-between">
-                  <div className="flex flex-row items-center space-x-2">
-                    {fulfillment.status === 'success' ? (
-                      <CheckCircleIcon className="h-7 w-7 text-green-500" />
-                    ) : (
-                      <SupportIcon className="h-7 w-7 text-orange-400" />
-                    )}
-                    <Subheader text={`${fulfillment.title}`} />
-                    <div>#{fulfillment.id}</div>
-                  </div>
+            {order.workflows?.filter((f) => f.status !== 'cancelled').map((fulfillment, i) => {
 
-                  <div>
-                    {fulfillment.can_cancel && (
-                      <div className="relative">
-                        <DropdownButton
-                          buttonIcon={
-                            <DotsHorizontalIcon
-                              className="h-5 w-5 font-bold text-gray-500 hover:text-gray-800"
-                              aria-hidden="true"
-                            />
-                          }
-                          items={[
-                            {
-                              title: 'Print packing slip',
-                              onClick: () => {},
-                            },
-                            {
-                              title: 'Cancel fulfillment',
-                              onClick: () => cancelFulfillment(fulfillment),
-                              itemStyle: 'text-red-500',
-                            },
-                          ]}
-                          buttonProps={{
-                            theme: 'clear',
-                            buttonStyle: 'text-blue-500',
-                          }}
-                        />
+                console.log('ffff',fulfillment);
+                if(!fulfillment.variants.length) return null;
+
+                return (
+                  <Card cardStyle="p-0" key={i}>
+                    <div className="flex flex-row justify-between">
+                      <div className="flex flex-row items-center space-x-2">
+                        {fulfillment.status === 'success' ? (
+                          <CheckCircleIcon className="h-7 w-7 text-green-500" />
+                        ) : (
+                          <SupportIcon className="h-7 w-7 text-orange-400" />
+                        )}
+                        <Subheader text={`${fulfillment.title}`} />
+                        <div>#{fulfillment.id}</div>
                       </div>
-                    )}
-                  </div>
-                </div>
 
-                <OrderItems
-                  variants={fulfillment.variants}
-                  onItemClick={() => {}}
-                />
+                      <div>
+                        {fulfillment.can_cancel && (
+                          <div className="relative">
+                            <DropdownButton
+                              buttonIcon={
+                                <DotsHorizontalIcon
+                                  className="h-5 w-5 font-bold text-gray-500 hover:text-gray-800"
+                                  aria-hidden="true"
+                                />
+                              }
+                              items={[
+                                {
+                                  title: 'Print packing slip',
+                                  onClick: () => {},
+                                },
+                                {
+                                  title: 'Cancel fulfillment',
+                                  onClick: () => cancelFulfillment(fulfillment),
+                                  itemStyle: 'text-red-500',
+                                },
+                              ]}
+                              buttonProps={{
+                                theme: 'clear',
+                                buttonStyle: 'text-blue-500',
+                              }}
+                            />
+                          </div>
+                        )}
+                        {fulfillment.type === 'returned' && (
+                          <div className="relative">
+                            <DropdownButton
+                              buttonIcon={
+                                <DotsHorizontalIcon
+                                  className="h-5 w-5 font-bold text-gray-500 hover:text-gray-800"
+                                  aria-hidden="true"
+                                />
+                              }
+                              items={
+                                fulfillment.status === 'success' ?
+                                  [
+                                    {
+                                      title: 'Edit tracking',
+                                      onClick: () => {},
+                                    },
+                                    {
+                                      title: 'Mark as in progress',
+                                      onClick: () => markAsProgress(fulfillment),
+                                    },
+                                  ] :
+                                  [
+                                    {
+                                      title: 'Edit tracking',
+                                      onClick: () => {},
+                                    },
+                                  ]
+                              }
+                              buttonProps={{
+                                theme: 'clear',
+                                buttonStyle: 'text-blue-500',
+                              }}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </div>
 
-                <Border />
+                    <OrderItems
+                      variants={fulfillment.variants}
+                      onItemClick={() => {}}
+                    />
 
-                <div className="flex justify-end space-x-4">
-                  {fulfillment.can_add_tracking && (
-                    <Button onClick={() => markAsFulfilled(fulfillment)}>
-                      Add tracking
-                    </Button>
-                  )}
-                  {fulfillment.can_mark_as_returned && (
-                    <Button onClick={() => {}}>Mark as returned</Button>
-                  )}
-                </div>
-              </Card>
-            ))}
+                    <Border />
+
+                    <div className="flex justify-end space-x-4">
+                      {fulfillment.can_add_tracking && (
+                        <Button onClick={() => markAsFulfilled(fulfillment)}>
+                          Add tracking
+                        </Button>
+                      )}
+                      {fulfillment.can_mark_as_returned && (
+                        <Button onClick={() => markAsReturned(fulfillment)}>Mark as returned</Button>
+                      )}
+                    </div>
+                  </Card>
+                )
+              }
+
+            )}
 
             {order.is_payment_pending && (
               <Card>

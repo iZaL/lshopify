@@ -2,7 +2,6 @@
 
 namespace IZal\Lshopify\Tests\Http\Controllers\Order\Fulfillment;
 
-use IZal\Lshopify\Managers\WorkflowManager;
 use IZal\Lshopify\Models\Order;
 use IZal\Lshopify\Models\Variant;
 use IZal\Lshopify\Models\Workflow;
@@ -30,7 +29,6 @@ class FulfillmentCancelControllerTest extends TestCase
 
         $fulfillmentWorkflow1 = $orderWorkflows->create(['type' => Workflow::TYPE_FULFILLMENT,'status' => Workflow::STATUS_SUCCESS]); // variant1
         $fulfillmentWorkflow1->variants()->attach($variant1,['quantity' => $fulfill1Qty]); //3
-
 
         $this->post(route('lshopify.orders.fulfillments.cancel',[$order->id,$fulfillmentWorkflow1->id]),[
             'variants' => [

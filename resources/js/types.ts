@@ -183,7 +183,7 @@ export type Billing = CustomerAddress;
 export interface Fulfillment {
   id: number;
   title: string;
-  type: string;
+  type: 'fulfilled'|'returned'|'refund'|'removed';
   status: 'removed' | 'success' | 'pending' | 'failed' | 'cancelled';
   can_cancel: boolean;
   can_mark_as_returned: boolean;

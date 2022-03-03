@@ -42,6 +42,7 @@ class WorkflowManager
     {
         $fulfilledWorkflows = $this->order
             ->workflows()
+            ->with(['variants'])
             ->where(function ($q) {
                 $q->where('type', Workflow::TYPE_FULFILLMENT)
                     ->orWhere('type', Workflow::TYPE_REFUND)
