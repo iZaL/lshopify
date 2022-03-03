@@ -16,6 +16,8 @@ class Product extends BaseModel
 
     protected $fillable = ['title', 'description', 'status', 'category_id'];
 
+    protected $with = ['image'];
+
     public static function newFactory()
     {
         return ProductFactory::new();

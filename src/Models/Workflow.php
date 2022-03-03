@@ -21,6 +21,8 @@ class Workflow extends BaseModel
 
     protected $table = 'workflows';
 
+//    protected $with = ['variants'];
+
     protected $guarded = ['id'];
 
     public static function newFactory()

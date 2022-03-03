@@ -13,7 +13,7 @@ class DraftOrderCreateController extends Controller
 {
     public function __invoke(Request $request): \Inertia\Response
     {
-        $products = Product::with(['variants'])
+        $products = Product::with(['variants.image','default_variant','image'])
             ->latest()
             ->get();
         $productsResource = ProductResource::collection($products);

@@ -57,7 +57,7 @@ export default function CartItems({
             key={i}>
             <div className="col-span-4 inline-flex items-center space-x-2">
               <VariantImage
-                image={item.variant.image}
+                image={item.variant.image || item.variant.product?.image }
                 onClick={() => {}}
                 imageStyle="w-12 h-12"
               />

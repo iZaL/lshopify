@@ -17,13 +17,11 @@ class ProductResource extends JsonResource
             'image' => new ImageResource($this->default_image),
             'product_type' => new CategoryResource($this->whenLoaded('category')),
             'images' => ImageResource::collection($this->whenLoaded('images')),
-            'default_variant' => new VariantResource($this->default_variant),
+            'default_variant' => new VariantResource($this->whenLoaded('default_variant')),
             'variants' => VariantResource::collection($this->whenLoaded('variants')),
             'tags' => TagResource::collection($this->whenLoaded('tags')),
             'status' => $this->status,
             'collections' => CollectionResource::collection($this->whenLoaded('collections')),
-            'shipping' => [],
-            'inventory' => [],
         ];
     }
 }

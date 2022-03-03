@@ -114,7 +114,7 @@ export interface Order extends OrderForm {
   customer?: Customer;
   pending_fulfillments: Fulfillment[];
   success_fulfillments: Fulfillment[];
-  fulfillments: Fulfillment[];
+  // fulfillments: Fulfillment[];
   workflows: Fulfillment[];
   payments: Payment[];
   is_payment_pending: boolean;

@@ -10,6 +10,7 @@ interface Props {
 export default function VariantImage({image, imageStyle, onClick}: Props) {
   const style = imageStyle ? imageStyle : 'w-16 h-16';
 
+  console.log('i',image);
   return (
     <div
       className={`flex cursor-pointer items-center  justify-center overflow-hidden rounded border border-gray-200 ${style}`}

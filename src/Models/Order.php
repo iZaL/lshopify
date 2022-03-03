@@ -135,9 +135,8 @@ class Order extends BaseModel
      */
     public function isPaymentPending(): bool
     {
-        $paidAmount = $this->success_payments()->sum('amount'); // 90
-        $paymentOwed = $this->amount(); // 100
-
+        $paidAmount = $this->success_payments->sum('amount'); // 90
+        $paymentOwed = $this->amount;
         return $paidAmount < $paymentOwed;
     }
 
@@ -146,14 +145,17 @@ class Order extends BaseModel
         return $this->hasMany(Workflow::class, 'order_id');
     }
 
+    public function success_fulfillments()
+    {
+        return $this->fulfillments()
+            ->where('status', Workflow::STATUS_SUCCESS);
+    }
+
     public function fulfillments()
     {
         return $this->hasMany(Workflow::class, 'order_id')
-            //            ->whereHas('variants', function ($query) {
-            //                $query->where('workflow_variants.quantity', '>', 0);
-            //            })
             ->where('type', Workflow::TYPE_FULFILLMENT)
-            ->where('status', Workflow::STATUS_SUCCESS);
+            ;
     }
 
     public function refunds()
@@ -165,42 +167,6 @@ class Order extends BaseModel
     {
         return $this->hasMany(Workflow::class, 'order_id')->where('type', Workflow::TYPE_RETURNED);
     }
-
-    //    public function fulfillments()
-    //    {
-    //        return $this->hasMany(Fulfillment::class, 'order_id');
-    //    }
-    //
-    //    public function pending_fulfillments()
-    //    {
-    //        return $this->fulfillments()->whereHas('variants', function ($q) {
-    //            $q->where('status', 'pending');
-    //        });
-    //    }
-    //
-    //    public function success_fulfillments()
-    //    {
-    //        return $this->fulfillments()->whereHas('variants', function ($q) {
-    //            $q->where('status', 'success');
-    //        });
-    //    }
-
-    //    public function fulfillment_variants()
-    //    {
-    //        return $this->hasManyThrough(FulfillmentVariant::class,Fulfillment::class);
-    //    }
-
-    //    public function pending_fulfillments()
-    //    {
-    //        return $this->hasManyThrough(FulfillmentVariant::class,Fulfillment::class)
-    //            ->where('status', 'pending');
-    //    }
-    //
-    //    public function success_fulfillments()
-    //    {
-    //        return $this->hasManyThrough(FulfillmentVariant::class,Fulfillment::class)
-    //            ->where('status', 'success');
-    //    }
 
     public function getShippingFullNameAttribute()
     {
@@ -236,7 +202,7 @@ class Order extends BaseModel
      * Return the total amount for the order.
      * @return float
      */
-    public function amount()
+    public function getAmountAttribute()
     {
         return $this->total;
     }

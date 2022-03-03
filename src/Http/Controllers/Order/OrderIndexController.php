@@ -11,7 +11,7 @@ class OrderIndexController extends Controller
 {
     public function __invoke(): \Inertia\Response
     {
-        $orders = OrderResource::collection(Order::latest()->get());
+        $orders = OrderResource::collection(Order::with(['customer','success_payments'])->latest()->get());
 
         return Inertia::render('Order/OrderIndex', ['orders' => $orders]);
     }

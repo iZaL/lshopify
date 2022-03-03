@@ -13,8 +13,7 @@ class WorkflowResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => 'ss',
-//            'title' => $this->title,
+            'title' => $this->title,
             'type' => ucfirst($this->type),
             'status' => $this->status,
             'can_cancel' => $this->type == Workflow::TYPE_FULFILLMENT && $this->status == Workflow::STATUS_SUCCESS,

@@ -2,13 +2,11 @@
 
 namespace IZal\Lshopify\Http\Controllers\Order;
 
+use Inertia\Inertia;
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Managers\WorkflowManager;
 use IZal\Lshopify\Models\Order;
-use IZal\Lshopify\Models\Variant;
 use IZal\Lshopify\Resources\OrderResource;
-use Inertia\Inertia;
-use IZal\Lshopify\Resources\VariantResource;
 use IZal\Lshopify\Resources\WorkflowVariantResource;
 
 class OrderShowController extends Controller
