@@ -13,7 +13,6 @@ export default function OrderItems({variants}: Props) {
     return null;
   }
 
-  console.log('v', variants);
   return (
     <div className="divide-y">
       {variants.map((variant, i) => (
@@ -25,21 +24,26 @@ export default function OrderItems({variants}: Props) {
             onClick={() => {}}
             imageStyle="w-12 h-12"
           />
-          <div className="flex-1 text-blue-500">
+          <div className="flex-1 text-gray-500">
             {variant.product && (
               <div className="underline">
                 <ProductTitle product={variant.product} />
               </div>
             )}
-            <div className="space-x-2 text-gray-500 dark:text-gray-100">
+            <div>
               {variant.title}
             </div>
+            <div>{variant.sku && `SKU: ${variant.sku}`}</div>
           </div>
 
-          <div>
-            OMR {variant.pivot_price} x {variant.pivot_quantity}
+
+          <div className='inline-flex text-gray-600 space-x-6'>
+            <div>
+              OMR {variant.pivot_price} x {variant.pivot_quantity}
+            </div>
+            <div>OMR {variant.pivot_total}</div>
           </div>
-          <div className="pl-6">OMR {variant.pivot_total}</div>
+
         </div>
       ))}
     </div>

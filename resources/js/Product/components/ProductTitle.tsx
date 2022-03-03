@@ -2,6 +2,8 @@ import React from 'react';
 import {Product} from '../../types';
 import {Link} from '@inertiajs/inertia-react';
 import route from 'ziggy-js';
+import Button from '../../components/Button'
+import { Inertia } from '@inertiajs/inertia'
 
 interface Props {
   product: Product;
@@ -10,10 +12,11 @@ interface Props {
 
 export default function TitleSection({product, style}: Props) {
   return (
-    <Link
-      href={route('lshopify.products.edit', [product.id])}
-      className={`text-blue-500 ${style}`}>
+    <Button
+      theme='clear'
+      onClick={() => Inertia.get(route('lshopify.products.edit', [product.id]))}
+      buttonStyle={`text-blue-500 underline ${style}`}>
       {product.title}
-    </Link>
+    </Button>
   );
 }

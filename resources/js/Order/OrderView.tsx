@@ -116,7 +116,6 @@ export default function OrderView(props: Props) {
 
   const fulfill = () => {
     return Inertia.get(route('lshopify.orders.fulfillments', [order.id]));
-    // return Inertia.get(route('lshopify.orders.fulfill', [order.id]));
   };
 
   const cancelFulfillment = (fulfillment:Fulfillment) => {
@@ -194,7 +193,7 @@ export default function OrderView(props: Props) {
                       fulfillment.can_cancel &&
                       <div className="relative">
                         <DropdownButton
-                          buttonIcon={<DotsHorizontalIcon className="h-4 w-4" aria-hidden="true" />}
+                          buttonIcon={<DotsHorizontalIcon className="h-5 w-5 font-bold text-gray-500 hover:text-gray-800" aria-hidden="true" />}
                           items={[
                             {
                               title: 'Print packing slip',
