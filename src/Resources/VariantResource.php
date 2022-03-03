@@ -30,7 +30,7 @@ class VariantResource extends JsonResource
             'out_of_stock_sale' => $this->out_of_stock_sale,
             'default' => $this->default,
             'physical_product' => $this->physical_product,
-            'image' => new ImageResource($this->image),
+            'image' => new ImageResource($this->whenLoaded('image')),
             'product' => new ProductResource($this->whenLoaded('product')),
         ];
     }

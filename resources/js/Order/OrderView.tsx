@@ -1,38 +1,24 @@
-import React, {useEffect, useState} from 'react';
-import Main from '../Main';
-import PageHeader from './../components/PageHeader';
-import {
-  Billing,
-  Customer,
-  CustomerAddress,
-  Fulfillment,
-  Order,
-  Shipping,
-  VariantPivot,
-} from '../types';
-import OrderItems from './components/OrderItems';
-import Card from '../components/Card';
-import Button from '../components/Button';
-import Border from '../components/Border';
-import Subheader from '../components/Subheader';
-import {Inertia} from '@inertiajs/inertia';
-import CustomerEdit from './Draft/components/CustomerEdit';
-import CustomerSelect from './Draft/components/CustomerSelect';
-import {useForm} from '@inertiajs/inertia-react';
-import PaymentPaid from './Payment/components/PaymentPaid';
-import PaymentPending from './Payment/components/PaymentPending';
-import OrderViewActionButtons from './components/OrderViewActionButtons';
-import route from 'ziggy-js';
-import {CustomerForm} from '../form_types';
-import BackButton from '../components/BackButton';
-import DropdownButton from '../components/DropdownButton';
-import {
-  DotsHorizontalIcon,
-  DotsVerticalIcon,
-  SupportIcon,
-} from '@heroicons/react/outline';
-import {Warning} from 'postcss';
-import {CheckCircleIcon} from '@heroicons/react/outline';
+import React, { useEffect, useState } from 'react'
+import Main from '../Main'
+import PageHeader from './../components/PageHeader'
+import { Billing, Customer, CustomerAddress, Fulfillment, Order, Shipping, VariantPivot, } from '../types'
+import OrderItems from './components/OrderItems'
+import Card from '../components/Card'
+import Button from '../components/Button'
+import Border from '../components/Border'
+import Subheader from '../components/Subheader'
+import { Inertia } from '@inertiajs/inertia'
+import CustomerEdit from './Draft/components/CustomerEdit'
+import CustomerSelect from './Draft/components/CustomerSelect'
+import { useForm } from '@inertiajs/inertia-react'
+import PaymentPaid from './Payment/components/PaymentPaid'
+import PaymentPending from './Payment/components/PaymentPending'
+import OrderViewActionButtons from './components/OrderViewActionButtons'
+import route from 'ziggy-js'
+import { CustomerForm } from '../form_types'
+import BackButton from '../components/BackButton'
+import DropdownButton from '../components/DropdownButton'
+import { CheckCircleIcon, DotsHorizontalIcon, SupportIcon, } from '@heroicons/react/outline'
 
 interface Props {
   order: Order;
@@ -44,7 +30,6 @@ interface Props {
 }
 
 export default function OrderView(props: Props) {
-  console.log('props', props);
 
   const {order, customers} = props;
 
@@ -175,7 +160,7 @@ export default function OrderView(props: Props) {
               </Card>
             ) : null}
 
-            {order.workflows.map((fulfillment, i) => (
+            {order.workflows?.map((fulfillment, i) => (
               <Card cardStyle="p-0" key={i}>
                 <div className="flex flex-row justify-between">
                   <div className="flex flex-row items-center space-x-2">

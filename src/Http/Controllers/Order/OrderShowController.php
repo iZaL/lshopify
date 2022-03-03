@@ -15,8 +15,7 @@ class OrderShowController extends Controller
 {
     public function __invoke($id): \Inertia\Response
     {
-        $order = Order::with(['workflows.variants.product'])->find($id);
-        $orderResource = new OrderResource($order);
+        $order = Order::with(['workflows.variants.product.image','workflows.variants.image'])->find($id);
 
         $unfulfilledVariants = (new WorkflowManager($order))->getUnfulfilledVariantsWithPivot();
         $totalUnfulfilledVariantsCount = $unfulfilledVariants->sum('pivot.quantity');
@@ -25,6 +24,8 @@ class OrderShowController extends Controller
                 'unfulfilled_variants_count' => $totalUnfulfilledVariantsCount,
             ]
         );
+
+        $orderResource = new OrderResource($order);
 
         return Inertia::render('Order/OrderView', ['order' => $orderResource,'pending_fulfillments' => $pendingFulfillments]);
     }
