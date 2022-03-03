@@ -97,7 +97,7 @@ class FulfillmentFulfillControllerTest extends TestCase
             ],
         ];
 
-        $req = $this->post(route('lshopify.orders.fulfill', [$order->id]), $postData);
+        $req = $this->post(route('lshopify.orders.fulfillments', [$order->id]), $postData);
 
         $workflow = Workflow::all()->last();
 

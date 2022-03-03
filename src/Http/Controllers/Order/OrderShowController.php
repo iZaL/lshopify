@@ -19,7 +19,12 @@ class OrderShowController extends Controller
         $orderResource = new OrderResource($order);
 
         $unfulfilledVariants = (new WorkflowManager($order))->getUnfulfilledVariantsWithPivot();
-        $pendingFulfillments = WorkflowVariantResource::collection($unfulfilledVariants);
+        $totalUnfulfilledVariantsCount = $unfulfilledVariants->sum('pivot.quantity');
+        $pendingFulfillments = WorkflowVariantResource::collection($unfulfilledVariants)->additional(
+            [
+                'unfulfilled_variants_count' => $totalUnfulfilledVariantsCount,
+            ]
+        );
 
         return Inertia::render('Order/OrderView', ['order' => $orderResource,'pending_fulfillments' => $pendingFulfillments]);
     }

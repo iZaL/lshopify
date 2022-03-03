@@ -3,6 +3,7 @@
 namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use IZal\Lshopify\Database\Factories\WorkflowFactory;
 
 class Workflow extends BaseModel
@@ -32,6 +33,12 @@ class Workflow extends BaseModel
         return $this->belongsTo(Order::class, 'order_id');
     }
 
+    public function getVariantsCountAttribute()
+    {
+//        dd($this->variants()->withPivot('quantity')->sum('pivot.quantity'));
+        return $this->variants()->sum('workflow_variants.quantity');
+    }
+
     public function variants()
     {
         return $this->belongsToMany(Variant::class, 'workflow_variants', 'workflow_id', 'variant_id')->withPivot(
@@ -42,5 +49,22 @@ class Workflow extends BaseModel
             'subtotal',
             'total'
         );
+    }
+
+    public function getTitleAttribute()
+    {
+        $type = $this->type;
+        $status = $this->status;
+        $title = $type;
+        $variantsCount = ' ('.$this->variants_count.')';
+        switch ($type) {
+            case self::TYPE_RETURNED:
+                $title = $status === self::STATUS_SUCCESS ? $title : 'Return in progress '. $variantsCount;
+                break;
+            default:
+                $title = $title. $variantsCount;
+                break;
+        }
+        return ucfirst($title);
     }
 }

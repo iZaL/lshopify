@@ -4,12 +4,10 @@ namespace IZal\Lshopify\Http\Controllers\Order\Fulfillment;
 
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\ReturnRequest;
-use IZal\Lshopify\Managers\WorkflowManager;
 use IZal\Lshopify\Models\Order;
 use IZal\Lshopify\Models\Workflow;
-use IZal\Lshopify\Resources\OrderResource;
 
-class ReturnController extends Controller
+class ReturnStoreController extends Controller
 {
     public function __invoke($orderID,ReturnRequest $request)
     {
@@ -45,6 +43,5 @@ class ReturnController extends Controller
         }
 
         return  redirect()->route('lshopify.orders.show',$orderID)->with('success','Return created successfully');
-
     }
 }

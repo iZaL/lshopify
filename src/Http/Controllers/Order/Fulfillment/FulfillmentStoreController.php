@@ -4,12 +4,10 @@ namespace IZal\Lshopify\Http\Controllers\Order\Fulfillment;
 
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\OrderFulfillmentFulfillRequest;
-use IZal\Lshopify\Managers\FulfillmentManager;
 use IZal\Lshopify\Managers\WorkflowManager;
 use IZal\Lshopify\Models\Order;
-use IZal\Lshopify\Models\Workflow;
 
-class FulfillmentFulfillController extends Controller
+class FulfillmentStoreController extends Controller
 {
     public function __invoke($orderID, OrderFulfillmentFulfillRequest $request)
     {
