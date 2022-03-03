@@ -22,8 +22,6 @@ class CreateWorkflowVariantsTable extends Migration
             $table->decimal('unit_price')->default(0.00);
             $table->decimal('total')->default(0.00);
             $table->decimal('subtotal')->default(0.00);
-            $table->decimal('tax')->default(0.00);
-            $table->decimal('applied_discount')->default(0.00);
             $table->timestamps();
         });
     }

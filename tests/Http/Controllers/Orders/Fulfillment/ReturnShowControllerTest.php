@@ -15,7 +15,6 @@ class ReturnShowControllerTest extends TestCase
         $response->assertInertia(
             fn ($assert) => $assert
                 ->has('order')
-                ->has('fulfillments')
         );
     }
 }

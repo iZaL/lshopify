@@ -24,7 +24,7 @@ export default function Refund({order}: Props) {
   }>({
     fulfillments: order.fulfillments?.map(fulfillment => ({
       ...fulfillment,
-      variants:fulfillment.variants.map((v) => ({
+      variants:fulfillment.variants.filter((v) => v.pivot_quantity > 0).map((v) => ({
         ...v,
         pivot_quantity:0
       }))

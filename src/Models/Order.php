@@ -149,6 +149,9 @@ class Order extends BaseModel
     public function fulfillments()
     {
         return $this->hasMany(Workflow::class, 'order_id')
+//            ->whereHas('variants', function ($query) {
+//                $query->where('workflow_variants.quantity', '>', 0);
+//            })
             ->where('type', Workflow::TYPE_FULFILLMENT)
             ->where('status', Workflow::STATUS_SUCCESS);
     }

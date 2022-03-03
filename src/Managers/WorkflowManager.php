@@ -196,6 +196,15 @@ class WorkflowManager
             ->values();
     }
 
+    public function createFulfillmentWorkflow($fulfillments): Workflow
+    {
+        $workflow = $this->order->workflows()->create([
+            'type' => Workflow::TYPE_FULFILLMENT,
+            'status' => Workflow::STATUS_SUCCESS
+        ]);
+        $this->attachWorkflowVariants($workflow, $fulfillments);
+        return $workflow;
+    }
     public function createRemovedWorkflow($fulfillments): Workflow
     {
         $workflow = $this->order->workflows()->create([
@@ -214,13 +223,9 @@ class WorkflowManager
         return $workflow;
     }
 
-    public function createReturnWorkflow($fulfillments): Workflow
+    public function createReturnWorkflow($variants)
     {
-        $workflow = $this->order->workflows()->create([
-            'type' => Workflow::TYPE_RETURNED,
-        ]);
-        $this->attachWorkflowVariants($workflow, $fulfillments);
-        return $workflow;
+        //@todo
     }
 
     private function attachWorkflowVariants($workflow, $fulfillments)

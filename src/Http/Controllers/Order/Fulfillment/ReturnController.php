@@ -15,7 +15,6 @@ class ReturnController extends Controller
     {
         $order = Order::with(['workflows'])->find($orderID);
 
-
         $fulfillments = $request->fulfillments;
 
         foreach ($fulfillments as $fulfillment) {
@@ -30,6 +29,7 @@ class ReturnController extends Controller
 
                 if($fulfillmentVariants->count() > 0 ) {
                     $newWorkflow = $order->workflows()->create(['type' => Workflow::TYPE_RETURNED]);
+
                     foreach ($fulfillmentVariants as $fulfillmentVariant) {
                         $workflowVariant = $workflow->variants->where('id',$fulfillmentVariant['id'])->first();
                         if($workflowVariant) {
