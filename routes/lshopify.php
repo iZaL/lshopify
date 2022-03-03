@@ -55,6 +55,7 @@ Route::post('orders', \IZal\Lshopify\Http\Controllers\Order\OrderStoreController
 Route::patch('orders/{id}', \IZal\Lshopify\Http\Controllers\Order\OrderUpdateController::class)->name('orders.update');
 Route::get('orders/{id}/fulfillments', \IZal\Lshopify\Http\Controllers\Order\Fulfillment\FulfillmentIndexController::class)->name('orders.fulfillments');
 Route::post('orders/{id}/fulfillments', \IZal\Lshopify\Http\Controllers\Order\Fulfillment\FulfillmentStoreController::class)->name('orders.fulfillments');
+Route::post('orders/{id}/fulfillments/{fulfillment_id}/cancel', \IZal\Lshopify\Http\Controllers\Order\Fulfillment\FulfillmentCancelController::class)->name('orders.fulfillments.cancel');
 Route::get('orders/{id}/return', \IZal\Lshopify\Http\Controllers\Order\Fulfillment\ReturnIndexController::class)->name('orders.return');
 Route::post('orders/{id}/return', \IZal\Lshopify\Http\Controllers\Order\Fulfillment\ReturnStoreController::class)->name('orders.return');
 

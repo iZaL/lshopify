@@ -130,4 +130,40 @@ class WorkflowManagerTest extends TestCase
         $this->assertEquals($expectedThirdFulfilledVariant['quantity'], $thirdFulfilledVariant->pivot->quantity);
 
     }
+
+    public function test_cancel_fulfillments()
+    {
+        $variant1Qty = 10;
+
+        $fulfill1Qty = 3; //7
+
+        $order = Order::factory()->create();
+
+        $variant1 = Variant::factory()->create();
+
+        $order->variants()->attach($variant1->id, ['quantity' => $variant1Qty]);
+
+        $orderWorkflows = $order->workflows();
+
+        $fulfillmentWorkflow1 = $orderWorkflows->create(['type' => Workflow::TYPE_FULFILLMENT,'status' => Workflow::STATUS_SUCCESS]); // variant1
+        $fulfillmentWorkflow1->variants()->attach($variant1,['quantity' => $fulfill1Qty]); //3
+
+        $workflow = Workflow::all()->last();
+
+        $workflowManager = new WorkflowManager($order);
+        $workflowManager->cancelFulfillment($workflow);
+
+        $this->assertDatabaseHas('workflows', [
+            'id' => $fulfillmentWorkflow1->id,
+            'type' => Workflow::TYPE_FULFILLMENT,
+            'status' => Workflow::STATUS_CANCELLED,
+        ]);
+
+        $this->assertDatabaseMissing('workflow_variants', [
+            'workflow_id' => $fulfillmentWorkflow1->id,
+            'variant_id' => $variant1->id,
+            'quantity' => $fulfill1Qty,
+        ]);
+
+    }
 }

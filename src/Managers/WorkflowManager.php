@@ -248,4 +248,12 @@ class WorkflowManager
             }
         }
     }
+
+    public function cancelFulfillment(Workflow $workflow)
+    {
+        $workflow->update([
+            'status' => Workflow::STATUS_CANCELLED,
+        ]);
+        $workflow->variants()->detach();
+    }
 }

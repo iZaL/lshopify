@@ -21,6 +21,7 @@ class WorkflowResource extends JsonResource
                 $this->type == Workflow::TYPE_RETURNED && $this->status == Workflow::STATUS_PENDING,
             'can_add_tracking' =>
                 $this->type == Workflow::TYPE_FULFILLMENT && $this->status == Workflow::STATUS_SUCCESS,
+            'can_return' => true,
 //            'total_variants_count' => $this->variants_count,
             'variants' => WorkflowVariantResource::collection($this->variants),
             'order' => new OrderResource($this->whenLoaded('order')),

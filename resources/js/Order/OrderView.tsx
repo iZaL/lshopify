@@ -109,7 +109,7 @@ export default function OrderView(props: Props) {
   };
 
   const cancelFulfillment = (fulfillment: Fulfillment) => {
-    console.log('f', fulfillment);
+    Inertia.post(route('lshopify.orders.fulfillments.cancel', [order.id,fulfillment.id]));
   };
 
   const refund = () => {
@@ -133,10 +133,26 @@ export default function OrderView(props: Props) {
             <PageHeader text={`Order Edit`} />
           </div>
 
-          <OrderViewActionButtons
-            onRefundClick={() => refund()}
-            onReturnClick={() => returnItems()}
-          />
+          <div className="mt-5 flex xl:mt-0 xl:ml-4">
+            <div className="">
+              <Button
+                theme="clear"
+                onClick={() => refund()}
+                buttonStyle={'hover:bg-gray-200 p-2 px-4'}>
+                Refund
+              </Button>
+              {
+                order.workflows.length > 0 && (
+                  <Button
+                    theme="clear"
+                    onClick={() => returnItems()}
+                    buttonStyle={'hover:bg-gray-200 p-2 px-4'}>
+                    Return
+                  </Button>
+                )
+              }
+            </div>
+          </div>
         </div>
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
@@ -160,7 +176,7 @@ export default function OrderView(props: Props) {
               </Card>
             ) : null}
 
-            {order.workflows?.map((fulfillment, i) => (
+            {order.workflows?.filter((f) => f.status !== 'cancelled').map((fulfillment, i) => (
               <Card cardStyle="p-0" key={i}>
                 <div className="flex flex-row justify-between">
                   <div className="flex flex-row items-center space-x-2">
@@ -186,10 +202,7 @@ export default function OrderView(props: Props) {
                           items={[
                             {
                               title: 'Print packing slip',
-                              onClick: () => {
-                                {
-                                }
-                              },
+                              onClick: () => {},
                             },
                             {
                               title: 'Cancel fulfillment',
@@ -250,7 +263,6 @@ export default function OrderView(props: Props) {
                 onChange={(field, value) => setData(field, value)}
                 onCustomerAddressSave={onCustomerAddressSave}
                 onContactSave={attributes =>
-                  // setData({...data, ...attributes});
                   updateOrderAttributes(attributes)
                 }
               />
