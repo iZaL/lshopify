@@ -28,13 +28,10 @@ export default function CustomerSelect({
   const [showMenu, setShowMenu] = useState(false);
   const [showDialog, setShowDialog] = useState<'create_customer' | null>(null);
 
-  console.log('showCollectionMenu', showMenu);
-
   const onCustomerSave = (
     customerData: CustomerForm,
     addressData: CustomerAddress,
   ) => {
-    console.log('customerData', customerData);
     onCustomerCreate(customerData, addressData);
   };
 

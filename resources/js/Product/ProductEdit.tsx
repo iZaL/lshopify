@@ -193,7 +193,6 @@ export default function ProductEdit(props: Props) {
     });
   };
 
-  console.log('isDirty', isDirty);
   return (
     <Main>
       <div className="p-6">

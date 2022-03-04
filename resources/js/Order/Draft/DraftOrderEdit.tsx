@@ -87,32 +87,16 @@ export default function DraftOrderEdit(props: Props) {
     customerData: CustomerForm,
     addressData: CustomerAddress,
   ) => {
-    Inertia.post(
-      route('lshopify.customers.store'),
-      {
-        customer: customerData,
-        address: addressData,
-      },
-      {
-        onSuccess: () => {
-          console.log('success');
-        },
-      },
-    );
+    Inertia.post(route('lshopify.customers.store'), {
+      customer: customerData,
+      address: addressData,
+    });
   };
 
   const onAttachCustomer = (customer?: Customer) => {
-    Inertia.post(
-      route('lshopify.draft.orders.customer.update', [order.id]),
-      {
-        customer_id: customer ? customer.id : null,
-      },
-      {
-        onSuccess: () => {
-          console.log('success');
-        },
-      },
-    );
+    Inertia.post(route('lshopify.draft.orders.customer.update', [order.id]), {
+      customer_id: customer ? customer.id : null,
+    });
   };
 
   const onCreateOrder = () => {
@@ -127,11 +111,7 @@ export default function DraftOrderEdit(props: Props) {
         ...extraData,
       };
     }
-    Inertia.post(route('lshopify.draft.orders.update', [order.id]), postData, {
-      onSuccess: () => {
-        console.log('success');
-      },
-    });
+    Inertia.post(route('lshopify.draft.orders.update', [order.id]), postData);
   };
 
   const onCustomerAddressSave = (

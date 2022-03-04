@@ -62,11 +62,7 @@ export default function DraftOrderCreate(props: Props) {
   const onCreateOrder = () => {};
 
   const handleSubmit = () => {
-    Inertia.post(route('lshopify.draft.orders.store'), data, {
-      onSuccess: () => {
-        console.log('success');
-      },
-    });
+    Inertia.post(route('lshopify.draft.orders.store'), data);
   };
 
   return (

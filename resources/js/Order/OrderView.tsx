@@ -61,33 +61,16 @@ export default function OrderView(props: Props) {
     customerData: CustomerForm,
     addressData: CustomerAddress,
   ) => {
-    Inertia.post(
-      route('lshopify.customers.store'),
-      {
-        customer: customerData,
-        address: addressData,
-      },
-      {
-        onSuccess: () => {
-          console.log('success');
-        },
-      },
-    );
+    Inertia.post(route('lshopify.customers.store'), {
+      customer: customerData,
+      address: addressData,
+    });
   };
 
   const onAttachCustomer = (customer?: Customer) => {
-    console.log('c', customer);
-    Inertia.post(
-      route('lshopify.orders.draft.customer.update', [order.id]),
-      {
-        customer_id: customer ? customer.id : null,
-      },
-      {
-        onSuccess: () => {
-          console.log('success');
-        },
-      },
-    );
+    Inertia.post(route('lshopify.draft.orders.customer.update', [order.id]), {
+      customer_id: customer ? customer.id : null,
+    });
   };
 
   const onCustomerAddressSave = (
@@ -134,7 +117,6 @@ export default function OrderView(props: Props) {
   };
 
   const markAsReturned = (fulfillment: Fulfillment) => {
-    console.log('fff', fulfillment);
     Inertia.post(
       route('lshopify.orders.return.edit', [order.id, fulfillment.id]),
       {
@@ -145,7 +127,6 @@ export default function OrderView(props: Props) {
   };
 
   const markAsProgress = (fulfillment: Fulfillment) => {
-    console.log('fff', fulfillment);
     Inertia.post(
       route('lshopify.orders.return.edit', [order.id, fulfillment.id]),
       {
@@ -212,7 +193,6 @@ export default function OrderView(props: Props) {
             {order.workflows
               ?.filter(f => f.status !== 'cancelled')
               .map((fulfillment, i) => {
-                console.log('ffff', fulfillment);
                 if (!fulfillment.variants.length) return null;
 
                 return (

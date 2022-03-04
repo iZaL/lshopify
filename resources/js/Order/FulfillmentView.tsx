@@ -45,7 +45,6 @@ export default function FulfillmentView({order, pending_fulfillments}: Props) {
     variant: VariantPivot,
     value: number,
   ) => {
-    console.log('v', variant);
     if (value <= trueVariant.pivot_quantity) {
       const newVariants = data.pending_fulfillments.map(v => {
         if (v.id === variant.id) {
@@ -73,17 +72,9 @@ export default function FulfillmentView({order, pending_fulfillments}: Props) {
   };
 
   const handleSubmit = () => {
-    Inertia.post(
-      route('lshopify.orders.fulfillments', [order.id]),
-      {
-        variants: data.pending_fulfillments,
-      },
-      {
-        onSuccess: () => {
-          console.log('success');
-        },
-      },
-    );
+    Inertia.post(route('lshopify.orders.fulfillments', [order.id]), {
+      variants: data.pending_fulfillments,
+    });
   };
 
   return (

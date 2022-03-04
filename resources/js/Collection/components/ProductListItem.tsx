@@ -8,7 +8,6 @@ interface Props {
 }
 
 export default function ProductListItem({product}: Props) {
-  console.log('product', product);
   return (
     <div className="flex flex-row items-center space-x-4 py-2 px-4">
       <Checkbox checked={false} name="product" onChange={() => {}} />
