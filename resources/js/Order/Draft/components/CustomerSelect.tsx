@@ -45,7 +45,7 @@ export default function CustomerSelect({
       <div className="w-100 relative" onClick={() => setShowMenu(true)}>
         <InputText
           name="search"
-          placeholder={'Search products'}
+          placeholder={'Search customer'}
           onChange={e => {
             setSearchTerm(e.target.value);
           }}

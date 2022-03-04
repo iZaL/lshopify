@@ -19,9 +19,7 @@ export default function EditQuantities({
   return (
     <div className="p-5">
       <p className="text-sm text-gray-700">Apply a price to all variants</p>
-      <form
-        className="flex space-x-4 border-b border-gray-200 py-3  "
-        action="#">
+      <div className="flex space-x-4 border-b border-gray-200 py-3">
         <div className="min-w-0 flex-1">
           <InputText
             name="all"
@@ -41,7 +39,7 @@ export default function EditQuantities({
           rounded>
           Apply to all
         </Button>
-      </form>
+      </div>
 
       {variants.map((variant, i) => {
         return (

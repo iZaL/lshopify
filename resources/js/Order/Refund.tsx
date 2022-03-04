@@ -13,7 +13,6 @@ import Button from '../components/Button';
 import InputText from '../components/forms/InputText';
 import route from 'ziggy-js';
 import BackButton from '../components/BackButton';
-import OrderViewActionButtons from './components/OrderViewActionButtons';
 
 interface Props {
   order: Order;

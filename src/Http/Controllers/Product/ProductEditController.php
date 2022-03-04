@@ -17,7 +17,7 @@ class ProductEditController extends Controller
 {
     public function __invoke($id): \Inertia\Response
     {
-        $product = Product::with(['images', 'variants', 'category', 'tags', 'collections'])->find($id);
+        $product = Product::with(['images', 'variants.image', 'category', 'tags', 'collections'])->find($id);
 
         $product = new ProductResource($product);
 

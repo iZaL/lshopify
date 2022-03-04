@@ -39,6 +39,9 @@ class Collection extends BaseModel
     public function smart_products()
     {
         $products = Product::query();
+        if (!$this->relationLoaded('conditions')) {
+            $this->load('conditions');
+        }
         foreach ($this->conditions as $condition) {
             $products = $this->getProductsForCondition($products, $condition, $this->determiner);
         }

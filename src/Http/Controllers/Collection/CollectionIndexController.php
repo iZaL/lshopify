@@ -11,7 +11,7 @@ class CollectionIndexController extends Controller
 {
     public function __invoke(): \Inertia\Response
     {
-        $collections = Collection::with(['conditions','products.default_variant','products.image'])->get();
+        $collections = Collection::with(['conditions','image'])->get();
         $collectionResources = CollectionResource::collection($collections);
 
         return Inertia::render('Collection/CollectionIndex', ['collections' => $collectionResources]);

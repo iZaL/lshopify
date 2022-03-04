@@ -19,7 +19,7 @@ class OrderResource extends JsonResource
                 'total_formatted' => $this->total_formatted,
                 'subtotal' => $this->subtotal,
                 'quantity' => $this->quantity,
-                'customer' => new CustomerResource($this->customer),
+                'customer' => new CustomerResource($this->whenLoaded('customer')),
                 'contact_email' => $this->contact_email ?? $customer->email,
                 'contact_phone' => $this->contact_phone ?? $customer->phone,
                 'variants' => OrderVariantResource::collection($this->whenLoaded('variants')),

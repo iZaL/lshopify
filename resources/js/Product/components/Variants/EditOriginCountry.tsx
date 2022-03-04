@@ -18,9 +18,7 @@ export default function EditOriginCountry({
   return (
     <div className="p-5">
       <p className="text-sm text-gray-700">Country/Region of origin</p>
-      <form
-        className="flex space-x-4 border-b border-gray-200 py-3  "
-        action="#">
+      <div className="flex space-x-4 border-b border-gray-200 py-3  ">
         <div className="min-w-0 flex-1">
           <select
             id="country"
@@ -36,7 +34,7 @@ export default function EditOriginCountry({
         <Button theme="default" onClick={() => onApplyAll(allText)}>
           Apply to all
         </Button>
-      </form>
+      </div>
 
       {variants.map((variant, i) => {
         return (

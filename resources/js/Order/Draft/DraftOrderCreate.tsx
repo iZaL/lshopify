@@ -91,9 +91,6 @@ export default function DraftOrderCreate(props: Props) {
               onCreateOrder={onCreateOrder}
             />
           </section>
-          {/*<section className='lg:col-start-3 lg:col-span-1 space-y-6'>*/}
-          {/*	<CustomerSelect />*/}
-          {/*</section>*/}
         </div>
       </div>
     </Main>

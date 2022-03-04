@@ -22,7 +22,7 @@ class WorkflowManager
     public function getFulfilledVariantsWithPivot(): Collection
     {
         $fulfilledVariants = $this->getFulfilledVariants();
-        $variants = Variant::with(['product','image'])
+        $variants = Variant::with(['product', 'image'])
             ->whereIn('id', $fulfilledVariants->pluck('id'))
             ->get();
         foreach ($variants as $variant) {
@@ -87,7 +87,7 @@ class WorkflowManager
     public function getUnfulfilledVariantsWithPivot(): Collection
     {
         $unfulfilledVariants = $this->getUnfulfilledVariants();
-        $variants = Variant::with(['product','image'])
+        $variants = Variant::with(['product', 'image'])
             ->whereIn('id', $unfulfilledVariants->pluck('id'))
             ->get();
         foreach ($variants as $variant) {
@@ -158,7 +158,10 @@ class WorkflowManager
      */
     private function resolveVariants(Collection $variants): Collection
     {
-        $orderVariants = $this->order->variants()->whereIn('variants.id', $variants->pluck('variant_id'))->get();
+        $orderVariants = $this->order
+            ->variants()
+            ->whereIn('variants.id', $variants->pluck('variant_id'))
+            ->get();
         return $variants
             ->map(function ($item) use ($orderVariants) {
                 $variant = $orderVariants->where('id', $item['variant_id'])->first();

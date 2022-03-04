@@ -15,9 +15,7 @@ export default function EditHSCodes({variants, onChange, onApplyAll}: Props) {
   return (
     <div className="p-5">
       <p className="text-sm text-gray-700">HS (Harmonized System) code</p>
-      <form
-        className="flex space-x-4 border-b border-gray-200 py-3  "
-        action="#">
+      <div className="flex space-x-4 border-b border-gray-200 py-3  ">
         <div className="min-w-0 flex-1">
           <InputText
             name="all"
@@ -28,7 +26,7 @@ export default function EditHSCodes({variants, onChange, onApplyAll}: Props) {
         <Button theme="default" onClick={() => onApplyAll(allText)}>
           Apply to all
         </Button>
-      </form>
+      </div>
 
       {variants.map(variant => {
         return (

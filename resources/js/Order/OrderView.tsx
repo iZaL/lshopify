@@ -1,24 +1,35 @@
-import React, { useEffect, useState } from 'react'
-import Main from '../Main'
-import PageHeader from './../components/PageHeader'
-import { Billing, Customer, CustomerAddress, Fulfillment, Order, Shipping, VariantPivot, } from '../types'
-import OrderItems from './components/OrderItems'
-import Card from '../components/Card'
-import Button from '../components/Button'
-import Border from '../components/Border'
-import Subheader from '../components/Subheader'
-import { Inertia } from '@inertiajs/inertia'
-import CustomerEdit from './Draft/components/CustomerEdit'
-import CustomerSelect from './Draft/components/CustomerSelect'
-import { useForm } from '@inertiajs/inertia-react'
-import PaymentPaid from './Payment/components/PaymentPaid'
-import PaymentPending from './Payment/components/PaymentPending'
-import OrderViewActionButtons from './components/OrderViewActionButtons'
-import route from 'ziggy-js'
-import { CustomerForm } from '../form_types'
-import BackButton from '../components/BackButton'
-import DropdownButton from '../components/DropdownButton'
-import { CheckCircleIcon, DotsHorizontalIcon, SupportIcon, } from '@heroicons/react/outline'
+import React, {useEffect, useState} from 'react';
+import Main from '../Main';
+import PageHeader from './../components/PageHeader';
+import {
+  Billing,
+  Customer,
+  CustomerAddress,
+  Fulfillment,
+  Order,
+  Shipping,
+  VariantPivot,
+} from '../types';
+import OrderItems from './components/OrderItems';
+import Card from '../components/Card';
+import Button from '../components/Button';
+import Border from '../components/Border';
+import Subheader from '../components/Subheader';
+import {Inertia} from '@inertiajs/inertia';
+import CustomerEdit from './Draft/components/CustomerEdit';
+import CustomerSelect from './Draft/components/CustomerSelect';
+import {useForm} from '@inertiajs/inertia-react';
+import PaymentPaid from './Payment/components/PaymentPaid';
+import PaymentPending from './Payment/components/PaymentPending';
+import route from 'ziggy-js';
+import {CustomerForm} from '../form_types';
+import BackButton from '../components/BackButton';
+import DropdownButton from '../components/DropdownButton';
+import {
+  CheckCircleIcon,
+  DotsHorizontalIcon,
+  SupportIcon,
+} from '@heroicons/react/outline';
 
 interface Props {
   order: Order;
@@ -30,7 +41,6 @@ interface Props {
 }
 
 export default function OrderView(props: Props) {
-
   const {order, customers} = props;
 
   const [customerSearchTerm, setCustomerSearchTerm] = useState('');
@@ -66,8 +76,9 @@ export default function OrderView(props: Props) {
   };
 
   const onAttachCustomer = (customer?: Customer) => {
+    console.log('c', customer);
     Inertia.post(
-      route('lshopify.orders.customer.update', [order.id]),
+      route('lshopify.orders.draft.customer.update', [order.id]),
       {
         customer_id: customer ? customer.id : null,
       },
@@ -109,7 +120,9 @@ export default function OrderView(props: Props) {
   };
 
   const cancelFulfillment = (fulfillment: Fulfillment) => {
-    Inertia.post(route('lshopify.orders.fulfillments.cancel', [order.id,fulfillment.id]));
+    Inertia.post(
+      route('lshopify.orders.fulfillments.cancel', [order.id, fulfillment.id]),
+    );
   };
 
   const refund = () => {
@@ -121,20 +134,26 @@ export default function OrderView(props: Props) {
   };
 
   const markAsReturned = (fulfillment: Fulfillment) => {
-    console.log('fff',fulfillment);
-    Inertia.post(route('lshopify.orders.return.edit', [order.id,fulfillment.id]),{
-      ...fulfillment,
-      status:'success'
-    });
-  }
+    console.log('fff', fulfillment);
+    Inertia.post(
+      route('lshopify.orders.return.edit', [order.id, fulfillment.id]),
+      {
+        ...fulfillment,
+        status: 'success',
+      },
+    );
+  };
 
   const markAsProgress = (fulfillment: Fulfillment) => {
-    console.log('fff',fulfillment);
-    Inertia.post(route('lshopify.orders.return.edit', [order.id,fulfillment.id]),{
-      ...fulfillment,
-      status:'pending'
-    });
-  }
+    console.log('fff', fulfillment);
+    Inertia.post(
+      route('lshopify.orders.return.edit', [order.id, fulfillment.id]),
+      {
+        ...fulfillment,
+        status: 'pending',
+      },
+    );
+  };
 
   return (
     <Main>
@@ -157,16 +176,14 @@ export default function OrderView(props: Props) {
                 buttonStyle={'hover:bg-gray-200 p-2 px-4'}>
                 Refund
               </Button>
-              {
-                order.workflows.length > 0 && (
-                  <Button
-                    theme="clear"
-                    onClick={() => returnItems()}
-                    buttonStyle={'hover:bg-gray-200 p-2 px-4'}>
-                    Return
-                  </Button>
-                )
-              }
+              {order.workflows.length > 0 && (
+                <Button
+                  theme="clear"
+                  onClick={() => returnItems()}
+                  buttonStyle={'hover:bg-gray-200 p-2 px-4'}>
+                  Return
+                </Button>
+              )}
             </div>
           </div>
         </div>
@@ -192,10 +209,11 @@ export default function OrderView(props: Props) {
               </Card>
             ) : null}
 
-            {order.workflows?.filter((f) => f.status !== 'cancelled').map((fulfillment, i) => {
-
-                console.log('ffff',fulfillment);
-                if(!fulfillment.variants.length) return null;
+            {order.workflows
+              ?.filter(f => f.status !== 'cancelled')
+              .map((fulfillment, i) => {
+                console.log('ffff', fulfillment);
+                if (!fulfillment.variants.length) return null;
 
                 return (
                   <Card cardStyle="p-0" key={i}>
@@ -248,23 +266,24 @@ export default function OrderView(props: Props) {
                                 />
                               }
                               items={
-                                fulfillment.status === 'success' ?
-                                  [
-                                    {
-                                      title: 'Edit tracking',
-                                      onClick: () => {},
-                                    },
-                                    {
-                                      title: 'Mark as in progress',
-                                      onClick: () => markAsProgress(fulfillment),
-                                    },
-                                  ] :
-                                  [
-                                    {
-                                      title: 'Edit tracking',
-                                      onClick: () => {},
-                                    },
-                                  ]
+                                fulfillment.status === 'success'
+                                  ? [
+                                      {
+                                        title: 'Edit tracking',
+                                        onClick: () => {},
+                                      },
+                                      {
+                                        title: 'Mark as in progress',
+                                        onClick: () =>
+                                          markAsProgress(fulfillment),
+                                      },
+                                    ]
+                                  : [
+                                      {
+                                        title: 'Edit tracking',
+                                        onClick: () => {},
+                                      },
+                                    ]
                               }
                               buttonProps={{
                                 theme: 'clear',
@@ -290,14 +309,14 @@ export default function OrderView(props: Props) {
                         </Button>
                       )}
                       {fulfillment.can_mark_as_returned && (
-                        <Button onClick={() => markAsReturned(fulfillment)}>Mark as returned</Button>
+                        <Button onClick={() => markAsReturned(fulfillment)}>
+                          Mark as returned
+                        </Button>
                       )}
                     </div>
                   </Card>
-                )
-              }
-
-            )}
+                );
+              })}
 
             {order.is_payment_pending && (
               <Card>
@@ -321,9 +340,7 @@ export default function OrderView(props: Props) {
                 onCustomerRemove={() => onAttachCustomer()}
                 onChange={(field, value) => setData(field, value)}
                 onCustomerAddressSave={onCustomerAddressSave}
-                onContactSave={attributes =>
-                  updateOrderAttributes(attributes)
-                }
+                onContactSave={attributes => updateOrderAttributes(attributes)}
               />
             ) : (
               <CustomerSelect

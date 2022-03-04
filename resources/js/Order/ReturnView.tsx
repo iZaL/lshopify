@@ -26,7 +26,7 @@ export default function Refund({order}: Props) {
       order.success_fulfillments?.map(fulfillment => ({
         ...fulfillment,
         variants: fulfillment.variants
-          .filter(v => v.pivot_quantity > 0)
+          ?.filter(v => v.pivot_quantity > 0)
           .map(v => ({
             ...v,
             pivot_quantity: 0,
@@ -99,8 +99,9 @@ export default function Refund({order}: Props) {
                   <FulfillmentItems
                     variants={fulfillment.variants || []}
                     currentVariants={
-                      order.success_fulfillments.find(f => f.id === fulfillment.id)
-                        ?.variants || []
+                      order.success_fulfillments.find(
+                        f => f.id === fulfillment.id,
+                      )?.variants || []
                     }
                     onVariantQuantityChange={(trueVariant, variant, value) =>
                       onVariantQuantityChange(

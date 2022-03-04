@@ -7,6 +7,7 @@ use IZal\Lshopify\Cart\Collections\ItemCollection;
 use IZal\Lshopify\Models\Customer;
 use IZal\Lshopify\Models\CustomerAddress;
 use IZal\Lshopify\Models\DraftOrder;
+use IZal\Lshopify\Models\Order;
 use IZal\Lshopify\Models\Variant;
 use Illuminate\Support\Arr;
 
@@ -130,10 +131,10 @@ class DraftOrderCreateAction extends OrderCreateAction
     }
 
     /**
-     * @param  DraftOrder  $order
-     * @param  Customer  $customer
+     * @param Order|DraftOrder $order
+     * @param Customer $customer
      */
-    public function attachCustomer(DraftOrder $order, Customer $customer)
+    public function attachCustomer(Order|DraftOrder $order, Customer $customer)
     {
         $order->update(['customer_id' => $customer->id]);
 
@@ -143,18 +144,18 @@ class DraftOrderCreateAction extends OrderCreateAction
     }
 
     /**
-     * @param  DraftOrder  $order
+     * @param Order|DraftOrder $order
      */
-    public function detachCustomer(DraftOrder $order)
+    public function detachCustomer(Order|DraftOrder $order)
     {
         $order->update(['customer_id' => null]);
     }
 
     /**
-     * @param  DraftOrder  $order
+     * @param  DraftOrder|Order  $order
      * @param  array  $attributes
      */
-    public function updateShippingAddress(DraftOrder $order, array $attributes = [])
+    public function updateShippingAddress(Order|DraftOrder $order, array $attributes = [])
     {
         $shippingAttributes = empty($attributes) ? $this->getShippingAddress($order) : $attributes;
         $attributes = CustomerAddress::parseShippingAddress($shippingAttributes, $this->order->getFillable());
@@ -162,10 +163,10 @@ class DraftOrderCreateAction extends OrderCreateAction
     }
 
     /**
-     * @param  DraftOrder  $order
-     * @param  array  $attributes
+     * @param DraftOrder|Order $order
+     * @param array $attributes
      */
-    public function updateBillingAddress(DraftOrder $order, array $attributes = [])
+    public function updateBillingAddress(DraftOrder|Order $order, array $attributes = [])
     {
         $billingAttributes = empty($attributes) ? $this->getBillingAddress($order) : $attributes;
         $attributes = CustomerAddress::parseBillingAddress($billingAttributes, $this->order->getFillable());

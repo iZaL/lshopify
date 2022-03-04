@@ -8,6 +8,7 @@ use IZal\Lshopify\Http\Requests\DraftOrderCustomerUpdateRequest;
 use IZal\Lshopify\Http\Requests\DraftOrderUpdateRequest;
 use IZal\Lshopify\Models\Customer;
 use IZal\Lshopify\Models\DraftOrder;
+use IZal\Lshopify\Models\Order;
 
 class DraftOrderUpdateController extends Controller
 {
@@ -52,6 +53,10 @@ class DraftOrderUpdateController extends Controller
     public function attachCustomer($id, DraftOrderCustomerUpdateRequest $request): \Illuminate\Http\RedirectResponse
     {
         $order = DraftOrder::find($id);
+
+        if(!$order) {
+            $order = Order::find($id);
+        }
 
         if ($request->customer_id) {
             $customer = Customer::find($request->customer_id);

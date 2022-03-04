@@ -11,7 +11,7 @@ class ReturnIndexController extends Controller
 {
     public function __invoke($orderID): \Inertia\Response
     {
-        $order = Order::with(['success_fulfillments'])->find($orderID);
+        $order = Order::with(['success_fulfillments.variants.image'])->find($orderID);
         $orderResource = new OrderResource($order);
 
         return Inertia::render(
