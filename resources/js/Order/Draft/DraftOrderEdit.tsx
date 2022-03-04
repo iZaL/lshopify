@@ -103,7 +103,7 @@ export default function DraftOrderEdit(props: Props) {
 
   const onAttachCustomer = (customer?: Customer) => {
     Inertia.post(
-      route('lshopify.orders.draft.customer.update', [order.id]),
+      route('lshopify.draft.orders.customer.update', [order.id]),
       {
         customer_id: customer ? customer.id : null,
       },
@@ -116,7 +116,7 @@ export default function DraftOrderEdit(props: Props) {
   };
 
   const onCreateOrder = () => {
-    Inertia.post(route('lshopify.orders.draft.confirm', [order.id]));
+    Inertia.post(route('lshopify.draft.orders.confirm', [order.id]));
   };
 
   const handleSubmit = (extraData?: {[x: string]: any}) => {
@@ -127,7 +127,7 @@ export default function DraftOrderEdit(props: Props) {
         ...extraData,
       };
     }
-    Inertia.post(route('lshopify.orders.draft.update', [order.id]), postData, {
+    Inertia.post(route('lshopify.draft.orders.update', [order.id]), postData, {
       onSuccess: () => {
         console.log('success');
       },
@@ -153,7 +153,7 @@ export default function DraftOrderEdit(props: Props) {
         <div className="flex flex-row items-center space-x-2">
           <BackButton
             onClick={() => {
-              Inertia.get(route('lshopify.orders.draft.index'));
+              Inertia.get(route('lshopify.draft.orders.index'));
             }}
           />
           <PageHeader text={`Order Edit`} />

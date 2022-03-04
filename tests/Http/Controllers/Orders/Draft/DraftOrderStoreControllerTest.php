@@ -58,7 +58,7 @@ class DraftOrderStoreControllerTest extends CartTestCase
         $itemCondition->setActions([['value' => '-10%']]);
         $this->cart->update($cartItem->rowId, ['conditions' => $itemCondition]);
 
-        $req = $this->post(route('lshopify.orders.draft.store'));
+        $req = $this->post(route('lshopify.draft.orders.store'));
 
         $order = DraftOrder::with(['variants'])->get()->last();
 

@@ -22,7 +22,7 @@ export default function DraftOrderIndex(props: Props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const onOrderClick = (order: Order) => {
-    Inertia.get(route('lshopify.orders.draft.edit', [order.id]));
+    Inertia.get(route('lshopify.draft.orders.edit', [order.id]));
   };
 
   return (

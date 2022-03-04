@@ -42,7 +42,7 @@ class DraftOrderConfirmControllerTest extends TestCase
             )
             ->create();
 
-        $this->post(route('lshopify.orders.draft.confirm', $draftOrder->id));
+        $this->post(route('lshopify.draft.orders.confirm', $draftOrder->id));
 
         $this->assertDatabaseHas('orders', ['id' => $draftOrder->id, 'draft' => 0]);
     }

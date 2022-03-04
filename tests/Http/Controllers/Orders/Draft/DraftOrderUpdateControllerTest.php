@@ -57,7 +57,7 @@ class DraftOrderUpdateControllerTest extends CartTestCase
 
         $this->cart->add($addedItem);
 
-        $this->patch(route('lshopify.orders.draft.update', $order->id), $data);
+        $this->patch(route('lshopify.draft.orders.update', $order->id), $data);
 
         $this->assertEquals(500, $this->cart->total());
 
@@ -95,7 +95,7 @@ class DraftOrderUpdateControllerTest extends CartTestCase
             'billing' => $newBillingAddress,
         ];
 
-        $this->patch(route('lshopify.orders.draft.update', $order->id), $data);
+        $this->patch(route('lshopify.draft.orders.update', $order->id), $data);
 
         $this->assertDatabaseHas('orders', [
             'customer_id' => $customer->id,
@@ -114,7 +114,7 @@ class DraftOrderUpdateControllerTest extends CartTestCase
 
         $address = $customer->default_address;
 
-        $this->post(route('lshopify.orders.draft.customer.update', $order->id), ['customer_id' => $customer->id]);
+        $this->post(route('lshopify.draft.orders.customer.update', $order->id), ['customer_id' => $customer->id]);
         $this->assertDatabaseHas('orders', [
             'customer_id' => $customer->id,
             'shipping_company' => $address->company,
@@ -133,7 +133,7 @@ class DraftOrderUpdateControllerTest extends CartTestCase
     {
         $customer = Customer::factory()->has(CustomerAddress::factory()->count(1)->default(), 'addresses')->create();
         $order = DraftOrder::factory()->create(['customer_id' => $customer->id]);
-        $this->post(route('lshopify.orders.draft.customer.update', $order->id), ['customer_id' => null]);
+        $this->post(route('lshopify.draft.orders.customer.update', $order->id), ['customer_id' => null]);
         $this->assertDatabaseHas('orders', ['customer_id' => null, 'draft' => 1]);
     }
 }

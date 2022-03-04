@@ -8,7 +8,7 @@ class DraftOrderIndexControllerTest extends TestCase
 {
     public function test_can_get_draft_order_index_page()
     {
-        $response = $this->get(route('lshopify.orders.draft.index'));
+        $response = $this->get(route('lshopify.draft.orders.index'));
         $response->assertInertia(
             fn ($assert) => $assert
             ->has('orders')

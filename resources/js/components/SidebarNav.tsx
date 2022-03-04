@@ -38,7 +38,7 @@ export default function SidebarNav() {
 
       <Navigator.Item
         name="Orders"
-        active={route().current('lshopify.orders.*')}
+        active={route().current('lshopify.orders.*') || route().current('lshopify.draft.orders.*')}
         href={route('lshopify.orders.index')}
         dropdown={true}>
         <Navigator.SubItem
@@ -48,28 +48,11 @@ export default function SidebarNav() {
         />
         <Navigator.SubItem
           name="Drafts"
-          href={route('lshopify.orders.draft.index')}
-          active={route().current('lshopify.orders.draft.*')}
+          href={route('lshopify.draft.orders.index')}
+          active={route().current('lshopify.draft.orders.*')}
         />
       </Navigator.Item>
     </Navigator>
   );
 
-  //     <div className="flex justify-end px-2 py-4">
-  //       <Switch
-  //         checked={darkMode}
-  //         onChange={() => setDarkMode(!darkMode)}
-  //         className={`${
-  //           darkMode ? 'bg-blue-600' : 'bg-gray-200'
-  //         } relative inline-flex items-center h-6 rounded-full w-11`}>
-  //         <span className="sr-only">Dark</span>
-  //         <span
-  //           className={`${
-  //             darkMode ? 'translate-x-6' : 'translate-x-1'
-  //           } inline-block w-4 h-4 transform bg-white rounded-full`}
-  //         />
-  //       </Switch>
-  //     </div>
-  //   </div>
-  // );
 }

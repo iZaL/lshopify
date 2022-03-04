@@ -38,7 +38,7 @@ class DraftOrderStoreController extends Controller
         }
 
         return redirect()
-            ->route('lshopify.orders.draft.edit', $order->id)
+            ->route('lshopify.draft.orders.edit', $order->id)
             ->with('success', 'Saved');
     }
 }
