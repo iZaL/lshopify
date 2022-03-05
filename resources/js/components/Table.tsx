@@ -21,11 +21,12 @@ interface TRProps {
   children: React.ReactNode;
   idx?: number;
   onClick?: () => void;
+  rowStyle?: string;
 }
 
 const Table = ({children}: Props) => {
   return (
-    <div className="flex flex-col">
+    <div className={`flex flex-col`}>
       <div className="-my-2 flex-grow overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
           <div className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
@@ -39,7 +40,7 @@ const Table = ({children}: Props) => {
   );
 };
 
-const Row = ({children, striped = true, idx, onClick}: TRProps) => {
+const Row = ({children, striped = true, idx, onClick, rowStyle}: TRProps) => {
   return (
     <tr
       className={classNames(
@@ -48,6 +49,7 @@ const Row = ({children, striped = true, idx, onClick}: TRProps) => {
           ? `${idx && idx % 2 !== 0 ? 'bg-gray-50' : 'bg-white'}`
           : 'bg-white',
         onClick && 'cursor-pointer hover:bg-gray-100',
+        rowStyle,
       )}
       onClick={onClick}>
       {children}
