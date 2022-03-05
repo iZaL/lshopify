@@ -74,7 +74,7 @@ export default function DraftOrdersSearchBar({
           </div>
 
           <div className="col-span-12 sm:col-span-6">
-            <div className="relative z-0 inline-flex rounded-md shadow-sm sm:space-x-3 sm:shadow-none">
+            <div className="relative z-20 inline-flex rounded-md shadow-sm sm:space-x-3 sm:shadow-none">
               <Popover.Group className="flex items-center">
                 <div className="inline-flex sm:shadow-sm">
                   <Popover className="relative inline-block text-left">
