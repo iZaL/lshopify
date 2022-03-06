@@ -43,8 +43,6 @@ export default function ProductsList({products}: Props) {
     return Inertia.get(route('lshopify.products.edit', [product.id]));
   };
 
-
-
   const showDialogBox = (param: ModalProp) => {
     setShowDialog(true);
     setModalParams({

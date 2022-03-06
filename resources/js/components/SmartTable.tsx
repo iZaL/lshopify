@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import Table from './Table';
 import Checkbox from './forms/Checkbox';
-import { Product } from '../types'
+import {Product} from '../types';
 
 interface Props {
   items: Array<any>;
@@ -90,10 +90,12 @@ interface BodyProps {
 }
 
 const Body = ({children}: BodyProps) => {
-  const {items, selectedItemIDs,setSelectedItemIDs} =
-    useContext<{items: Array<any>; selectedItemIDs: Array<number>;setSelectedItemIDs:(itemIDs:Array<number>)=>void}>(
-      SmartTableContext,
-    );
+  const {items, selectedItemIDs, setSelectedItemIDs} =
+    useContext<{
+      items: Array<any>;
+      selectedItemIDs: Array<number>;
+      setSelectedItemIDs: (itemIDs: Array<number>) => void;
+    }>(SmartTableContext);
 
   const onCheckboxChange = (itemID: number) => {
     const checkedBox = selectedItemIDs.includes(itemID)
