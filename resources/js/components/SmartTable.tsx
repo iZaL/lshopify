@@ -1,6 +1,7 @@
 import React, {useContext, useState} from 'react';
 import Table from './Table';
 import Checkbox from './forms/Checkbox';
+import { Product } from '../types'
 
 interface Props {
   items: Array<any>;
@@ -34,7 +35,7 @@ const SmartTable = ({items, children}: Props) => {
         setSelectedItemIDs,
         onCheckboxChange,
         onSelectedAllChange,
-        items
+        items,
       }}>
       {children}
     </SmartTableContext.Provider>
@@ -54,20 +55,19 @@ interface SmartHeaderProps {
 }
 
 const Header = ({children}: HeaderProps) => {
-  const {selectedItemIDs,onSelectedAllChange}: any = useContext(SmartTableContext);
+  const {selectedItemIDs, onSelectedAllChange}: any =
+    useContext(SmartTableContext);
 
-  if(selectedItemIDs.length) {
+  if (selectedItemIDs.length) {
     return null;
   }
 
   return (
-      <thead>
-      {
-        children({
-          onSelectedAllChange: onSelectedAllChange,
-        })
-      }
-      </thead>
+    <thead>
+      {children({
+        onSelectedAllChange: onSelectedAllChange,
+      })}
+    </thead>
   );
 };
 const SmartHeader = ({children}: SmartHeaderProps) => {
@@ -90,32 +90,39 @@ interface BodyProps {
 }
 
 const Body = ({children}: BodyProps) => {
-  const {items, selectedItemIDs} =
-    useContext<{items: Array<any>; selectedItemIDs: Array<number>}>(
+  const {items, selectedItemIDs,setSelectedItemIDs} =
+    useContext<{items: Array<any>; selectedItemIDs: Array<number>;setSelectedItemIDs:(itemIDs:Array<number>)=>void}>(
       SmartTableContext,
     );
 
+  const onCheckboxChange = (itemID: number) => {
+    const checkedBox = selectedItemIDs.includes(itemID)
+      ? selectedItemIDs.filter(vID => vID !== itemID)
+      : [...selectedItemIDs, itemID];
+    setSelectedItemIDs(checkedBox);
+  };
+
   return (
     <tbody>
-    {items.map((item, id) => {
-      return (
-        <Table.Row key={id} idx={id} onClick={() => {}}>
-          <Table.Col>
-            <div className="flex w-12 items-center justify-center">
-              <Checkbox
-                checked={selectedItemIDs.includes(item.id)}
-                onChange={() => {}}
-                // onChange={() => onCheckboxChange(item.id)}
-                name=""
-              />
-            </div>
-          </Table.Col>
-          {children({
-            item,
-          })}
-        </Table.Row>
-      );
-    })}
+      {items.map((item, id) => {
+        return (
+          <Table.Row key={id} idx={id} onClick={() => {}}>
+            <Table.Col>
+              <div className="flex w-12 items-center justify-center">
+                <Checkbox
+                  checked={selectedItemIDs.includes(item.id)}
+                  // onChange={() => {}}
+                  onChange={() => onCheckboxChange(item.id)}
+                  name=""
+                />
+              </div>
+            </Table.Col>
+            {children({
+              item,
+            })}
+          </Table.Row>
+        );
+      })}
     </tbody>
   );
 };

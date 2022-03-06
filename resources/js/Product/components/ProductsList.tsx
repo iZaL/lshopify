@@ -43,19 +43,7 @@ export default function ProductsList({products}: Props) {
     return Inertia.get(route('lshopify.products.edit', [product.id]));
   };
 
-  const onSelectedAllChange = () => {
-    if (products.length === selectedProductIDs.length) {
-      setSelectProductIDs([]);
-    } else {
-      setSelectProductIDs(products.map(v => v.id));
-    }
-  };
-  const onCheckboxChange = (productID: Product['id']) => {
-    const checkedBox = selectedProductIDs.includes(productID)
-      ? selectedProductIDs.filter(vID => vID !== productID)
-      : [...selectedProductIDs, productID];
-    setSelectProductIDs(checkedBox);
-  };
+
 
   const showDialogBox = (param: ModalProp) => {
     setShowDialog(true);
@@ -235,7 +223,6 @@ export default function ProductsList({products}: Props) {
           }}
         </SmartTable.Body>
       </Table>
-
     </SmartTable>
   );
 }
