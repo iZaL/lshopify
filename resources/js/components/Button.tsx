@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react';
 import classNames from 'classnames';
-import { ButtonTheme } from '../types'
+import {ButtonTheme} from '../types';
 
 interface Props {
   buttonStyle?: string;

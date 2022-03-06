@@ -2,7 +2,7 @@ import React, {Fragment, ReactNode, useEffect, useState} from 'react';
 import {Dialog, Transition} from '@headlessui/react';
 import ModalFooter from './ModalFooter';
 import Button from './Button';
-import { ButtonTheme } from '../types'
+import {ButtonTheme} from '../types';
 
 interface Props {
   visible: boolean;
@@ -29,7 +29,7 @@ export default function Modal({
   submitButtonTitle = 'Done',
   hideFooter = false,
   hideCancelButton = false,
-  theme='success',
+  theme = 'success',
 }: Props) {
   const [rendered, setRendered] = useState(false);
 
@@ -98,10 +98,7 @@ export default function Modal({
                     )}
                   </div>
                   <div className="ml-4 mt-2 flex-shrink-0">
-                    <Button
-                      onClick={onHideModal}
-                      theme="default"
-                    >
+                    <Button onClick={onHideModal} theme="default">
                       X
                     </Button>
                   </div>
