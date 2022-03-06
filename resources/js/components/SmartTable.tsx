@@ -61,13 +61,13 @@ const Header = ({children}: HeaderProps) => {
   }
 
   return (
-    <thead>
-    {
-      children({
-        onSelectedAllChange: onSelectedAllChange,
-      })
-    }
-    </thead>
+      <thead>
+      {
+        children({
+          onSelectedAllChange: onSelectedAllChange,
+        })
+      }
+      </thead>
   );
 };
 const SmartHeader = ({children}: SmartHeaderProps) => {

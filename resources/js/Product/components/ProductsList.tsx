@@ -184,55 +184,58 @@ export default function ProductsList({products}: Props) {
           );
         }}
       </SmartTable.SmartHeader>
-      <SmartTable.Header>
-        {({onSelectedAllChange}) => {
-          return (
-            <Table.Row rowStyle="m-2">
-              <Table.Head headerStyle="w-16">
-                <Checkbox
-                  checked={
-                    selectedProductIDs.length === products.length &&
-                    products.length != 0
-                  }
-                  onChange={() => onSelectedAllChange()}
-                  name=""
-                  inputStyle="mx-4"
-                />
-              </Table.Head>
-              <Table.Head title="Product" />
-              <Table.Head title="Status" />
-              <Table.Head title="Inventory" />
-              <Table.Head title="Type" />
-              <Table.Head title="Vendor" />
-            </Table.Row>
-          );
-        }}
-      </SmartTable.Header>
+      <Table>
+        <SmartTable.Header>
+          {({onSelectedAllChange}) => {
+            return (
+              <Table.Row rowStyle="m-2">
+                <Table.Head headerStyle="w-16">
+                  <Checkbox
+                    checked={
+                      selectedProductIDs.length === products.length &&
+                      products.length != 0
+                    }
+                    onChange={() => onSelectedAllChange()}
+                    name=""
+                    inputStyle="mx-4"
+                  />
+                </Table.Head>
+                <Table.Head title="Product" />
+                <Table.Head title="Status" />
+                <Table.Head title="Inventory" />
+                <Table.Head title="Type" />
+                <Table.Head title="Vendor" />
+              </Table.Row>
+            );
+          }}
+        </SmartTable.Header>
 
-      <SmartTable.Body>
-        {({item}) => {
-          return (
-            <>
-              <Table.Col>
-                <Button theme="clear" onClick={() => onProductClick(item)}>
-                  {item.image && (
-                    <VariantImage
-                      onClick={() => onProductClick(item)}
-                      image={item.image}
-                      imageStyle={'w-14 h-14 mr-2'}
-                    />
-                  )}
-                  {item.title}
-                </Button>
-              </Table.Col>
-              <Table.Col>{item.status}</Table.Col>
-              <Table.Col>4 in stocks for 5 variants</Table.Col>
-              <Table.Col>{item.product_type}</Table.Col>
-              <Table.Col>zalsstores</Table.Col>
-            </>
-          );
-        }}
-      </SmartTable.Body>
+        <SmartTable.Body>
+          {({item}) => {
+            return (
+              <>
+                <Table.Col>
+                  <Button theme="clear" onClick={() => onProductClick(item)}>
+                    {item.image && (
+                      <VariantImage
+                        onClick={() => onProductClick(item)}
+                        image={item.image}
+                        imageStyle={'w-14 h-14 mr-2'}
+                      />
+                    )}
+                    {item.title}
+                  </Button>
+                </Table.Col>
+                <Table.Col>{item.status}</Table.Col>
+                <Table.Col>4 in stocks for 5 variants</Table.Col>
+                <Table.Col>{item.product_type}</Table.Col>
+                <Table.Col>zalsstores</Table.Col>
+              </>
+            );
+          }}
+        </SmartTable.Body>
+      </Table>
+
     </SmartTable>
   );
 }
