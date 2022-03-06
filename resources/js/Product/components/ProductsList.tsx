@@ -1,5 +1,5 @@
 import React from 'react';
-import {Product} from '../../types';
+import { ButtonTheme, Product } from '../../types'
 import {Inertia} from '@inertiajs/inertia';
 import route from 'ziggy-js';
 import VariantImage from '../Variant/components/VariantImage';
@@ -7,15 +7,37 @@ import Checkbox from '../../components/forms/Checkbox';
 import Button from '../../components/Button';
 import Table from '../../components/Table';
 import DropdownButton from '../../components/DropdownButton';
+import Modal from '../../components/Modal'
 
 interface Props {
   products: Product[];
+}
+
+interface ModalProp {
+  title:string;
+  body:string;
+  theme:ButtonTheme;
+  submitButtonTitle?:string;
+  onSubmit:()=>void;
+  cancelButtonTitle:string;
+  onClose:()=>void;
 }
 
 export default function ProductsList({products}: Props) {
   const [selectedProductIDs, setSelectProductIDs] = React.useState<number[]>(
     [],
   );
+
+  const [showDialog, setShowDialog] = React.useState(false);
+  const [modalParams,setModalParams] = React.useState<ModalProp>({
+    cancelButtonTitle: 'Cancel',
+    submitButtonTitle: 'Save',
+    theme: 'success',
+    title: 'Are you sure ?',
+    body: 'Are you sure ?',
+    onClose: () => setShowDialog(false),
+    onSubmit: () => setShowDialog(false),
+  });
 
   const onProductClick = (product: Product) => {
     return Inertia.get(route('lshopify.products.edit', [product.id]));
@@ -28,6 +50,20 @@ export default function ProductsList({products}: Props) {
       setSelectProductIDs(products.map(v => v.id));
     }
   };
+  const onCheckboxChange = (productID: Product['id']) => {
+    const checkedBox = selectedProductIDs.includes(productID)
+      ? selectedProductIDs.filter(vID => vID !== productID)
+      : [...selectedProductIDs, productID];
+    setSelectProductIDs(checkedBox);
+  };
+
+  const showDialogBox  = (param: ModalProp) => {
+    setShowDialog(true);
+    setModalParams({
+      ...modalParams,
+      ...param
+    });
+  }
 
   return (
     <>
@@ -48,7 +84,7 @@ export default function ProductsList({products}: Props) {
           theme="clear"
           buttonStyle="-ml-px px-2 border border-gray-300 font-medium"
           onClick={() => {}}>
-          Open bulk editor
+          Edit products
         </Button>
 
         <DropdownButton
@@ -60,20 +96,93 @@ export default function ProductsList({products}: Props) {
           }}
           items={[
             {
-              title: 'Edit Prices',
+              title: 'Set as active',
+              onClick: () => showDialogBox({
+                ...modalParams,
+                title: `Set ${selectedProductIDs.length} products as active?`,
+                body: 'Setting products as active will make them available to their selected sales channels and apps.',
+                submitButtonTitle:'Set as active',
+                onSubmit: () => {
+                  setShowDialog(false);
+                  Inertia.post(route('lshopify.products.attributes'), {
+                    product_ids: selectedProductIDs,
+                    status: 'active',
+                  });
+                },
+              }),
+            },
+            {
+              title: 'Set as draft',
+              onClick: () => showDialogBox({
+                ...modalParams,
+                title: `Set ${selectedProductIDs.length} products as draft?`,
+                body: 'Setting products as draft will hide them from all sales channels and apps.',
+                submitButtonTitle:'Set as draft',
+                onSubmit: () => {
+                  setShowDialog(false);
+                  Inertia.post(route('lshopify.products.attributes'), {
+                    product_ids: selectedProductIDs,
+                    status: 'draft',
+                  });
+                },
+              }),
+            },
+            {
+              title: 'Archive products',
+              onClick: () => showDialogBox({
+                ...modalParams,
+                title: `Archive ${selectedProductIDs.length} products?`,
+                body: 'Archiving products will hide them from your sales channels and Shopify admin. You’ll find them using the status filter in your product list.',
+                submitButtonTitle:'Archive products',
+                onSubmit: () => {
+                  setShowDialog(false);
+                  // Inertia.post(route('lshopify.products.attributes'), {
+                  //   product_ids: selectedProductIDs,
+                  //   status: 'draft',
+                  // });
+                },
+              })
+            },
+            {
+              title: 'Delete products',
+              onClick: () => showDialogBox({
+                ...modalParams,
+                title: `Delete ${selectedProductIDs.length} products?`,
+                body: 'This can’t be undone.',
+                submitButtonTitle:'Delete products',
+                theme:'error',
+                onSubmit: () => {
+                  setShowDialog(false);
+                  Inertia.post(route('lshopify.products.delete'), {
+                    product_ids: selectedProductIDs,
+                  });
+                },
+              })
+            },
+            {
+              title: 'Add tags',
+              onClick: () => {},
+            },
+            {
+              title: 'Add to collection',
+              onClick: () => {},
+            },
+            {
+              title: 'Remove from collection',
               onClick: () => {},
             },
           ]}
         />
+
       </div>
       ):null}
       <Table>
         {!selectedProductIDs.length && (
           <thead className=''>
             <Table.Row rowStyle="m-2">
-              <Table.Head headerStyle="w-16 ">
+              <Table.Head headerStyle="w-16">
                 <Checkbox
-                  checked={selectedProductIDs.length === products.length}
+                  checked={selectedProductIDs.length === products.length && products.length != 0}
                   onChange={() => onSelectedAllChange()}
                   name=""
                   inputStyle="mx-4"
@@ -91,8 +200,8 @@ export default function ProductsList({products}: Props) {
           {products.map((product, id) => (
             <Table.Row key={id} idx={id} onClick={() => {}}>
               <Table.Col>
-                <div className="flex w-12 items-center justify-center">
-                  <Checkbox checked={false} onChange={() => {}} name="" />
+                <div className="flex items-center justify-center w-12">
+                  <Checkbox checked={selectedProductIDs.includes(product.id)} onChange={() => onCheckboxChange(product.id)} name="" />
                 </div>
               </Table.Col>
 
@@ -116,6 +225,17 @@ export default function ProductsList({products}: Props) {
           ))}
         </tbody>
       </Table>
+
+      <Modal
+        visible={showDialog}
+        heading={modalParams.title}
+        theme={modalParams.theme}
+        submitButtonTitle={modalParams.submitButtonTitle}
+        onClose={() => modalParams.onClose()}
+        onConfirm={() => modalParams.onSubmit()}
+      >
+        <p className="p-5 text-sm">{modalParams.body}</p>
+      </Modal>
     </>
   );
 }

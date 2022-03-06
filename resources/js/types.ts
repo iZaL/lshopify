@@ -195,3 +195,5 @@ export interface Fulfillment {
 }
 
 export type FulfillmentVariant = VariantPivot;
+
+export type ButtonTheme = 'success' | 'error' | 'warning' | 'default' | 'clear';

@@ -94,7 +94,7 @@ export default function EditVariantOptions({
           setShowDialog(false);
           deletingVariants.length && onVariantOptionsRemoveConfirm();
         }}
-        theme={deletingVariants.length ? 'red' : 'green'}
+        theme={deletingVariants.length ? 'error' : 'success'}
         submitButtonTitle={
           deletingVariants.length ? 'Delete Variants' : 'Close'
         }>

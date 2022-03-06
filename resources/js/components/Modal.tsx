@@ -2,6 +2,7 @@ import React, {Fragment, ReactNode, useEffect, useState} from 'react';
 import {Dialog, Transition} from '@headlessui/react';
 import ModalFooter from './ModalFooter';
 import Button from './Button';
+import { ButtonTheme } from '../types'
 
 interface Props {
   visible: boolean;
@@ -11,7 +12,7 @@ interface Props {
   subHeading?: string;
   children?: ReactNode;
   onConfirm: () => void;
-  theme?: string;
+  theme?: ButtonTheme;
   width?: string;
   hideFooter?: boolean;
   hideCancelButton?: boolean;
@@ -28,6 +29,7 @@ export default function Modal({
   submitButtonTitle = 'Done',
   hideFooter = false,
   hideCancelButton = false,
+  theme='success',
 }: Props) {
   const [rendered, setRendered] = useState(false);
 
@@ -99,7 +101,6 @@ export default function Modal({
                     <Button
                       onClick={onHideModal}
                       theme="default"
-                      // className='relative inline-flex items-center px-4 py-2 border border-gray-400 rounded hover:bg-gray-200 ring-0'
                     >
                       X
                     </Button>
@@ -117,6 +118,7 @@ export default function Modal({
                   onProceed={onProceed}
                   submitButtonTitle={submitButtonTitle}
                   hideCancelButton={hideCancelButton}
+                  theme={theme}
                 />
               )}
             </div>

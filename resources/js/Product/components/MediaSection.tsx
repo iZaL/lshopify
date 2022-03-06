@@ -67,7 +67,7 @@ const MediaSection = ({onImagesUpload, images, onImagesDelete}: Props) => {
           setSelectedImages([]);
           onImagesDelete(selectedImages);
         }}
-        theme="red"
+        theme="error"
         submitButtonTitle="Delete">
         <p className="p-5 text-sm">do you wish to continue?</p>
       </Modal>

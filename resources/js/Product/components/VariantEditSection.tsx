@@ -531,7 +531,7 @@ export default function VariantEditSection({
           setShowDialog(null);
           onVariantsDelete(checkedVariantIDs);
         }}
-        theme="red"
+        theme="error"
         submitButtonTitle="Delete">
         <p className="p-5 text-sm">
           You cannot recover deleted product variants, do you wish to continue?
@@ -546,7 +546,7 @@ export default function VariantEditSection({
           setShowDialog(null);
           onApplyAll('image', null);
         }}
-        theme="red"
+        theme="error"
         submitButtonTitle="Remove">
         <p className="p-5 text-sm">do you wish to continue?</p>
       </Modal>
@@ -640,7 +640,7 @@ export default function VariantEditSection({
       <Modal
         visible={showDialog === 'delete_variant'}
         heading={`Delete ${selectedVariant?.title}`}
-        theme="red"
+        theme="error"
         submitButtonTitle="Delete"
         onClose={() => {
           setShowDialog(null);

@@ -1,11 +1,12 @@
 import React, {ReactNode} from 'react';
 import Button from './Button';
+import { ButtonTheme } from '../types'
 
 interface Props {
   onHideModal: () => void;
   onProceed: () => void;
   submitButtonTitle?: string;
-  theme?: string;
+  theme?: ButtonTheme;
   children?: ReactNode;
   hideCancelButton?: boolean;
 }
@@ -16,10 +17,11 @@ export default function ModalFooter({
   submitButtonTitle = 'Done',
   hideCancelButton = false,
   children,
+  theme = 'success'
 }: Props) {
   return (
     <div className="bg-gray-50 px-4 py-3 dark:bg-gray-600 sm:flex sm:flex-row-reverse sm:px-6">
-      <Button onClick={() => onProceed()} theme="success">
+      <Button onClick={() => onProceed()} theme={theme}>
         {submitButtonTitle}
       </Button>
 

@@ -1,10 +1,11 @@
 import React, {ReactNode} from 'react';
 import classNames from 'classnames';
+import { ButtonTheme } from '../types'
 
 interface Props {
   buttonStyle?: string;
   onClick?: () => void;
-  theme?: 'success' | 'error' | 'warning' | 'default' | 'clear';
+  theme?: ButtonTheme;
   border?: boolean;
   rounded?: boolean;
   children?: ReactNode;

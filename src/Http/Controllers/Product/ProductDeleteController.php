@@ -2,17 +2,22 @@
 
 namespace IZal\Lshopify\Http\Controllers\Product;
 
+use Illuminate\Http\Request;
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Models\Product;
 
 class ProductDeleteController extends Controller
 {
-    public function __invoke($id): \Illuminate\Http\RedirectResponse
+    public function __invoke(Request $request): \Illuminate\Http\RedirectResponse
     {
-        $product = Product::find($id);
+        $this->validate($request, [
+            'product_ids' => 'required|array',
+        ]);
 
-        $product->delete();
+        $products = Product::whereIn('id',$request->product_ids);
 
-        return redirect()->back();
+        $products->delete();
+
+        return redirect()->back()->with('success','Products Deleted');
     }
 }
