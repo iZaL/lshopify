@@ -1,13 +1,12 @@
-import React from 'react';
-import {ButtonTheme, Product} from '../../types';
-import {Inertia} from '@inertiajs/inertia';
-import route from 'ziggy-js';
-import Checkbox from '../../components/forms/Checkbox';
-import Button from '../../components/Button';
-import Table from '../../components/Table';
-import DropdownButton from '../../components/DropdownButton';
-import SmartTable from '../../components/SmartTable';
-import VariantImage from '../Variant/components/VariantImage';
+import React from 'react'
+import { ButtonTheme, Product } from '../../types'
+import { Inertia } from '@inertiajs/inertia'
+import route from 'ziggy-js'
+import Button from '../../components/Button'
+import Table from '../../components/Table'
+import DropdownButton from '../../components/DropdownButton'
+import SmartTable from '../../components/SmartTable'
+import VariantImage from '../Variant/components/VariantImage'
 import Modal from '../../components/Modal'
 
 interface Props {
@@ -25,9 +24,6 @@ interface ModalProp {
 }
 
 export default function ProductsList({products}: Props) {
-  const [selectedProductIDs, setSelectProductIDs] = React.useState<number[]>(
-    [],
-  );
 
   const [showDialog, setShowDialog] = React.useState(false);
   const [modalParams, setModalParams] = React.useState<ModalProp>({
@@ -56,20 +52,9 @@ export default function ProductsList({products}: Props) {
     <>
       <SmartTable items={products}>
         <SmartTable.SmartHeader>
-          {({selectedItemIDs, items, onSelectedAllChange}) => {
+          {({selectedItemIDs}) => {
             return (
-              <div className="mb-2 flex h-10 w-full flex-row px-4">
-                <Button
-                  theme="clear"
-                  buttonStyle="px-6 rounded-l-md border border-gray-300 font-medium">
-                  <Checkbox
-                    name="selected"
-                    checked={selectedItemIDs.length === items.length}
-                    onChange={() => onSelectedAllChange()}
-                  />
-                  <span className="px-2">{selectedItemIDs.length} selected</span>
-                </Button>
-
+              <>
                 <Button
                   theme="clear"
                   buttonStyle="-ml-px px-2 border border-gray-300 font-medium"
@@ -96,10 +81,13 @@ export default function ProductsList({products}: Props) {
                           submitButtonTitle: 'Set as active',
                           onSubmit: () => {
                             setShowDialog(false);
-                            Inertia.post(route('lshopify.products.attributes'), {
-                              product_ids: selectedItemIDs,
-                              status: 'active',
-                            });
+                            Inertia.post(
+                              route('lshopify.products.attributes'),
+                              {
+                                product_ids: selectedItemIDs,
+                                status: 'active',
+                              },
+                            );
                           },
                         }),
                     },
@@ -113,10 +101,13 @@ export default function ProductsList({products}: Props) {
                           submitButtonTitle: 'Set as draft',
                           onSubmit: () => {
                             setShowDialog(false);
-                            Inertia.post(route('lshopify.products.attributes'), {
-                              product_ids: selectedItemIDs,
-                              status: 'draft',
-                            });
+                            Inertia.post(
+                              route('lshopify.products.attributes'),
+                              {
+                                product_ids: selectedItemIDs,
+                                status: 'draft',
+                              },
+                            );
                           },
                         }),
                     },
@@ -130,10 +121,6 @@ export default function ProductsList({products}: Props) {
                           submitButtonTitle: 'Archive products',
                           onSubmit: () => {
                             setShowDialog(false);
-                            // Inertia.post(route('lshopify.products.attributes'), {
-                            //   product_ids: selectedProductIDs,
-                            //   status: 'draft',
-                            // });
                           },
                         }),
                     },
@@ -168,36 +155,19 @@ export default function ProductsList({products}: Props) {
                     },
                   ]}
                 />
-              </div>
+              </>
             );
           }}
         </SmartTable.SmartHeader>
+
         <Table>
           <SmartTable.Header>
-            {({onSelectedAllChange}) => {
-              return (
-                <Table.Row rowStyle="m-2">
-                  <Table.Head headerStyle="w-16">
-                    <Checkbox
-                      checked={
-                        selectedProductIDs.length === products.length &&
-                        products.length != 0
-                      }
-                      onChange={() => onSelectedAllChange()}
-                      name=""
-                      inputStyle="mx-4"
-                    />
-                  </Table.Head>
-                  <Table.Head title="Product" />
-                  <Table.Head title="Status" />
-                  <Table.Head title="Inventory" />
-                  <Table.Head title="Type" />
-                  <Table.Head title="Vendor" />
-                </Table.Row>
-              );
-            }}
+            <Table.Head title="Product" />
+            <Table.Head title="Status" />
+            <Table.Head title="Inventory" />
+            <Table.Head title="Type" />
+            <Table.Head title="Vendor" />
           </SmartTable.Header>
-
           <SmartTable.Body>
             {({item}) => {
               return (

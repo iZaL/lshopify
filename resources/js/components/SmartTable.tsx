@@ -1,45 +1,39 @@
-import React, { useContext,useState } from 'react'
-import Table from './Table'
-import Checkbox from './forms/Checkbox'
+import React, {useContext, useState} from 'react';
+import Table from './Table';
+import Checkbox from './forms/Checkbox';
+import Button from './Button';
 
 interface ItemWithID {
-  id:number
+  id: number;
 }
 
-interface MyContextData <Item extends ItemWithID> {
-  selectedItemIDs:Item['id'][],
-  setSelectedItemIDs:(ids:Item['id'][])=>void,
-  onSelectedAllChange:()=>void,
+interface SmartTableContextData<Item extends ItemWithID> {
+  selectedItemIDs: Item['id'][];
+  setSelectedItemIDs: (ids: Item['id'][]) => void;
+  onSelectedAllChange: () => void;
   items: Item[];
 }
 
 interface HeaderProps {
-  children: (props: {onSelectedAllChange: () => void}) => JSX.Element;
+  children: React.ReactNode;
 }
 
-interface SmartHeaderProps <T extends ItemWithID>{
-  children: (props: {
-    onSelectedAllChange: () => void;
-    items: T[];
-    selectedItemIDs: T['id'][];
-  }) => JSX.Element;
-}
-
-
-
-const SmartTableContext = React.createContext<MyContextData<ItemWithID>>({
+const SmartTableContext = React.createContext<
+  SmartTableContextData<ItemWithID>
+>({
   selectedItemIDs: [],
   setSelectedItemIDs: () => {},
   onSelectedAllChange: () => {},
-  items: []
-})
+  items: [],
+});
 
-type MyProviderProps<Item extends ItemWithID> = {
+const SmartTable = <Item extends ItemWithID>({
+  items,
+  children,
+}: {
   items: Item[];
-}
-
-const SmartTable = <Item extends ItemWithID>({items, children}: React.PropsWithChildren<MyProviderProps<Item>>) => {
-// const SmartTable = <Item extends ItemWithID>({items, children}: { items:T[];children:React.ReactNode }) => {
+  children: React.ReactNode;
+}) => {
   const [selectedItemIDs, setSelectedItemIDs] = useState<Item['id'][]>([]);
 
   const onSelectedAllChange = () => {
@@ -64,7 +58,8 @@ const SmartTable = <Item extends ItemWithID>({items, children}: React.PropsWithC
 };
 
 const Header = ({children}: HeaderProps) => {
-  const {selectedItemIDs, onSelectedAllChange} =  useContext(SmartTableContext);
+  const {selectedItemIDs, onSelectedAllChange, items} =
+    useContext(SmartTableContext);
 
   if (selectedItemIDs.length) {
     return null;
@@ -72,28 +67,56 @@ const Header = ({children}: HeaderProps) => {
 
   return (
     <thead>
-      {children({
-        onSelectedAllChange: onSelectedAllChange,
-      })}
+      <Table.Row rowStyle="m-2">
+        <Table.Head headerStyle="w-16">
+          <Checkbox
+            checked={
+              selectedItemIDs.length === items.length && items.length != 0
+            }
+            onChange={() => onSelectedAllChange()}
+            name=""
+            inputStyle="mx-4"
+          />
+        </Table.Head>
+        {children}
+      </Table.Row>
     </thead>
   );
 };
 
+interface SmartHeaderProps<Item extends ItemWithID> {
+  children: (props: {selectedItemIDs: Item['id'][]}) => JSX.Element;
+}
+
 const SmartHeader = ({children}: SmartHeaderProps<ItemWithID>) => {
-  const {onSelectedAllChange, items, selectedItemIDs} = useContext(SmartTableContext);
+  const {onSelectedAllChange, items, selectedItemIDs} =
+    useContext(SmartTableContext);
 
   if (!selectedItemIDs.length) {
     return null;
   }
 
-  return children({
-    onSelectedAllChange,
-    items,
-    selectedItemIDs,
-  });
+  return (
+    <div className="mb-2 flex h-10 w-full flex-row px-4">
+      <Button
+        theme="clear"
+        buttonStyle="px-6 rounded-l-md border border-gray-300 font-medium">
+        <Checkbox
+          name="selected"
+          checked={selectedItemIDs.length === items.length}
+          onChange={() => onSelectedAllChange()}
+        />
+        <span className="px-2">{selectedItemIDs.length} selected</span>
+      </Button>
+
+      {children({
+        selectedItemIDs,
+      })}
+    </div>
+  );
 };
 
-interface BodyProps <T extends ItemWithID>{
+interface BodyProps<T extends ItemWithID> {
   children: (props: {item: any}) => JSX.Element;
 }
 
