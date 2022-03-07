@@ -1,13 +1,13 @@
-import React from 'react'
-import { ButtonTheme, Product } from '../../types'
-import { Inertia } from '@inertiajs/inertia'
-import route from 'ziggy-js'
-import Button from '../../components/Button'
-import Table from '../../components/Table'
-import DropdownButton from '../../components/DropdownButton'
-import SmartTable from '../../components/SmartTable'
-import VariantImage from '../Variant/components/VariantImage'
-import Modal from '../../components/Modal'
+import React from 'react';
+import {ButtonTheme, Product} from '../../types';
+import {Inertia} from '@inertiajs/inertia';
+import route from 'ziggy-js';
+import Button from '../../components/Button';
+import Table from '../../components/Table';
+import DropdownButton from '../../components/DropdownButton';
+import SmartTable from '../../components/SmartTable';
+import VariantImage from '../Variant/components/VariantImage';
+import Modal from '../../components/Modal';
 
 interface Props {
   products: Product[];
@@ -24,7 +24,6 @@ interface ModalProp {
 }
 
 export default function ProductsList({products}: Props) {
-
   const [showDialog, setShowDialog] = React.useState(false);
   const [modalParams, setModalParams] = React.useState<ModalProp>({
     cancelButtonTitle: 'Cancel',

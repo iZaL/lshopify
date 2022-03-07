@@ -1,11 +1,11 @@
 import React from 'react';
-import { Collection, CollectionCondition } from '../../types'
+import {Collection, CollectionCondition} from '../../types';
 import {Inertia} from '@inertiajs/inertia';
 import route from 'ziggy-js';
 import Button from '../../components/Button';
 import VariantImage from '../../Product/Variant/components/VariantImage';
 import Table from '../../components/Table';
-import SmartTable from '../../components/SmartTable'
+import SmartTable from '../../components/SmartTable';
 
 interface Props {
   collections: Collection[];
@@ -21,9 +21,7 @@ export default function CollectionList({collections}: Props) {
       <SmartTable items={collections}>
         <SmartTable.SmartHeader>
           {({selectedItemIDs}) => {
-            return (
-              <></>
-            )
+            return <></>;
           }}
         </SmartTable.SmartHeader>
 
@@ -35,7 +33,6 @@ export default function CollectionList({collections}: Props) {
             <Table.Head />
           </SmartTable.Header>
           <SmartTable.Body>
-
             {({item}) => {
               return (
                 <>
@@ -55,14 +52,15 @@ export default function CollectionList({collections}: Props) {
                   </Table.Col>
                   <Table.Col>{item.type}</Table.Col>
                   <Table.Col>
-                    {item.conditions.map((condition:CollectionCondition, idx:number) => (
-                      <div key={idx}>{condition.title}</div>
-                    ))}
+                    {item.conditions.map(
+                      (condition: CollectionCondition, idx: number) => (
+                        <div key={idx}>{condition.title}</div>
+                      ),
+                    )}
                   </Table.Col>
                 </>
-              )
+              );
             }}
-
           </SmartTable.Body>
         </Table>
       </SmartTable>

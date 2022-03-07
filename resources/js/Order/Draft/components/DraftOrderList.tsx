@@ -2,7 +2,7 @@ import React from 'react';
 import {Order} from '../../../types';
 import Checkbox from '../../../components/forms/Checkbox';
 import Table from '../../../components/Table';
-import SmartTable from '../../../components/SmartTable'
+import SmartTable from '../../../components/SmartTable';
 
 interface Props {
   orders: Order[];
@@ -11,13 +11,10 @@ interface Props {
 
 export default function DraftOrderList({orders, onItemClick}: Props) {
   return (
-
     <SmartTable items={orders}>
       <SmartTable.SmartHeader>
         {({selectedItemIDs}) => {
-          return (
-            <></>
-          )
+          return <></>;
         }}
       </SmartTable.SmartHeader>
 
@@ -40,7 +37,7 @@ export default function DraftOrderList({orders, onItemClick}: Props) {
                 <Table.Col>{item.status}</Table.Col>
                 <Table.Col>{item.total_formatted}</Table.Col>
               </>
-            )
+            );
           }}
         </SmartTable.Body>
       </Table>

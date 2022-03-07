@@ -5,7 +5,7 @@ import Button from '../../components/Button';
 import VariantImage from '../../Product/Variant/components/VariantImage';
 import InputText from '../../components/forms/InputText';
 import Table from '../../components/Table';
-import SmartTable from '../../components/SmartTable'
+import SmartTable from '../../components/SmartTable';
 
 type ExtendedVariant = Variant & {
   isDirty: boolean;
@@ -26,13 +26,10 @@ export default function InventoryList({
   };
 
   return (
-
     <SmartTable items={variants}>
       <SmartTable.SmartHeader>
         {({selectedItemIDs}) => {
-          return (
-            <></>
-          )
+          return <></>;
         }}
       </SmartTable.SmartHeader>
 
@@ -60,9 +57,9 @@ export default function InventoryList({
                 <Table.Col>
                   {item.product?.title && (
                     <span className="font-bold">
-                  {item.product.title}
+                      {item.product.title}
                       <br />
-                </span>
+                    </span>
                   )}
                   {item.title}
                 </Table.Col>
@@ -84,11 +81,10 @@ export default function InventoryList({
                   ) : null}
                 </Table.Col>
               </>
-            )
+            );
           }}
         </SmartTable.Body>
-
-    </Table>
+      </Table>
     </SmartTable>
   );
 }
