@@ -1,17 +1,46 @@
-import React, {useContext, useState} from 'react';
-import Table from './Table';
-import Checkbox from './forms/Checkbox';
-import {Product} from '../types';
+import React, { useContext,useState } from 'react'
+import Table from './Table'
+import Checkbox from './forms/Checkbox'
 
-interface Props {
-  items: Array<any>;
-  children: React.ReactNode;
+interface ItemWithID {
+  id:number
 }
 
-const SmartTableContext: any = React.createContext(null);
+interface MyContextData <Item extends ItemWithID> {
+  selectedItemIDs:Item['id'][],
+  setSelectedItemIDs:(ids:Item['id'][])=>void,
+  onSelectedAllChange:()=>void,
+  items: Item[];
+}
 
-const SmartTable = ({items, children}: Props) => {
-  const [selectedItemIDs, setSelectedItemIDs] = useState<number[]>([]);
+interface HeaderProps {
+  children: (props: {onSelectedAllChange: () => void}) => JSX.Element;
+}
+
+interface SmartHeaderProps <T extends ItemWithID>{
+  children: (props: {
+    onSelectedAllChange: () => void;
+    items: T[];
+    selectedItemIDs: T['id'][];
+  }) => JSX.Element;
+}
+
+
+
+const SmartTableContext = React.createContext<MyContextData<ItemWithID>>({
+  selectedItemIDs: [],
+  setSelectedItemIDs: () => {},
+  onSelectedAllChange: () => {},
+  items: []
+})
+
+type MyProviderProps<Item extends ItemWithID> = {
+  items: Item[];
+}
+
+const SmartTable = <Item extends ItemWithID>({items, children}: React.PropsWithChildren<MyProviderProps<Item>>) => {
+// const SmartTable = <Item extends ItemWithID>({items, children}: { items:T[];children:React.ReactNode }) => {
+  const [selectedItemIDs, setSelectedItemIDs] = useState<Item['id'][]>([]);
 
   const onSelectedAllChange = () => {
     if (items.length === selectedItemIDs.length) {
@@ -21,19 +50,11 @@ const SmartTable = ({items, children}: Props) => {
     }
   };
 
-  const onCheckboxChange = (itemID: number) => {
-    const checkedBox = selectedItemIDs.includes(itemID)
-      ? selectedItemIDs.filter(vID => vID !== itemID)
-      : [...selectedItemIDs, itemID];
-    setSelectedItemIDs(checkedBox);
-  };
-
   return (
     <SmartTableContext.Provider
       value={{
         selectedItemIDs,
         setSelectedItemIDs,
-        onCheckboxChange,
         onSelectedAllChange,
         items,
       }}>
@@ -42,21 +63,8 @@ const SmartTable = ({items, children}: Props) => {
   );
 };
 
-interface HeaderProps {
-  children: (props: {onSelectedAllChange: () => void}) => JSX.Element;
-}
-
-interface SmartHeaderProps {
-  children: (props: {
-    onSelectedAllChange: () => void;
-    items: Array<any>;
-    selectedItemIDs: number[];
-  }) => JSX.Element;
-}
-
 const Header = ({children}: HeaderProps) => {
-  const {selectedItemIDs, onSelectedAllChange}: any =
-    useContext(SmartTableContext);
+  const {selectedItemIDs, onSelectedAllChange} =  useContext(SmartTableContext);
 
   if (selectedItemIDs.length) {
     return null;
@@ -70,9 +78,9 @@ const Header = ({children}: HeaderProps) => {
     </thead>
   );
 };
-const SmartHeader = ({children}: SmartHeaderProps) => {
-  const {onSelectedAllChange, items, selectedItemIDs}: any =
-    useContext(SmartTableContext);
+
+const SmartHeader = ({children}: SmartHeaderProps<ItemWithID>) => {
+  const {onSelectedAllChange, items, selectedItemIDs} = useContext(SmartTableContext);
 
   if (!selectedItemIDs.length) {
     return null;
@@ -85,19 +93,15 @@ const SmartHeader = ({children}: SmartHeaderProps) => {
   });
 };
 
-interface BodyProps {
+interface BodyProps <T extends ItemWithID>{
   children: (props: {item: any}) => JSX.Element;
 }
 
-const Body = ({children}: BodyProps) => {
+const Body = ({children}: BodyProps<ItemWithID>) => {
   const {items, selectedItemIDs, setSelectedItemIDs} =
-    useContext<{
-      items: Array<any>;
-      selectedItemIDs: Array<number>;
-      setSelectedItemIDs: (itemIDs: Array<number>) => void;
-    }>(SmartTableContext);
+    useContext(SmartTableContext);
 
-  const onCheckboxChange = (itemID: number) => {
+  const onCheckboxChange = (itemID: ItemWithID['id']) => {
     const checkedBox = selectedItemIDs.includes(itemID)
       ? selectedItemIDs.filter(vID => vID !== itemID)
       : [...selectedItemIDs, itemID];
