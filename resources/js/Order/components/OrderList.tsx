@@ -2,6 +2,7 @@ import React from 'react';
 import {Order} from '../../types';
 import Checkbox from '../../components/forms/Checkbox';
 import Table from '../../components/Table';
+import SmartTable from '../../components/SmartTable'
 
 interface Props {
   orders: Order[];
@@ -10,9 +11,17 @@ interface Props {
 
 export default function OrderList({orders, onItemClick}: Props) {
   return (
-    <Table>
-      <thead>
-        <Table.Row>
+    <SmartTable items={orders}>
+      <SmartTable.SmartHeader>
+        {({selectedItemIDs}) => {
+          return (
+            <></>
+          )
+        }}
+      </SmartTable.SmartHeader>
+
+      <Table>
+        <SmartTable.Header>
           <Table.Head headerStyle="w-16" />
           <Table.Head title="Order" />
           <Table.Head title="Date" />
@@ -23,30 +32,26 @@ export default function OrderList({orders, onItemClick}: Props) {
           <Table.Head title="Items" />
           <Table.Head title="Delivery method" />
           <Table.Head title="Tags" />
-        </Table.Row>
-      </thead>
-      <tbody>
-        {orders.map((order, id) => (
-          <Table.Row key={id} idx={id} onClick={() => onItemClick(order)}>
-            <Table.Col>
-              <div className="flex w-12 items-center justify-center">
-                <Checkbox checked={false} onChange={() => {}} name="" />
-              </div>
-            </Table.Col>
-            <Table.Col>#{order.id}</Table.Col>
-            <Table.Col>{order.date_time}</Table.Col>
-            <Table.Col>{order.customer?.first_name || '--'}</Table.Col>
-            <Table.Col>{order.total_formatted}</Table.Col>
-            <Table.Col>{order.payment_status}</Table.Col>
-            <Table.Col>{order.fulfillment_status}</Table.Col>
-            <Table.Col>{order.items_count}</Table.Col>
-            <Table.Col></Table.Col>
-            <Table.Col></Table.Col>
-            {/*<Table.Col>{order.delivery_method}</Table.Col>*/}
-            {/*<Table.Col>{order.tags}</Table.Col>*/}
-          </Table.Row>
-        ))}
-      </tbody>
-    </Table>
+        </SmartTable.Header>
+        <SmartTable.Body>
+          {({item}) => {
+            return (
+              <>
+                <Table.Col>#{item.id}</Table.Col>
+                <Table.Col>{item.date_time}</Table.Col>
+                <Table.Col>{item.customer?.first_name || '--'}</Table.Col>
+                <Table.Col>{item.total_formatted}</Table.Col>
+                <Table.Col>{item.payment_status}</Table.Col>
+                <Table.Col>{item.fulfillment_status}</Table.Col>
+                <Table.Col>{item.items_count}</Table.Col>
+                <Table.Col></Table.Col>
+                <Table.Col></Table.Col>
+              </>
+            )
+          }}
+        </SmartTable.Body>
+      </Table>
+    </SmartTable>
+
   );
 }

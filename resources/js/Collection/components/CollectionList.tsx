@@ -2,7 +2,6 @@ import React from 'react';
 import { Collection, CollectionCondition } from '../../types'
 import {Inertia} from '@inertiajs/inertia';
 import route from 'ziggy-js';
-import Checkbox from '../../components/forms/Checkbox';
 import Button from '../../components/Button';
 import VariantImage from '../../Product/Variant/components/VariantImage';
 import Table from '../../components/Table';
