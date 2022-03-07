@@ -5,14 +5,15 @@ import Button from '../../components/Button';
 import VariantImage from '../../Product/Variant/components/VariantImage';
 import InputText from '../../components/forms/InputText';
 import Table from '../../components/Table';
+import SmartTable from '../../components/SmartTable'
 
 type ExtendedVariant = Variant & {
   isDirty: boolean;
 };
 interface Props {
   variants: ExtendedVariant[];
-  onQuantityChange: (variant: ExtendedVariant, quantity: string) => void;
-  onSave: (variant: ExtendedVariant) => void;
+  onQuantityChange: (item: ExtendedVariant, quantity: string) => void;
+  onSave: (item: ExtendedVariant) => void;
 }
 
 export default function InventoryList({
@@ -20,68 +21,74 @@ export default function InventoryList({
   onQuantityChange,
   onSave,
 }: Props) {
-  const onCollectionClick = (variant: Variant) => {
+  const onCollectionClick = (item: Variant) => {
     // return Inertia.get(route('lshopify.variants.edit', [collection.id]));
   };
 
   return (
-    <Table>
-      <thead>
-        <tr>
-          <Table.Head />
+
+    <SmartTable items={variants}>
+      <SmartTable.SmartHeader>
+        {({selectedItemIDs}) => {
+          return (
+            <></>
+          )
+        }}
+      </SmartTable.SmartHeader>
+
+      <Table>
+        <SmartTable.Header>
           <Table.Head />
           <Table.Head title="Product" />
           <Table.Head title="SKU" />
           <Table.Head title="Available" />
           <Table.Head />
-        </tr>
-      </thead>
-      <tbody>
-        {variants.map((variant, id) => (
-          <Table.Row key={id} idx={id} onClick={() => {}}>
-            <Table.Col>
-              <div className="flex w-12 items-center justify-center">
-                <Checkbox checked={false} onChange={() => {}} name="" />
-              </div>
-            </Table.Col>
-            <Table.Col>
-              {variant.image && (
-                <VariantImage
-                  onClick={() => onCollectionClick(variant)}
-                  image={variant.image}
-                  imageStyle="w-16 h-12"
-                />
-              )}
-            </Table.Col>
-            <Table.Col>
-              {variant.product?.title && (
-                <span className="font-bold">
-                  {variant.product.title}
-                  <br />
+        </SmartTable.Header>
+        <SmartTable.Body>
+          {({item}) => {
+            return (
+              <>
+                <Table.Col>
+                  {item.image && (
+                    <VariantImage
+                      onClick={() => onCollectionClick(item)}
+                      image={item.image}
+                      imageStyle="w-16 h-12"
+                    />
+                  )}
+                </Table.Col>
+                <Table.Col>
+                  {item.product?.title && (
+                    <span className="font-bold">
+                  {item.product.title}
+                      <br />
                 </span>
-              )}
-              {variant.title}
-            </Table.Col>
-            <Table.Col>{variant.sku}</Table.Col>
-            <Table.Col colStyle="w-16">
-              <InputText
-                value={variant.quantity}
-                name="quantity"
-                onChange={event =>
-                  onQuantityChange(variant, event.target.value)
-                }
-              />
-            </Table.Col>
-            <Table.Col colStyle="w-16">
-              {variant.isDirty ? (
-                <Button onClick={() => onSave(variant)} theme="success">
-                  Save
-                </Button>
-              ) : null}
-            </Table.Col>
-          </Table.Row>
-        ))}
-      </tbody>
+                  )}
+                  {item.title}
+                </Table.Col>
+                <Table.Col>{item.sku}</Table.Col>
+                <Table.Col colStyle="w-16">
+                  <InputText
+                    value={item.quantity}
+                    name="quantity"
+                    onChange={event =>
+                      onQuantityChange(item, event.target.value)
+                    }
+                  />
+                </Table.Col>
+                <Table.Col colStyle="w-16">
+                  {item.isDirty ? (
+                    <Button onClick={() => onSave(item)} theme="success">
+                      Save
+                    </Button>
+                  ) : null}
+                </Table.Col>
+              </>
+            )
+          }}
+        </SmartTable.Body>
+
     </Table>
+    </SmartTable>
   );
 }
