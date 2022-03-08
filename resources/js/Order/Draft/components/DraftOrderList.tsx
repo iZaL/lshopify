@@ -20,22 +20,22 @@ export default function DraftOrderList({orders, onItemClick}: Props) {
 
       <Table>
         <SmartTable.Header>
-          <Table.Head headerStyle="w-16" />
-          <Table.Head title="Draft order" />
-          <Table.Head title="Date" />
-          <Table.Head title="Customer" />
-          <Table.Head title="Status" />
-          <Table.Head title="Total" />
+          <Table.Header headerStyle="w-16" />
+          <Table.Header title="Draft order" />
+          <Table.Header title="Date" />
+          <Table.Header title="Customer" />
+          <Table.Header title="Status" />
+          <Table.Header title="Total" />
         </SmartTable.Header>
         <SmartTable.Body>
           {({item}) => {
             return (
               <>
-                <Table.Col>#{item.id}</Table.Col>
-                <Table.Col>{item.date}</Table.Col>
-                <Table.Col>{item.customer?.first_name || '--'}</Table.Col>
-                <Table.Col>{item.status}</Table.Col>
-                <Table.Col>{item.total_formatted}</Table.Col>
+                <Table.Cell>#{item.id}</Table.Cell>
+                <Table.Cell>{item.date}</Table.Cell>
+                <Table.Cell>{item.customer?.first_name || '--'}</Table.Cell>
+                <Table.Cell>{item.status}</Table.Cell>
+                <Table.Cell>{item.total_formatted}</Table.Cell>
               </>
             );
           }}

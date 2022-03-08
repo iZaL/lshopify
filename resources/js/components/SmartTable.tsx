@@ -68,7 +68,7 @@ const Header = ({children}: HeaderProps) => {
   return (
     <thead>
       <Table.Row rowStyle="m-2">
-        <Table.Head headerStyle="w-16">
+        <Table.Header headerStyle="w-16">
           <Checkbox
             checked={
               selectedItemIDs.length === items.length && items.length != 0
@@ -77,7 +77,7 @@ const Header = ({children}: HeaderProps) => {
             name=""
             inputStyle="mx-4"
           />
-        </Table.Head>
+        </Table.Header>
         {children}
       </Table.Row>
     </thead>
@@ -136,7 +136,7 @@ const Body = ({children}: BodyProps<ItemWithID>) => {
       {items.map((item, id) => {
         return (
           <Table.Row key={id} idx={id} onClick={() => {}}>
-            <Table.Col>
+            <Table.Cell>
               <div className="flex w-12 items-center justify-center">
                 <Checkbox
                   checked={selectedItemIDs.includes(item.id)}
@@ -145,7 +145,7 @@ const Body = ({children}: BodyProps<ItemWithID>) => {
                   name=""
                 />
               </div>
-            </Table.Col>
+            </Table.Cell>
             {children({
               item,
             })}

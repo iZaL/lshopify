@@ -156,26 +156,26 @@ export default function ProductsListOld({products}: Props) {
         {!selectedProductIDs.length && (
           <thead className="">
             <Table.Row rowStyle="m-2">
-              <Table.Head headerStyle="w-16">
+              <Table.Header headerStyle="w-16">
                 <Checkbox
                   checked={selectedProductIDs.length === products.length}
                   onChange={() => onSelectedAllChange()}
                   name=""
                   inputStyle="mx-4"
                 />
-              </Table.Head>
-              <Table.Head title="Product" />
-              <Table.Head title="Status" />
-              <Table.Head title="Inventory" />
-              <Table.Head title="Type" />
-              <Table.Head title="Vendor" />
+              </Table.Header>
+              <Table.Header title="Product" />
+              <Table.Header title="Status" />
+              <Table.Header title="Inventory" />
+              <Table.Header title="Type" />
+              <Table.Header title="Vendor" />
             </Table.Row>
           </thead>
         )}
         <tbody>
           {products.map((product, id) => (
             <Table.Row key={id} idx={id} onClick={() => {}}>
-              <Table.Col>
+              <Table.Cell>
                 <div className="flex w-12 items-center justify-center">
                   <Checkbox
                     checked={selectedProductIDs.includes(product.id)}
@@ -183,9 +183,9 @@ export default function ProductsListOld({products}: Props) {
                     name=""
                   />
                 </div>
-              </Table.Col>
+              </Table.Cell>
 
-              <Table.Col>
+              <Table.Cell>
                 <Button theme="clear" onClick={() => onProductClick(product)}>
                   {product.image && (
                     <VariantImage
@@ -196,11 +196,11 @@ export default function ProductsListOld({products}: Props) {
                   )}
                   {product.title}
                 </Button>
-              </Table.Col>
-              <Table.Col>{product.status}</Table.Col>
-              <Table.Col>4 in stocks for 5 variants</Table.Col>
-              <Table.Col>{product.product_type}</Table.Col>
-              <Table.Col>zalsstores</Table.Col>
+              </Table.Cell>
+              <Table.Cell>{product.status}</Table.Cell>
+              <Table.Cell>4 in stocks for 5 variants</Table.Cell>
+              <Table.Cell>{product.product_type}</Table.Cell>
+              <Table.Cell>zalsstores</Table.Cell>
             </Table.Row>
           ))}
         </tbody>

@@ -35,17 +35,17 @@ export default function InventoryList({
 
       <Table>
         <SmartTable.Header>
-          <Table.Head />
-          <Table.Head title="Product" />
-          <Table.Head title="SKU" />
-          <Table.Head title="Available" />
-          <Table.Head />
+          <Table.Header />
+          <Table.Header title="Product" />
+          <Table.Header title="SKU" />
+          <Table.Header title="Available" />
+          <Table.Header />
         </SmartTable.Header>
         <SmartTable.Body>
           {({item}) => {
             return (
               <>
-                <Table.Col>
+                <Table.Cell>
                   {item.image && (
                     <VariantImage
                       onClick={() => onCollectionClick(item)}
@@ -53,8 +53,8 @@ export default function InventoryList({
                       imageStyle="w-16 h-12"
                     />
                   )}
-                </Table.Col>
-                <Table.Col>
+                </Table.Cell>
+                <Table.Cell>
                   {item.product?.title && (
                     <span className="font-bold">
                       {item.product.title}
@@ -62,9 +62,9 @@ export default function InventoryList({
                     </span>
                   )}
                   {item.title}
-                </Table.Col>
-                <Table.Col>{item.sku}</Table.Col>
-                <Table.Col colStyle="w-16">
+                </Table.Cell>
+                <Table.Cell>{item.sku}</Table.Cell>
+                <Table.Cell colStyle="w-16">
                   <InputText
                     value={item.quantity}
                     name="quantity"
@@ -72,14 +72,14 @@ export default function InventoryList({
                       onQuantityChange(item, event.target.value)
                     }
                   />
-                </Table.Col>
-                <Table.Col colStyle="w-16">
+                </Table.Cell>
+                <Table.Cell colStyle="w-16">
                   {item.isDirty ? (
                     <Button onClick={() => onSave(item)} theme="success">
                       Save
                     </Button>
                   ) : null}
-                </Table.Col>
+                </Table.Cell>
               </>
             );
           }}

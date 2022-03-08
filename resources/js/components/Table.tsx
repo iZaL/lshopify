@@ -5,18 +5,18 @@ interface Props {
   children: React.ReactNode;
 }
 
-interface TDProps {
+interface CellProps {
   children?: React.ReactNode;
   colStyle?: string;
 }
 
-interface THeadProps {
+interface HeaderProps {
   title?: string;
   children?: React.ReactNode;
   headerStyle?: string;
 }
 
-interface TRProps {
+interface RowProps {
   striped?: boolean;
   children: React.ReactNode;
   idx?: number;
@@ -40,7 +40,7 @@ const Table = ({children}: Props) => {
   );
 };
 
-const Row = ({children, striped = true, idx, onClick, rowStyle}: TRProps) => {
+const Row = ({children, striped = true, idx, onClick, rowStyle}: RowProps) => {
   return (
     <tr
       className={classNames(
@@ -57,7 +57,7 @@ const Row = ({children, striped = true, idx, onClick, rowStyle}: TRProps) => {
   );
 };
 
-const Col = ({children, colStyle}: TDProps) => {
+const Cell = ({children, colStyle}: CellProps) => {
   return (
     <td
       className={`whitespace-nowrap px-6 py-4 text-sm text-gray-500 ${colStyle}`}>
@@ -66,7 +66,7 @@ const Col = ({children, colStyle}: TDProps) => {
   );
 };
 
-const Head = ({title, children = null, headerStyle}: THeadProps) => {
+const Header = ({title, children = null, headerStyle}: HeaderProps) => {
   return (
     <th
       className={`px-6 py-3 text-left text-sm font-medium tracking-wider text-gray-900 ${headerStyle}`}>
@@ -76,7 +76,7 @@ const Head = ({title, children = null, headerStyle}: THeadProps) => {
 };
 
 Table.Row = Row;
-Table.Col = Col;
-Table.Head = Head;
+Table.Cell = Cell;
+Table.Header = Header;
 
 export default Table;

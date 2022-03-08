@@ -161,17 +161,17 @@ export default function ProductsList({products}: Props) {
 
         <Table>
           <SmartTable.Header>
-            <Table.Head title="Product" />
-            <Table.Head title="Status" />
-            <Table.Head title="Inventory" />
-            <Table.Head title="Type" />
-            <Table.Head title="Vendor" />
+            <Table.Header title="Product" />
+            <Table.Header title="Status" />
+            <Table.Header title="Inventory" />
+            <Table.Header title="Type" />
+            <Table.Header title="Vendor" />
           </SmartTable.Header>
           <SmartTable.Body>
             {({item}) => {
               return (
                 <>
-                  <Table.Col>
+                  <Table.Cell>
                     <Button theme="clear" onClick={() => onProductClick(item)}>
                       {item.image && (
                         <VariantImage
@@ -182,11 +182,11 @@ export default function ProductsList({products}: Props) {
                       )}
                       {item.title}
                     </Button>
-                  </Table.Col>
-                  <Table.Col>{item.status}</Table.Col>
-                  <Table.Col>4 in stocks for 5 variants</Table.Col>
-                  <Table.Col>{item.product_type}</Table.Col>
-                  <Table.Col>zalsstores</Table.Col>
+                  </Table.Cell>
+                  <Table.Cell>{item.status}</Table.Cell>
+                  <Table.Cell>4 in stocks for 5 variants</Table.Cell>
+                  <Table.Cell>{item.product_type}</Table.Cell>
+                  <Table.Cell>zalsstores</Table.Cell>
                 </>
               );
             }}

@@ -20,30 +20,30 @@ export default function OrderList({orders, onItemClick}: Props) {
 
       <Table>
         <SmartTable.Header>
-          <Table.Head headerStyle="w-16" />
-          <Table.Head title="Order" />
-          <Table.Head title="Date" />
-          <Table.Head title="Customer" />
-          <Table.Head title="Total" />
-          <Table.Head title="Payment status" />
-          <Table.Head title="Fulfillment status" />
-          <Table.Head title="Items" />
-          <Table.Head title="Delivery method" />
-          <Table.Head title="Tags" />
+          <Table.Header headerStyle="w-16" />
+          <Table.Header title="Order" />
+          <Table.Header title="Date" />
+          <Table.Header title="Customer" />
+          <Table.Header title="Total" />
+          <Table.Header title="Payment status" />
+          <Table.Header title="Fulfillment status" />
+          <Table.Header title="Items" />
+          <Table.Header title="Delivery method" />
+          <Table.Header title="Tags" />
         </SmartTable.Header>
         <SmartTable.Body>
           {({item}) => {
             return (
               <>
-                <Table.Col>#{item.id}</Table.Col>
-                <Table.Col>{item.date_time}</Table.Col>
-                <Table.Col>{item.customer?.first_name || '--'}</Table.Col>
-                <Table.Col>{item.total_formatted}</Table.Col>
-                <Table.Col>{item.payment_status}</Table.Col>
-                <Table.Col>{item.fulfillment_status}</Table.Col>
-                <Table.Col>{item.items_count}</Table.Col>
-                <Table.Col></Table.Col>
-                <Table.Col></Table.Col>
+                <Table.Cell>#{item.id}</Table.Cell>
+                <Table.Cell>{item.date_time}</Table.Cell>
+                <Table.Cell>{item.customer?.first_name || '--'}</Table.Cell>
+                <Table.Cell>{item.total_formatted}</Table.Cell>
+                <Table.Cell>{item.payment_status}</Table.Cell>
+                <Table.Cell>{item.fulfillment_status}</Table.Cell>
+                <Table.Cell>{item.items_count}</Table.Cell>
+                <Table.Cell></Table.Cell>
+                <Table.Cell></Table.Cell>
               </>
             );
           }}

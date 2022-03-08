@@ -27,16 +27,16 @@ export default function CollectionList({collections}: Props) {
 
         <Table>
           <SmartTable.Header>
-            <Table.Head  />
-            <Table.Head title="Title" />
-            <Table.Head title="Product conditions" />
-            <Table.Head />
+            <Table.Header  />
+            <Table.Header title="Title" />
+            <Table.Header title="Product conditions" />
+            <Table.Header />
           </SmartTable.Header>
           <SmartTable.Body>
             {({item}) => {
               return (
                 <>
-                  <Table.Col>
+                  <Table.Cell>
                     <Button
                       theme="clear"
                       onClick={() => onCollectionClick(item)}>
@@ -49,15 +49,15 @@ export default function CollectionList({collections}: Props) {
                       )}
                       {item.name}
                     </Button>
-                  </Table.Col>
-                  <Table.Col>{item.type}</Table.Col>
-                  <Table.Col>
+                  </Table.Cell>
+                  <Table.Cell>{item.type}</Table.Cell>
+                  <Table.Cell>
                     {item.conditions.map(
                       (condition: CollectionCondition, idx: number) => (
                         <div key={idx}>{condition.title}</div>
                       ),
                     )}
-                  </Table.Col>
+                  </Table.Cell>
                 </>
               );
             }}
