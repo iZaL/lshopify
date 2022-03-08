@@ -27,7 +27,7 @@ export default function CollectionList({collections}: Props) {
 
         <Table>
           <SmartTable.Header>
-            <Table.Head headerStyle="w-16" />
+            <Table.Head  />
             <Table.Head title="Title" />
             <Table.Head title="Product conditions" />
             <Table.Head />
