@@ -9,6 +9,10 @@ import {Popover, Transition} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/solid';
 import Button from '../components/Button';
 import Border from '../components/Border';
+import BackButton from '../components/BackButton';
+import {Inertia} from '@inertiajs/inertia';
+import route from 'ziggy-js';
+import PageHeader from '../components/PageHeader';
 
 interface Props {
   products: Product[];
@@ -52,10 +56,10 @@ export default function ProductBulkEdit(props: Props) {
 
   const [selectedProductAttributes, setSelectedProductAttributes] = useState<
     Array<keyof Product>
-  >(defaultProductAttributes);
+    >(defaultProductAttributes);
   const [selectedVariantAttributes, setSelectedVariantAttributes] = useState<
     Array<keyof Variant>
-  >(defaultVariantAttributes);
+    >(defaultVariantAttributes);
 
   const attributeLabels: AttributeLabel = {
     title: 'Title',
@@ -117,11 +121,29 @@ export default function ProductBulkEdit(props: Props) {
 
   const handleSubmit = (): void => {};
 
+  const people = [
+    {
+      name: 'Lindsay Walton',
+      title: 'Front-end Developer',
+      email: 'lindsay.walton@example.com',
+      role: 'Member',
+    },
+    // More people...
+  ];
   return (
     <Main>
       <div className="p-6">
         <FormSubmitBar onSubmit={handleSubmit} show={isDirty} />
-        <Card>
+        <div className="flex flex-row items-center space-x-2">
+          <BackButton
+            onClick={() => {
+              Inertia.get(route('lshopify.products.index'));
+            }}
+          />
+          <PageHeader text="Bulk Editor" />
+        </div>
+
+        <Card cardStyle="mt-6">
           <div className="text-sm text-gray-700">
             Currently editing these fields:
           </div>
@@ -311,6 +333,75 @@ export default function ProductBulkEdit(props: Props) {
                 />
               ))}
             </>
+          </div>
+
+          <div className="-mx-4 flex flex-col">
+            <div className="overflow-x-auto">
+              <div className="inline-block w-full py-2 align-middle">
+                <div className="shadow-sm ring-1 ring-black ring-opacity-5">
+                  <table className="w-full divide-y divide-gray-300">
+                    <thead className="bg-gray-50">
+                    <tr>
+                      {selectedProductAttributes.map(attribute => (
+                        <th
+                          key={attribute}
+                          className="border px-4 py-2 text-sm font-normal">
+                          {attributeLabels[attribute] ?? '-'}
+                        </th>
+                      ))}
+                      {selectedVariantAttributes.map(attribute => (
+                        <th
+                          key={attribute}
+                          className="border px-4 py-2 text-sm font-normal">
+                          {attributeLabels[attribute] ?? '-'}
+                        </th>
+                      ))}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {products.map(product => (
+                      <>
+                        <tr key={product.id}>
+                          {selectedProductAttributes.map(attribute => (
+                            <td
+                              key={attribute}
+                              className="w-44 border px-4 py-2 text-sm font-normal">
+                              {product[attribute] ?? '-'}
+                            </td>
+                          ))}
+                          {
+                            selectedVariantAttributes.map((attribute,idx) => (
+                              <td
+                                key={idx}
+                                className="w-44 border px-4 py-2 text-sm font-normal">
+                                --
+                              </td>
+                            ))
+                          }
+                        </tr>
+                        {product.variants?.map(variant => (
+                          <tr>
+                            {
+                              selectedProductAttributes.map((product,idx) => (
+                                <td key={idx} className="w-44 border px-12 py-2 text-sm font-normal text-gray-500">{variant.title}</td>
+                              ))
+                            }
+                            {selectedVariantAttributes.map(attribute => (
+                              <td
+                                key={attribute}
+                                className="w-44 border px-4 py-2 text-sm font-normal">
+                                {variant[attribute] ?? '-'}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </>
+                    ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         </Card>
       </div>

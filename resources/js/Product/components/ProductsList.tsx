@@ -58,7 +58,9 @@ export default function ProductsList({products}: Props) {
                   theme="clear"
                   buttonStyle="-ml-px px-2 border border-gray-300 font-medium"
                   onClick={() =>
-                    Inertia.get(route('lshopify.products.bulk_edit'))
+                    Inertia.get(route('lshopify.products.bulk_edit'), {
+                      product_ids: selectedItemIDs,
+                    })
                   }>
                   Edit products
                 </Button>
