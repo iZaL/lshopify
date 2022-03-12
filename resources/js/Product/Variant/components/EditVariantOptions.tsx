@@ -3,6 +3,7 @@ import {Variant, VariantOption} from '../../../types';
 import InputText from '../../../components/forms/InputText';
 import {XIcon} from '@heroicons/react/solid';
 import Modal from '../../../components/Modal';
+import TagClose from '../../../components/TagClose';
 
 interface Props {
   variants: Variant[];
@@ -67,17 +68,11 @@ export default function EditVariantOptions({
               <div className="flex flex-row items-center space-x-2" key={i}>
                 {option.options?.map((o, idx) => {
                   return (
-                    <div
-                      className="flex h-6 flex-row items-center justify-end overflow-hidden rounded rounded-md bg-gray-200 "
-                      key={idx}>
-                      <div className="flex-1  px-2">{o.id}</div>
-                      <XIcon
-                        className="h-6 w-6 cursor-pointer hover:rounded hover:rounded-md hover:bg-gray-300"
-                        onClick={() => {
-                          onVariantOptionsRemove(o);
-                        }}
-                      />
-                    </div>
+                    <TagClose
+                      key={idx}
+                      title={o.id}
+                      onClick={() => onVariantOptionsRemove(o)}
+                    />
                   );
                 })}
               </div>

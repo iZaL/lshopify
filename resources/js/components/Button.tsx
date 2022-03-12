@@ -9,10 +9,12 @@ interface Props {
   border?: boolean;
   rounded?: boolean;
   children?: ReactNode;
+  disabled?: boolean;
 }
 
 export default function Button({
   theme = 'success',
+  disabled = false,
   border = true,
   buttonStyle,
   children,
@@ -41,9 +43,13 @@ export default function Button({
       break;
   }
 
+  if (disabled) {
+    themeStyle = 'text-gray-300 bg-white border cursor-default';
+  }
+
   return (
     <button
-      onClick={onClick ?? undefined}
+      onClick={disabled ? undefined : onClick ?? undefined}
       className={classNames(
         theme === 'clear' ? `` : `rounded-md py-2 px-4`,
         ` box-border block inline-flex items-center justify-center text-center text-sm focus:outline-none ${themeStyle} ${buttonStyle} `,

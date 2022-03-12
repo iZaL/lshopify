@@ -1,13 +1,13 @@
 import React from 'react';
 import {ButtonTheme, Product} from '../../types';
 import {Inertia} from '@inertiajs/inertia';
-import route from 'ziggy-js';
 import Button from '../../components/Button';
 import Table from '../../components/Table';
 import DropdownButton from '../../components/DropdownButton';
 import SmartTable from '../../components/SmartTable';
 import VariantImage from '../Variant/components/VariantImage';
 import Modal from '../../components/Modal';
+import route from 'ziggy-js';
 
 interface Props {
   products: Product[];
@@ -57,7 +57,9 @@ export default function ProductsList({products}: Props) {
                 <Button
                   theme="clear"
                   buttonStyle="-ml-px px-2 border border-gray-300 font-medium"
-                  onClick={() => {}}>
+                  onClick={() =>
+                    Inertia.get(route('lshopify.products.bulk_edit'))
+                  }>
                   Edit products
                 </Button>
 

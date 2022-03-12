@@ -15,11 +15,11 @@ Route::post('cart/discount/remove', \IZal\Lshopify\Http\Controllers\Cart\CartDis
 Route::get('products', \IZal\Lshopify\Http\Controllers\Product\ProductIndexController::class)->name('products.index');
 Route::get('products/new', \IZal\Lshopify\Http\Controllers\Product\ProductCreateController::class)->name('products.create');
 Route::get('products/{id}/edit', \IZal\Lshopify\Http\Controllers\Product\ProductEditController::class)->name('products.edit');
+Route::get('products/bulk_edit', \IZal\Lshopify\Http\Controllers\Product\ProductBulkEditController::class)->name('products.bulk_edit');
 Route::post('products', \IZal\Lshopify\Http\Controllers\Product\ProductStoreController::class)->name('products.store');
 Route::post('products/attributes', \IZal\Lshopify\Http\Controllers\Product\ProductAttributesController::class)->name('products.attributes');
 Route::post('products/delete', \IZal\Lshopify\Http\Controllers\Product\ProductDeleteController::class)->name('products.delete');
 Route::patch('products/{id}', \IZal\Lshopify\Http\Controllers\Product\ProductUpdateController::class)->name('products.update');
-//Route::delete('products/{id}', \IZal\Lshopify\Http\Controllers\Product\ProductDeleteController::class)->name('products.destroy');
 
 /*
  * Variants Controllers
