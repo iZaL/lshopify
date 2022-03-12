@@ -74,10 +74,10 @@ export default function BulkEditor(props: Props) {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95">
                   <Popover.Panel className="absolute right-0 mt-2 origin-top-right rounded-md bg-white p-2 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="flex flex-row items-center p min-w-[350px]">
+                    <div className="p flex min-w-[350px] flex-row items-center">
                       <div className="w-1/3">General</div>
-                      <div className="w-2/3 inline-flex items-center flex-wrap">
-                        <div className="px-2 border rounded mb-2 ml-2">
+                      <div className="inline-flex w-2/3 flex-wrap items-center">
+                        <div className="mb-2 ml-2 rounded border px-2">
                           Title
                         </div>
                       </div>

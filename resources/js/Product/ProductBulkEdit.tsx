@@ -1,15 +1,12 @@
-import React, {Fragment, ReactNode, useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import Main from '../Main';
 import FormSubmitBar from '../components/FormSubmitBar';
 import {useForm} from '@inertiajs/inertia-react';
-import {ButtonTheme, Product, Variant} from '../types';
+import {Product, Variant} from '../types';
 import Card from '../components/Card';
-import Subheader from '../components/Subheader';
 import TagClose from '../components/TagClose';
-import BulkEditor from './components/BulkEditor';
 import {Popover, Transition} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/solid';
-import * as stream from 'stream';
 import Button from '../components/Button';
 import Border from '../components/Border';
 
@@ -90,8 +87,7 @@ export default function ProductBulkEdit(props: Props) {
       <Button
         {...props}
         theme="default"
-        buttonStyle={`${props.buttonStyle} my-1 py-1 `}
-      >
+        buttonStyle={`${props.buttonStyle} my-1 py-1 `}>
         {props.title}
       </Button>
     );
@@ -109,7 +105,7 @@ export default function ProductBulkEdit(props: Props) {
       <div className="p-6">
         <FormSubmitBar onSubmit={handleSubmit} show={isDirty} />
         <Card>
-          <div className="text-gray-700 text-sm">
+          <div className="text-sm text-gray-700">
             Currently editing these fields:
           </div>
           <div className="inline-flex space-x-2">
@@ -127,8 +123,8 @@ export default function ProductBulkEdit(props: Props) {
                     <div className="inline-flex sm:shadow-sm">
                       <Popover className="relative inline-block text-left">
                         <Popover.Button
-                          className="group justify-center rounded-md border border-gray-300 px-4
-                       text-gray-900 hover:bg-gray-50 hover:text-gray-900 inline-flex
+                          className="group inline-flex justify-center rounded-md border border-gray-300
+                       px-4 text-gray-900 hover:bg-gray-50 hover:text-gray-900
                       ">
                           <span>Vendor</span>
                           <ChevronDownIcon
@@ -145,14 +141,14 @@ export default function ProductBulkEdit(props: Props) {
                           leave="transition ease-in duration-75"
                           leaveFrom="transform opacity-100 scale-100"
                           leaveTo="transform opacity-0 scale-95">
-                          <Popover.Panel className="absolute left-0 mt-2 origin-top-right rounded-md bg-white p-2 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none w-[40rem] text-sm h-[20rem] overflow-y-scroll ">
+                          <Popover.Panel className="absolute left-0 mt-2 h-[20rem] w-[36rem] origin-top-right overflow-y-scroll rounded-md bg-white p-2 text-sm shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none ">
                             <dl>
-                              <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 items-center">
+                              <div className="items-center py-1 sm:grid sm:grid-cols-4">
                                 <dt>General</dt>
-                                <dd className="mt-1 text-gray-900 sm:mt-0 sm:col-span-2 space-x-2 space-y-1">
+                                <dd className="mt-1 space-x-1 space-y-1 text-gray-900 sm:col-span-3 sm:mt-0">
                                   <AttributeButton
                                     title="Title"
-                                    buttonStyle="ml-2"
+                                    buttonStyle="ml-1"
                                   />
                                   <AttributeButton
                                     title="Tags"
@@ -169,12 +165,12 @@ export default function ProductBulkEdit(props: Props) {
                             <Border borderStyle="my-0" />
 
                             <dl>
-                              <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 items-center">
+                              <div className="items-center py-1 sm:grid sm:grid-cols-4">
                                 <dt>Pricing</dt>
-                                <dd className="mt-1 text-gray-900 sm:mt-0 sm:col-span-2 space-x-2 space-y-1">
+                                <dd className="mt-1 space-x-1 space-y-1 text-gray-900 sm:col-span-3 sm:mt-0">
                                   <AttributeButton
                                     title="Price"
-                                    buttonStyle="ml-2"
+                                    buttonStyle="ml-1"
                                     onClick={() => {}}
                                   />
                                   <AttributeButton
@@ -196,12 +192,12 @@ export default function ProductBulkEdit(props: Props) {
                             <Border borderStyle="my-0" />
 
                             <dl>
-                              <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 items-center">
+                              <div className="items-center py-1 sm:grid sm:grid-cols-4">
                                 <dt>Inventory</dt>
-                                <dd className="mt-1 text-gray-900 sm:mt-0 sm:col-span-2 space-x-2 space-y-1">
+                                <dd className="mt-1 space-x-1 space-y-1 text-gray-900 sm:col-span-3 sm:mt-0">
                                   <AttributeButton
                                     title="SKU"
-                                    buttonStyle="ml-2"
+                                    buttonStyle="ml-1"
                                     onClick={() => {}}
                                   />
                                   <AttributeButton
@@ -228,12 +224,12 @@ export default function ProductBulkEdit(props: Props) {
                             <Border borderStyle="my-0" />
 
                             <dl>
-                              <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 items-center">
+                              <div className="items-center py-1 sm:grid sm:grid-cols-4">
                                 <dt>Shipping</dt>
-                                <dd className="mt-1 text-gray-900 sm:mt-0 sm:col-span-2 space-x-2 space-y-1">
+                                <dd className="mt-1 space-x-1 space-y-1 text-gray-900 sm:col-span-3 sm:mt-0">
                                   <AttributeButton
                                     title="Weight"
-                                    buttonStyle="ml-2"
+                                    buttonStyle="ml-1"
                                     onClick={() => {}}
                                   />
 
