@@ -31,7 +31,7 @@ type Attributes = {
 type AttributeLabel = Partial<Attributes>;
 
 interface AttributeButton extends ButtonProps {
-  title:keyof AttributeLabel;
+  title: keyof AttributeLabel;
 }
 
 export default function ProductBulkEdit(props: Props) {
@@ -41,21 +41,26 @@ export default function ProductBulkEdit(props: Props) {
     products: products,
   };
 
-  const onChange = (attributes: any) => {
-    console.log('attributes', attributes);
-  };
-
   const {data, setData, post, isDirty} = useForm<Form>(formProps);
 
-  const handleSubmit = (): void => {};
-
   const defaultProductAttributes: Array<keyof Product> = ['title'];
-  const defaultVariantAttributes: Array<keyof Variant> = ['sku', 'price','compare_at_price'];
+  const defaultVariantAttributes: Array<keyof Variant> = [
+    'sku',
+    'price',
+    'compare_at_price',
+  ];
+
+  const [selectedProductAttributes, setSelectedProductAttributes] = useState<
+    Array<keyof Product>
+  >(defaultProductAttributes);
+  const [selectedVariantAttributes, setSelectedVariantAttributes] = useState<
+    Array<keyof Variant>
+  >(defaultVariantAttributes);
 
   const attributeLabels: AttributeLabel = {
     title: 'Title',
     status: 'Status',
-    tags:'Tags',
+    tags: 'Tags',
     price: 'Price',
     compare_at_price: 'Compare At Price',
     cost_price: 'Cost Price',
@@ -71,35 +76,20 @@ export default function ProductBulkEdit(props: Props) {
     origin_country_id: 'Origin Country',
   };
 
-  const allVariantAttributes: Array<keyof Variant> = [
-    'price',
-    'compare_at_price',
-    'cost_price',
-    'taxable',
-    'sku',
-    'barcode',
-    'weight',
-    'quantity',
-    'hs_code',
-    'out_of_stock_sale',
-    'track_quantity',
-    'requires_shipping',
-    'weight',
-    'origin_country_id',
-  ];
-
   const AttributeButton = (props: AttributeButton) => {
     const title = attributeLabels[props.title] ?? null;
 
-    const selectedAttributes = [...selectedVariantAttributes, ...selectedProductAttributes];
+    const selectedAttributes = [
+      ...selectedVariantAttributes,
+      ...selectedProductAttributes,
+    ];
 
     return (
       <Button
         {...props}
         theme="default"
         buttonStyle={`${props.buttonStyle} px-2 py-1 `}
-        disabled={title ? selectedAttributes.includes(props.title) : false}
-      >
+        disabled={title ? selectedAttributes.includes(props.title) : false}>
         {title}
       </Button>
     );
@@ -107,7 +97,9 @@ export default function ProductBulkEdit(props: Props) {
 
   const onProductButtonClick = (attribute: keyof Product) => {
     if (selectedProductAttributes.includes(attribute)) {
-      setSelectedProductAttributes(selectedProductAttributes.filter(item => item !== attribute));
+      setSelectedProductAttributes(
+        selectedProductAttributes.filter(item => item !== attribute),
+      );
     } else {
       setSelectedProductAttributes([...selectedProductAttributes, attribute]);
     }
@@ -115,18 +107,15 @@ export default function ProductBulkEdit(props: Props) {
 
   const onVariantButtonClick = (attribute: keyof Variant) => {
     if (selectedVariantAttributes.includes(attribute)) {
-      setSelectedVariantAttributes(selectedVariantAttributes.filter(item => item !== attribute));
+      setSelectedVariantAttributes(
+        selectedVariantAttributes.filter(item => item !== attribute),
+      );
     } else {
       setSelectedVariantAttributes([...selectedVariantAttributes, attribute]);
     }
-  }
+  };
 
-  const [selectedProductAttributes, setSelectedProductAttributes] = useState<
-    Array<keyof Product>
-  >(defaultProductAttributes);
-  const [selectedVariantAttributes, setSelectedVariantAttributes] = useState<
-    Array<keyof Variant>
-  >(defaultVariantAttributes);
+  const handleSubmit = (): void => {};
 
   return (
     <Main>
@@ -136,9 +125,9 @@ export default function ProductBulkEdit(props: Props) {
           <div className="text-sm text-gray-700">
             Currently editing these fields:
           </div>
-          <div className="inline-flex space-x-2 flex-wrap space-y-2">
+          <div className="inline-flex flex-wrap space-x-2 space-y-2">
             <>
-              <div className="col-span-12 sm:col-span-6 mt-2 ml-2">
+              <div className="col-span-12 mt-2 ml-2 sm:col-span-6">
                 <div className="relative z-0 inline-flex rounded-md shadow-sm sm:space-x-3 sm:shadow-none">
                   <Popover.Group className="flex items-center">
                     <div className="inline-flex sm:shadow-sm">
@@ -170,7 +159,9 @@ export default function ProductBulkEdit(props: Props) {
                                   <AttributeButton
                                     title="title"
                                     buttonStyle="ml-1"
-                                    onClick={() => onProductButtonClick('title')}
+                                    onClick={() =>
+                                      onProductButtonClick('title')
+                                    }
                                   />
                                   <AttributeButton
                                     title="tags"
@@ -178,7 +169,9 @@ export default function ProductBulkEdit(props: Props) {
                                   />
                                   <AttributeButton
                                     title="status"
-                                    onClick={() => onProductButtonClick('status')}
+                                    onClick={() =>
+                                      onProductButtonClick('status')
+                                    }
                                   />
                                 </dd>
                               </div>
@@ -193,19 +186,27 @@ export default function ProductBulkEdit(props: Props) {
                                   <AttributeButton
                                     title="price"
                                     buttonStyle="ml-1"
-                                    onClick={() => onVariantButtonClick('price')}
+                                    onClick={() =>
+                                      onVariantButtonClick('price')
+                                    }
                                   />
                                   <AttributeButton
                                     title="compare_at_price"
-                                    onClick={() => onVariantButtonClick('compare_at_price')}
+                                    onClick={() =>
+                                      onVariantButtonClick('compare_at_price')
+                                    }
                                   />
                                   <AttributeButton
                                     title="cost_price"
-                                    onClick={() => onVariantButtonClick('cost_price')}
+                                    onClick={() =>
+                                      onVariantButtonClick('cost_price')
+                                    }
                                   />
                                   <AttributeButton
                                     title="taxable"
-                                    onClick={() => onVariantButtonClick('taxable')}
+                                    onClick={() =>
+                                      onVariantButtonClick('taxable')
+                                    }
                                   />
                                 </dd>
                               </div>
@@ -224,20 +225,28 @@ export default function ProductBulkEdit(props: Props) {
                                   />
                                   <AttributeButton
                                     title="barcode"
-                                    onClick={() => onVariantButtonClick('barcode')}
+                                    onClick={() =>
+                                      onVariantButtonClick('barcode')
+                                    }
                                   />
                                   <AttributeButton
                                     title="quantity"
-                                    onClick={() => onVariantButtonClick('quantity')}
+                                    onClick={() =>
+                                      onVariantButtonClick('quantity')
+                                    }
                                   />
 
                                   <AttributeButton
                                     title="out_of_stock_sale"
-                                    onClick={() => onVariantButtonClick('out_of_stock_sale')}
+                                    onClick={() =>
+                                      onVariantButtonClick('out_of_stock_sale')
+                                    }
                                   />
                                   <AttributeButton
                                     title="track_quantity"
-                                    onClick={() => onVariantButtonClick('track_quantity')}
+                                    onClick={() =>
+                                      onVariantButtonClick('track_quantity')
+                                    }
                                   />
                                 </dd>
                               </div>
@@ -252,21 +261,29 @@ export default function ProductBulkEdit(props: Props) {
                                   <AttributeButton
                                     title="weight"
                                     buttonStyle="ml-1"
-                                    onClick={() => onVariantButtonClick('weight')}
+                                    onClick={() =>
+                                      onVariantButtonClick('weight')
+                                    }
                                   />
 
                                   <AttributeButton
                                     title="requires_shipping"
-                                    onClick={() => onVariantButtonClick('requires_shipping')}
+                                    onClick={() =>
+                                      onVariantButtonClick('requires_shipping')
+                                    }
                                   />
 
                                   <AttributeButton
                                     title="hs_code"
-                                    onClick={() => onVariantButtonClick('hs_code')}
+                                    onClick={() =>
+                                      onVariantButtonClick('hs_code')
+                                    }
                                   />
                                   <AttributeButton
                                     title="origin_country_id"
-                                    onClick={() => onVariantButtonClick('origin_country_id')}
+                                    onClick={() =>
+                                      onVariantButtonClick('origin_country_id')
+                                    }
                                   />
                                 </dd>
                               </div>
@@ -278,6 +295,7 @@ export default function ProductBulkEdit(props: Props) {
                   </Popover.Group>
                 </div>
               </div>
+
               {selectedProductAttributes.map((attribute, idx) => (
                 <TagClose
                   key={idx}
@@ -292,8 +310,6 @@ export default function ProductBulkEdit(props: Props) {
                   onClick={() => onVariantButtonClick(attribute)}
                 />
               ))}
-
-
             </>
           </div>
         </Card>
