@@ -2,7 +2,8 @@ import {Product} from '../../../types';
 import Select from '../../../components/forms/Select';
 import InputText from '../../../components/forms/InputText';
 import React from 'react';
-export default function ProductChange({
+
+export default function ProductCell({
   product,
   attribute,
   onChange,

@@ -2,18 +2,17 @@ import {Product, Variant} from '../../../types';
 import InputText from '../../../components/forms/InputText';
 import React from 'react';
 import {AttributeLabel} from './types';
-import Checkbox from '../../../components/forms/Checkbox'
+import Checkbox from '../../../components/forms/Checkbox';
 
-export default function VariantChange({
-  variant,
+export default function VariantCell({
+  value,
   attribute,
   onChange,
 }: {
-  variant: Variant;
+  value: string|boolean;
   attribute: keyof Variant;
-  onChange: (value: string|boolean) => void;
+  onChange: (value: string | boolean) => void;
 }) {
-
   let textAttributes: Array<keyof Variant> = [
     'price',
     'compare_at_price',
@@ -25,7 +24,7 @@ export default function VariantChange({
     'hs_code',
   ];
 
-  let booleanAttributes:Array<keyof Variant> = ['out_of_stock_sale','track_quantity','taxable'];
+  let booleanAttributes: Array<keyof Variant> = ['out_of_stock_sale', 'track_quantity', 'taxable'];
 
   let placeholders: AttributeLabel = {
     price: 'OMR',
@@ -38,7 +37,7 @@ export default function VariantChange({
       <InputText
         key={attribute}
         name={attribute}
-        value={variant[attribute]}
+        value={value}
         onChange={e => onChange(e.target.value)}
         inputStyle="rounded-none border-none shadow-none"
         rightComponent={
@@ -50,8 +49,13 @@ export default function VariantChange({
 
   if (booleanAttributes.includes(attribute)) {
     return (
-      <Checkbox inputStyle='mx-4' name={attribute} checked={variant[attribute] === true} onChange={e => onChange(e.target.checked)} />
-    )
+      <Checkbox
+        inputStyle="mx-4"
+        name={attribute}
+        checked={value === true}
+        onChange={e => onChange(e.target.checked)}
+      />
+    );
   }
-    return <>---</>;
+  return <>---</>;
 }
