@@ -43,8 +43,8 @@ const attributeLabels: AttributeLabel = {
   origin_country_id: 'Country of origin',
 };
 
-type ProductButtons = 'title' | 'status' | 'tags';
-type VariantButtons =
+type ProductAttributes = 'title' | 'status' | 'tags';
+type VariantAttributes =
   | 'price'
   | 'compare_at_price'
   | 'cost_price'
@@ -74,17 +74,17 @@ export default function ProductBulkEdit(props: Props) {
     });
   }, []);
 
-  const [selectedProductAttributes, setSelectedProductAttributes] = useState<ProductButtons[]>([
+  const [selectedProductAttributes, setSelectedProductAttributes] = useState<ProductAttributes[]>([
     'title',
     'status',
   ]);
-  const [selectedVariantAttributes, setSelectedVariantAttributes] = useState<VariantButtons[]>([
+  const [selectedVariantAttributes, setSelectedVariantAttributes] = useState<VariantAttributes[]>([
     'sku',
     'price',
     'compare_at_price',
   ]);
 
-  const onButtonClick = (attribute: ProductButtons | VariantButtons) => {
+  const onButtonClick = (attribute: ProductAttributes | VariantAttributes) => {
     if (attribute === 'title' || attribute === 'status' || attribute === 'tags') {
       onProductButtonClick(attribute);
     } else {
@@ -92,7 +92,7 @@ export default function ProductBulkEdit(props: Props) {
     }
   };
 
-  const onProductButtonClick = (attribute: ProductButtons) => {
+  const onProductButtonClick = (attribute: ProductAttributes) => {
     if (selectedProductAttributes.includes(attribute)) {
       setSelectedProductAttributes(selectedProductAttributes.filter(item => item !== attribute));
     } else {
@@ -100,7 +100,7 @@ export default function ProductBulkEdit(props: Props) {
     }
   };
 
-  const onVariantButtonClick = (attribute: VariantButtons) => {
+  const onVariantButtonClick = (attribute: VariantAttributes) => {
     if (selectedVariantAttributes.includes(attribute)) {
       setSelectedVariantAttributes(selectedVariantAttributes.filter(item => item !== attribute));
     } else {
@@ -108,7 +108,7 @@ export default function ProductBulkEdit(props: Props) {
     }
   };
 
-  const onProductChange = (product: Product, field: ProductButtons | VariantButtons, value: string) => {
+  const onProductAttributeChange = (product: Product, field: ProductAttributes | VariantAttributes, value: string) => {
     setData({
       products: data.products.map(p => {
         if (p.id === product.id) {
@@ -122,7 +122,7 @@ export default function ProductBulkEdit(props: Props) {
     });
   };
 
-  const onVariantChange = <T extends keyof Variant>(
+  const onVariantAttributeChange = <T extends keyof Variant>(
     product: Product,
     variant: Variant,
     attribute: T,
@@ -152,7 +152,7 @@ export default function ProductBulkEdit(props: Props) {
       });
     }
   };
-  const onDefaultVariantChange = <T extends keyof Variant>(
+  const onDefaultVariantAttributeChange = <T extends keyof Variant>(
     product: Product,
     variant: Variant,
     attribute: T,
@@ -183,14 +183,12 @@ export default function ProductBulkEdit(props: Props) {
 
   const selectedAttributes = [...selectedVariantAttributes, ...selectedProductAttributes];
 
-  const buttons: {[key: string]: Array<ProductButtons | VariantButtons>} = {
+  const buttons: {[key: string]: Array<ProductAttributes | VariantAttributes>} = {
     General: ['title', 'status', 'tags'],
     Pricing: ['price', 'cost_price', 'compare_at_price', 'taxable'],
     Inventory: ['sku', 'barcode', 'quantity', 'out_of_stock_sale', 'track_quantity'],
     Shipping: ['weight', 'requires_shipping', 'hs_code'],
   };
-
-  const sectionKeys = Object.keys(buttons);
 
   return (
     <Main>
@@ -234,14 +232,13 @@ export default function ProductBulkEdit(props: Props) {
                           leaveFrom="transform opacity-100 scale-100"
                           leaveTo="transform opacity-0 scale-95">
                           <Popover.Panel className="absolute left-0 mt-2 max-h-[20rem] w-[36rem] origin-top-right overflow-y-scroll rounded-md bg-white p-2 text-sm shadow shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none divide-y ">
-                            {sectionKeys.map((key, idx) => {
-                              const section = buttons[key];
+                            {Object.keys(buttons).map((key, idx) => {
                               return (
                                 <dl key={idx} className='divide-y divide-black'>
                                   <div className="items-center py-2 sm:grid sm:grid-cols-4">
                                     <dt>{key}</dt>
                                     <dd className="mt-1 space-x-1 space-y-2 text-gray-900 sm:col-span-3 sm:mt-0">
-                                      {section.map((button, idx) => {
+                                      {buttons[key].map((button, idx) => {
                                         return (
                                           <Button
                                             key={idx}
@@ -315,7 +312,7 @@ export default function ProductBulkEdit(props: Props) {
                                     <ProductChange
                                       product={product}
                                       attribute={attribute}
-                                      onChange={value => onProductChange(product, attribute, value)}
+                                      onChange={value => onProductAttributeChange(product, attribute, value)}
                                     />
                                   </td>
                                 );
@@ -328,7 +325,7 @@ export default function ProductBulkEdit(props: Props) {
                                         variant={product.default_variant}
                                         attribute={attribute}
                                         onChange={value =>
-                                          onDefaultVariantChange(
+                                          onDefaultVariantAttributeChange(
                                             product,
                                             product.default_variant,
                                             attribute,
@@ -366,7 +363,7 @@ export default function ProductBulkEdit(props: Props) {
                                         variant={variant}
                                         attribute={attribute}
                                         onChange={value =>
-                                          onVariantChange(product, variant, attribute, value)
+                                          onVariantAttributeChange(product, variant, attribute, value)
                                         }
                                       />
                                     </td>
