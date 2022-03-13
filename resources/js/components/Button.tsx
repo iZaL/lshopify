@@ -1,16 +1,6 @@
-import React, {ReactNode} from 'react';
+import React from 'react';
 import classNames from 'classnames';
-import {ButtonTheme} from '../types';
-
-interface Props {
-  buttonStyle?: string;
-  onClick?: () => void;
-  theme?: ButtonTheme;
-  border?: boolean;
-  rounded?: boolean;
-  children?: ReactNode;
-  disabled?: boolean;
-}
+import {ButtonProps} from '../types';
 
 export default function Button({
   theme = 'success',
@@ -19,7 +9,7 @@ export default function Button({
   buttonStyle,
   children,
   onClick,
-}: Props) {
+}: ButtonProps) {
   let themeStyle = `text-white bg-green-800 hover:bg-green-900 focus:ring-1 focus:ring-offset-2 focus:ring-green-500 focus:border-green-500`;
 
   switch (theme) {

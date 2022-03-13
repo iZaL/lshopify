@@ -1,4 +1,5 @@
 import {CustomerForm, OrderForm} from './form_types';
+import {ReactNode} from 'react';
 
 export interface Tag {
   id: string;
@@ -197,3 +198,13 @@ export interface Fulfillment {
 export type FulfillmentVariant = VariantPivot;
 
 export type ButtonTheme = 'success' | 'error' | 'warning' | 'default' | 'clear';
+
+export interface ButtonProps {
+  buttonStyle?: string;
+  onClick?: () => void;
+  theme?: ButtonTheme;
+  border?: boolean;
+  rounded?: boolean;
+  children?: ReactNode;
+  disabled?: boolean;
+}
