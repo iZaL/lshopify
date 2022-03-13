@@ -77,7 +77,7 @@ export interface Variant {
   product?: Product;
 }
 
-export type ProductStatus = 'All' | 'Active' | 'Draft' | 'Archive';
+export type ProductStatus = 'All' | 'Active' | 'Draft' | 'Archived';
 
 export interface Product {
   id: number;

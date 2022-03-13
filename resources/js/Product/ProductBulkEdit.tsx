@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Main from '../Main';
 import FormSubmitBar from '../components/FormSubmitBar';
 import {useForm} from '@inertiajs/inertia-react';
@@ -13,6 +13,8 @@ import BackButton from '../components/BackButton';
 import {Inertia} from '@inertiajs/inertia';
 import route from 'ziggy-js';
 import PageHeader from '../components/PageHeader';
+import Select from '../components/forms/Select';
+import InputText from '../components/forms/InputText';
 
 interface Props {
   products: Product[];
@@ -47,7 +49,13 @@ export default function ProductBulkEdit(props: Props) {
 
   const {data, setData, post, isDirty} = useForm<Form>(formProps);
 
-  const defaultProductAttributes: Array<keyof Product> = ['title'];
+  useEffect(() => {
+    setData({
+      products: products,
+    });
+  }, []);
+
+  const defaultProductAttributes: Array<keyof Product> = ['title', 'status'];
   const defaultVariantAttributes: Array<keyof Variant> = [
     'sku',
     'price',
@@ -119,17 +127,148 @@ export default function ProductBulkEdit(props: Props) {
     }
   };
 
+  const onChange = (
+    product: Product,
+    field: keyof Product | keyof Variant,
+    value: string,
+  ) => {
+    setData({
+      products: data.products.map((p) => {
+        if (p.id === product.id) {
+          return {
+            ...p,
+            [field]: value,
+          };
+        }
+        return p;
+      }),
+    });
+  };
+
+  const TagSelector = () => {
+    return <>Tag</>;
+  };
+
+  const ProductChange = ({
+    product,
+    attribute,
+  }: {
+    product: Product;
+    attribute: keyof Product;
+  }) => {
+    if (attribute === 'tags') {
+      return <TagSelector />;
+    }
+
+    if (attribute === 'status') {
+      return (
+        <Select
+          name="status"
+          onChange={e => onChange(product,attribute,e.target.value)}
+          value={product['status']}
+          inputStyle="rounded-none border-none">
+          <option value="draft">Draft</option>
+          <option value="active">Active</option>
+          <option value="archived">Archived</option>
+        </Select>
+      );
+    }
+
+    if (attribute === 'title') {
+      return (
+        <InputText
+          name={attribute}
+          value={product['title']}
+          onChange={e => onChange(product, attribute, e.target.value)}
+          inputStyle="rounded-none border-none"
+        />
+      );
+    }
+
+    return null;
+  };
+
+  const onVariantChange = <T extends keyof Variant>(
+    product: Product,
+    variant: Variant,
+    attribute: T,
+    value: Variant[T],
+  ) => {
+    if (product && product.variants) {
+
+      const newProduct = {
+        ...product,
+        variants: product.variants.map((v) => {
+          if (v.id === variant.id) {
+            return {
+              ...variant,
+              [attribute]: value,
+            };
+          }
+          return v;
+        }),
+      };
+
+      // update data products with new product
+      setData({
+        products: data.products.map((p) => {
+          if (p.id === product.id) {
+            return newProduct;
+          }
+          return p;
+        }),
+      });
+
+    }
+  };
+
+  const VariantChange = ({
+    product,
+    variant,
+    attribute,
+  }: {
+    product: Product;
+    variant: Variant;
+    attribute: keyof Variant;
+  }) => {
+    let textAttributes: Array<keyof Variant> = [
+      'price',
+      'compare_at_price',
+      'cost_price',
+      'sku',
+      'barcode',
+      'quantity',
+      'weight',
+      'hs_code',
+    ];
+
+    let placeholders: AttributeLabel = {
+      price: 'OMR',
+      compare_at_price: 'OMR',
+      cost_price: 'OMR',
+    };
+
+    if (textAttributes.includes(attribute)) {
+      return (
+        <InputText
+          name={attribute}
+          value={variant[attribute]}
+          onChange={e =>
+            onVariantChange(product, variant, attribute, e.target.value)
+          }
+          inputStyle="rounded-none border-none shadow-none"
+          rightComponent={
+            placeholders[attribute] ? <div className="text-md text-sm text-gray-400">OMR</div> : null
+          }
+        />
+      );
+    }
+
+    return <>---</>;
+  };
+
   const handleSubmit = (): void => {};
 
-  const people = [
-    {
-      name: 'Lindsay Walton',
-      title: 'Front-end Developer',
-      email: 'lindsay.walton@example.com',
-      role: 'Member',
-    },
-    // More people...
-  ];
   return (
     <Main>
       <div className="p-6">
@@ -150,7 +289,7 @@ export default function ProductBulkEdit(props: Props) {
           <div className="inline-flex flex-wrap space-x-2 space-y-2">
             <>
               <div className="col-span-12 mt-2 ml-2 sm:col-span-6">
-                <div className="relative z-0 inline-flex rounded-md shadow-sm sm:space-x-3 sm:shadow-none">
+                <div className="relative z-30 inline-flex rounded-md shadow-sm sm:space-x-3 sm:shadow-none">
                   <Popover.Group className="flex items-center">
                     <div className="inline-flex sm:shadow-sm">
                       <Popover className="relative inline-block text-left">
@@ -342,16 +481,16 @@ export default function ProductBulkEdit(props: Props) {
                   <table className="w-full divide-y divide-gray-300">
                     <thead className="bg-gray-50">
                     <tr>
-                      {selectedProductAttributes.map(attribute => (
+                      {selectedProductAttributes.map((attribute, idx) => (
                         <th
-                          key={attribute}
+                          key={idx}
                           className="border px-4 py-2 text-sm font-normal">
                           {attributeLabels[attribute] ?? '-'}
                         </th>
                       ))}
-                      {selectedVariantAttributes.map(attribute => (
+                      {selectedVariantAttributes.map((attribute, idx) => (
                         <th
-                          key={attribute}
+                          key={idx}
                           className="border px-4 py-2 text-sm font-normal">
                           {attributeLabels[attribute] ?? '-'}
                         </th>
@@ -359,40 +498,59 @@ export default function ProductBulkEdit(props: Props) {
                     </tr>
                     </thead>
                     <tbody>
-                    {products.map(product => (
+                    {data.products.map((product, idx) => (
                       <>
-                        <tr key={product.id}>
-                          {selectedProductAttributes.map(attribute => (
-                            <td
-                              key={attribute}
-                              className="w-44 border px-4 py-2 text-sm font-normal">
-                              {product[attribute] ?? '-'}
-                            </td>
-                          ))}
-                          {
-                            selectedVariantAttributes.map((attribute,idx) => (
+                        <tr>
+                          {selectedProductAttributes.map((attribute, idx) => {
+                            return (
                               <td
                                 key={idx}
-                                className="w-44 border px-4 py-2 text-sm font-normal">
-                                --
+                                className="w-44 border text-sm font-normal">
+                                <ProductChange
+                                  product={product}
+                                  attribute={attribute}
+                                />
                               </td>
-                            ))
-                          }
+                            );
+                          })}
+                          {selectedVariantAttributes.map((attribute, idx) => (
+                            <td
+                              key={idx}
+                              className="w-44 border px-4 text-sm font-normal">
+                              --
+                            </td>
+                          ))}
                         </tr>
-                        {product.variants?.map(variant => (
-                          <tr>
-                            {
-                              selectedProductAttributes.map((product,idx) => (
-                                <td key={idx} className="w-44 border px-12 py-2 text-sm font-normal text-gray-500">{variant.title}</td>
-                              ))
-                            }
-                            {selectedVariantAttributes.map(attribute => (
-                              <td
-                                key={attribute}
-                                className="w-44 border px-4 py-2 text-sm font-normal">
-                                {variant[attribute] ?? '-'}
-                              </td>
-                            ))}
+                        {product.variants?.map((variant, idx) => (
+                          <tr key={idx}>
+                            {selectedProductAttributes.map(
+                              (attribute, idx) => (
+                                <td
+                                  key={idx}
+                                  className="w-44 border px-4 text-sm font-normal">
+                                  {attribute === 'title' ? (
+                                    <div className="px-12 text-gray-500 ">
+                                      {variant.title}
+                                    </div>
+                                  ) : (
+                                    '--'
+                                  )}
+                                </td>
+                              ),
+                            )}
+                            {selectedVariantAttributes.map(
+                              (attribute, idx) => (
+                                <td
+                                  key={idx}
+                                  className="w-44 border text-sm font-normal">
+                                  <VariantChange
+                                    product={product}
+                                    variant={variant}
+                                    attribute={attribute}
+                                  />
+                                </td>
+                              ),
+                            )}
                           </tr>
                         ))}
                       </>
@@ -403,6 +561,7 @@ export default function ProductBulkEdit(props: Props) {
               </div>
             </div>
           </div>
+
         </Card>
       </div>
     </Main>

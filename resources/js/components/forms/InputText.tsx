@@ -7,7 +7,7 @@ interface Props {
   placeholder?: string;
   inputStyle?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value?: string | number;
+  value?: any;
   rightComponent?: ReactNode;
   leftComponent?: ReactNode;
   leftComponentOnClick?: ReactNode;
