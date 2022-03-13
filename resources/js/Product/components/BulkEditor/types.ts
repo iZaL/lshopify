@@ -5,3 +5,19 @@ export type Attributes = {
 };
 
 export type AttributeLabel = Partial<Attributes>;
+
+export type ProductAttributes = 'title' | 'status' | 'tags';
+export type VariantAttributes =
+  | 'price'
+  | 'compare_at_price'
+  | 'cost_price'
+  | 'sku'
+  | 'barcode'
+  | 'weight'
+  | 'quantity'
+  | 'requires_shipping'
+  | 'taxable'
+  | 'hs_code'
+  | 'track_quantity'
+  | 'out_of_stock_sale'
+  | 'origin_country_id';

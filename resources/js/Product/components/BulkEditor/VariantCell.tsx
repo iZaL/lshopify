@@ -9,7 +9,7 @@ export default function VariantCell({
   attribute,
   onChange,
 }: {
-  value: string|boolean;
+  value: string | boolean;
   attribute: keyof Variant;
   onChange: (value: string | boolean) => void;
 }) {
