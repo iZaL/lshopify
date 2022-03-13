@@ -21,10 +21,7 @@ export interface Payment {
 export type CollectionType = 'manual' | 'smart';
 export type CollectionDeterminer = 'all' | 'any';
 
-export type CollectionField =
-  | 'product_title'
-  | 'product_type'
-  | 'product_vendor';
+export type CollectionField = 'product_title' | 'product_type' | 'product_vendor';
 
 export interface CollectionCondition {
   id: number;

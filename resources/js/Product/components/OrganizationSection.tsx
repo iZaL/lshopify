@@ -82,9 +82,7 @@ export default function OrganizationSection({
           }))}
           value={{value: productType?.id, label: productType?.name}}
           classNamePrefix="select"
-          onChange={option =>
-            onProductChange({id: option?.value, name: option?.label})
-          }
+          onChange={option => onProductChange({id: option?.value, name: option?.label})}
           components={{
             DropdownIndicator: () => null,
             IndicatorSeparator: () => null,
@@ -112,8 +110,7 @@ export default function OrganizationSection({
           />
         </div>
         {showCollectionMenu && (
-          <OutsideClickHandler
-            onOutsideClick={() => setShowCollectionMenu(false)}>
+          <OutsideClickHandler onOutsideClick={() => setShowCollectionMenu(false)}>
             <CollectionMenu
               defaultCollection={defaultCollection}
               collection={collection}
@@ -127,15 +124,11 @@ export default function OrganizationSection({
             {collection.map((item, index) => {
               return (
                 <li className="flex flex-row justify-between " key={index}>
-                  <Button
-                    theme="clear"
-                    buttonStyle="text-sm text-blue-500 underline">
+                  <Button theme="clear" buttonStyle="text-sm text-blue-500 underline">
                     {item.name}
                   </Button>
 
-                  <Button
-                    theme="clear"
-                    onClick={() => onCollectionChange(item, false)}>
+                  <Button theme="clear" onClick={() => onCollectionChange(item, false)}>
                     X
                   </Button>
                 </li>

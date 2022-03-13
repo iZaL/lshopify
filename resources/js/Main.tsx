@@ -7,13 +7,7 @@ import {useRecoilValue} from 'recoil';
 import {darkModeState} from './atoms';
 import PopMessages from './components/PopMessages';
 
-export default function Main({
-  title,
-  children,
-}: {
-  title?: string;
-  children: React.ReactNode;
-}) {
+export default function Main({title, children}: {title?: string; children: React.ReactNode}) {
   const darkMode = useRecoilValue(darkModeState);
 
   return (

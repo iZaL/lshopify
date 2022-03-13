@@ -18,9 +18,7 @@ interface HeaderProps {
   children: React.ReactNode;
 }
 
-const SmartTableContext = React.createContext<
-  SmartTableContextData<ItemWithID>
->({
+const SmartTableContext = React.createContext<SmartTableContextData<ItemWithID>>({
   selectedItemIDs: [],
   setSelectedItemIDs: () => {},
   onSelectedAllChange: () => {},
@@ -58,8 +56,7 @@ const SmartTable = <Item extends ItemWithID>({
 };
 
 const Header = ({children}: HeaderProps) => {
-  const {selectedItemIDs, onSelectedAllChange, items} =
-    useContext(SmartTableContext);
+  const {selectedItemIDs, onSelectedAllChange, items} = useContext(SmartTableContext);
 
   if (selectedItemIDs.length) {
     return null;
@@ -70,9 +67,7 @@ const Header = ({children}: HeaderProps) => {
       <Table.Row rowStyle="m-2">
         <Table.Header headerStyle="w-16">
           <Checkbox
-            checked={
-              selectedItemIDs.length === items.length && items.length != 0
-            }
+            checked={selectedItemIDs.length === items.length && items.length != 0}
             onChange={() => onSelectedAllChange()}
             name=""
             inputStyle="mx-4"
@@ -89,8 +84,7 @@ interface SmartHeaderProps<Item extends ItemWithID> {
 }
 
 const SmartHeader = ({children}: SmartHeaderProps<ItemWithID>) => {
-  const {onSelectedAllChange, items, selectedItemIDs} =
-    useContext(SmartTableContext);
+  const {onSelectedAllChange, items, selectedItemIDs} = useContext(SmartTableContext);
 
   if (!selectedItemIDs.length) {
     return null;
@@ -98,9 +92,7 @@ const SmartHeader = ({children}: SmartHeaderProps<ItemWithID>) => {
 
   return (
     <div className="mb-2 flex h-10 w-full flex-row px-4">
-      <Button
-        theme="clear"
-        buttonStyle="px-6 rounded-l-md border border-gray-300 font-medium">
+      <Button theme="clear" buttonStyle="px-6 rounded-l-md border border-gray-300 font-medium">
         <Checkbox
           name="selected"
           checked={selectedItemIDs.length === items.length}
@@ -121,8 +113,7 @@ interface BodyProps<T extends ItemWithID> {
 }
 
 const Body = ({children}: BodyProps<ItemWithID>) => {
-  const {items, selectedItemIDs, setSelectedItemIDs} =
-    useContext(SmartTableContext);
+  const {items, selectedItemIDs, setSelectedItemIDs} = useContext(SmartTableContext);
 
   const onCheckboxChange = (itemID: ItemWithID['id']) => {
     const checkedBox = selectedItemIDs.includes(itemID)

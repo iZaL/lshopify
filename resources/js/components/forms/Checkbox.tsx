@@ -8,13 +8,7 @@ interface Props {
   inputStyle?: string;
 }
 
-export default function Checkbox({
-  name,
-  label,
-  inputStyle,
-  checked = false,
-  onChange,
-}: Props) {
+export default function Checkbox({name, label, inputStyle, checked = false, onChange}: Props) {
   return (
     <div className="relative flex items-start">
       <div className="flex h-5 items-center">

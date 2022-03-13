@@ -26,9 +26,7 @@ export default function ContactCard({email, phone, onSave}: Props) {
 
       <div className="text-sm text-blue-500">
         <div>{email}</div>
-        <div className={`${!phone ?? 'text-gray-500'}`}>
-          {phone ?? 'No number'}
-        </div>
+        <div className={`${!phone ?? 'text-gray-500'}`}>{phone ?? 'No number'}</div>
       </div>
 
       <Modal

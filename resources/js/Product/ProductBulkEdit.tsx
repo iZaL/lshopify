@@ -1,20 +1,20 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import Main from '../Main'
-import FormSubmitBar from '../components/FormSubmitBar'
-import { useForm } from '@inertiajs/inertia-react'
-import { Product, Variant } from '../types'
-import Card from '../components/Card'
-import TagClose from '../components/TagClose'
-import { Popover, Transition } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/solid'
-import BackButton from '../components/BackButton'
-import { Inertia } from '@inertiajs/inertia'
-import route from 'ziggy-js'
-import PageHeader from '../components/PageHeader'
-import ProductChange from './components/BulkEditor/ProductChange'
-import VariantChange from './components/BulkEditor/VariantChange'
-import { AttributeLabel } from './components/BulkEditor/types'
-import Button from '../components/Button'
+import React, {Fragment, useEffect, useState} from 'react';
+import Main from '../Main';
+import FormSubmitBar from '../components/FormSubmitBar';
+import {useForm} from '@inertiajs/inertia-react';
+import {Product, Variant} from '../types';
+import Card from '../components/Card';
+import TagClose from '../components/TagClose';
+import {Popover, Transition} from '@headlessui/react';
+import {ChevronDownIcon} from '@heroicons/react/solid';
+import BackButton from '../components/BackButton';
+import {Inertia} from '@inertiajs/inertia';
+import route from 'ziggy-js';
+import PageHeader from '../components/PageHeader';
+import ProductChange from './components/BulkEditor/ProductChange';
+import VariantChange from './components/BulkEditor/VariantChange';
+import {AttributeLabel} from './components/BulkEditor/types';
+import Button from '../components/Button';
 
 interface Props {
   products: Product[];
@@ -29,18 +29,18 @@ const attributeLabels: AttributeLabel = {
   status: 'Status',
   tags: 'Tags',
   price: 'Price',
-  compare_at_price: 'Compare At Price',
-  cost_price: 'Cost Price',
+  compare_at_price: 'Compare at price',
+  cost_price: 'Cost per item',
   sku: 'SKU',
   barcode: 'Barcode',
   weight: 'Weight',
   quantity: 'Quantity',
-  requires_shipping: 'Requires Shipping',
-  taxable: 'Taxable',
-  hs_code: 'HS Code',
+  requires_shipping: 'Requires shipping',
+  taxable: 'Charge taxes',
+  hs_code: 'HS code',
   track_quantity: 'Track Quantity',
-  out_of_stock_sale: 'Out of Stock Sale',
-  origin_country_id: 'Origin Country',
+  out_of_stock_sale: 'Continue selling when out of stock',
+  origin_country_id: 'Country of origin',
 };
 
 type ProductButtons = 'title' | 'status' | 'tags';
@@ -74,23 +74,18 @@ export default function ProductBulkEdit(props: Props) {
     });
   }, []);
 
-  const [selectedProductAttributes, setSelectedProductAttributes] = useState<
-    ProductButtons[]
-  >(['title', 'status']);
-  const [selectedVariantAttributes, setSelectedVariantAttributes] = useState<
-    VariantButtons[]
-  >([
+  const [selectedProductAttributes, setSelectedProductAttributes] = useState<ProductButtons[]>([
+    'title',
+    'status',
+  ]);
+  const [selectedVariantAttributes, setSelectedVariantAttributes] = useState<VariantButtons[]>([
     'sku',
     'price',
     'compare_at_price',
   ]);
 
   const onButtonClick = (attribute: ProductButtons | VariantButtons) => {
-    if (
-      attribute === 'title' ||
-      attribute === 'status' ||
-      attribute === 'tags'
-    ) {
+    if (attribute === 'title' || attribute === 'status' || attribute === 'tags') {
       onProductButtonClick(attribute);
     } else {
       onVariantButtonClick(attribute);
@@ -99,9 +94,7 @@ export default function ProductBulkEdit(props: Props) {
 
   const onProductButtonClick = (attribute: ProductButtons) => {
     if (selectedProductAttributes.includes(attribute)) {
-      setSelectedProductAttributes(
-        selectedProductAttributes.filter(item => item !== attribute),
-      );
+      setSelectedProductAttributes(selectedProductAttributes.filter(item => item !== attribute));
     } else {
       setSelectedProductAttributes([...selectedProductAttributes, attribute]);
     }
@@ -109,19 +102,13 @@ export default function ProductBulkEdit(props: Props) {
 
   const onVariantButtonClick = (attribute: VariantButtons) => {
     if (selectedVariantAttributes.includes(attribute)) {
-      setSelectedVariantAttributes(
-        selectedVariantAttributes.filter(item => item !== attribute),
-      );
+      setSelectedVariantAttributes(selectedVariantAttributes.filter(item => item !== attribute));
     } else {
       setSelectedVariantAttributes([...selectedVariantAttributes, attribute]);
     }
   };
 
-  const onChange = (
-    product: Product,
-    field: ProductButtons | VariantButtons,
-    value: string,
-  ) => {
+  const onProductChange = (product: Product, field: ProductButtons | VariantButtons, value: string) => {
     setData({
       products: data.products.map(p => {
         if (p.id === product.id) {
@@ -165,31 +152,42 @@ export default function ProductBulkEdit(props: Props) {
       });
     }
   };
+  const onDefaultVariantChange = <T extends keyof Variant>(
+    product: Product,
+    variant: Variant,
+    attribute: T,
+    value: Variant[T],
+  ) => {
+    if (product && product.variants) {
+      const newProduct = {
+        ...product,
+        default_variant: {
+          ...product.default_variant,
+          [attribute]: value,
+        },
+      };
+
+      // update data products with new product
+      setData({
+        products: data.products.map(p => {
+          if (p.id === product.id) {
+            return newProduct;
+          }
+          return p;
+        }),
+      });
+    }
+  };
 
   const handleSubmit = (): void => {};
 
-  const selectedAttributes = [
-    ...selectedVariantAttributes,
-    ...selectedProductAttributes,
-  ];
+  const selectedAttributes = [...selectedVariantAttributes, ...selectedProductAttributes];
 
   const buttons: {[key: string]: Array<ProductButtons | VariantButtons>} = {
     General: ['title', 'status', 'tags'],
     Pricing: ['price', 'cost_price', 'compare_at_price', 'taxable'],
-    Inventory: [
-      'sku',
-      'barcode',
-      'quantity',
-      'out_of_stock_sale',
-      'track_quantity',
-    ],
-    Shipping: [
-      'sku',
-      'barcode',
-      'quantity',
-      'out_of_stock_sale',
-      'track_quantity',
-    ],
+    Inventory: ['sku', 'barcode', 'quantity', 'out_of_stock_sale', 'track_quantity'],
+    Shipping: ['weight', 'requires_shipping', 'hs_code'],
   };
 
   const sectionKeys = Object.keys(buttons);
@@ -208,9 +206,7 @@ export default function ProductBulkEdit(props: Props) {
         </div>
 
         <Card cardStyle="mt-6">
-          <div className="text-sm text-gray-700">
-            Currently editing these fields:
-          </div>
+          <div className="text-sm text-gray-700">Currently editing these fields:</div>
           <div className="inline-flex flex-wrap space-x-2 space-y-2">
             <>
               <div className="col-span-12 mt-2 ml-2 sm:col-span-6">
@@ -237,11 +233,11 @@ export default function ProductBulkEdit(props: Props) {
                           leave="transition ease-in duration-75"
                           leaveFrom="transform opacity-100 scale-100"
                           leaveTo="transform opacity-0 scale-95">
-                          <Popover.Panel className="absolute left-0 mt-2 max-h-[20rem] w-[36rem] origin-top-right overflow-y-scroll rounded-md bg-white p-2 text-sm shadow shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none ">
+                          <Popover.Panel className="absolute left-0 mt-2 max-h-[20rem] w-[36rem] origin-top-right overflow-y-scroll rounded-md bg-white p-2 text-sm shadow shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none divide-y ">
                             {sectionKeys.map((key, idx) => {
                               const section = buttons[key];
                               return (
-                                <dl key={idx} className='divide-y'>
+                                <dl key={idx} className='divide-y divide-black'>
                                   <div className="items-center py-2 sm:grid sm:grid-cols-4">
                                     <dt>{key}</dt>
                                     <dd className="mt-1 space-x-1 space-y-2 text-gray-900 sm:col-span-3 sm:mt-0">
@@ -251,9 +247,7 @@ export default function ProductBulkEdit(props: Props) {
                                             key={idx}
                                             theme="default"
                                             buttonStyle={`px-2 py-1 `}
-                                            disabled={selectedAttributes.includes(
-                                              button,
-                                            )}
+                                            disabled={selectedAttributes.includes(button)}
                                             onClick={() => {
                                               onButtonClick(button);
                                             }}>
@@ -299,89 +293,90 @@ export default function ProductBulkEdit(props: Props) {
                     <thead className="bg-gray-50">
                       <tr>
                         {selectedProductAttributes.map((attribute, idx) => (
-                          <th
-                            key={idx}
-                            className="border px-4 py-2 text-sm font-normal">
+                          <th key={idx} className="border px-4 py-2 text-sm font-normal">
                             {attributeLabels[attribute] ?? '-'}
                           </th>
                         ))}
                         {selectedVariantAttributes.map((attribute, idx) => (
-                          <th
-                            key={idx}
-                            className="border px-4 py-2 text-sm font-normal">
+                          <th key={idx} className="border px-4 py-2 text-sm font-normal">
                             {attributeLabels[attribute] ?? '-'}
                           </th>
                         ))}
                       </tr>
                     </thead>
                     <tbody>
-                      {data.products.map((product, idx) => (
-                        <Fragment key={idx}>
-                          <tr>
-                            {selectedProductAttributes.map((attribute, idx) => {
-                              return (
-                                <td
-                                  key={attribute}
-                                  className="w-44 border text-sm font-normal">
-                                  <ProductChange
-                                    product={product}
-                                    attribute={attribute}
-                                    onChange={value =>
-                                      onChange(product, attribute, value)
-                                    }
-                                  />
-                                </td>
-                              );
-                            })}
-                            {selectedVariantAttributes.map((attribute, idx) => (
-                              <td
-                                key={attribute}
-                                className="w-44 border px-4 text-sm font-normal">
-                                --
-                              </td>
-                            ))}
-                          </tr>
-                          {product.variants?.map((variant, idx) => (
-                            <tr key={idx}>
-                              {selectedProductAttributes.map(
-                                (attribute, idx) => (
-                                  <td
-                                    key={attribute}
-                                    className="w-44 border px-4 text-sm font-normal">
-                                    {attribute === 'title' ? (
-                                      <div className="px-12 text-gray-500 ">
-                                        {variant.title}
-                                      </div>
-                                    ) : (
-                                      '--'
-                                    )}
-                                  </td>
-                                ),
-                              )}
-                              {selectedVariantAttributes.map(
-                                (attribute, idx) => (
-                                  <td
-                                    key={attribute}
-                                    className="w-44 border text-sm font-normal">
-                                    <VariantChange
-                                      variant={variant}
+                      {data.products.map((product, idx) => {
+                        return (
+                          <Fragment key={idx}>
+                            <tr>
+                              {selectedProductAttributes.map((attribute, idx) => {
+                                return (
+                                  <td key={attribute} className="w-44 border text-sm font-normal">
+                                    <ProductChange
+                                      product={product}
                                       attribute={attribute}
-                                      onChange={value =>
-                                        onVariantChange(
-                                          product,
-                                          variant,
-                                          attribute,
-                                          value,
-                                        )
-                                      }
+                                      onChange={value => onProductChange(product, attribute, value)}
                                     />
                                   </td>
-                                ),
-                              )}
+                                );
+                              })}
+
+                              {!product.variants?.length && product.default_variant
+                                ? selectedVariantAttributes.map((attribute, idx) => (
+                                    <td key={attribute} className="w-44 border text-sm font-normal">
+                                      <VariantChange
+                                        variant={product.default_variant}
+                                        attribute={attribute}
+                                        onChange={value =>
+                                          onDefaultVariantChange(
+                                            product,
+                                            product.default_variant,
+                                            attribute,
+                                            value,
+                                          )
+                                        }
+                                      />
+                                    </td>
+                                  ))
+                                : selectedVariantAttributes.map((attribute, idx) => (
+                                    <td
+                                      key={attribute}
+                                      className="w-44 border px-4 text-sm font-normal">
+                                      --
+                                    </td>
+                                  ))}
                             </tr>
-                          ))}
-                        </Fragment>
-                      ))}
+                            {product.variants?.map((variant, idx) => {
+                              return (
+                                <tr key={idx}>
+                                  {selectedProductAttributes.map((attribute, idx) => (
+                                    <td
+                                      key={attribute}
+                                      className="w-44 border px-4 text-sm font-normal">
+                                      {attribute === 'title' ? (
+                                        <div className="px-12 text-gray-500 ">{variant.title}</div>
+                                      ) : (
+                                        '--'
+                                      )}
+                                    </td>
+                                  ))}
+                                  {selectedVariantAttributes.map((attribute, idx) => (
+                                    <td key={attribute} className="w-44 border text-sm font-normal">
+                                      <VariantChange
+                                        variant={variant}
+                                        attribute={attribute}
+                                        onChange={value =>
+                                          onVariantChange(product, variant, attribute, value)
+                                        }
+                                      />
+                                    </td>
+                                  ))}
+                                </tr>
+                              );
+                            })}
+                          </Fragment>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>

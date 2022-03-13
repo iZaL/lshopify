@@ -94,9 +94,7 @@ export default function ProductCreate(props: Props) {
 
   const onImagesDelete = (images: Image[]) => {
     const deletingImageIDs = images.map(img => img.id);
-    const currentImages = data.images?.filter(
-      img => !deletingImageIDs.includes(img.id),
-    );
+    const currentImages = data.images?.filter(img => !deletingImageIDs.includes(img.id));
     setData('images', currentImages);
   };
 
@@ -158,28 +156,20 @@ export default function ProductCreate(props: Props) {
             />
             <PricingSection
               variant={data.default_variant}
-              onChange={(field, value) =>
-                setDataObject('default_variant', field, value)
-              }
+              onChange={(field, value) => setDataObject('default_variant', field, value)}
             />
             <InventorySection
               variant={data.default_variant}
-              onChange={(field, value) =>
-                setDataObject('default_variant', field, value)
-              }
+              onChange={(field, value) => setDataObject('default_variant', field, value)}
             />
             <ShippingSection
               variant={data.default_variant}
-              onChange={(field, value) =>
-                setDataObject('default_variant', field, value)
-              }
+              onChange={(field, value) => setDataObject('default_variant', field, value)}
             />
             <VariantSection
               currentVariants={data.default_variant.options || []}
               defaultVariants={variants}
-              onChange={(field, value) =>
-                setDataObject('default_variant', field, value)
-              }
+              onChange={(field, value) => setDataObject('default_variant', field, value)}
             />
           </section>
 
@@ -197,9 +187,7 @@ export default function ProductCreate(props: Props) {
               collection={data.collections || []}
               onProductTypeChange={value => setData('product_type', value)}
               setTags={tagsCollection => setData('tags', tagsCollection)}
-              setCollection={collectionCollection =>
-                setData('collections', collectionCollection)
-              }
+              setCollection={collectionCollection => setData('collections', collectionCollection)}
               onProductTypeCreate={value => onProductTypeCreate(value)}
               isProductTypeLoading={isProductTypeLoading}
               isTagsLoading={isTagsLoading}

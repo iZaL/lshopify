@@ -54,9 +54,7 @@ export default function VariantCreate(props: Props) {
   }, [product.images]);
 
   const onVariantItemClick = (v: Variant) => {
-    return Inertia.get(
-      route('lshopify.products.variants.edit', [product.id, v.id]),
-    );
+    return Inertia.get(route('lshopify.products.variants.edit', [product.id, v.id]));
   };
 
   const onImagesUpload = (images: Image[]) => {
@@ -104,19 +102,13 @@ export default function VariantCreate(props: Props) {
               onChange={(field, value: any) => setData(field, value)}
               onImagesUpload={images => onImagesUpload(images)}
             />
-            <PricingSection
-              variant={data}
-              onChange={(field, value) => setData(field, value)}
-            />
+            <PricingSection variant={data} onChange={(field, value) => setData(field, value)} />
             <InventorySection
               variant={data}
               onChange={(field, value: any) => setData(field, value)}
             />
 
-            <ShippingSection
-              variant={data}
-              onChange={(field, value) => setData(field, value)}
-            />
+            <ShippingSection variant={data} onChange={(field, value) => setData(field, value)} />
           </section>
         </div>
       </div>

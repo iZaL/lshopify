@@ -16,14 +16,8 @@ export default function OrderItems({variants}: Props) {
   return (
     <div className="divide-y">
       {variants.map((variant, i) => (
-        <div
-          className="variants-center flex flex-row items-center space-x-2 py-2 text-sm "
-          key={i}>
-          <VariantImage
-            image={variant.image}
-            onClick={() => {}}
-            imageStyle="w-12 h-12"
-          />
+        <div className="variants-center flex flex-row items-center space-x-2 py-2 text-sm " key={i}>
+          <VariantImage image={variant.image} onClick={() => {}} imageStyle="w-12 h-12" />
           <div className="flex-1 text-gray-500">
             {variant.product && (
               <div className="underline">

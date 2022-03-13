@@ -22,9 +22,7 @@ export default function PricingSection({onChange, variant}: Props) {
           <InputText
             name="price"
             onChange={e => onChange('price', e.target.value)}
-            leftComponent={
-              <div className="text-md text-sm text-gray-400">OMR</div>
-            }
+            leftComponent={<div className="text-md text-sm text-gray-400">OMR</div>}
             inputStyle="pl-14"
             placeholder="0.00"
             value={variant.price}
@@ -36,9 +34,7 @@ export default function PricingSection({onChange, variant}: Props) {
           <InputText
             name="compare_at_price"
             onChange={e => onChange('compare_at_price', e.target.value)}
-            leftComponent={
-              <div className="text-md text-sm text-gray-400">OMR</div>
-            }
+            leftComponent={<div className="text-md text-sm text-gray-400">OMR</div>}
             inputStyle="pl-14"
             placeholder="0.00"
             value={variant.compare_at_price}
@@ -52,16 +48,12 @@ export default function PricingSection({onChange, variant}: Props) {
           <InputText
             name="cost_price"
             onChange={e => onChange('cost_price', e.target.value)}
-            leftComponent={
-              <div className="text-md text-sm text-gray-400">OMR</div>
-            }
+            leftComponent={<div className="text-md text-sm text-gray-400">OMR</div>}
             inputStyle="pl-14"
             placeholder="0.00"
             value={variant.cost_price}
           />
-          <p className="block py-1 text-sm text-gray-500">
-            Customers wont see this
-          </p>
+          <p className="block py-1 text-sm text-gray-500">Customers wont see this</p>
         </div>
 
         <div className="flex-1">

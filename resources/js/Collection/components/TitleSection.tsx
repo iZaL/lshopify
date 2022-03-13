@@ -6,10 +6,7 @@ import TextArea from '../../components/forms/TextArea';
 import {Collection} from '../../types';
 
 interface Props {
-  onChange: <T extends keyof Collection>(
-    field: T,
-    value: Collection[T] | any,
-  ) => void;
+  onChange: <T extends keyof Collection>(field: T, value: Collection[T] | any) => void;
   name: string;
   description: string;
 }

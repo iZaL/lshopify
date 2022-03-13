@@ -41,11 +41,7 @@ export default function InventoryIndex(props: Props) {
     const index = data.variants.findIndex(v => v.id === variant.id);
     const newVariant = {...variant, quantity: quantity, isDirty: true};
     setData({
-      variants: [
-        ...data.variants.slice(0, index),
-        newVariant,
-        ...data.variants.slice(index + 1),
-      ],
+      variants: [...data.variants.slice(0, index), newVariant, ...data.variants.slice(index + 1)],
     });
   };
 

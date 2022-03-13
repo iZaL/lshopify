@@ -7,10 +7,7 @@ import Button from '../../components/Button';
 import CollectionConditionItem from './CollectionConditionItem';
 
 interface Props {
-  onChange: <T extends keyof Collection>(
-    field: T,
-    value: Collection[T] | any,
-  ) => void;
+  onChange: <T extends keyof Collection>(field: T, value: Collection[T] | any) => void;
   collection: Collection;
 }
 
@@ -85,19 +82,11 @@ export default function CollectionTypeSection({onChange, collection}: T) {
               <CollectionConditionItem
                 key={i}
                 condition={condition}
-                onFieldChange={e =>
-                  onConditionChange(condition, 'field', e.target.value)
-                }
-                onCriteriaChange={e =>
-                  onConditionChange(condition, 'criteria', e.target.value)
-                }
-                onValueChange={e =>
-                  onConditionChange(condition, 'value', e.target.value)
-                }
+                onFieldChange={e => onConditionChange(condition, 'field', e.target.value)}
+                onCriteriaChange={e => onConditionChange(condition, 'criteria', e.target.value)}
+                onValueChange={e => onConditionChange(condition, 'value', e.target.value)}
                 onDelete={() => {
-                  const newConditions = collection.conditions.filter(
-                    c => c.id !== condition.id,
-                  );
+                  const newConditions = collection.conditions.filter(c => c.id !== condition.id);
                   onChange('conditions', newConditions);
                 }}
               />

@@ -83,10 +83,7 @@ export default function DraftOrderEdit(props: Props) {
     });
   };
 
-  const onCustomerCreate = (
-    customerData: CustomerForm,
-    addressData: CustomerAddress,
-  ) => {
+  const onCustomerCreate = (customerData: CustomerForm, addressData: CustomerAddress) => {
     Inertia.post(route('lshopify.customers.store'), {
       customer: customerData,
       address: addressData,
@@ -114,10 +111,7 @@ export default function DraftOrderEdit(props: Props) {
     Inertia.post(route('lshopify.draft.orders.update', [order.id]), postData);
   };
 
-  const onCustomerAddressSave = (
-    type: 'shipping' | 'billing',
-    address: Shipping | Billing,
-  ) => {
+  const onCustomerAddressSave = (type: 'shipping' | 'billing', address: Shipping | Billing) => {
     handleSubmit({
       [type]: {
         ...address,

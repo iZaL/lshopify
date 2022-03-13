@@ -46,9 +46,7 @@ export default function Navbar() {
                 <div>
                   <Menu.Button className="flex max-w-xs items-center rounded-full text-sm focus:border-transparent focus:outline-none focus:ring-0">
                     <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gray-500">
-                      <span className="text-sm font-medium leading-none text-white">
-                        AA
-                      </span>
+                      <span className="text-sm font-medium leading-none text-white">AA</span>
                     </span>
                     <span className="pl-2">Afzal Abbas</span>
                   </Menu.Button>
