@@ -2,6 +2,7 @@ import {Product} from '../../../types';
 import Select from '../../../components/forms/Select';
 import InputText from '../../../components/forms/InputText';
 import React from 'react';
+import VariantImage from '../../Variant/components/VariantImage';
 
 export default function ProductCell({
   product,
@@ -32,12 +33,20 @@ export default function ProductCell({
 
   if (attribute === 'title') {
     return (
-      <InputText
-        name={attribute}
-        value={product['title']}
-        onChange={e => onChange(e.target.value)}
-        inputStyle="min-w-[280px] rounded-none shadow-none border-none focus:rounded-none "
-      />
+      <div className="inline-flex items-center">
+        <VariantImage
+          image={product.image}
+          onClick={() => {}}
+          imageStyle="h-10 ml-2"
+          border={false}
+        />
+        <InputText
+          name={attribute}
+          value={product['title']}
+          onChange={e => onChange(e.target.value)}
+          inputStyle="min-w-[280px] rounded-none shadow-none border-none focus:rounded-none "
+        />
+      </div>
     );
   }
 

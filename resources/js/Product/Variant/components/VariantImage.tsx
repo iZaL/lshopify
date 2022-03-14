@@ -1,20 +1,30 @@
 import React from 'react';
 import {Image} from '../../../types';
+import classNames from 'classnames';
 
 interface Props {
   image: Image | null | undefined;
   imageStyle?: string;
   onClick: () => void;
+  border?: boolean;
 }
 
-export default function VariantImage({image, imageStyle, onClick}: Props) {
-  const style = imageStyle ? imageStyle : 'w-16 h-16';
+export default function VariantImage({image, imageStyle, onClick, border = true}: Props) {
+  const style = imageStyle ? imageStyle : 'w-14 h-16';
   return (
     <div
-      className={`flex cursor-pointer items-center  justify-center overflow-hidden rounded border border-gray-200 ${style}`}
+      className={classNames('overflow-hidden',{
+        'rounded rounded-md border border-gray-200 mr-2': border,
+      })}
       onClick={onClick}>
       {image ? (
-        <img src={image.url} className="pointer-events-none object-contain" alt="" />
+        <div className='self-center'>
+          <img
+            src={image.url}
+            className={classNames('inline-block object-contain', style)}
+            alt=""
+          />
+        </div>
       ) : (
         <svg
           xmlns="http://www.w3.org/2000/svg"

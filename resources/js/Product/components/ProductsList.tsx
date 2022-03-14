@@ -174,7 +174,7 @@ export default function ProductsList({products}: Props) {
                         <VariantImage
                           onClick={() => onProductClick(item)}
                           image={item.image}
-                          imageStyle={'w-14 h-14 mr-2'}
+                          imageStyle={'w-14 h-14'}
                         />
                       )}
                       {item.title}

@@ -284,7 +284,7 @@ export default function ProductBulkEdit(props: Props) {
                                   {selectedProductAttributes.map((attribute, idx) => (
                                     <Cell key={attribute}>
                                       {attribute === 'title' ? (
-                                        <div className="bg-gray-100 p-2 pl-8 text-gray-500 ">
+                                        <div className="bg-gray-100 p-2 pl-12 text-gray-500 ">
                                           {variant.title}
                                         </div>
                                       ) : (

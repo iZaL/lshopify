@@ -64,7 +64,7 @@ export default function InputText({
         autoComplete={autocomplete ? autocomplete : ''}
         placeholder={placeholder ? placeholder : ''}
         className={classNames(
-          'focus:blue-500 block w-full rounded-md border border-gray-300 shadow-sm sm:text-sm',
+          'focus:blue-500 block w-full rounded-md border border-gray-300 sm:text-sm',
           leftComponent && 'pl-[3rem]',
           inputStyle,
         )}

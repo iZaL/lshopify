@@ -17,7 +17,7 @@ export default function Select({name, inputStyle, value, children, onChange}: Pr
       id={name}
       value={value}
       onChange={e => onChange(e)}
-      className={`${inputStyle} block w-full rounded-md border border-gray-300 shadow-sm sm:text-sm
+      className={`${inputStyle} block w-full rounded-md border border-gray-300 sm:text-sm
         `}>
       {children}
     </select>

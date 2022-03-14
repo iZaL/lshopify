@@ -345,7 +345,7 @@ export default function VariantEditSection({
                     </div>
                     <div className="mr-2 w-14">
                       <VariantImage
-                        imageStyle="h-12"
+                        imageStyle="w-12 h-10"
                         image={variant.image}
                         onClick={() => {
                           setSelectedVariant(variant);
