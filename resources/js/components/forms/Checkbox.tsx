@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 
 interface Props {
   name: string;
@@ -10,19 +11,20 @@ interface Props {
 
 export default function Checkbox({name, label, inputStyle, checked = false, onChange}: Props) {
   return (
-    <div className="relative flex items-start">
-      <div className="flex h-5 items-center">
-        <input
-          id={name}
-          name={name}
-          type="checkbox"
-          className={`h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 ${inputStyle}`}
-          checked={checked}
-          onChange={onChange}
-        />
-      </div>
+    <div className="relative inline-flex items-center space-x-2">
+      <input
+        id={name}
+        name={name}
+        type="checkbox"
+        checked={checked}
+        className={classNames(
+          'focus:shadow-outline h-4 w-4 rounded border-gray-500 text-indigo-500 focus:outline-none',
+          inputStyle,
+        )}
+        onChange={onChange}
+      />
       {label && (
-        <div className="ml-3 text-sm">
+        <div className="text-sm">
           <label htmlFor="comments" className="">
             {label}
           </label>

@@ -1,4 +1,5 @@
 import React, {ReactNode} from 'react';
+import classNames from 'classnames';
 
 interface Props {
   name: string;
@@ -50,7 +51,7 @@ export default function InputText({
   ...props
 }: Props) {
   return (
-    <div className="relative rounded-md shadow-sm ">
+    <div className="relative">
       {leftComponent && (
         <Button onClick={leftComponentOnClick} position="left">
           {leftComponent}
@@ -62,9 +63,11 @@ export default function InputText({
         id={name}
         autoComplete={autocomplete ? autocomplete : ''}
         placeholder={placeholder ? placeholder : ''}
-        className={`block w-full rounded-md border border-gray-300 py-2 pl-4 pr-10 shadow-sm dark:border-gray-500 dark:bg-gray-800
-        ${leftComponent && 'pl-[3rem]'}
-        focus:blue-500 focus:border-blue-500 focus:outline-none sm:text-sm ${inputStyle}`}
+        className={classNames(
+          'focus:blue-500 block w-full rounded-md border border-gray-300 shadow-sm sm:text-sm',
+          leftComponent && 'pl-[3rem]',
+          inputStyle,
+        )}
         {...props}
       />
       {rightComponent && (

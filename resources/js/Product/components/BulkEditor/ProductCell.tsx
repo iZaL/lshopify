@@ -21,9 +21,8 @@ export default function ProductCell({
       <Select
         name="status"
         onChange={e => onChange(e.target.value)}
-        // product,attribute,
         value={product['status']}
-        inputStyle="rounded-none border-none">
+        inputStyle="rounded-none shadow-none border-none focus:rounded-none min-w-[150px]">
         <option value="draft">Draft</option>
         <option value="active">Active</option>
         <option value="archived">Archived</option>
@@ -37,8 +36,7 @@ export default function ProductCell({
         name={attribute}
         value={product['title']}
         onChange={e => onChange(e.target.value)}
-        // onChange={e => onChange(product, attribute, e.target.value)}
-        inputStyle="rounded-none border-none"
+        inputStyle="min-w-[280px] rounded-none shadow-none border-none focus:rounded-none "
       />
     );
   }

@@ -39,7 +39,7 @@ export default function VariantCell({
         name={attribute}
         value={value}
         onChange={e => onChange(e.target.value)}
-        inputStyle="rounded-none border-none shadow-none"
+        inputStyle="min-w-[150px] rounded-none shadow-none border-none focus:rounded-none "
         rightComponent={
           placeholders[attribute] ? <div className="text-md text-sm text-gray-400">OMR</div> : null
         }
@@ -50,10 +50,10 @@ export default function VariantCell({
   if (booleanAttributes.includes(attribute)) {
     return (
       <Checkbox
-        inputStyle="mx-4"
         name={attribute}
         checked={value === true}
         onChange={e => onChange(e.target.checked)}
+        inputStyle="mx-4 "
       />
     );
   }

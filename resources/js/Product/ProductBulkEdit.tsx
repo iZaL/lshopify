@@ -13,6 +13,7 @@ import ProductCell from './components/BulkEditor/ProductCell';
 import VariantCell from './components/BulkEditor/VariantCell';
 import {AttributeLabel, ProductAttributes, VariantAttributes} from './components/BulkEditor/types';
 import TagsPopup from './components/BulkEditor/TagsPopup';
+import Cell from './components/BulkEditor/Cell';
 
 interface Props {
   products: Product[];
@@ -220,16 +221,16 @@ export default function ProductBulkEdit(props: Props) {
             <div className="overflow-x-auto">
               <div className="inline-block w-full py-2 align-middle">
                 <div className="shadow-sm ring-1 ring-black ring-opacity-5">
-                  <table className="w-full divide-y divide-gray-300">
+                  <table className="table-auto divide-y divide-gray-300">
                     <thead className="bg-gray-50">
                       <tr>
                         {selectedProductAttributes.map((attribute, idx) => (
-                          <th key={idx} className="border px-4 py-2 text-sm font-normal">
+                          <th key={idx} className="border py-2 text-sm font-normal">
                             {attributeLabels[attribute] ?? '-'}
                           </th>
                         ))}
                         {selectedVariantAttributes.map((attribute, idx) => (
-                          <th key={idx} className="border px-4 py-2 text-sm font-normal">
+                          <th key={idx} className="border py-2 text-sm font-normal">
                             {attributeLabels[attribute] ?? '-'}
                           </th>
                         ))}
@@ -242,7 +243,7 @@ export default function ProductBulkEdit(props: Props) {
                             <tr>
                               {selectedProductAttributes.map((attribute, idx) => {
                                 return (
-                                  <td key={attribute} className="w-44 border text-sm font-normal">
+                                  <Cell key={idx}>
                                     <ProductCell
                                       product={product}
                                       attribute={attribute}
@@ -250,13 +251,13 @@ export default function ProductBulkEdit(props: Props) {
                                         onProductAttributeChange(product, attribute, value)
                                       }
                                     />
-                                  </td>
+                                  </Cell>
                                 );
                               })}
 
                               {!product.variants?.length && product.default_variant
                                 ? selectedVariantAttributes.map((attribute, idx) => (
-                                    <td key={attribute} className="w-44 border text-sm font-normal">
+                                    <Cell key={idx}>
                                       <VariantCell
                                         value={product.default_variant[attribute]}
                                         attribute={attribute}
@@ -269,32 +270,30 @@ export default function ProductBulkEdit(props: Props) {
                                           )
                                         }
                                       />
-                                    </td>
+                                    </Cell>
                                   ))
                                 : selectedVariantAttributes.map((attribute, idx) => (
-                                    <td
-                                      key={attribute}
-                                      className="w-44 border px-4 text-sm font-normal">
-                                      --
-                                    </td>
+                                    <Cell key={attribute}>
+                                      <div className="cursor-not-allowed px-4">—</div>
+                                    </Cell>
                                   ))}
                             </tr>
                             {product.variants?.map((variant, idx) => {
                               return (
                                 <tr key={idx}>
                                   {selectedProductAttributes.map((attribute, idx) => (
-                                    <td
-                                      key={attribute}
-                                      className="w-44 border px-4 text-sm font-normal">
+                                    <Cell key={attribute}>
                                       {attribute === 'title' ? (
-                                        <div className="px-12 text-gray-500 ">{variant.title}</div>
+                                        <div className="bg-gray-100 p-2 pl-8 text-gray-500 ">
+                                          {variant.title}
+                                        </div>
                                       ) : (
-                                        '--'
+                                        <div className="cursor-not-allowed px-4">—</div>
                                       )}
-                                    </td>
+                                    </Cell>
                                   ))}
                                   {selectedVariantAttributes.map((attribute, idx) => (
-                                    <td key={attribute} className="w-44 border text-sm font-normal">
+                                    <Cell key={attribute}>
                                       <VariantCell
                                         value={variant[attribute]}
                                         attribute={attribute}
@@ -307,7 +306,7 @@ export default function ProductBulkEdit(props: Props) {
                                           )
                                         }
                                       />
-                                    </td>
+                                    </Cell>
                                   ))}
                                 </tr>
                               );

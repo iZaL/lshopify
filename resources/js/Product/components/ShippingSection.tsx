@@ -6,6 +6,7 @@ import Subheader from '../../components/Subheader';
 import Checkbox from '../../components/forms/Checkbox';
 import {SearchIcon} from '@heroicons/react/solid';
 import {Variant} from '../../types';
+import Border from '../../components/Border';
 
 interface Props {
   variant: Variant;
@@ -24,7 +25,7 @@ export default function ShippingSection({variant, onChange}: Props) {
         onChange={e => onChange('physical_product', e.target.checked)}
       />
 
-      <div className="w-full border-t border-gray-300" />
+      <Border />
 
       {variant.physical_product && (
         <>
@@ -42,7 +43,7 @@ export default function ShippingSection({variant, onChange}: Props) {
             </div>
           </div>
 
-          <div className="w-full border-t border-gray-300" />
+          <Border />
 
           <Subheader text="CUSTOMS INFORMATION" headerStyle="text-xs" />
 

@@ -5,6 +5,7 @@ import InputText from '../../components/forms/InputText';
 import Subheader from '../../components/Subheader';
 import Checkbox from '../../components/forms/Checkbox';
 import {Variant} from '../../types';
+import Border from '../../components/Border';
 
 interface Props {
   onChange: <T extends keyof Variant>(field: T, value: Variant[T]) => void;
@@ -44,7 +45,7 @@ export default function InventorySection({onChange, variant}: Props) {
       />
 
       {variant.track_quantity && (
-        <>
+        <div>
           <Checkbox
             name="out_of_stock_sale"
             label="Continue selling when out of stock"
@@ -52,14 +53,14 @@ export default function InventorySection({onChange, variant}: Props) {
             onChange={e => onChange('out_of_stock_sale', e.target.checked)}
           />
 
-          <div className="w-full border-t border-gray-300" />
+          <Border />
 
           <div className="min-w-0 flex-1">
             <Subheader text="QUANTITY" headerStyle="text-sm" />
           </div>
 
-          <div className="flex space-x-10">
-            <div className="flex-1">
+          <div className="flex ">
+            <div className="w-1/2 pr-5">
               <Label title="Available" />
               <InputText
                 name="quantity"
@@ -67,9 +68,8 @@ export default function InventorySection({onChange, variant}: Props) {
                 value={variant.quantity}
               />
             </div>
-            <div className="flex-1"></div>
           </div>
-        </>
+        </div>
       )}
     </Card>
   );

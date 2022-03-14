@@ -4,6 +4,7 @@ import Subheader from '../../components/Subheader';
 import Checkbox from '../../components/forms/Checkbox';
 import {Product, ProductStatus} from '../../types';
 import Select from '../../components/forms/Select';
+import Border from '../../components/Border';
 
 interface Props {
   onChange: (field: keyof Product, value: any) => void;
@@ -29,7 +30,7 @@ export default function StatusSection({onChange, activeStatus}: Props) {
         This product will be available to 1 sales channel.
       </div>
 
-      <div className="w-full border-t border-gray-300" />
+      <Border />
 
       <Subheader text={'SALES CHANNELS AND APPS'} headerStyle={'text-xs'} />
       <Checkbox label="Online Store" name="online_store" checked={false} onChange={() => {}} />
