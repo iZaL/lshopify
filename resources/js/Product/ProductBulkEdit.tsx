@@ -203,6 +203,7 @@ export default function ProductBulkEdit(props: Props) {
                 <TagClose
                   key={idx}
                   title={attributeLabels[attribute] ?? '-'}
+                  hideIcon={attribute === 'title'}
                   onClick={() => onProductButtonClick(attribute)}
                 />
               ))}
