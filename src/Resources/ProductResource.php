@@ -22,6 +22,9 @@ class ProductResource extends JsonResource
             'tags' => TagResource::collection($this->whenLoaded('tags')),
             'status' => $this->status,
             'collections' => CollectionResource::collection($this->whenLoaded('collections')),
+            'seo_title' => $this->seo_title,
+            'seo_description' => $this->seo_description,
+            'seo_url' => $this->seo_url,
         ];
     }
 }

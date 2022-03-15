@@ -6,7 +6,7 @@ export type Attributes = {
 
 export type AttributeLabel = Partial<Attributes>;
 
-export type ProductAttributes = 'title' | 'status' | 'tags';
+export type ProductAttributes = 'title' | 'status' | 'tags'  | 'seo_title' | 'seo_description' | 'seo_url';
 export type VariantAttributes =
   | 'price'
   | 'compare_at_price'
@@ -20,4 +20,6 @@ export type VariantAttributes =
   | 'hs_code'
   | 'track_quantity'
   | 'out_of_stock_sale'
-  | 'origin_country_id';
+  | 'origin_country_id'
+
+  ;

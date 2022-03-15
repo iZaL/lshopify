@@ -27,10 +27,8 @@ export default function CollectionList({collections}: Props) {
 
         <Table>
           <SmartTable.Header>
-            <Table.Header />
             <Table.Header title="Title" />
             <Table.Header title="Product conditions" />
-            <Table.Header />
           </SmartTable.Header>
           <SmartTable.Body>
             {({item}) => {
@@ -48,11 +46,10 @@ export default function CollectionList({collections}: Props) {
                       {item.name}
                     </Button>
                   </Table.Cell>
-                  <Table.Cell>{item.type}</Table.Cell>
                   <Table.Cell>
                     {item.conditions.map((condition: CollectionCondition, idx: number) => (
                       <div key={idx}>{condition.title}</div>
-                    ))}
+                    )) }
                   </Table.Cell>
                 </>
               );

@@ -14,7 +14,7 @@ class Product extends BaseModel
 
     protected $table = 'products';
 
-    protected $fillable = ['title', 'description', 'status', 'category_id'];
+    protected $fillable = ['title', 'description', 'status', 'category_id', 'seo_title', 'seo_description', 'seo_url'];
 
     protected $with = ['image'];
 

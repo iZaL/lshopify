@@ -89,6 +89,9 @@ export interface Product {
   images?: Image[];
   image?: Image;
   collections?: Collection[];
+  seo_title?: string;
+  seo_description?: string;
+  seo_url?: string;
 }
 
 export interface VariantPivot extends Variant {

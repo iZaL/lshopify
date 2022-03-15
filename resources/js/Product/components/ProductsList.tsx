@@ -117,6 +117,10 @@ export default function ProductsList({products}: Props) {
                           submitButtonTitle: 'Archive products',
                           onSubmit: () => {
                             setShowDialog(false);
+                            Inertia.post(route('lshopify.products.attributes'), {
+                              product_ids: selectedItemIDs,
+                              status: 'archived',
+                            });
                           },
                         }),
                     },

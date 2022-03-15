@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import Main from '../Main';
 import FormSubmitBar from '../components/FormSubmitBar';
 import {useForm} from '@inertiajs/inertia-react';
-import { Product, Tag, Variant } from '../types'
+import {Product, Tag, Variant} from '../types';
 import Card from '../components/Card';
 import TagClose from '../components/TagClose';
 import BackButton from '../components/BackButton';
@@ -40,6 +40,9 @@ const attributeLabels: AttributeLabel = {
   track_quantity: 'Track Quantity',
   out_of_stock_sale: 'Continue selling when out of stock',
   origin_country_id: 'Country of origin',
+  seo_title: 'Page title',
+  seo_url: 'URL and Handle',
+  seo_description: 'Meta description',
 };
 
 export default function ProductBulkEdit(props: Props) {
@@ -69,7 +72,7 @@ export default function ProductBulkEdit(props: Props) {
   ]);
 
   const onButtonClick = (attribute: ProductAttributes | VariantAttributes) => {
-    if (attribute === 'title' || attribute === 'status' || attribute === 'tags') {
+    if (attribute === 'title' || attribute === 'status' || attribute === 'tags' || attribute === 'seo_title' || attribute === 'seo_url' || attribute === 'seo_description') {
       onProductButtonClick(attribute);
     } else {
       onVariantButtonClick(attribute);
@@ -120,7 +123,7 @@ export default function ProductBulkEdit(props: Props) {
         taggable_type: 'product',
       },
       {
-        onSuccess: (page) => {
+        onSuccess: page => {
           Inertia.reload();
         },
       },
@@ -198,7 +201,11 @@ export default function ProductBulkEdit(props: Props) {
   };
 
   const handleSubmit = (): void => {
-    Inertia.post(route('lshopify.products.bulk.update'), data);
+    Inertia.post(route('lshopify.products.bulk.update'), data,{
+      // preserveScroll: false,
+      // preserveState: true,
+      // onSuccess: () => {},
+    });
   };
 
   const buttons: {[key: string]: Array<ProductAttributes | VariantAttributes>} = {
@@ -206,6 +213,7 @@ export default function ProductBulkEdit(props: Props) {
     Pricing: ['price', 'cost_price', 'compare_at_price', 'taxable'],
     Inventory: ['sku', 'barcode', 'quantity', 'out_of_stock_sale', 'track_quantity'],
     Shipping: ['weight', 'requires_shipping', 'hs_code'],
+    SEO: ['seo_title', 'seo_description', 'seo_url'],
   };
 
   return (

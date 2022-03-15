@@ -50,7 +50,9 @@ const SmartTable = <Item extends ItemWithID>({
         onSelectedAllChange,
         items,
       }}>
-      {children}
+      <div className='relative'>
+        {children}
+      </div>
     </SmartTableContext.Provider>
   );
 };
@@ -58,23 +60,21 @@ const SmartTable = <Item extends ItemWithID>({
 const Header = ({children}: HeaderProps) => {
   const {selectedItemIDs, onSelectedAllChange, items} = useContext(SmartTableContext);
 
-  if (selectedItemIDs.length) {
-    return null;
-  }
-
   return (
     <thead>
-      <Table.Row rowStyle="m-2">
-        <Table.Header headerStyle="w-16">
-          <Checkbox
-            checked={selectedItemIDs.length === items.length && items.length != 0}
-            onChange={() => onSelectedAllChange()}
-            name=""
-            inputStyle="mx-4"
+    <Table.Row rowStyle="m-2">
+      <Table.Header headerStyle="w-16">
+        <div className="flex w-12 items-center justify-center">
+        <Checkbox
+          checked={selectedItemIDs.length === items.length && items.length != 0}
+          onChange={() => onSelectedAllChange()}
+          name="check-all"
+          // inputStyle="mx-4"
           />
-        </Table.Header>
-        {children}
-      </Table.Row>
+        </div>
+      </Table.Header>
+      {children}
+    </Table.Row>
     </thead>
   );
 };
@@ -91,19 +91,16 @@ const SmartHeader = ({children}: SmartHeaderProps<ItemWithID>) => {
   }
 
   return (
-    <div className="mb-2 flex h-10 w-full flex-row px-4">
-      <Button theme="clear" buttonStyle="px-6 rounded-l-md border border-gray-300 font-medium">
-        <Checkbox
-          name="selected"
-          checked={selectedItemIDs.length === items.length}
-          onChange={() => onSelectedAllChange()}
-        />
-        <span className="px-2">{selectedItemIDs.length} selected</span>
-      </Button>
+    <div className="z-20 absolute top-0 left-12 flex h-10 items-center bg-white pt-2 ">
+      <div className="mb-2 flex w-full flex-row px-4">
+        <Button theme="clear" buttonStyle="px-6 py-2 rounded-l-md border border-gray-300 font-medium">
+          {selectedItemIDs.length} selected
+        </Button>
 
-      {children({
-        selectedItemIDs,
-      })}
+        {children({
+          selectedItemIDs,
+        })}
+      </div>
     </div>
   );
 };
@@ -124,25 +121,25 @@ const Body = ({children}: BodyProps<ItemWithID>) => {
 
   return (
     <tbody>
-      {items.map((item, id) => {
-        return (
-          <Table.Row key={id} idx={id} onClick={() => {}}>
-            <Table.Cell>
-              <div className="flex w-12 items-center justify-center">
-                <Checkbox
-                  checked={selectedItemIDs.includes(item.id)}
-                  // onChange={() => {}}
-                  onChange={() => onCheckboxChange(item.id)}
-                  name=""
-                />
-              </div>
-            </Table.Cell>
-            {children({
-              item,
-            })}
-          </Table.Row>
-        );
-      })}
+    {items.map((item, id) => {
+      return (
+        <Table.Row key={id} idx={id} onClick={() => {}}>
+          <Table.Cell>
+            <div className="flex w-12 items-center justify-center">
+              <Checkbox
+                checked={selectedItemIDs.includes(item.id)}
+                // onChange={() => {}}
+                onChange={() => onCheckboxChange(item.id)}
+                name=""
+              />
+            </div>
+          </Table.Cell>
+          {children({
+            item,
+          })}
+        </Table.Row>
+      );
+    })}
     </tbody>
   );
 };

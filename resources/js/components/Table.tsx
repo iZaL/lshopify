@@ -42,7 +42,7 @@ const Row = ({children, striped = true, idx, onClick, rowStyle}: RowProps) => {
   return (
     <tr
       className={classNames(
-        'whitespace-nowrap px-6 py-4 text-sm text-gray-600',
+        'whitespace-nowrap',
         striped ? `${idx && idx % 2 !== 0 ? 'bg-gray-50' : 'bg-white'}` : 'bg-white',
         onClick && 'cursor-pointer hover:bg-gray-100',
         rowStyle,
@@ -55,14 +55,14 @@ const Row = ({children, striped = true, idx, onClick, rowStyle}: RowProps) => {
 
 const Cell = ({children, colStyle}: CellProps) => {
   return (
-    <td className={`whitespace-nowrap px-6 py-4 text-sm text-gray-500 ${colStyle}`}>{children}</td>
+    <td className={`whitespace-nowrap py-4 text-sm text-gray-500 ${colStyle}`}>{children}</td>
   );
 };
 
 const Header = ({title, children = null, headerStyle}: HeaderProps) => {
   return (
     <th
-      className={`px-6 py-3 text-left text-sm font-medium tracking-wider text-gray-900 ${headerStyle}`}>
+      className={`py-3 text-left text-sm font-medium tracking-wider text-gray-900 ${headerStyle}`}>
       {title ? title : children}
     </th>
   );

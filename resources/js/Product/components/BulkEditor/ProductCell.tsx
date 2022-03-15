@@ -1,27 +1,27 @@
 import {Product, Tag} from '../../../types';
 import Select from '../../../components/forms/Select';
 import InputText from '../../../components/forms/InputText';
-import React, { useEffect } from 'react'
+import React, {useEffect} from 'react';
 import VariantImage from '../../Variant/components/VariantImage';
 import {Popover} from '@headlessui/react';
 import Button from '../../../components/Button';
-import TagClose from '../../../components/TagClose'
-import { XIcon } from '@heroicons/react/solid'
+import TagClose from '../../../components/TagClose';
+import {XIcon} from '@heroicons/react/solid';
+import classNames from 'classnames'
 
 export default function ProductCell({
   product,
   attribute,
   onChange,
   onTagAdd,
-  onTagRemove
+  onTagRemove,
 }: {
   product: Product;
   attribute: keyof Product;
   onChange: (value: string) => void;
   onTagAdd: (value: string) => void;
-  onTagRemove:(tag:Tag) => void;
+  onTagRemove: (tag: Tag) => void;
 }) {
-
   useEffect(() => {
     setSelectedTags(product.tags ? product.tags : selectedTags);
   }, [product.tags]);
@@ -30,32 +30,34 @@ export default function ProductCell({
   const [selectedTags, setSelectedTags] = React.useState<Tag[]>(product.tags ? product.tags : []);
 
   const onTagChange = (tag: Tag) => {
-    // setSelectedTags(
-    //   selectedTags.includes(tag) ? selectedTags.filter(t => t !== tag) : [...selectedTags, tag],
-    // );
     onTagRemove(tag);
   };
 
   const onTagSave = () => {
-    onTagAdd(tagValue);
     setTagValue('');
+    onTagAdd(tagValue);
   };
 
   if (attribute === 'tags') {
     return (
       <div className="inline-flex sm:shadow-sm">
         <Popover className="relative text-left">
-          <Popover.Button className="flex w-[26rem] flex-wrap p-1">
+          <Popover.Button className={
+            classNames(
+              "flex w-[18rem] flex-wrap p-1 ",
+              !selectedTags.length ? 'py-4' : null
+            )
+          }>
             {selectedTags.map((tag, idx) => (
               <div
                 key={idx}
-                className="rounded rounded-md bg-gray-200 p-1 px-2 text-sm text-gray-700 my-px mx-px ">
+                className="my-px mx-px rounded rounded-md bg-gray-200 p-1 px-2 text-sm text-gray-700 ">
                 {tag.name}
               </div>
             ))}
           </Popover.Button>
 
-          <Popover.Panel className="absolute right-0 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <Popover.Panel className="absolute right-0 left-0 mt-2 rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="w[36rem] relative flex flex-col space-y-2 ">
               <div>Tags</div>
               <InputText
@@ -75,14 +77,12 @@ export default function ProductCell({
                     buttonStyle="rounded rounded-md bg-gray-200 p-1 px-2 text-sm text-gray-700 my-px mx-px "
                     onClick={() => onTagChange(tag)}>
                     {tag.name}
-                    {
-                      selectedTags.includes(tag) && (
-                        <XIcon
-                          className="w-4 cursor-pointer hover:rounded hover:rounded-md hover:bg-gray-300"
-                          onClick={() => {}}
-                        />
-                      )
-                    }
+                    {selectedTags.includes(tag) && (
+                      <XIcon
+                        className="w-4 cursor-pointer hover:rounded hover:rounded-md hover:bg-gray-300"
+                        onClick={() => {}}
+                      />
+                    )}
                   </Button>
                 ))}
               </div>
@@ -136,5 +136,12 @@ export default function ProductCell({
     );
   }
 
-  return null;
+  return (
+    <InputText
+      name={attribute}
+      value={product[attribute]}
+      onChange={e => onChange(e.target.value)}
+      inputStyle="min-w-[150px] rounded-none shadow-none border-none focus:rounded-none "
+    />
+  );
 }
