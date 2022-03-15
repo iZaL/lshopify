@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import Main from '../Main';
 import FormSubmitBar from '../components/FormSubmitBar';
 import {useForm} from '@inertiajs/inertia-react';
-import {Product, Variant} from '../types';
+import { Product, Tag, Variant } from '../types'
 import Card from '../components/Card';
 import TagClose from '../components/TagClose';
 import BackButton from '../components/BackButton';
@@ -55,11 +55,12 @@ export default function ProductBulkEdit(props: Props) {
     setData({
       products: products,
     });
-  }, []);
+  }, [products]);
 
   const [selectedProductAttributes, setSelectedProductAttributes] = useState<ProductAttributes[]>([
     'title',
     'status',
+    'tags',
   ]);
   const [selectedVariantAttributes, setSelectedVariantAttributes] = useState<VariantAttributes[]>([
     'sku',
@@ -102,6 +103,36 @@ export default function ProductBulkEdit(props: Props) {
           return {
             ...p,
             [field]: value,
+          };
+        }
+        return p;
+      }),
+    });
+  };
+
+  const onTagAdd = (product: Product, value: string) => {
+    const url = route('lshopify.tags.store');
+    Inertia.post(
+      url,
+      {
+        name: value,
+        taggable_id: product.id,
+        taggable_type: 'product',
+      },
+      {
+        onSuccess: (page) => {
+          Inertia.reload();
+        },
+      },
+    );
+  };
+  const onTagRemove = (product: Product, tag: Tag) => {
+    setData({
+      products: data.products.map(p => {
+        if (p.id === product.id) {
+          return {
+            ...p,
+            tags: p.tags?.filter(t => t.id !== tag.id),
           };
         }
         return p;
@@ -166,7 +197,9 @@ export default function ProductBulkEdit(props: Props) {
     }
   };
 
-  const handleSubmit = (): void => {};
+  const handleSubmit = (): void => {
+    Inertia.post(route('lshopify.products.bulk.update'), data);
+  };
 
   const buttons: {[key: string]: Array<ProductAttributes | VariantAttributes>} = {
     General: ['title', 'status', 'tags'],
@@ -251,6 +284,8 @@ export default function ProductBulkEdit(props: Props) {
                                       onChange={value =>
                                         onProductAttributeChange(product, attribute, value)
                                       }
+                                      onTagAdd={value => onTagAdd(product, value)}
+                                      onTagRemove={tag => onTagRemove(product, tag)}
                                     />
                                   </Cell>
                                 );

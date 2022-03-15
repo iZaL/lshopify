@@ -13,6 +13,10 @@ class Tag extends BaseModel
     protected $table = 'tags';
     public $timestamps = false;
 
+    public $morphs = [
+      'product' => 'IZal\Lshopify\Models\Product'
+    ];
+
     protected $fillable = ['name', 'slug'];
 
     public static function newFactory()

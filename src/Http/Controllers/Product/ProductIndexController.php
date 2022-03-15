@@ -28,7 +28,6 @@ class ProductIndexController extends Controller
 
         $products = ProductResource::collection($products->get());
 
-
-        return Inertia::render('Product/ProductIndex', ['products' => $products, 'statuses' => ['All', 'Published', 'Draft'], 'search' => $searchTerm, 'status' => $status]);
+        return Inertia::render('Product/ProductIndex', ['products' => $products, 'statuses' => ['All', 'Active', 'Draft'], 'search' => $searchTerm, 'status' => $status]);
     }
 }

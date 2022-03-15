@@ -18,7 +18,6 @@ class ProductAttributesController extends Controller
             'product_ids' => 'required|array',
         ]);
 
-
         $products = Product::whereIn('id',$request->product_ids);
 
         $attributes = $request->except('product_ids');

@@ -13,12 +13,12 @@ export default function VariantImage({image, imageStyle, onClick, border = true}
   const style = imageStyle ? imageStyle : 'w-14 h-16';
   return (
     <div
-      className={classNames('overflow-hidden',{
-        'rounded rounded-md border border-gray-200 mr-2': border,
+      className={classNames('overflow-hidden', {
+        'mr-2 rounded rounded-md border border-gray-200': border,
       })}
       onClick={onClick}>
       {image ? (
-        <div className='self-center'>
+        <div className="self-center">
           <img
             src={image.url}
             className={classNames('inline-block object-contain', style)}

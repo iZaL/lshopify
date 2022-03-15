@@ -24,7 +24,12 @@ export default function VariantCell({
     'hs_code',
   ];
 
-  let booleanAttributes: Array<keyof Variant> = ['out_of_stock_sale', 'track_quantity', 'taxable','requires_shipping'];
+  let booleanAttributes: Array<keyof Variant> = [
+    'out_of_stock_sale',
+    'track_quantity',
+    'taxable',
+    'requires_shipping',
+  ];
 
   let placeholders: AttributeLabel = {
     price: 'OMR',

@@ -7,7 +7,9 @@ class TagStoreRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:tags,name',
+            'name' => 'required|string|max:50|min:2',
+            'taggable_type' => 'nullable',
+            'taggable_id' => 'nullable',
         ];
     }
 }
