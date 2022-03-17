@@ -54,13 +54,15 @@ const Row = ({children, striped = true, idx, onClick, rowStyle}: RowProps) => {
 };
 
 const Cell = ({children, cellStyle}: CellProps) => {
-  return <td className={`whitespace-nowrap py-4 text-sm text-gray-500 ${cellStyle}`}>{children}</td>;
+  return (
+    <td className={`whitespace-nowrap py-4 text-sm text-gray-500 ${cellStyle}`}>{children}</td>
+  );
 };
 
 const Header = ({title, children = null, headerStyle}: HeaderProps) => {
   return (
     <th
-      className={`py-4 text-left text-sm font-medium tracking-wider text-gray-900 flex-wrap ${headerStyle}`}>
+      className={`flex-wrap py-4 text-left text-sm font-medium tracking-wider text-gray-900 ${headerStyle}`}>
       {title ? title : children}
     </th>
   );

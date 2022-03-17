@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import Main from '../../Main'
-import PageHeader from '../../components/PageHeader'
-import { Order } from '../../types'
-import DraftOrderIndexActionButtons from './components/DraftOrderIndexActionButtons'
-import DraftOrderList from './components/DraftOrderList'
-import { Inertia } from '@inertiajs/inertia'
-import route from 'ziggy-js'
-import DraftOrdersSearchBar from './components/DraftOrdersSearchBar'
+import React, {useState} from 'react';
+import Main from '../../Main';
+import PageHeader from '../../components/PageHeader';
+import {Order} from '../../types';
+import DraftOrderIndexActionButtons from './components/DraftOrderIndexActionButtons';
+import DraftOrderList from './components/DraftOrderList';
+import {Inertia} from '@inertiajs/inertia';
+import route from 'ziggy-js';
+import DraftOrdersSearchBar from './components/DraftOrdersSearchBar';
 
 interface Props {
   orders: Order[];

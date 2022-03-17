@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
-import Table from './Table'
-import Checkbox from './forms/Checkbox'
-import Button from './Button'
+import React, {useContext, useEffect, useState} from 'react';
+import Table from './Table';
+import Checkbox from './forms/Checkbox';
+import Button from './Button';
 
 interface ItemWithID {
   id: number;
@@ -109,10 +109,10 @@ const SmartHeader = ({children}: SmartHeaderProps<ItemWithID>) => {
 
 interface BodyProps<T extends ItemWithID> {
   children: (props: {item: any}) => JSX.Element;
-  onItemClick?:(item: any) => void;
+  onItemClick?: (item: any) => void;
 }
 
-const Body = ({children,onItemClick}: BodyProps<ItemWithID>) => {
+const Body = ({children, onItemClick}: BodyProps<ItemWithID>) => {
   const {items, selectedItemIDs, setSelectedItemIDs} = useContext(SmartTableContext);
 
   const onCheckboxChange = (itemID: ItemWithID['id']) => {
@@ -126,7 +126,7 @@ const Body = ({children,onItemClick}: BodyProps<ItemWithID>) => {
     <tbody>
       {items.map((item, id) => {
         return (
-          <Table.Row key={id} idx={id} onClick={() => onItemClick ? onItemClick(item):{}}>
+          <Table.Row key={id} idx={id} onClick={() => (onItemClick ? onItemClick(item) : {})}>
             <Table.Cell>
               <div className="flex w-12 items-center justify-center">
                 <Checkbox

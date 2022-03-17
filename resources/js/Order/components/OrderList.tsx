@@ -30,9 +30,7 @@ export default function OrderList({orders, onItemClick}: Props) {
           <Table.Header title="Delivery method" />
           <Table.Header title="Tags" />
         </SmartTable.Header>
-        <SmartTable.Body
-          onItemClick={onItemClick}
-        >
+        <SmartTable.Body onItemClick={onItemClick}>
           {({item}) => {
             return (
               <>

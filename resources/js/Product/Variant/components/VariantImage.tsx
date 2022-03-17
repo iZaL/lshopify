@@ -19,11 +19,7 @@ export default function VariantImage({image, imageStyle, onClick, border = true}
       onClick={onClick}>
       {image ? (
         <div className="self-center">
-          <img
-            src={image.url}
-            className={classNames('inline-block object-cover', style)}
-            alt=""
-          />
+          <img src={image.url} className={classNames('inline-block object-cover', style)} alt="" />
         </div>
       ) : (
         <svg

@@ -43,11 +43,7 @@ export default function InventoryList({variants, onQuantityChange, onSave}: Prop
               <>
                 <Table.Cell cellStyle={'w-16'}>
                   {item.image && (
-                    <VariantImage
-                      onClick={() => {}}
-                      image={item.image}
-                      imageStyle="w-16 h-12"
-                    />
+                    <VariantImage onClick={() => {}} image={item.image} imageStyle="w-16 h-12" />
                   )}
                 </Table.Cell>
                 <Table.Cell>

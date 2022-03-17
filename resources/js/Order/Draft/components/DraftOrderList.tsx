@@ -1,7 +1,7 @@
-import React from 'react'
-import { Order } from '../../../types'
-import Table from '../../../components/Table'
-import SmartTable from '../../../components/SmartTable'
+import React from 'react';
+import {Order} from '../../../types';
+import Table from '../../../components/Table';
+import SmartTable from '../../../components/SmartTable';
 
 interface Props {
   orders: Order[];
