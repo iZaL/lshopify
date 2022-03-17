@@ -66,10 +66,10 @@ const Header = ({children}: HeaderProps) => {
     <thead>
       <Table.Row rowStyle="m-2">
         <Table.Header headerStyle="w-16">
-          <div className="flex w-12 items-center justify-center">
+          <div className="flex w-12 py-1 items-center justify-center" onClick={() => onSelectedAllChange()}>
             <Checkbox
               checked={selectedItemIDs.length === items.length && items.length != 0}
-              onChange={() => onSelectedAllChange()}
+              onChange={() => {}}
               name="check-all"
             />
           </div>
@@ -92,7 +92,7 @@ const SmartHeader = ({children}: SmartHeaderProps<ItemWithID>) => {
   }
 
   return (
-    <div className="absolute top-0 left-16 z-20 bg-white pt-1.5">
+    <div className="absolute top-0 left-16 z-20 bg-white pt-2">
       <div className="flex flex-row">
         <Button
           theme="clear"
@@ -128,10 +128,10 @@ const Body = ({children, onItemClick}: BodyProps<ItemWithID>) => {
         return (
           <Table.Row key={id} idx={id} onClick={() => (onItemClick ? onItemClick(item) : {})}>
             <Table.Cell>
-              <div className="flex w-12 items-center justify-center">
+              <div className="flex w-12 py-2 items-center justify-center" onClick={(e) => {e.stopPropagation();onCheckboxChange(item.id);}}>
                 <Checkbox
                   checked={selectedItemIDs.includes(item.id)}
-                  onChange={() => onCheckboxChange(item.id)}
+                  onChange={(e) => {}}
                   name={`check-${item.id}`}
                 />
               </div>
