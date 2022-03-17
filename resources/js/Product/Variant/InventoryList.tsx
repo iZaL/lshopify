@@ -41,10 +41,10 @@ export default function InventoryList({variants, onQuantityChange, onSave}: Prop
           {({item}) => {
             return (
               <>
-                <Table.Cell>
+                <Table.Cell cellStyle={'w-16'}>
                   {item.image && (
                     <VariantImage
-                      onClick={() => onCollectionClick(item)}
+                      onClick={() => {}}
                       image={item.image}
                       imageStyle="w-16 h-12"
                     />
@@ -60,14 +60,14 @@ export default function InventoryList({variants, onQuantityChange, onSave}: Prop
                   {item.title}
                 </Table.Cell>
                 <Table.Cell>{item.sku}</Table.Cell>
-                <Table.Cell colStyle="w-16">
+                <Table.Cell cellStyle="w-16">
                   <InputText
                     value={item.quantity}
                     name="quantity"
                     onChange={event => onQuantityChange(item, event.target.value)}
                   />
                 </Table.Cell>
-                <Table.Cell colStyle="w-16">
+                <Table.Cell cellStyle="w-16">
                   {item.isDirty ? (
                     <Button onClick={() => onSave(item)} theme="success">
                       Save

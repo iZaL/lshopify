@@ -72,7 +72,14 @@ export default function ProductBulkEdit(props: Props) {
   ]);
 
   const onButtonClick = (attribute: ProductAttributes | VariantAttributes) => {
-    if (attribute === 'title' || attribute === 'status' || attribute === 'tags' || attribute === 'seo_title' || attribute === 'seo_url' || attribute === 'seo_description') {
+    if (
+      attribute === 'title' ||
+      attribute === 'status' ||
+      attribute === 'tags' ||
+      attribute === 'seo_title' ||
+      attribute === 'seo_url' ||
+      attribute === 'seo_description'
+    ) {
       onProductButtonClick(attribute);
     } else {
       onVariantButtonClick(attribute);
@@ -201,7 +208,7 @@ export default function ProductBulkEdit(props: Props) {
   };
 
   const handleSubmit = (): void => {
-    Inertia.post(route('lshopify.products.bulk.update'), data,{
+    Inertia.post(route('lshopify.products.bulk.update'), data, {
       // preserveScroll: false,
       // preserveState: true,
       // onSuccess: () => {},
@@ -231,7 +238,7 @@ export default function ProductBulkEdit(props: Props) {
 
         <Card cardStyle="mt-6">
           <div className="text-sm text-gray-700">Currently editing these fields:</div>
-          <div className="inline-flex flex-wrap space-x-2 space-y-2">
+          <div className="inline-flex flex-wrap space-x-2 ">
             <>
               <TagsPopup
                 buttons={buttons}

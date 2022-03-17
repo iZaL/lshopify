@@ -20,7 +20,6 @@ export default function OrderList({orders, onItemClick}: Props) {
 
       <Table>
         <SmartTable.Header>
-          <Table.Header headerStyle="w-16" />
           <Table.Header title="Order" />
           <Table.Header title="Date" />
           <Table.Header title="Customer" />
@@ -31,7 +30,9 @@ export default function OrderList({orders, onItemClick}: Props) {
           <Table.Header title="Delivery method" />
           <Table.Header title="Tags" />
         </SmartTable.Header>
-        <SmartTable.Body>
+        <SmartTable.Body
+          onItemClick={onItemClick}
+        >
           {({item}) => {
             return (
               <>

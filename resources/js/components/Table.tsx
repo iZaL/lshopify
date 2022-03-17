@@ -7,7 +7,7 @@ interface Props {
 
 interface CellProps {
   children?: React.ReactNode;
-  colStyle?: string;
+  cellStyle?: string;
 }
 
 interface HeaderProps {
@@ -27,8 +27,8 @@ interface RowProps {
 const Table = ({children}: Props) => {
   return (
     <div className="flex flex-col">
-      <div className="-my-2 flex-grow overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+      <div className="flex-grow overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div className="inline-block min-w-full align-middle sm:px-6 lg:px-8">
           <div className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
             <table className="relative min-w-full divide-y divide-gray-200">{children}</table>
           </div>
@@ -53,16 +53,14 @@ const Row = ({children, striped = true, idx, onClick, rowStyle}: RowProps) => {
   );
 };
 
-const Cell = ({children, colStyle}: CellProps) => {
-  return (
-    <td className={`whitespace-nowrap py-4 text-sm text-gray-500 ${colStyle}`}>{children}</td>
-  );
+const Cell = ({children, cellStyle}: CellProps) => {
+  return <td className={`whitespace-nowrap py-4 text-sm text-gray-500 ${cellStyle}`}>{children}</td>;
 };
 
 const Header = ({title, children = null, headerStyle}: HeaderProps) => {
   return (
     <th
-      className={`py-3 text-left text-sm font-medium tracking-wider text-gray-900 ${headerStyle}`}>
+      className={`py-4 text-left text-sm font-medium tracking-wider text-gray-900 flex-wrap ${headerStyle}`}>
       {title ? title : children}
     </th>
   );

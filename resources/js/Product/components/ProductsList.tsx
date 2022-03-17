@@ -168,7 +168,7 @@ export default function ProductsList({products}: Props) {
             <Table.Header title="Type" />
             <Table.Header title="Vendor" />
           </SmartTable.Header>
-          <SmartTable.Body>
+          <SmartTable.Body onItemClick={onProductClick}>
             {({item}) => {
               return (
                 <>

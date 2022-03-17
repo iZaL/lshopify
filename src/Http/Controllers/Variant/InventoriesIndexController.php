@@ -13,7 +13,7 @@ class InventoriesIndexController extends Controller
 {
     public function __invoke(): \Inertia\Response
     {
-        $variants = Variant::with(['product'])->where('default',0)->get();
+        $variants = Variant::with(['product','image'])->where('default',0)->get();
         $variants = VariantResource::collection($variants);
         return Inertia::render('Product/Variant/InventoryIndex', ['variants' => $variants]);
     }

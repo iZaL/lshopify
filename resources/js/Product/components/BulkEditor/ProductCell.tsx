@@ -7,7 +7,7 @@ import {Popover} from '@headlessui/react';
 import Button from '../../../components/Button';
 import TagClose from '../../../components/TagClose';
 import {XIcon} from '@heroicons/react/solid';
-import classNames from 'classnames'
+import classNames from 'classnames';
 
 export default function ProductCell({
   product,
@@ -42,12 +42,11 @@ export default function ProductCell({
     return (
       <div className="inline-flex sm:shadow-sm">
         <Popover className="relative text-left">
-          <Popover.Button className={
-            classNames(
-              "flex w-[18rem] flex-wrap p-1 ",
-              !selectedTags.length ? 'py-4' : null
-            )
-          }>
+          <Popover.Button
+            className={classNames(
+              'flex w-[18rem] flex-wrap p-1 ',
+              !selectedTags.length ? 'py-4' : null,
+            )}>
             {selectedTags.map((tag, idx) => (
               <div
                 key={idx}

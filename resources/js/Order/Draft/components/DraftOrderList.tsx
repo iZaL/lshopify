@@ -1,8 +1,7 @@
-import React from 'react';
-import {Order} from '../../../types';
-import Checkbox from '../../../components/forms/Checkbox';
-import Table from '../../../components/Table';
-import SmartTable from '../../../components/SmartTable';
+import React from 'react'
+import { Order } from '../../../types'
+import Table from '../../../components/Table'
+import SmartTable from '../../../components/SmartTable'
 
 interface Props {
   orders: Order[];
@@ -20,14 +19,13 @@ export default function DraftOrderList({orders, onItemClick}: Props) {
 
       <Table>
         <SmartTable.Header>
-          <Table.Header headerStyle="w-16" />
           <Table.Header title="Draft order" />
           <Table.Header title="Date" />
           <Table.Header title="Customer" />
           <Table.Header title="Status" />
           <Table.Header title="Total" />
         </SmartTable.Header>
-        <SmartTable.Body>
+        <SmartTable.Body onItemClick={onItemClick}>
           {({item}) => {
             return (
               <>

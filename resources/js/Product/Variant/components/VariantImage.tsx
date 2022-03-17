@@ -21,7 +21,7 @@ export default function VariantImage({image, imageStyle, onClick, border = true}
         <div className="self-center">
           <img
             src={image.url}
-            className={classNames('inline-block object-contain', style)}
+            className={classNames('inline-block object-cover', style)}
             alt=""
           />
         </div>
