@@ -38,7 +38,7 @@ export default function CollectionEdit(props: Props) {
   }, [collection.products]);
 
   const onAddProductsToCollection = (productIDs: number[]) => {
-    const url = route('lshopify.collections.products.update', [collection.id]);
+    const url = route('lshopify.collections.products.store', [collection.id]);
     Inertia.post(
       url,
       {

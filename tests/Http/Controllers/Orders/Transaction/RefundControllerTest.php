@@ -59,7 +59,7 @@ class RefundControllerTest extends TestCase
             'restock' => 1,
         ];
 
-        $req = $this->post(route('lshopify.orders.refund', $order->id), $postData);
+        $req = $this->post(route('lshopify.orders.refund.store', $order->id), $postData);
 
         $workflowVariant1 = WorkflowVariant::where('variant_id', $variant1->id)->where('quantity', $fulfillQuantity - 1)->first();
         $workflowVariant2 = WorkflowVariant::where('variant_id', $variant2->id)->where('quantity', $fulfillQuantity - 2)->first();

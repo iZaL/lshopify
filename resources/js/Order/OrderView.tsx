@@ -109,7 +109,7 @@ export default function OrderView(props: Props) {
   };
 
   const refund = () => {
-    Inertia.get(route('lshopify.orders.refund', [order.id]));
+    Inertia.get(route('lshopify.orders.refund.index', [order.id]));
   };
 
   const returnItems = () => {

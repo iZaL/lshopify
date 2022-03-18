@@ -1,15 +1,28 @@
 <?php
 
-namespace IZal\Lshopify\Http\Controllers\Order\Fulfillment;
+namespace IZal\Lshopify\Http\Controllers\Order;
 
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\ReturnRequest;
 use IZal\Lshopify\Models\Order;
 use IZal\Lshopify\Models\Workflow;
+use IZal\Lshopify\Resources\OrderResource;
 
-class ReturnStoreController extends Controller
+class ReturnController extends Controller
 {
-    public function __invoke($orderID, ReturnRequest $request)
+    public function index($orderID): \Inertia\Response
+    {
+        $order = Order::with(['success_fulfillments.variants.image'])->find($orderID);
+        $orderResource = new OrderResource($order);
+
+        return Inertia::render('Order/ReturnView', [
+            'order' => $orderResource,
+        ]);
+    }
+
+    public function store($orderID, ReturnRequest $request)
     {
         $order = Order::with(['workflows.variants'])->find($orderID);
 
@@ -48,5 +61,14 @@ class ReturnStoreController extends Controller
         return redirect()
             ->route('lshopify.orders.show', $orderID)
             ->with('success', 'Return created successfully');
+    }
+
+    public function edit($orderID, $returnID, Request $request)
+    {
+        $order = Order::findOrFail($orderID);
+        $return = $order->returns()->findOrFail($returnID);
+
+        $return->update($request->only(['status']));
+        return redirect()->route('lshopify.orders.show', $orderID);
     }
 }

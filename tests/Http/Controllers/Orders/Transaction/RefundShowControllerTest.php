@@ -10,7 +10,7 @@ class RefundShowControllerTest extends TestCase
     public function test_can_get_edit_orders_page()
     {
         $order = Order::factory()->create();
-        $response = $this->get(route('lshopify.orders.refund.show', $order->id));
+        $response = $this->get(route('lshopify.orders.refund.index', $order->id));
 
         $response->assertInertia(
             fn ($assert) => $assert
