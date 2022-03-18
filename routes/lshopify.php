@@ -16,18 +16,25 @@ Route::controller(\IZal\Lshopify\Http\Controllers\CartDiscountController::class)
     Route::post('cart/discount/remove', 'remove')->name('cart.discount.remove');
 });
 
+Route::controller(\IZal\Lshopify\Http\Controllers\CategoryController::class)->group(function () {
+    Route::post('categories', 'store')->name('categories.store');
+});
+
+Route::controller(\IZal\Lshopify\Http\Controllers\ProductController::class)->group(function () {
+    Route::get('products', 'index')->name('products.index');
+    Route::get('products/new', 'create')->name('products.create');
+    Route::get('products/{id}/edit', 'edit')->name('products.edit');
+    Route::post('products', 'store')->name('products.store');
+    Route::post('products/delete', 'delete')->name('products.delete');
+    Route::patch('products/{id}', 'update')->name('products.update');
+});
+
 /*
  * Products Controller
  */
-Route::get('products', \IZal\Lshopify\Http\Controllers\Product\ProductIndexController::class)->name('products.index');
-Route::get('products/new', \IZal\Lshopify\Http\Controllers\Product\ProductCreateController::class)->name('products.create');
-Route::get('products/{id}/edit', \IZal\Lshopify\Http\Controllers\Product\ProductEditController::class)->name('products.edit');
 Route::get('products/bulk_edit', \IZal\Lshopify\Http\Controllers\Product\ProductBulkEditController::class)->name('products.bulk.edit');
 Route::post('products/bulk_edit', \IZal\Lshopify\Http\Controllers\Product\ProductBulkUpdateController::class)->name('products.bulk.update');
-Route::post('products', \IZal\Lshopify\Http\Controllers\Product\ProductStoreController::class)->name('products.store');
 Route::post('products/attributes', \IZal\Lshopify\Http\Controllers\Product\ProductAttributesController::class)->name('products.attributes');
-Route::post('products/delete', \IZal\Lshopify\Http\Controllers\Product\ProductDeleteController::class)->name('products.delete');
-Route::patch('products/{id}', \IZal\Lshopify\Http\Controllers\Product\ProductUpdateController::class)->name('products.update');
 
 /*
  * Variants Controllers
@@ -100,7 +107,6 @@ Route::post('customers', \IZal\Lshopify\Http\Controllers\Customer\CustomerStoreC
 /*
  * Categories Controllers
  */
-Route::post('categories', \IZal\Lshopify\Http\Controllers\Category\CategoryStoreController::class)->name('categories.store');
 Route::post('tags', \IZal\Lshopify\Http\Controllers\Tag\TagStoreController::class)->name('tags.store');
 Route::get('tags/search', \IZal\Lshopify\Http\Controllers\Tag\TagSearchController::class)->name('tags.search');
 

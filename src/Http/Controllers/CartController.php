@@ -52,12 +52,9 @@ class CartController extends Controller
     /**
      * @throws ValidationException
      */
-    public function update(
-        Request $request,
-        DraftOrderCreateAction $orderCreateAction
-    ): RedirectResponse {
-
-        $this->validate($request,[
+    public function update(Request $request, DraftOrderCreateAction $orderCreateAction): RedirectResponse
+    {
+        $this->validate($request, [
             'rowId' => 'required',
             'item' => 'required|array',
             'orderID' => 'nullable|exists:orders,id',

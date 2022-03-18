@@ -4,7 +4,6 @@ namespace IZal\Lshopify\Http\Controllers;
 
 use Illuminate\Http\Request;
 use IZal\Lshopify\Cart\Condition;
-use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\DiscountStoreRequest;
 
 class CartDiscountController extends Controller

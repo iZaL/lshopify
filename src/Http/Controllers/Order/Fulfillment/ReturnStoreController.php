@@ -36,11 +36,9 @@ class ReturnStoreController extends Controller
                             $workflowVariant->pivot->save();
 
                             // create new workflow variant
-                            $newWorkflow
-                                ->variants()
-                                ->attach($fulfillmentVariant['id'], [
-                                    'quantity' => $fulfillmentVariant['pivot_quantity'],
-                                ]);
+                            $newWorkflow->variants()->attach($fulfillmentVariant['id'], [
+                                'quantity' => $fulfillmentVariant['pivot_quantity'],
+                            ]);
                         }
                     }
                 }
