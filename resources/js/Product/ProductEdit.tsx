@@ -105,9 +105,11 @@ export default function ProductEdit(props: Props) {
   };
 
   const onImagesUpload = (images: Image[]) => {
-    const url = route('lshopify.products.images.store', [product.id]);
+    const url = route('lshopify.images.store');
     const productData = {
       images: images,
+      imageable_id: product.id,
+      imageable_type: 'product',
     };
     setData('images', [...(data.images || []), ...images]);
     Inertia.post(url, productData, {
@@ -150,7 +152,7 @@ export default function ProductEdit(props: Props) {
   };
 
   const onImagesDelete = (images: Image[]) => {
-    const url = route('lshopify.products.images.destroy', [product.id]);
+    const url = route('lshopify.images.delete');
     const productData = {
       images: images,
     };

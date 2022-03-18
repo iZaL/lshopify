@@ -19,12 +19,6 @@ use IZal\Lshopify\Resources\VariantResource;
 class VariantController extends Controller
 {
 
-
-    public function index()
-    {
-
-    }
-
     public function create($productID, Request $request): \Inertia\Response
     {
         $product = Product::with(['images', 'variants'])->find($productID);

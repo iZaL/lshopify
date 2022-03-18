@@ -9,8 +9,7 @@ class ImageStoreControllerTest extends TestCase
 {
     public function test_throws_error_when_images_array_missing()
     {
-        $product = Product::factory()->create();
-        $response = $this->post(route('lshopify.products.images.store', $product->id), []);
+        $response = $this->post(route('lshopify.images.store', []), []);
         $response->assertSessionHasErrors(['images']);
     }
 

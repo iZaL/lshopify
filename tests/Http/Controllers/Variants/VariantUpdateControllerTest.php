@@ -93,7 +93,6 @@ class VariantUpdateControllerTest extends TestCase
             ->toArray();
 
         $this->assertDatabaseCount('variants', 1);
-
         $this->assertDatabaseHas('variants', $variantData);
     }
 }

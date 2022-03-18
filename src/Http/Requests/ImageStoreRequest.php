@@ -9,6 +9,8 @@ class ImageStoreRequest extends BaseFormRequest
         return [
             'images' => 'required|array',
             'images.*' => 'image',
+            'imageable_id' => 'required',
+            'imageable_type' => 'required',
         ];
     }
 }

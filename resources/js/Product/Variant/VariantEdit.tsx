@@ -51,6 +51,8 @@ export default function VariantEdit(props: Props) {
     const url = route('lshopify.products.images.store', [product.id]);
     const productData = {
       images: images,
+      imageable_id: product.id,
+      imageable_type: 'product',
     };
     setData('images', [...(data.images || []), ...images]);
     Inertia.post(url, productData, {
@@ -61,7 +63,7 @@ export default function VariantEdit(props: Props) {
   };
 
   const handleSubmit = (): void => {
-    const url = route('lshopify.products.variants.store', [product.id]);
+    const url = route('lshopify.products.variants.update', [variant.id]);
     post(url, {
       preserveScroll: false,
       preserveState: true,
