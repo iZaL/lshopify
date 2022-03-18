@@ -25,7 +25,11 @@ import route from 'ziggy-js';
 import {CustomerForm} from '../form_types';
 import BackButton from '../components/BackButton';
 import DropdownButton from '../components/DropdownButton';
-import {CheckCircleIcon, DotsHorizontalIcon, SupportIcon} from '@heroicons/react/outline';
+import {
+  CheckCircleIcon,
+  DotsHorizontalIcon,
+  SupportIcon,
+} from '@heroicons/react/outline';
 
 interface Props {
   order: Order;
@@ -53,7 +57,10 @@ export default function OrderView(props: Props) {
     });
   }, [order]);
 
-  const onCustomerCreate = (customerData: CustomerForm, addressData: CustomerAddress) => {
+  const onCustomerCreate = (
+    customerData: CustomerForm,
+    addressData: CustomerAddress,
+  ) => {
     Inertia.post(route('lshopify.customers.store'), {
       customer: customerData,
       address: addressData,
@@ -66,7 +73,10 @@ export default function OrderView(props: Props) {
     });
   };
 
-  const onCustomerAddressSave = (type: 'shipping' | 'billing', address: Shipping | Billing) => {
+  const onCustomerAddressSave = (
+    type: 'shipping' | 'billing',
+    address: Shipping | Billing,
+  ) => {
     Inertia.patch(route('lshopify.orders.update', [order.id]), {
       [type]: address,
     });
@@ -83,7 +93,9 @@ export default function OrderView(props: Props) {
   };
 
   const markAsFulfilled = (fulfillment: Fulfillment) => {
-    Inertia.get(route('lshopify.orders.fulfillments', [order.id, fulfillment.id]));
+    Inertia.get(
+      route('lshopify.orders.fulfillments', [order.id, fulfillment.id]),
+    );
   };
 
   const fulfill = () => {
@@ -91,7 +103,9 @@ export default function OrderView(props: Props) {
   };
 
   const cancelFulfillment = (fulfillment: Fulfillment) => {
-    Inertia.post(route('lshopify.orders.fulfillments.cancel', [order.id, fulfillment.id]));
+    Inertia.post(
+      route('lshopify.orders.fulfillments.cancel', [order.id, fulfillment.id]),
+    );
   };
 
   const refund = () => {
@@ -103,17 +117,23 @@ export default function OrderView(props: Props) {
   };
 
   const markAsReturned = (fulfillment: Fulfillment) => {
-    Inertia.post(route('lshopify.orders.return.edit', [order.id, fulfillment.id]), {
-      ...fulfillment,
-      status: 'success',
-    });
+    Inertia.post(
+      route('lshopify.orders.return.edit', [order.id, fulfillment.id]),
+      {
+        ...fulfillment,
+        status: 'success',
+      },
+    );
   };
 
   const markAsProgress = (fulfillment: Fulfillment) => {
-    Inertia.post(route('lshopify.orders.return.edit', [order.id, fulfillment.id]), {
-      ...fulfillment,
-      status: 'pending',
-    });
+    Inertia.post(
+      route('lshopify.orders.return.edit', [order.id, fulfillment.id]),
+      {
+        ...fulfillment,
+        status: 'pending',
+      },
+    );
   };
 
   return (
@@ -159,7 +179,10 @@ export default function OrderView(props: Props) {
                     text={`Unfulfilled (${props.pending_fulfillments.unfulfilled_variants_count})`}
                   />
                 </div>
-                <OrderItems variants={props.pending_fulfillments.data} onItemClick={() => {}} />
+                <OrderItems
+                  variants={props.pending_fulfillments.data}
+                  onItemClick={() => {}}
+                />
                 <Border />
                 <div className="flex justify-end">
                   <Button onClick={() => fulfill()}>Fulfill items</Button>
@@ -231,7 +254,8 @@ export default function OrderView(props: Props) {
                                       },
                                       {
                                         title: 'Mark as in progress',
-                                        onClick: () => markAsProgress(fulfillment),
+                                        onClick: () =>
+                                          markAsProgress(fulfillment),
                                       },
                                     ]
                                   : [
@@ -251,13 +275,18 @@ export default function OrderView(props: Props) {
                       </div>
                     </div>
 
-                    <OrderItems variants={fulfillment.variants} onItemClick={() => {}} />
+                    <OrderItems
+                      variants={fulfillment.variants}
+                      onItemClick={() => {}}
+                    />
 
                     <Border />
 
                     <div className="flex justify-end space-x-4">
                       {fulfillment.can_add_tracking && (
-                        <Button onClick={() => markAsFulfilled(fulfillment)}>Add tracking</Button>
+                        <Button onClick={() => markAsFulfilled(fulfillment)}>
+                          Add tracking
+                        </Button>
                       )}
                       {fulfillment.can_mark_as_returned && (
                         <Button onClick={() => markAsReturned(fulfillment)}>

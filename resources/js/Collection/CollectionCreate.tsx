@@ -84,9 +84,9 @@ export default function CollectionCreate() {
                     <div className="ml-3">Automated</div>
                   </div>
                   <p className="ml-6 text-sm text-gray-500">
-                    Existing and future products that match the conditions you set will
-                    automatically be added to this collection. Learn more about automated
-                    collections.
+                    Existing and future products that match the conditions you
+                    set will automatically be added to this collection. Learn
+                    more about automated collections.
                   </p>
                 </div>
               </div>

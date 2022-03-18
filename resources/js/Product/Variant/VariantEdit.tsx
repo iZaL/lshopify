@@ -94,13 +94,19 @@ export default function VariantEdit(props: Props) {
               onImagesUpload={images => onImagesUpload(images)}
               onChange={(field, value: any) => setData(field, value)}
             />
-            <PricingSection variant={data} onChange={(field, value) => setData(field, value)} />
+            <PricingSection
+              variant={data}
+              onChange={(field, value) => setData(field, value)}
+            />
             <InventorySection
               variant={data}
               onChange={(field, value: any) => setData(field, value)}
             />
 
-            <ShippingSection variant={data} onChange={(field, value) => setData(field, value)} />
+            <ShippingSection
+              variant={data}
+              onChange={(field, value) => setData(field, value)}
+            />
           </section>
         </div>
       </div>

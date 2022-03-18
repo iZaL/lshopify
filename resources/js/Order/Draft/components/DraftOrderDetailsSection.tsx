@@ -41,8 +41,11 @@ export default function DraftOrderDetailsSection({
     'discount' | 'payment_paid' | 'payment_pending' | 'send_invoice' | null
   >(null);
 
-  const [selectedDiscount, setSelectedDiscount] = useState<CartDiscount | null>(null);
-  const [selectedDiscountItem, setSelectedDiscountItem] = useState<CartItem | null>(null);
+  const [selectedDiscount, setSelectedDiscount] = useState<CartDiscount | null>(
+    null,
+  );
+  const [selectedDiscountItem, setSelectedDiscountItem] =
+    useState<CartItem | null>(null);
 
   const items: CartItem[] = Object.keys(cart.items).map(k => cart.items[k]);
 
@@ -161,7 +164,9 @@ export default function DraftOrderDetailsSection({
 
             <div className="flex flex-row items-center justify-between ">
               <div className="text-xs font-semibold">INVOICE</div>
-              <Button onClick={() => setShowDialog('send_invoice')}>Send Invoice</Button>
+              <Button onClick={() => setShowDialog('send_invoice')}>
+                Send Invoice
+              </Button>
             </div>
 
             <Border />
@@ -169,10 +174,14 @@ export default function DraftOrderDetailsSection({
             <div className="flex flex-row items-center justify-between ">
               <div className="text-xs font-semibold">PAYMENT</div>
               <div className="flex flex-row space-x-5">
-                <Button theme="default" onClick={() => setShowDialog('payment_paid')}>
+                <Button
+                  theme="default"
+                  onClick={() => setShowDialog('payment_paid')}>
                   Mark as paid
                 </Button>
-                <Button theme="default" onClick={() => setShowDialog('payment_pending')}>
+                <Button
+                  theme="default"
+                  onClick={() => setShowDialog('payment_pending')}>
                   Mark as pending
                 </Button>
                 <Button>Pay by credit card</Button>
@@ -227,8 +236,8 @@ export default function DraftOrderDetailsSection({
           onCreateOrder();
         }}>
         <p className="p-5 text-sm">
-          This will create an order. Mark this order as paid if you received OMR {cart.total}{' '}
-          outside of Shopify.
+          This will create an order. Mark this order as paid if you received OMR{' '}
+          {cart.total} outside of Shopify.
         </p>
       </Modal>
 
@@ -244,8 +253,8 @@ export default function DraftOrderDetailsSection({
           onCreateOrder();
         }}>
         <p className="p-5 text-sm">
-          This will create an order without payment. You will be able to collect payment of OMR{' '}
-          {cart.total} later.
+          This will create an order without payment. You will be able to collect
+          payment of OMR {cart.total} later.
         </p>
       </Modal>
     </Card>

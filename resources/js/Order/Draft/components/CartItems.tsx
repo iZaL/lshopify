@@ -52,7 +52,9 @@ export default function CartItems({
 
       {items.map((item, i) => {
         return (
-          <div className="grid grid-cols-6 items-center space-x-4 text-sm " key={i}>
+          <div
+            className="grid grid-cols-6 items-center space-x-4 text-sm "
+            key={i}>
             <div className="col-span-4 inline-flex items-center space-x-2">
               <VariantImage
                 image={item.variant.image || item.variant.product?.image}
@@ -82,7 +84,9 @@ export default function CartItems({
               <InputText
                 name="quantity"
                 value={item.quantity}
-                onChange={e => onVariantAttributeChange(item, 'quantity', e.target.value)}
+                onChange={e =>
+                  onVariantAttributeChange(item, 'quantity', e.target.value)
+                }
               />
             </div>
             <div className="inline-flex justify-around">

@@ -12,7 +12,15 @@ import FormSubmitBar from '../components/FormSubmitBar';
 import VariantEditSection from './components/VariantEditSection';
 import {useForm} from '@inertiajs/inertia-react';
 import {Inertia} from '@inertiajs/inertia';
-import {Collection, Image, Product, ProductType, Tag, Variant, VariantOption} from '../types';
+import {
+  Collection,
+  Image,
+  Product,
+  ProductType,
+  Tag,
+  Variant,
+  VariantOption,
+} from '../types';
 import route from 'ziggy-js';
 import BackButton from '../components/BackButton';
 import Subheader from '../components/Subheader';
@@ -40,8 +48,15 @@ type Form = Product & {
 };
 
 export default function ProductEdit(props: Props) {
-  const {product, variant_options, variants, variant_values, product_types, collection, tags} =
-    props;
+  const {
+    product,
+    variant_options,
+    variants,
+    variant_values,
+    product_types,
+    collection,
+    tags,
+  } = props;
 
   const formProps: Form = {
     ...product,
@@ -82,7 +97,10 @@ export default function ProductEdit(props: Props) {
   };
 
   const onEditVariantClick = (variant: Variant) => {
-    const url = route('lshopify.products.variants.edit', [product.id, variant.id]);
+    const url = route('lshopify.products.variants.edit', [
+      product.id,
+      variant.id,
+    ]);
     return Inertia.get(url);
   };
 
@@ -227,20 +245,28 @@ export default function ProductEdit(props: Props) {
                 <>
                   <PricingSection
                     variant={data.default_variant}
-                    onChange={(field, value) => setDataObject('default_variant', field, value)}
+                    onChange={(field, value) =>
+                      setDataObject('default_variant', field, value)
+                    }
                   />
                   <InventorySection
                     variant={data.default_variant}
-                    onChange={(field, value) => setDataObject('default_variant', field, value)}
+                    onChange={(field, value) =>
+                      setDataObject('default_variant', field, value)
+                    }
                   />
                   <ShippingSection
                     variant={data.default_variant}
-                    onChange={(field, value) => setDataObject('default_variant', field, value)}
+                    onChange={(field, value) =>
+                      setDataObject('default_variant', field, value)
+                    }
                   />
                   <VariantSection
                     currentVariants={data.default_variant?.options || []}
                     defaultVariants={variants}
-                    onChange={(field, value) => setDataObject('default_variant', field, value)}
+                    onChange={(field, value) =>
+                      setDataObject('default_variant', field, value)
+                    }
                   />
                 </>
               )
@@ -287,7 +313,9 @@ export default function ProductEdit(props: Props) {
                 <MultiSelectDropdown
                   items={collection}
                   selectedItems={data.collections || []}
-                  onChange={collectionCollection => setData('collections', collectionCollection)}
+                  onChange={collectionCollection =>
+                    setData('collections', collectionCollection)
+                  }
                 />
               </div>
 

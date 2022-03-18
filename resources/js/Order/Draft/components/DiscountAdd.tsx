@@ -53,7 +53,9 @@ export default function DiscountAdd({discount, children}: Props) {
                 ) : null
               }
               inputStyle={discountAttributes.suffix === 'amount' ? 'pl-14' : ''}
-              placeholder={discountAttributes.suffix === 'amount' ? '0.00' : '0'}
+              placeholder={
+                discountAttributes.suffix === 'amount' ? '0.00' : '0'
+              }
               value={discountAttributes.value}
             />
           </div>

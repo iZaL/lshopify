@@ -18,7 +18,9 @@ interface HeaderProps {
   children: React.ReactNode;
 }
 
-const SmartTableContext = React.createContext<SmartTableContextData<ItemWithID>>({
+const SmartTableContext = React.createContext<
+  SmartTableContextData<ItemWithID>
+>({
   selectedItemIDs: [],
   setSelectedItemIDs: () => {},
   onSelectedAllChange: () => {},
@@ -60,7 +62,8 @@ const SmartTable = <Item extends ItemWithID>({
 };
 
 const Header = ({children}: HeaderProps) => {
-  const {selectedItemIDs, onSelectedAllChange, items} = useContext(SmartTableContext);
+  const {selectedItemIDs, onSelectedAllChange, items} =
+    useContext(SmartTableContext);
 
   return (
     <thead>
@@ -70,7 +73,9 @@ const Header = ({children}: HeaderProps) => {
             className="flex w-12 items-center justify-center py-1"
             onClick={() => onSelectedAllChange()}>
             <Checkbox
-              checked={selectedItemIDs.length === items.length && items.length != 0}
+              checked={
+                selectedItemIDs.length === items.length && items.length != 0
+              }
               onChange={() => {}}
               name="check-all"
             />
@@ -115,7 +120,8 @@ interface BodyProps<T extends ItemWithID> {
 }
 
 const Body = ({children, onItemClick}: BodyProps<ItemWithID>) => {
-  const {items, selectedItemIDs, setSelectedItemIDs} = useContext(SmartTableContext);
+  const {items, selectedItemIDs, setSelectedItemIDs} =
+    useContext(SmartTableContext);
 
   const onCheckboxChange = (itemID: ItemWithID['id']) => {
     const checkedBox = selectedItemIDs.includes(itemID)
@@ -128,7 +134,10 @@ const Body = ({children, onItemClick}: BodyProps<ItemWithID>) => {
     <tbody>
       {items.map((item, id) => {
         return (
-          <Table.Row key={id} idx={id} onClick={() => (onItemClick ? onItemClick(item) : {})}>
+          <Table.Row
+            key={id}
+            idx={id}
+            onClick={() => (onItemClick ? onItemClick(item) : {})}>
             <Table.Cell>
               <div
                 className="flex w-12 items-center justify-center py-2"

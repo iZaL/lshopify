@@ -27,7 +27,9 @@ export default function ProductCell({
   }, [product.tags]);
 
   const [tagValue, setTagValue] = React.useState('');
-  const [selectedTags, setSelectedTags] = React.useState<Tag[]>(product.tags ? product.tags : []);
+  const [selectedTags, setSelectedTags] = React.useState<Tag[]>(
+    product.tags ? product.tags : [],
+  );
 
   const onTagChange = (tag: Tag) => {
     onTagRemove(tag);

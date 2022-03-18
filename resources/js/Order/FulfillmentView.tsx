@@ -3,7 +3,14 @@ import Main from '../Main';
 import PageHeader from '../components/PageHeader';
 import Card from '../components/Card';
 import Border from '../components/Border';
-import {Billing, Customer, Fulfillment, Order, Shipping, VariantPivot} from '../types';
+import {
+  Billing,
+  Customer,
+  Fulfillment,
+  Order,
+  Shipping,
+  VariantPivot,
+} from '../types';
 import {useForm} from '@inertiajs/inertia-react';
 import {Inertia} from '@inertiajs/inertia';
 import AddressCard from '../Customer/components/AddressCard';
@@ -55,7 +62,10 @@ export default function FulfillmentView({order, pending_fulfillments}: Props) {
     }
   };
 
-  const onCustomerAddressSave = (type: 'shipping' | 'billing', address: Shipping | Billing) => {
+  const onCustomerAddressSave = (
+    type: 'shipping' | 'billing',
+    address: Shipping | Billing,
+  ) => {
     Inertia.patch(route('lshopify.orders.update', [order.id]), {
       [type]: address,
     });
@@ -119,7 +129,9 @@ export default function FulfillmentView({order, pending_fulfillments}: Props) {
             <Card>
               <AddressCard
                 address={order.billing}
-                onSave={attributes => onCustomerAddressSave('billing', attributes)}
+                onSave={attributes =>
+                  onCustomerAddressSave('billing', attributes)
+                }
                 title="SHIPPING ADDRESS"
               />
             </Card>

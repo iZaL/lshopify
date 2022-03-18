@@ -24,7 +24,8 @@ export default function ErrorBox({errors}: Props) {
         </div>
         <div className="ml-3">
           <h3 className="text-sm font-medium text-red-800">
-            There were {totalErrors} error{totalErrors !== 1 && `s`} with your submission
+            There were {totalErrors} error{totalErrors !== 1 && `s`} with your
+            submission
           </h3>
           <div className="mt-2 text-sm text-red-700">
             <ul className="list-disc space-y-1 pl-5">

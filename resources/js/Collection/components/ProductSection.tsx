@@ -27,7 +27,9 @@ export default function ProductSection({collectionProducts, sortTerm}: Props) {
 
       <div>
         {collectionProducts.map((product, i) => (
-          <div className="flex flex-row items-center space-x-2 space-y-2 px-4" key={i}>
+          <div
+            className="flex flex-row items-center space-x-2 space-y-2 px-4"
+            key={i}>
             <div className="w-5">{i + 1}.</div>
             <VariantImage image={product.image} onClick={() => {}} />
             <div className="flex-auto">

@@ -8,7 +8,11 @@ interface Props {
   show?: boolean;
 }
 
-export default function FormSubmitBar({onDiscard, onSubmit, show = true}: Props) {
+export default function FormSubmitBar({
+  onDiscard,
+  onSubmit,
+  show = true,
+}: Props) {
   const discard = () => {
     Inertia.reload({
       onSuccess: () => Inertia.reload(),

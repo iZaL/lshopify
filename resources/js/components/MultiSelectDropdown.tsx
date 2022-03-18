@@ -28,7 +28,9 @@ export default function MultiSelectDropdown<T extends Item>({
     if (checked) {
       newCollection = [...selectedItems, collectionItem];
     } else {
-      newCollection = selectedItems.filter(item => item.id !== collectionItem.id);
+      newCollection = selectedItems.filter(
+        item => item.id !== collectionItem.id,
+      );
     }
     onChange(newCollection);
   };
@@ -44,12 +46,15 @@ export default function MultiSelectDropdown<T extends Item>({
         />
       </div>
       {showCollectionMenu && (
-        <OutsideClickHandler onOutsideClick={() => setShowCollectionMenu(false)}>
+        <OutsideClickHandler
+          onOutsideClick={() => setShowCollectionMenu(false)}>
           <div className="relative">
             <div className="absolute top-0 left-0 z-30 h-[12rem] w-full overflow-y-scroll rounded-md bg-blue-50 bg-white shadow-md focus:border-none focus:outline-none">
               <ul role="button" className="font-weight-light ">
                 {items.map((item, index) => {
-                  const checked = selectedItems.some(collect => collect.id === item.id);
+                  const checked = selectedItems.some(
+                    collect => collect.id === item.id,
+                  );
                   return (
                     <li
                       className="flex flex-row px-4 py-2 hover:bg-gray-50"
@@ -57,7 +62,9 @@ export default function MultiSelectDropdown<T extends Item>({
                       <Checkbox
                         name={item.name}
                         checked={checked}
-                        onChange={e => onCollectionChange(item, e.target.checked)}
+                        onChange={e =>
+                          onCollectionChange(item, e.target.checked)
+                        }
                         inputStyle="text-sm font-weight-light"
                       />
                       <div className="px-2">{item.name}</div>
@@ -75,11 +82,15 @@ export default function MultiSelectDropdown<T extends Item>({
           {selectedItems.map((item, index) => {
             return (
               <li className="flex flex-row justify-between " key={index}>
-                <Button theme="clear" buttonStyle="text-sm text-blue-500 underline">
+                <Button
+                  theme="clear"
+                  buttonStyle="text-sm text-blue-500 underline">
                   {item.name}
                 </Button>
 
-                <Button theme="clear" onClick={() => onCollectionChange(item, false)}>
+                <Button
+                  theme="clear"
+                  onClick={() => onCollectionChange(item, false)}>
                   X
                 </Button>
               </li>
