@@ -10,6 +10,9 @@ use IZal\Lshopify\Resources\VariantResource;
 
 class CartController extends Controller
 {
+    /**
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function add(Request $request, DraftOrderCreateAction $orderCreateAction): \Illuminate\Http\RedirectResponse
     {
         $this->validate($request, [
@@ -45,10 +48,21 @@ class CartController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function update(
-        CartUpdateRequest $request,
+        Request $request,
         DraftOrderCreateAction $orderCreateAction
     ): \Illuminate\Http\RedirectResponse {
+
+        $this->validate($request,[
+            'rowId' => 'required',
+            'item' => 'required|array',
+            'orderID' => 'nullable|exists:orders,id',
+            'item.quantity' => 'required|integer|gt:0',
+        ]);
+
         $cart = app('cart');
         $cart->item($request->rowId);
         $cart->update($request->rowId, $request->item);
