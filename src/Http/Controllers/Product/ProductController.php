@@ -1,12 +1,13 @@
 <?php
 
-namespace IZal\Lshopify\Http\Controllers;
+namespace IZal\Lshopify\Http\Controllers\Product;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use IZal\Lshopify\Actions\ProductCreateAction;
 use IZal\Lshopify\Actions\ProductUpdateAction;
+use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\ProductStoreRequest;
 use IZal\Lshopify\Models\Category;
 use IZal\Lshopify\Models\Collection;

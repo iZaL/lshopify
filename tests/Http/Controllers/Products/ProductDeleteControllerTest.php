@@ -10,8 +10,7 @@ class ProductDeleteControllerTest extends TestCase
     public function test_can_delete_product()
     {
         $product = Product::factory()->create();
-        $response = $this->delete(route('lshopify.products.destroy', $product->id));
-
+        $response = $this->post(route('lshopify.products.delete', ['product_ids' => [$product->id]]));
         $this->assertDatabaseMissing('products', ['id' => $product->id]);
     }
 }

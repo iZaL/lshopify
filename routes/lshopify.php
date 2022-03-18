@@ -20,7 +20,7 @@ Route::controller(\IZal\Lshopify\Http\Controllers\CategoryController::class)->gr
     Route::post('categories', 'store')->name('categories.store');
 });
 
-Route::controller(\IZal\Lshopify\Http\Controllers\ProductController::class)->group(function () {
+Route::controller(\IZal\Lshopify\Http\Controllers\Product\ProductController::class)->group(function () {
     Route::get('products', 'index')->name('products.index');
     Route::get('products/new', 'create')->name('products.create');
     Route::get('products/{id}/edit', 'edit')->name('products.edit');

@@ -67,14 +67,15 @@ class CartController extends Controller
         return redirect()->back();
     }
 
-    public function remove(): RedirectResponse
-    {
+    public function remove(
+        Request $request,
+        DraftOrderCreateAction $orderCreateAction
+    ): \Illuminate\Http\RedirectResponse {
+        $this->validate($request, [
+            'rowId' => 'required',
+        ]);
         $cart = app('cart');
-        $cart->clear();
-
-        if (session()->has('cartOrder')) {
-            session()->forget('cartOrder');
-        }
+        $cart->remove($request->rowId);
 
         return redirect()->back();
     }
