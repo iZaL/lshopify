@@ -7,7 +7,5 @@ export default function Cell({
   children: React.ReactNode;
   cellStyle?: string;
 }) {
-  return (
-    <td className={`border text-sm font-normal ${cellStyle}`}>{children}</td>
-  );
+  return <td className={`border text-sm font-normal ${cellStyle}`}>{children}</td>;
 }

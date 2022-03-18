@@ -8,10 +8,7 @@ export default function FileUploadBox() {
     <div className="mt-1 sm:mt-0">
       <div className="flex justify-center rounded-md border-2 border-dashed border-gray-500 px-6 pt-5 pb-6">
         <div className="flex flex-col items-center space-y-1">
-          <ArrowCircleUpIcon
-            className="w-16 text-gray-600"
-            aria-hidden="true"
-          />
+          <ArrowCircleUpIcon className="w-16 text-gray-600" aria-hidden="true" />
           <Link
             href={route('lshopify.products.create')}
             type="button"
@@ -19,9 +16,7 @@ export default function FileUploadBox() {
             {' '}
             Add Files
           </Link>
-          <p className="pl-1 pt-5 text-sm text-gray-600">
-            or drop files to upload
-          </p>
+          <p className="pl-1 pt-5 text-sm text-gray-600">or drop files to upload</p>
         </div>
       </div>
     </div>

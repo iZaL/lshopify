@@ -37,9 +37,7 @@ export default function VariantOptionsEdit({
       ): VariantOption & {
         edited?: boolean;
       } => {
-        return o.name === option.name
-          ? {...option, id: e.target.value, edited: true}
-          : o;
+        return o.name === option.name ? {...option, id: e.target.value, edited: true} : o;
       },
     );
     onChange('options', currentOptions);

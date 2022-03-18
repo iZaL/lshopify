@@ -27,9 +27,7 @@ export default function VariantOptionsItem({
       <div className="flex flex-row justify-between">
         <div className="font-semi-bold text-sm">VariantOption {iteration}</div>
         {showRemoveItemButton && (
-          <Button
-            onClick={() => (variant ? onVariantRemove(variant) : null)}
-            theme="clear">
+          <Button onClick={() => (variant ? onVariantRemove(variant) : null)} theme="clear">
             <div className="text-sm text-blue-700">Remove</div>
           </Button>
         )}

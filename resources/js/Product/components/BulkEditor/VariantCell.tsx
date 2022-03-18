@@ -46,9 +46,7 @@ export default function VariantCell({
         onChange={e => onChange(e.target.value)}
         inputStyle="min-w-[150px] rounded-none shadow-none border-none focus:rounded-none"
         rightComponent={
-          placeholders[attribute] ? (
-            <div className="text-md text-sm text-gray-400">OMR</div>
-          ) : null
+          placeholders[attribute] ? <div className="text-md text-sm text-gray-400">OMR</div> : null
         }
       />
     );

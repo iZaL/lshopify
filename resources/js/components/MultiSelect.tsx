@@ -1,7 +1,7 @@
 import React from 'react';
 import CreatableSelect from 'react-select/creatable';
-import {Tag} from '../../types';
-import Loader from '../../components/Loader';
+import { Tag } from '../types'
+import Loader from './Loader'
 
 interface Props {
   selectedItems: Tag[];
@@ -11,7 +11,7 @@ interface Props {
   onCreate: (value: string) => void;
 }
 
-export default function TagsSelect({
+export default function MultiSelect({
   selectedItems,
   items,
   onChange,

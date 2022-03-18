@@ -1,7 +1,7 @@
 import React from 'react';
-import {ProductType} from '../../types';
 import CreatableSelect from 'react-select/creatable';
-import Loader from '../../components/Loader';
+import { ProductType } from '../types'
+import Loader from './Loader'
 
 interface Props {
   items: ProductType[];
@@ -11,7 +11,7 @@ interface Props {
   isLoading: boolean;
 }
 
-export default function ProductTypeSelect({
+export default function SingleSelect({
   items,
   selectedItem,
   onCreate,

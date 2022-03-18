@@ -12,15 +12,9 @@ const DisclosureButton = ({open, title}: {open: boolean; title: string}) => {
         <span className="font-medium text-gray-900">{title}</span>
         <span className="ml-6 flex items-center">
           {open ? (
-            <ChevronUpIcon
-              className="text-black-50 h-6 w-6"
-              aria-hidden="true"
-            />
+            <ChevronUpIcon className="text-black-50 h-6 w-6" aria-hidden="true" />
           ) : (
-            <ChevronDownIcon
-              className="text-black-50 h-6 w-6"
-              aria-hidden="true"
-            />
+            <ChevronDownIcon className="text-black-50 h-6 w-6" aria-hidden="true" />
           )}
         </span>
       </Disclosure.Button>

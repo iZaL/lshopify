@@ -12,11 +12,7 @@ interface Props {
   onChange: (collection: Collection[]) => void;
 }
 
-export default function CollectionSelect({
-  items,
-  selectedItems,
-  onChange,
-}: Props) {
+export default function CollectionSelect({items, selectedItems, onChange}: Props) {
   const [showCollectionMenu, setShowCollectionMenu] = useState(false);
 
   const onCollectionChange = (collectionItem: Collection, checked: boolean) => {
@@ -40,8 +36,7 @@ export default function CollectionSelect({
         />
       </div>
       {showCollectionMenu && (
-        <OutsideClickHandler
-          onOutsideClick={() => setShowCollectionMenu(false)}>
+        <OutsideClickHandler onOutsideClick={() => setShowCollectionMenu(false)}>
           <CollectionMenu
             selectedItems={selectedItems}
             items={items}
@@ -55,15 +50,11 @@ export default function CollectionSelect({
           {selectedItems.map((item, index) => {
             return (
               <li className="flex flex-row justify-between " key={index}>
-                <Button
-                  theme="clear"
-                  buttonStyle="text-sm text-blue-500 underline">
+                <Button theme="clear" buttonStyle="text-sm text-blue-500 underline">
                   {item.name}
                 </Button>
 
-                <Button
-                  theme="clear"
-                  onClick={() => onCollectionChange(item, false)}>
+                <Button theme="clear" onClick={() => onCollectionChange(item, false)}>
                   X
                 </Button>
               </li>

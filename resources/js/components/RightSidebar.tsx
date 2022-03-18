@@ -8,12 +8,7 @@ interface Props {
   children: React.ReactNode;
   title: string;
 }
-export default function RightSidebar({
-  isOpen,
-  onClose,
-  title,
-  children,
-}: Props) {
+export default function RightSidebar({isOpen, onClose, title, children}: Props) {
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
@@ -62,9 +57,7 @@ export default function RightSidebar({
                     </div>
                   </div>
                   <div className="my-3 w-full border-t border-gray-200" />
-                  <div className="relative mt-6 flex-1 px-4 sm:px-6">
-                    {children}
-                  </div>
+                  <div className="relative mt-6 flex-1 px-4 sm:px-6">{children}</div>
                 </div>
               </div>
             </Transition.Child>

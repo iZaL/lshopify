@@ -21,11 +21,7 @@ interface Props {
   customers: Customer[];
 }
 
-export default function Refund({
-  order,
-  pending_fulfillments,
-  fulfillments,
-}: Props) {
+export default function Refund({order, pending_fulfillments, fulfillments}: Props) {
   const {data, setData} = useForm<{
     // order: Order;
     restock: boolean;
@@ -51,9 +47,7 @@ export default function Refund({
   ) => {
     if (value <= trueVariant.pivot_quantity) {
       let collection =
-        type === 'pending_fulfillments'
-          ? data.pending_fulfillments
-          : data.fulfillments;
+        type === 'pending_fulfillments' ? data.pending_fulfillments : data.fulfillments;
       const newVariants = collection.map(v => {
         if (v.id === variant.id) {
           return {
@@ -87,9 +81,7 @@ export default function Refund({
                 Inertia.get(route('lshopify.orders.show', [order.id]));
               }}
             />
-            <PageHeader
-              text={order.is_payment_pending ? 'Restock' : 'Refund'}
-            />
+            <PageHeader text={order.is_payment_pending ? 'Restock' : 'Refund'} />
           </div>
         </div>
 
@@ -144,12 +136,7 @@ export default function Refund({
                   variants={data.fulfillments || []}
                   currentVariants={fulfillments || []}
                   onVariantQuantityChange={(trueVariant, variant, value) =>
-                    onPendingVariantQuantityChange(
-                      'fulfillments',
-                      trueVariant,
-                      variant,
-                      value,
-                    )
+                    onPendingVariantQuantityChange('fulfillments', trueVariant, variant, value)
                   }
                 />
                 <div className="py-4 text-sm text-gray-500">

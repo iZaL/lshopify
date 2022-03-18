@@ -12,13 +12,7 @@ interface Props {
 }
 
 const DZFileUploadBox = React.memo(
-  ({
-    images,
-    selectedImages,
-    onImagesUpload,
-    onImagesSelect,
-    isMulti = false,
-  }: Props) => {
+  ({images, selectedImages, onImagesUpload, onImagesSelect, isMulti = false}: Props) => {
     const {getRootProps, getInputProps} = useDropzone({
       accept: 'image/*',
       onDrop: acceptedFiles => {
@@ -34,9 +28,7 @@ const DZFileUploadBox = React.memo(
 
     const onSelect = (image: Image) => {
       if (isMulti) {
-        const currentImages = selectedImages
-          .map(img => img.id)
-          .includes(image.id)
+        const currentImages = selectedImages.map(img => img.id).includes(image.id)
           ? selectedImages.filter(img => img.id !== image.id)
           : [...selectedImages, image];
         onImagesSelect(currentImages);
@@ -58,9 +50,7 @@ const DZFileUploadBox = React.memo(
       ) : (
         <div
           className={classNames(
-            checked
-              ? 'border-transparent bg-green-600'
-              : 'border-gray-300 bg-white',
+            checked ? 'border-transparent bg-green-600' : 'border-gray-300 bg-white',
             'absolute top-2 left-2 flex h-4 w-4 items-center justify-center rounded-full border ring-2 ring-green-500 ring-offset-2',
           )}>
           <div className="h-2 w-2 rounded-full bg-white" />
@@ -102,9 +92,7 @@ const DZFileUploadBox = React.memo(
             <input {...getInputProps()} />
             <div className="relative">
               <div className="flex w-full flex-col items-center justify-center ">
-                <div className="text-sm text-blue-500 underline ">
-                  Add media
-                </div>
+                <div className="text-sm text-blue-500 underline ">Add media</div>
                 <div className="text-center text-xs">Drop files to upload</div>
               </div>
             </div>

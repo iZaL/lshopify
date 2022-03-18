@@ -23,10 +23,7 @@ export default function NotificationBox({message, type}: Props) {
     <div className={`rounded-md ${bgColor} m-6 py-6 px-6`}>
       <div className="flex">
         <div className="flex-shrink-0">
-          <CheckCircleIcon
-            className="h-5 w-5 text-green-400"
-            aria-hidden="true"
-          />
+          <CheckCircleIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
         </div>
         <div className="ml-3">
           <p className="text-sm font-medium text-green-800">{message}</p>

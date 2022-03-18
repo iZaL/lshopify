@@ -70,8 +70,7 @@ export default function ProductsList({products}: Props) {
                   arrowVisible={true}
                   buttonProps={{
                     theme: 'clear',
-                    buttonStyle:
-                      '-ml-px px-2 border border-gray-300 rounded-r-md h-10 font-medium',
+                    buttonStyle: '-ml-px px-2 border border-gray-300 rounded-r-md h-10 font-medium',
                   }}
                   items={[
                     {
@@ -84,13 +83,10 @@ export default function ProductsList({products}: Props) {
                           submitButtonTitle: 'Set as active',
                           onSubmit: () => {
                             setShowDialog(false);
-                            Inertia.post(
-                              route('lshopify.products.attributes'),
-                              {
-                                product_ids: selectedItemIDs,
-                                status: 'active',
-                              },
-                            );
+                            Inertia.post(route('lshopify.products.attributes'), {
+                              product_ids: selectedItemIDs,
+                              status: 'active',
+                            });
                           },
                         }),
                     },
@@ -104,13 +100,10 @@ export default function ProductsList({products}: Props) {
                           submitButtonTitle: 'Set as draft',
                           onSubmit: () => {
                             setShowDialog(false);
-                            Inertia.post(
-                              route('lshopify.products.attributes'),
-                              {
-                                product_ids: selectedItemIDs,
-                                status: 'draft',
-                              },
-                            );
+                            Inertia.post(route('lshopify.products.attributes'), {
+                              product_ids: selectedItemIDs,
+                              status: 'draft',
+                            });
                           },
                         }),
                     },
@@ -124,13 +117,10 @@ export default function ProductsList({products}: Props) {
                           submitButtonTitle: 'Archive products',
                           onSubmit: () => {
                             setShowDialog(false);
-                            Inertia.post(
-                              route('lshopify.products.attributes'),
-                              {
-                                product_ids: selectedItemIDs,
-                                status: 'archived',
-                              },
-                            );
+                            Inertia.post(route('lshopify.products.attributes'), {
+                              product_ids: selectedItemIDs,
+                              status: 'archived',
+                            });
                           },
                         }),
                     },

@@ -69,9 +69,7 @@ export default function Modal({
             <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity dark:bg-gray-900" />
           </Transition.Child>
 
-          <span
-            className="sm:inline-block sm:h-screen sm:align-middle"
-            aria-hidden="true">
+          <span className="sm:inline-block sm:h-screen sm:align-middle" aria-hidden="true">
             &#8203;
           </span>
 
@@ -92,9 +90,7 @@ export default function Modal({
                       {heading}
                     </h3>
                     {subHeading && (
-                      <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                        {subHeading}
-                      </p>
+                      <p className="mt-1 max-w-2xl text-sm text-gray-500">{subHeading}</p>
                     )}
                   </div>
                   <div className="ml-4 mt-2 flex-shrink-0">
@@ -105,9 +101,7 @@ export default function Modal({
                 </div>
               </div>
 
-              <div className="relative max-h-[30rem] overflow-y-scroll">
-                {children}
-              </div>
+              <div className="relative max-h-[30rem] overflow-y-scroll">{children}</div>
 
               {!hideFooter && (
                 <ModalFooter

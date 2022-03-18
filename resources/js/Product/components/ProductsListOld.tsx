@@ -24,9 +24,7 @@ interface ModalProp {
 }
 
 export default function ProductsListOld({products}: Props) {
-  const [selectedProductIDs, setSelectProductIDs] = React.useState<number[]>(
-    [],
-  );
+  const [selectedProductIDs, setSelectProductIDs] = React.useState<number[]>([]);
 
   const [showDialog, setShowDialog] = React.useState(false);
   const [modalParams, setModalParams] = React.useState<ModalProp>({
@@ -69,9 +67,7 @@ export default function ProductsListOld({products}: Props) {
     <>
       {selectedProductIDs.length ? (
         <div className="mb-2 flex h-10 w-full flex-row px-4">
-          <Button
-            theme="clear"
-            buttonStyle="px-6 rounded-l-md border border-gray-300 font-medium">
+          <Button theme="clear" buttonStyle="px-6 rounded-l-md border border-gray-300 font-medium">
             <Checkbox
               name="selected"
               checked={selectedProductIDs.length === products.length}
@@ -92,8 +88,7 @@ export default function ProductsListOld({products}: Props) {
             arrowVisible={true}
             buttonProps={{
               theme: 'clear',
-              buttonStyle:
-                '-ml-px px-2 border border-gray-300 rounded-r-md h-10',
+              buttonStyle: '-ml-px px-2 border border-gray-300 rounded-r-md h-10',
             }}
             items={[
               {

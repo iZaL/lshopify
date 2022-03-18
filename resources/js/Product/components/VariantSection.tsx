@@ -13,20 +13,12 @@ interface Props {
   onChange: (name: keyof Variant, options: VariantOption[]) => void;
 }
 
-export default function VariantSection({
-  currentVariants,
-  defaultVariants,
-  onChange,
-}: Props) {
+export default function VariantSection({currentVariants, defaultVariants, onChange}: Props) {
   const [hasVariants, setHasVariants] = useState(false);
-  const pendingVariants = defaultVariants.filter(
-    ({id}) => !currentVariants.some(v => v.id === id),
-  );
+  const pendingVariants = defaultVariants.filter(({id}) => !currentVariants.some(v => v.id === id));
   const onVariantAdd = () => {
     const variantKeys = currentVariants.map(({id}) => id);
-    const randomVariant = defaultVariants.find(
-      ({id}) => !variantKeys.includes(id),
-    );
+    const randomVariant = defaultVariants.find(({id}) => !variantKeys.includes(id));
     if (randomVariant) {
       const variants = [...currentVariants, {...randomVariant, options: []}];
       onChange('options', variants);
@@ -42,17 +34,9 @@ export default function VariantSection({
     }
   };
 
-  const onVariantChange = (
-    oldVariant: VariantOption,
-    newVariant: VariantOption,
-  ) => {
-    const variants = currentVariants.filter(
-      variant => variant.id !== oldVariant.id,
-    );
-    const newVariants = [
-      ...variants,
-      {...newVariant, options: oldVariant.options},
-    ];
+  const onVariantChange = (oldVariant: VariantOption, newVariant: VariantOption) => {
+    const variants = currentVariants.filter(variant => variant.id !== oldVariant.id);
+    const newVariants = [...variants, {...newVariant, options: oldVariant.options}];
     onChange('options', newVariants);
   };
 
@@ -61,10 +45,7 @@ export default function VariantSection({
     onChange('options', variants);
   };
 
-  const onVariantOptionsChange = (
-    currentVariant: VariantOption,
-    options: VariantOption[],
-  ) => {
+  const onVariantOptionsChange = (currentVariant: VariantOption, options: VariantOption[]) => {
     const variants = currentVariants.map(variant => {
       if (variant.id === currentVariant.id) {
         return {

@@ -9,11 +9,7 @@ interface Props {
   onApplyAll: (text: string) => void;
 }
 
-export default function EditQuantities({
-  variants,
-  onChange,
-  onApplyAll,
-}: Props) {
+export default function EditQuantities({variants, onChange, onApplyAll}: Props) {
   const [allText, setAllText] = useState('');
 
   return (
@@ -24,9 +20,7 @@ export default function EditQuantities({
           <InputText
             name="all"
             onChange={e => setAllText(e.target.value)}
-            leftComponent={
-              <div className="text-md text-sm text-gray-400">QTY</div>
-            }
+            leftComponent={<div className="text-md text-sm text-gray-400">QTY</div>}
             inputStyle="pl-14"
             placeholder="0"
           />
@@ -43,12 +37,8 @@ export default function EditQuantities({
 
       {variants.map((variant, i) => {
         return (
-          <div
-            className="flex items-center space-x-4 border-b border-gray-200 py-3"
-            key={i}>
-            <div className="min-w-0 flex-1 text-sm text-gray-800">
-              {variant.title}
-            </div>
+          <div className="flex items-center space-x-4 border-b border-gray-200 py-3" key={i}>
+            <div className="min-w-0 flex-1 text-sm text-gray-800">{variant.title}</div>
 
             <div className="w-24">
               <InputText

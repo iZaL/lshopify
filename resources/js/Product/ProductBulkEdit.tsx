@@ -11,11 +11,7 @@ import route from 'ziggy-js';
 import PageHeader from '../components/PageHeader';
 import ProductCell from './components/BulkEditor/ProductCell';
 import VariantCell from './components/BulkEditor/VariantCell';
-import {
-  AttributeLabel,
-  ProductAttributes,
-  VariantAttributes,
-} from './components/BulkEditor/types';
+import {AttributeLabel, ProductAttributes, VariantAttributes} from './components/BulkEditor/types';
 import TagsPopup from './components/BulkEditor/TagsPopup';
 import Cell from './components/BulkEditor/Cell';
 
@@ -64,12 +60,16 @@ export default function ProductBulkEdit(props: Props) {
     });
   }, [products]);
 
-  const [selectedProductAttributes, setSelectedProductAttributes] = useState<
-    ProductAttributes[]
-  >(['title', 'status', 'tags']);
-  const [selectedVariantAttributes, setSelectedVariantAttributes] = useState<
-    VariantAttributes[]
-  >(['sku', 'price', 'compare_at_price']);
+  const [selectedProductAttributes, setSelectedProductAttributes] = useState<ProductAttributes[]>([
+    'title',
+    'status',
+    'tags',
+  ]);
+  const [selectedVariantAttributes, setSelectedVariantAttributes] = useState<VariantAttributes[]>([
+    'sku',
+    'price',
+    'compare_at_price',
+  ]);
 
   const onButtonClick = (attribute: ProductAttributes | VariantAttributes) => {
     if (
@@ -88,9 +88,7 @@ export default function ProductBulkEdit(props: Props) {
 
   const onProductButtonClick = (attribute: ProductAttributes) => {
     if (selectedProductAttributes.includes(attribute)) {
-      setSelectedProductAttributes(
-        selectedProductAttributes.filter(item => item !== attribute),
-      );
+      setSelectedProductAttributes(selectedProductAttributes.filter(item => item !== attribute));
     } else {
       setSelectedProductAttributes([...selectedProductAttributes, attribute]);
     }
@@ -98,9 +96,7 @@ export default function ProductBulkEdit(props: Props) {
 
   const onVariantButtonClick = (attribute: VariantAttributes) => {
     if (selectedVariantAttributes.includes(attribute)) {
-      setSelectedVariantAttributes(
-        selectedVariantAttributes.filter(item => item !== attribute),
-      );
+      setSelectedVariantAttributes(selectedVariantAttributes.filter(item => item !== attribute));
     } else {
       setSelectedVariantAttributes([...selectedVariantAttributes, attribute]);
     }
@@ -219,20 +215,13 @@ export default function ProductBulkEdit(props: Props) {
     });
   };
 
-  const buttons: {[key: string]: Array<ProductAttributes | VariantAttributes>} =
-    {
-      General: ['title', 'status', 'tags'],
-      Pricing: ['price', 'cost_price', 'compare_at_price', 'taxable'],
-      Inventory: [
-        'sku',
-        'barcode',
-        'quantity',
-        'out_of_stock_sale',
-        'track_quantity',
-      ],
-      Shipping: ['weight', 'requires_shipping', 'hs_code'],
-      SEO: ['seo_title', 'seo_description', 'seo_url'],
-    };
+  const buttons: {[key: string]: Array<ProductAttributes | VariantAttributes>} = {
+    General: ['title', 'status', 'tags'],
+    Pricing: ['price', 'cost_price', 'compare_at_price', 'taxable'],
+    Inventory: ['sku', 'barcode', 'quantity', 'out_of_stock_sale', 'track_quantity'],
+    Shipping: ['weight', 'requires_shipping', 'hs_code'],
+    SEO: ['seo_title', 'seo_description', 'seo_url'],
+  };
 
   return (
     <Main>
@@ -248,19 +237,14 @@ export default function ProductBulkEdit(props: Props) {
         </div>
 
         <Card cardStyle="mt-6">
-          <div className="text-sm text-gray-700">
-            Currently editing these fields:
-          </div>
+          <div className="text-sm text-gray-700">Currently editing these fields:</div>
           <div className="inline-flex flex-wrap space-x-2 ">
             <>
               <TagsPopup
                 buttons={buttons}
                 attributeLabels={attributeLabels}
                 onButtonClick={button => onButtonClick(button)}
-                selectedAttributes={[
-                  ...selectedVariantAttributes,
-                  ...selectedProductAttributes,
-                ]}
+                selectedAttributes={[...selectedVariantAttributes, ...selectedProductAttributes]}
               />
 
               {selectedProductAttributes.map((attribute, idx) => (
@@ -290,16 +274,12 @@ export default function ProductBulkEdit(props: Props) {
                     <thead className="bg-gray-50">
                       <tr>
                         {selectedProductAttributes.map((attribute, idx) => (
-                          <th
-                            key={idx}
-                            className="border py-2 text-sm font-normal">
+                          <th key={idx} className="border py-2 text-sm font-normal">
                             {attributeLabels[attribute] ?? '-'}
                           </th>
                         ))}
                         {selectedVariantAttributes.map((attribute, idx) => (
-                          <th
-                            key={idx}
-                            className="border py-2 text-sm font-normal">
+                          <th key={idx} className="border py-2 text-sm font-normal">
                             {attributeLabels[attribute] ?? '-'}
                           </th>
                         ))}
@@ -310,100 +290,75 @@ export default function ProductBulkEdit(props: Props) {
                         return (
                           <Fragment key={idx}>
                             <tr>
-                              {selectedProductAttributes.map(
-                                (attribute, idx) => {
-                                  return (
+                              {selectedProductAttributes.map((attribute, idx) => {
+                                return (
+                                  <Cell key={idx}>
+                                    <ProductCell
+                                      product={product}
+                                      attribute={attribute}
+                                      onChange={value =>
+                                        onProductAttributeChange(product, attribute, value)
+                                      }
+                                      onTagAdd={value => onTagAdd(product, value)}
+                                      onTagRemove={tag => onTagRemove(product, tag)}
+                                    />
+                                  </Cell>
+                                );
+                              })}
+
+                              {!product.variants?.length && product.default_variant
+                                ? selectedVariantAttributes.map((attribute, idx) => (
                                     <Cell key={idx}>
-                                      <ProductCell
-                                        product={product}
+                                      <VariantCell
+                                        value={product.default_variant[attribute]}
                                         attribute={attribute}
                                         onChange={value =>
-                                          onProductAttributeChange(
+                                          onDefaultVariantAttributeChange(
                                             product,
+                                            product.default_variant,
                                             attribute,
                                             value,
                                           )
                                         }
-                                        onTagAdd={value =>
-                                          onTagAdd(product, value)
-                                        }
-                                        onTagRemove={tag =>
-                                          onTagRemove(product, tag)
-                                        }
                                       />
                                     </Cell>
-                                  );
-                                },
-                              )}
-
-                              {!product.variants?.length &&
-                              product.default_variant
-                                ? selectedVariantAttributes.map(
-                                    (attribute, idx) => (
-                                      <Cell key={idx}>
-                                        <VariantCell
-                                          value={
-                                            product.default_variant[attribute]
-                                          }
-                                          attribute={attribute}
-                                          onChange={value =>
-                                            onDefaultVariantAttributeChange(
-                                              product,
-                                              product.default_variant,
-                                              attribute,
-                                              value,
-                                            )
-                                          }
-                                        />
-                                      </Cell>
-                                    ),
-                                  )
-                                : selectedVariantAttributes.map(
-                                    (attribute, idx) => (
-                                      <Cell key={attribute}>
-                                        <div className="cursor-not-allowed px-4">
-                                          —
-                                        </div>
-                                      </Cell>
-                                    ),
-                                  )}
+                                  ))
+                                : selectedVariantAttributes.map((attribute, idx) => (
+                                    <Cell key={attribute}>
+                                      <div className="cursor-not-allowed px-4">—</div>
+                                    </Cell>
+                                  ))}
                             </tr>
                             {product.variants?.map((variant, idx) => {
                               return (
                                 <tr key={idx}>
-                                  {selectedProductAttributes.map(
-                                    (attribute, idx) => (
-                                      <Cell key={attribute}>
-                                        {attribute === 'title' ? (
-                                          <div className="bg-gray-100 p-2 pl-12 text-gray-500 ">
-                                            {variant.title}
-                                          </div>
-                                        ) : (
-                                          <div className="cursor-not-allowed px-4">
-                                            —
-                                          </div>
-                                        )}
-                                      </Cell>
-                                    ),
-                                  )}
-                                  {selectedVariantAttributes.map(
-                                    (attribute, idx) => (
-                                      <Cell key={attribute}>
-                                        <VariantCell
-                                          value={variant[attribute]}
-                                          attribute={attribute}
-                                          onChange={value =>
-                                            onVariantAttributeChange(
-                                              product,
-                                              variant,
-                                              attribute,
-                                              value,
-                                            )
-                                          }
-                                        />
-                                      </Cell>
-                                    ),
-                                  )}
+                                  {selectedProductAttributes.map((attribute, idx) => (
+                                    <Cell key={attribute}>
+                                      {attribute === 'title' ? (
+                                        <div className="bg-gray-100 p-2 pl-12 text-gray-500 ">
+                                          {variant.title}
+                                        </div>
+                                      ) : (
+                                        <div className="cursor-not-allowed px-4">—</div>
+                                      )}
+                                    </Cell>
+                                  ))}
+                                  {selectedVariantAttributes.map((attribute, idx) => (
+                                    <Cell key={attribute}>
+                                      <VariantCell
+                                        value={variant[attribute]}
+                                        attribute={attribute}
+                                        onChange={value =>
+                                          onVariantAttributeChange(
+                                            product,
+                                            variant,
+                                            attribute,
+                                            value,
+                                          )
+                                        }
+                                      />
+                                    </Cell>
+                                  ))}
                                 </tr>
                               );
                             })}

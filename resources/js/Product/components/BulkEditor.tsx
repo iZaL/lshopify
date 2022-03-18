@@ -41,8 +41,7 @@ export default function BulkEditor(props: Props) {
   // console.log('props',props);
   // const { collection, fields } = props;
   //
-  const [selectedFields, setSelectedFields] =
-    useState<Field[]>(defaultAttributes);
+  const [selectedFields, setSelectedFields] = useState<Field[]>(defaultAttributes);
 
   return (
     <>
@@ -77,9 +76,7 @@ export default function BulkEditor(props: Props) {
                     <div className="p flex min-w-[350px] flex-row items-center">
                       <div className="w-1/3">General</div>
                       <div className="inline-flex w-2/3 flex-wrap items-center">
-                        <div className="mb-2 ml-2 rounded border px-2">
-                          Title
-                        </div>
+                        <div className="mb-2 ml-2 rounded border px-2">Title</div>
                       </div>
                     </div>
                   </Popover.Panel>

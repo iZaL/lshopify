@@ -25,9 +25,7 @@ export default function ProductSearch({
 }: Props) {
   const [showDialog, setShowDialog] = useState(false);
 
-  const [selectedVariantIDs, setSelectedVariantIDs] = useState<number[]>(
-    items.map(({id}) => id),
-  );
+  const [selectedVariantIDs, setSelectedVariantIDs] = useState<number[]>(items.map(({id}) => id));
 
   // useEffect(() => {
   //   setSelectedVariantIDs(items.map(({id}) => id));
@@ -60,10 +58,7 @@ export default function ProductSearch({
             leftComponent={<SearchIcon className="h-5 w-5 text-gray-500" />}
           />
         </div>
-        <Button
-          theme="default"
-          onClick={() => setShowDialog(true)}
-          buttonStyle="ml-2">
+        <Button theme="default" onClick={() => setShowDialog(true)} buttonStyle="ml-2">
           Browse
         </Button>
       </div>
@@ -94,26 +89,19 @@ export default function ProductSearch({
               text-sm hover:bg-gray-100
               "
                 onClick={() =>
-                  !product.variants?.length &&
-                  addRemoveVariant(product.default_variant)
+                  !product.variants?.length && addRemoveVariant(product.default_variant)
                 }>
                 <div>{i + 1}.</div>
 
                 {!product.variants?.length && (
                   <Checkbox
-                    checked={selectedVariantIDs.includes(
-                      product.default_variant?.id,
-                    )}
+                    checked={selectedVariantIDs.includes(product.default_variant?.id)}
                     name="product"
                     onChange={() => {}}
                   />
                 )}
 
-                <VariantImage
-                  image={product.image}
-                  onClick={() => {}}
-                  imageStyle="w-12 h-12"
-                />
+                <VariantImage image={product.image} onClick={() => {}} imageStyle="w-12 h-12" />
                 <div className="flex-auto">{product.title}</div>
                 {!product.variants?.length && (
                   <>
@@ -137,11 +125,7 @@ export default function ProductSearch({
                       name="product"
                       onChange={() => {}}
                     />
-                    <VariantImage
-                      image={variant.image}
-                      onClick={() => {}}
-                      imageStyle="w-12 h-12"
-                    />
+                    <VariantImage image={variant.image} onClick={() => {}} imageStyle="w-12 h-12" />
                     <div className="flex-auto">{variant.title}</div>
                     <div className="w-20">{variant.quantity} available</div>
                     <div className="w-20">{variant.price}</div>

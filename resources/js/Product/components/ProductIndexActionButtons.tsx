@@ -19,9 +19,7 @@ export default function ProductIndexActionButtons() {
         buttonStyle="p-2 hover:bg-gray-200">
         Import
       </Button>
-      <Button
-        theme="success"
-        onClick={() => Inertia.get(route('lshopify.products.create'))}>
+      <Button theme="success" onClick={() => Inertia.get(route('lshopify.products.create'))}>
         Add product
       </Button>
     </div>
