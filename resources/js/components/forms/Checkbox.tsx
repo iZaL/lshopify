@@ -9,7 +9,13 @@ interface Props {
   inputStyle?: string;
 }
 
-export default function Checkbox({name, label, inputStyle, checked = false, onChange}: Props) {
+export default function Checkbox({
+  name,
+  label,
+  inputStyle,
+  checked = false,
+  onChange,
+}: Props) {
   return (
     <div className="relative inline-flex items-center space-x-2">
       <input

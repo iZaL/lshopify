@@ -68,12 +68,13 @@ export default function FlashMessages() {
   const [visible, setVisible] = useState(false);
   const {flash, errors, env} = usePage<Props>().props;
   //
-  let flashMessage: {type: keyof FlashMessageType; message: string | null} = useMemo(() => {
-    return {
-      type: 'success',
-      message: null,
-    };
-  }, []);
+  let flashMessage: {type: keyof FlashMessageType; message: string | null} =
+    useMemo(() => {
+      return {
+        type: 'success',
+        message: null,
+      };
+    }, []);
 
   if (flash) {
     if (flash.success) {
@@ -161,7 +162,9 @@ export default function FlashMessages() {
       leave="transition-opacity duration-150"
       leaveFrom="opacity-100"
       leaveTo="opacity-0">
-      <Content type={flashMessageType} setVisible={visibility => setVisible(visibility)}>
+      <Content
+        type={flashMessageType}
+        setVisible={visibility => setVisible(visibility)}>
         <div>{message}</div>
       </Content>
     </Transition>

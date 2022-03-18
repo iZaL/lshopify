@@ -10,7 +10,10 @@ import CreateAddressForm from './CreateAddressForm';
 
 interface Props {
   customer?: Customer | null;
-  children: (customerData: CustomerForm, addressData: CustomerAddress) => ReactElement;
+  children: (
+    customerData: CustomerForm,
+    addressData: CustomerAddress,
+  ) => ReactElement;
 }
 
 export default function CreateCustomerForm({customer, children}: Props) {
@@ -43,7 +46,10 @@ export default function CreateCustomerForm({customer, children}: Props) {
     ...addressForm,
   });
 
-  const onCustomerAttributeChange = <T extends keyof Customer>(field: T, value: Customer[T]) => {
+  const onCustomerAttributeChange = <T extends keyof Customer>(
+    field: T,
+    value: Customer[T],
+  ) => {
     setCustomerData({
       ...customerData,
       [field]: value,
@@ -76,7 +82,9 @@ export default function CreateCustomerForm({customer, children}: Props) {
             <InputText
               name="first_name"
               value={customerData.first_name}
-              onChange={e => onCustomerAttributeChange('first_name', e.target.value)}
+              onChange={e =>
+                onCustomerAttributeChange('first_name', e.target.value)
+              }
             />
           </div>
           <div className="sm:col-span-3">
@@ -84,7 +92,9 @@ export default function CreateCustomerForm({customer, children}: Props) {
             <InputText
               name="last_name"
               value={customerData.last_name}
-              onChange={e => onCustomerAttributeChange('last_name', e.target.value)}
+              onChange={e =>
+                onCustomerAttributeChange('last_name', e.target.value)
+              }
             />
           </div>
           <div className="sm:col-span-6">
@@ -101,7 +111,9 @@ export default function CreateCustomerForm({customer, children}: Props) {
               name="accepts_marketing"
               label="Customer accepts email marketing"
               checked={customerData.accepts_marketing}
-              onChange={e => onCustomerAttributeChange('accepts_marketing', e.target.checked)}
+              onChange={e =>
+                onCustomerAttributeChange('accepts_marketing', e.target.checked)
+              }
             />
           </div>
 
@@ -110,7 +122,9 @@ export default function CreateCustomerForm({customer, children}: Props) {
               name="tax_exempted"
               label="Customer is tax exempt"
               checked={customerData.tax_exempted}
-              onChange={e => onCustomerAttributeChange('tax_exempted', e.target.checked)}
+              onChange={e =>
+                onCustomerAttributeChange('tax_exempted', e.target.checked)
+              }
             />
           </div>
 

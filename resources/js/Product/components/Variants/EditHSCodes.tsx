@@ -31,7 +31,9 @@ export default function EditHSCodes({variants, onChange, onApplyAll}: Props) {
       {variants.map(variant => {
         return (
           <div className="flex items-center space-x-4 border-b border-gray-200 py-3">
-            <div className="min-w-0 flex-1 text-sm text-gray-800">{variant.title}</div>
+            <div className="min-w-0 flex-1 text-sm text-gray-800">
+              {variant.title}
+            </div>
 
             <div className="w-56">
               <InputText

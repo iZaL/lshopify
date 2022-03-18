@@ -33,7 +33,12 @@ export default function StatusSection({onChange, activeStatus}: Props) {
       <Border />
 
       <Subheader text={'SALES CHANNELS AND APPS'} headerStyle={'text-xs'} />
-      <Checkbox label="Online Store" name="online_store" checked={false} onChange={() => {}} />
+      <Checkbox
+        label="Online Store"
+        name="online_store"
+        checked={false}
+        onChange={() => {}}
+      />
     </Card>
   );
 }

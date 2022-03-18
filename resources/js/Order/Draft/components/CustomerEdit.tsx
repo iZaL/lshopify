@@ -14,7 +14,10 @@ interface Props {
   ) => void;
   order: Order;
   onChange: <T extends keyof Order>(field: T, value: any) => void;
-  onContactSave: (attributes: {contact_email: string; contact_phone: string}) => void;
+  onContactSave: (attributes: {
+    contact_email: string;
+    contact_phone: string;
+  }) => void;
 }
 
 export default function CustomerEdit({
@@ -34,14 +37,22 @@ export default function CustomerEdit({
           <Subheader text="Customer" />
           <XIcon
             className="w-5 cursor-pointer text-gray-500 hover:text-gray-700"
-            onClick={() => (order.customer ? onCustomerRemove(order.customer) : {})}
+            onClick={() =>
+              order.customer ? onCustomerRemove(order.customer) : {}
+            }
           />
         </div>
 
-        <div className="mt-2 text-sm text-blue-500 underline">{order.customer.full_name}</div>
+        <div className="mt-2 text-sm text-blue-500 underline">
+          {order.customer.full_name}
+        </div>
       </div>
 
-      <ContactCard email={order.contact_email} phone={order.contact_phone} onSave={onContactSave} />
+      <ContactCard
+        email={order.contact_email}
+        phone={order.contact_phone}
+        onSave={onContactSave}
+      />
 
       <AddressCard
         address={order.shipping}

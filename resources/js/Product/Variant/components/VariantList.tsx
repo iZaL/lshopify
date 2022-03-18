@@ -11,7 +11,11 @@ interface Props {
   onVariantItemClick: (variant: Variant) => void;
 }
 
-export default function VariantList({variants, variant, onVariantItemClick}: Props) {
+export default function VariantList({
+  variants,
+  variant,
+  onVariantItemClick,
+}: Props) {
   return (
     <Card cardStyle="px-0">
       <Subheader text="Variants" headerStyle="px-4" />
@@ -25,7 +29,11 @@ export default function VariantList({variants, variant, onVariantItemClick}: Pro
                 'position-relative z-1 box-border inline-block flex min-w-full cursor-pointer flex-row items-center space-x-2 border border-l-0 border-r-0 border-gray-200 p-2 text-sm hover:bg-gray-100',
               )}
               onClick={() => onVariantItemClick(v)}>
-              <VariantImage image={v.image} onClick={() => {}} imageStyle="h-8 w-8" />
+              <VariantImage
+                image={v.image}
+                onClick={() => {}}
+                imageStyle="h-8 w-8"
+              />
               <div className="">{v.title}</div>
             </li>
           );

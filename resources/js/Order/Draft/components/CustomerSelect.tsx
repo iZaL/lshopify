@@ -28,7 +28,10 @@ export default function CustomerSelect({
   const [showMenu, setShowMenu] = useState(false);
   const [showDialog, setShowDialog] = useState<'create_customer' | null>(null);
 
-  const onCustomerSave = (customerData: CustomerForm, addressData: CustomerAddress) => {
+  const onCustomerSave = (
+    customerData: CustomerForm,
+    addressData: CustomerAddress,
+  ) => {
     onCustomerCreate(customerData, addressData);
   };
 
@@ -48,7 +51,9 @@ export default function CustomerSelect({
           autocomplete="off"
         />
 
-        <Dropdown visible={showMenu} setVisible={visible => setShowMenu(visible)}>
+        <Dropdown
+          visible={showMenu}
+          setVisible={visible => setShowMenu(visible)}>
           <div className="bg-white">
             <div className="p-2">
               <div

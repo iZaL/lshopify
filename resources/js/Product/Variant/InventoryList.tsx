@@ -16,7 +16,11 @@ interface Props {
   onSave: (item: ExtendedVariant) => void;
 }
 
-export default function InventoryList({variants, onQuantityChange, onSave}: Props) {
+export default function InventoryList({
+  variants,
+  onQuantityChange,
+  onSave,
+}: Props) {
   const onCollectionClick = (item: Variant) => {
     // return Inertia.get(route('lshopify.variants.edit', [collection.id]));
   };
@@ -43,7 +47,11 @@ export default function InventoryList({variants, onQuantityChange, onSave}: Prop
               <>
                 <Table.Cell cellStyle={'w-16'}>
                   {item.image && (
-                    <VariantImage onClick={() => {}} image={item.image} imageStyle="w-16 h-12" />
+                    <VariantImage
+                      onClick={() => {}}
+                      image={item.image}
+                      imageStyle="w-16 h-12"
+                    />
                   )}
                 </Table.Cell>
                 <Table.Cell>
@@ -60,7 +68,9 @@ export default function InventoryList({variants, onQuantityChange, onSave}: Prop
                   <InputText
                     value={item.quantity}
                     name="quantity"
-                    onChange={event => onQuantityChange(item, event.target.value)}
+                    onChange={event =>
+                      onQuantityChange(item, event.target.value)
+                    }
                   />
                 </Table.Cell>
                 <Table.Cell cellStyle="w-16">

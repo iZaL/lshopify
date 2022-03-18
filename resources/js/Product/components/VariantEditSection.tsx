@@ -52,7 +52,11 @@ export default function VariantEditSection({
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
 
-  const onVariantOptionsChange = (variant: Variant, option: VariantOption, value: string) => {
+  const onVariantOptionsChange = (
+    variant: Variant,
+    option: VariantOption,
+    value: string,
+  ) => {
     const variants = currentVariants.map(v => {
       if (v.id === variant.id) {
         return {
@@ -156,7 +160,10 @@ export default function VariantEditSection({
         <div className="flex-1">
           <Subheader text="Variants" />
         </div>
-        <Button onClick={onAddVariantClick} theme="clear" buttonStyle="text-blue-500">
+        <Button
+          onClick={onAddVariantClick}
+          theme="clear"
+          buttonStyle="text-blue-500">
           Add Variant
         </Button>
         <div className="relative">
@@ -194,7 +201,10 @@ export default function VariantEditSection({
         </li>
         {variantValues.map((option, i) => {
           return (
-            <li key={i} className="text-blue-500" onClick={() => onVariantOptionClick(option)}>
+            <li
+              key={i}
+              className="text-blue-500"
+              onClick={() => onVariantOptionClick(option)}>
               {option.id}
             </li>
           );
@@ -228,7 +238,8 @@ export default function VariantEditSection({
               width="w-[16rem]"
               buttonProps={{
                 theme: 'clear',
-                buttonStyle: '-ml-px px-4 py-2 border border-gray-300 rounded-r-md',
+                buttonStyle:
+                  '-ml-px px-4 py-2 border border-gray-300 rounded-r-md',
               }}
               items={[
                 {
@@ -277,13 +288,21 @@ export default function VariantEditSection({
                 {
                   title: 'Continue selling when out of stock',
                   onClick: () => {
-                    onBulkAttributesSet(checkedVariantIDs, 'out_of_stock_sale', true);
+                    onBulkAttributesSet(
+                      checkedVariantIDs,
+                      'out_of_stock_sale',
+                      true,
+                    );
                   },
                 },
                 {
                   title: 'Stop selling when out of stock',
                   onClick: () => {
-                    onBulkAttributesSet(checkedVariantIDs, 'out_of_stock_sale', false);
+                    onBulkAttributesSet(
+                      checkedVariantIDs,
+                      'out_of_stock_sale',
+                      false,
+                    );
                   },
                 },
               ]}
@@ -305,9 +324,18 @@ export default function VariantEditSection({
             <div className="w-full">
               <div
                 className={`grid items-center gap-6
-                ${variantOptions.length === 3 && 'grid-cols-[repeat(4,10rem),9rem,9rem,auto]'}
-                ${variantOptions.length === 2 && 'grid-cols-[repeat(3,10rem),9rem,9rem,auto]'}
-                ${variantOptions.length === 1 && 'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'}
+                ${
+                  variantOptions.length === 3 &&
+                  'grid-cols-[repeat(4,10rem),9rem,9rem,auto]'
+                }
+                ${
+                  variantOptions.length === 2 &&
+                  'grid-cols-[repeat(3,10rem),9rem,9rem,auto]'
+                }
+                ${
+                  variantOptions.length === 1 &&
+                  'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
+                }
                 `}>
                 {variantOptions.map((option, i) => {
                   return (
@@ -331,7 +359,9 @@ export default function VariantEditSection({
               <li
                 key={i}
                 className={classNames(
-                  checkedVariantIDs.includes(variant.id) ? 'bg-blue-50 dark:bg-gray-700' : '',
+                  checkedVariantIDs.includes(variant.id)
+                    ? 'bg-blue-50 dark:bg-gray-700'
+                    : '',
                   'position-relative box-border inline-block min-w-full border-t border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-900',
                 )}>
                 <div className="flex items-center">
@@ -382,7 +412,11 @@ export default function VariantEditSection({
                                 name={currentOption.id}
                                 value={currentOption.id}
                                 onChange={e =>
-                                  onVariantOptionsChange(variant, currentOption, e.target.value)
+                                  onVariantOptionsChange(
+                                    variant,
+                                    currentOption,
+                                    e.target.value,
+                                  )
                                 }
                               />
                             </div>
@@ -394,7 +428,11 @@ export default function VariantEditSection({
                             name="price"
                             value={variant.price}
                             onChange={e =>
-                              onVariantAttributeChange(variant, 'price', e.target.value)
+                              onVariantAttributeChange(
+                                variant,
+                                'price',
+                                e.target.value,
+                              )
                             }
                           />
                         </div>
@@ -403,7 +441,11 @@ export default function VariantEditSection({
                             name="quantity"
                             value={variant.quantity}
                             onChange={e =>
-                              onVariantAttributeChange(variant, 'quantity', e.target.value)
+                              onVariantAttributeChange(
+                                variant,
+                                'quantity',
+                                e.target.value,
+                              )
                             }
                           />
                         </div>
@@ -411,7 +453,13 @@ export default function VariantEditSection({
                           <InputText
                             name="sku"
                             value={variant.sku}
-                            onChange={e => onVariantAttributeChange(variant, 'sku', e.target.value)}
+                            onChange={e =>
+                              onVariantAttributeChange(
+                                variant,
+                                'sku',
+                                e.target.value,
+                              )
+                            }
                           />
                         </div>
                         <div className="sticky top-0 right-0 flex hidden h-full bg-gray-100 py-4 px-2 shadow shadow-md dark:bg-gray-900 sm:block">
@@ -449,8 +497,12 @@ export default function VariantEditSection({
         onClose={() => setShowDialog(null)}
         onConfirm={() => setShowDialog(null)}>
         <EditPrices
-          variants={currentVariants.filter(v => checkedVariantIDs.includes(v.id))}
-          onChange={(variant, value) => onVariantAttributeChange(variant, 'price', value)}
+          variants={currentVariants.filter(v =>
+            checkedVariantIDs.includes(v.id),
+          )}
+          onChange={(variant, value) =>
+            onVariantAttributeChange(variant, 'price', value)
+          }
           onApplyAll={value => onApplyAll('price', value)}
         />
       </Modal>
@@ -461,8 +513,12 @@ export default function VariantEditSection({
         onClose={() => setShowDialog(null)}
         onConfirm={() => setShowDialog(null)}>
         <EditQuantities
-          variants={currentVariants.filter(v => checkedVariantIDs.includes(v.id))}
-          onChange={(variant, value) => onVariantAttributeChange(variant, 'quantity', value)}
+          variants={currentVariants.filter(v =>
+            checkedVariantIDs.includes(v.id),
+          )}
+          onChange={(variant, value) =>
+            onVariantAttributeChange(variant, 'quantity', value)
+          }
           onApplyAll={value => onApplyAll('quantity', value)}
         />
       </Modal>
@@ -516,7 +572,9 @@ export default function VariantEditSection({
         onClose={() => setShowDialog(null)}
         onConfirm={() => setShowDialog(null)}>
         <EditOriginCountry
-          variants={currentVariants.filter(v => checkedVariantIDs.includes(v.id))}
+          variants={currentVariants.filter(v =>
+            checkedVariantIDs.includes(v.id),
+          )}
           onChange={(variant, value) =>
             onVariantAttributeChange(variant, 'origin_country_id', value)
           }
@@ -530,8 +588,12 @@ export default function VariantEditSection({
         onClose={() => setShowDialog(null)}
         onConfirm={() => setShowDialog(null)}>
         <EditHSCodes
-          variants={currentVariants.filter(v => checkedVariantIDs.includes(v.id))}
-          onChange={(variant, value) => onVariantAttributeChange(variant, 'hs_code', value)}
+          variants={currentVariants.filter(v =>
+            checkedVariantIDs.includes(v.id),
+          )}
+          onChange={(variant, value) =>
+            onVariantAttributeChange(variant, 'hs_code', value)
+          }
           onApplyAll={value => onApplyAll('hs_code', value)}
         />
       </Modal>
@@ -559,7 +621,10 @@ export default function VariantEditSection({
         hideFooter={true}
         onClose={() => setShowDialog(null)}
         onConfirm={() => setShowDialog(null)}>
-        <BulkEditor variants={currentVariants.filter(({id}) => checkedVariantIDs.includes(id))}>
+        <BulkEditor
+          variants={currentVariants.filter(({id}) =>
+            checkedVariantIDs.includes(id),
+          )}>
           {variants => (
             <ModalFooter
               onHideModal={() => setShowDialog(null)}
@@ -587,8 +652,8 @@ export default function VariantEditSection({
           onVariantsDelete(selectedVariant ? [selectedVariant.id] : []);
         }}>
         <p className="p-5 text-sm">
-          Are you sure you want to delete the variant {selectedVariant?.title}? This action cannot
-          be reversed.
+          Are you sure you want to delete the variant {selectedVariant?.title}?
+          This action cannot be reversed.
         </p>
       </Modal>
     </Card>

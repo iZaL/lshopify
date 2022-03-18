@@ -29,7 +29,11 @@ const Trigger = ({children}: {children: React.ReactNode}) => {
     <>
       <div onClick={toggleOpen}>{children}</div>
 
-      {open && <div className="fixed inset-0 z-40" onClick={() => setOpen(false)}></div>}
+      {open && (
+        <div
+          className="fixed inset-0 z-40"
+          onClick={() => setOpen(false)}></div>
+      )}
     </>
   );
 };
@@ -81,7 +85,10 @@ const Content = ({
           <div
             className={`absolute z-50 mt-2 rounded-md shadow-lg ${alignmentClasses} ${widthClasses}`}
             onClick={() => setOpen(false)}>
-            <div className={`rounded-md ring-1 ring-black ring-opacity-5 ` + contentClasses}>
+            <div
+              className={
+                `rounded-md ring-1 ring-black ring-opacity-5 ` + contentClasses
+              }>
               {children}
             </div>
           </div>
@@ -98,7 +105,12 @@ interface DropdownLinkProps {
   children: React.ReactNode;
 }
 
-const DropdownLink = ({href, method = 'post', as = 'a', children}: DropdownLinkProps) => {
+const DropdownLink = ({
+  href,
+  method = 'post',
+  as = 'a',
+  children,
+}: DropdownLinkProps) => {
   return (
     <Link
       href={href}

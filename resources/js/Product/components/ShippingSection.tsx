@@ -49,8 +49,8 @@ export default function ShippingSection({variant, onChange}: Props) {
 
           <div className="min-w-0 flex-1">
             <span className="block py-1 text-sm text-gray-500">
-              Customs authorities use this information to calculate duties when shipping
-              internationally. Shown on printed customs forms.
+              Customs authorities use this information to calculate duties when
+              shipping internationally. Shown on printed customs forms.
             </span>
           </div>
 
@@ -91,7 +91,8 @@ export default function ShippingSection({variant, onChange}: Props) {
         <div className="min-w-0 flex-1">
           <Subheader text="WEIGHT" headerStyle="text-xs" />
           <span className="block py-1 text-sm text-gray-500">
-            Used to calculate shipping rates at checkout and label prices during fulfillment.
+            Used to calculate shipping rates at checkout and label prices during
+            fulfillment.
           </span>
         </div>
       )}

@@ -18,7 +18,9 @@ interface HeaderProps {
   children: React.ReactNode;
 }
 
-const SmartTableContext = React.createContext<SmartTableContextData<ItemWithID>>({
+const SmartTableContext = React.createContext<
+  SmartTableContextData<ItemWithID>
+>({
   selectedItemIDs: [],
   setSelectedItemIDs: () => {},
   onSelectedAllChange: () => {},
@@ -60,15 +62,20 @@ const SmartTable = <Item extends ItemWithID>({
 };
 
 const Header = ({children}: HeaderProps) => {
-  const {selectedItemIDs, onSelectedAllChange, items} = useContext(SmartTableContext);
+  const {selectedItemIDs, onSelectedAllChange, items} =
+    useContext(SmartTableContext);
 
   return (
     <thead>
       <Table.Row rowStyle="m-2">
         <Table.Header headerStyle="w-16">
-          <div className="flex w-12 py-1 items-center justify-center" onClick={() => onSelectedAllChange()}>
+          <div
+            className="flex w-12 py-1 items-center justify-center"
+            onClick={() => onSelectedAllChange()}>
             <Checkbox
-              checked={selectedItemIDs.length === items.length && items.length != 0}
+              checked={
+                selectedItemIDs.length === items.length && items.length != 0
+              }
               onChange={() => {}}
               name="check-all"
             />
@@ -113,7 +120,8 @@ interface BodyProps<T extends ItemWithID> {
 }
 
 const Body = ({children, onItemClick}: BodyProps<ItemWithID>) => {
-  const {items, selectedItemIDs, setSelectedItemIDs} = useContext(SmartTableContext);
+  const {items, selectedItemIDs, setSelectedItemIDs} =
+    useContext(SmartTableContext);
 
   const onCheckboxChange = (itemID: ItemWithID['id']) => {
     const checkedBox = selectedItemIDs.includes(itemID)
@@ -126,12 +134,20 @@ const Body = ({children, onItemClick}: BodyProps<ItemWithID>) => {
     <tbody>
       {items.map((item, id) => {
         return (
-          <Table.Row key={id} idx={id} onClick={() => (onItemClick ? onItemClick(item) : {})}>
+          <Table.Row
+            key={id}
+            idx={id}
+            onClick={() => (onItemClick ? onItemClick(item) : {})}>
             <Table.Cell>
-              <div className="flex w-12 py-2 items-center justify-center" onClick={(e) => {e.stopPropagation();onCheckboxChange(item.id);}}>
+              <div
+                className="flex w-12 py-2 items-center justify-center"
+                onClick={e => {
+                  e.stopPropagation();
+                  onCheckboxChange(item.id);
+                }}>
                 <Checkbox
                   checked={selectedItemIDs.includes(item.id)}
-                  onChange={(e) => {}}
+                  onChange={e => {}}
                   name={`check-${item.id}`}
                 />
               </div>

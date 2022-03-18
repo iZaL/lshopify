@@ -51,7 +51,10 @@ export default function ProductSearchBar({
           <div className="col-span-12 sm:col-span-6">
             <div className="relative rounded-md shadow-sm">
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                <SearchIcon
+                  className="h-5 w-5 text-gray-400"
+                  aria-hidden="true"
+                />
               </div>
               <InputText
                 name="search"
@@ -127,7 +130,11 @@ export default function ProductSearchBar({
                       <Popover.Panel className="absolute right-0 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <form className="space-y-4">
                           <div className="flex items-center">
-                            <InputText name="tag" onChange={() => {}} inputStyle="w-36" />
+                            <InputText
+                              name="tag"
+                              onChange={() => {}}
+                              inputStyle="w-36"
+                            />
                           </div>
                         </form>
                       </Popover.Panel>

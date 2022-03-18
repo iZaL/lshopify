@@ -99,26 +99,45 @@ export default function Refund({order}: Props) {
                   <FulfillmentItems
                     variants={fulfillment.variants || []}
                     currentVariants={
-                      order.success_fulfillments.find(f => f.id === fulfillment.id)?.variants || []
+                      order.success_fulfillments.find(
+                        f => f.id === fulfillment.id,
+                      )?.variants || []
                     }
                     onVariantQuantityChange={(trueVariant, variant, value) =>
-                      onVariantQuantityChange(fulfillment, trueVariant, variant, value)
+                      onVariantQuantityChange(
+                        fulfillment,
+                        trueVariant,
+                        variant,
+                        value,
+                      )
                     }
                   />
 
-                  <div className="mt-4 py-2 text-sm text-gray-500">Select a reason to return.</div>
+                  <div className="mt-4 py-2 text-sm text-gray-500">
+                    Select a reason to return.
+                  </div>
                   <div className="flex flex-row space-x-2">
                     <div className="flex-1">
                       <Select name={'reason'} onChange={() => {}}>
                         <option value={'unknown'}>Unknown</option>
-                        <option value={'wrong_item'}>Received wrong item</option>
-                        <option value={'change_mind'}>Customer changed their mind</option>
-                        <option value={'not_as_described'}>Item not as described</option>
+                        <option value={'wrong_item'}>
+                          Received wrong item
+                        </option>
+                        <option value={'change_mind'}>
+                          Customer changed their mind
+                        </option>
+                        <option value={'not_as_described'}>
+                          Item not as described
+                        </option>
                         <option value={'other'}>Other</option>
                       </Select>
                     </div>
                     <div className="flex-1">
-                      <InputText inputStyle="flex-1" name={'other_reason'} onChange={() => {}} />
+                      <InputText
+                        inputStyle="flex-1"
+                        name={'other_reason'}
+                        onChange={() => {}}
+                      />
                     </div>
                   </div>
                   <div className="text-sm text-gray-500">

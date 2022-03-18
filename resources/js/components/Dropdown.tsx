@@ -9,7 +9,13 @@ interface Props {
   width?: string;
 }
 
-export default function Dropdown({items, visible, setVisible, children, width = 'w-full'}: Props) {
+export default function Dropdown({
+  items,
+  visible,
+  setVisible,
+  children,
+  width = 'w-full',
+}: Props) {
   if (!visible) {
     return null;
   }
@@ -21,7 +27,10 @@ export default function Dropdown({items, visible, setVisible, children, width = 
         {items?.length ? (
           <ul className="p-2 text-sm text-black ">
             {items.map((item, i) => (
-              <li key={i} onClick={item.onClick} className="block p-2 hover:bg-gray-100">
+              <li
+                key={i}
+                onClick={item.onClick}
+                className="block p-2 hover:bg-gray-100">
                 {item.title}
               </li>
             ))}

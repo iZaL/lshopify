@@ -35,7 +35,9 @@ export default function CollectionList({collections}: Props) {
               return (
                 <>
                   <Table.Cell>
-                    <Button theme="clear" onClick={() => onCollectionClick(item)}>
+                    <Button
+                      theme="clear"
+                      onClick={() => onCollectionClick(item)}>
                       {item.image && (
                         <VariantImage
                           onClick={() => onCollectionClick(item)}
@@ -47,9 +49,11 @@ export default function CollectionList({collections}: Props) {
                     </Button>
                   </Table.Cell>
                   <Table.Cell>
-                    {item.conditions.map((condition: CollectionCondition, idx: number) => (
-                      <div key={idx}>{condition.title}</div>
-                    ))}
+                    {item.conditions.map(
+                      (condition: CollectionCondition, idx: number) => (
+                        <div key={idx}>{condition.title}</div>
+                      ),
+                    )}
                   </Table.Cell>
                 </>
               );

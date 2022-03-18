@@ -22,7 +22,9 @@ interface Props {
 export default function CollectionEdit(props: Props) {
   const {collection, products} = props;
 
-  const {data, setData, isDirty} = useForm<Collection & {searchTerm: string; sortTerm: string}>({
+  const {data, setData, isDirty} = useForm<
+    Collection & {searchTerm: string; sortTerm: string}
+  >({
     ...collection,
     searchTerm: '',
     sortTerm: '',
@@ -132,7 +134,10 @@ export default function CollectionEdit(props: Props) {
                   />
                 </Card>
 
-                <ProductSection sortTerm={data.sortTerm} collectionProducts={data.products || []} />
+                <ProductSection
+                  sortTerm={data.sortTerm}
+                  collectionProducts={data.products || []}
+                />
               </>
             )}
           </section>

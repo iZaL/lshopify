@@ -44,7 +44,7 @@ class OrderManager
     {
         $payload = array_merge(
             [
-                'amount' => $this->order->amount(),
+                'amount' => $this->order->amount,
                 'currency' => 'OMR',
                 'status' => Transaction::STATUS_SUCCESS,
             ],

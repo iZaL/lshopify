@@ -8,14 +8,28 @@ import InventorySection from './components/InventorySection';
 import ShippingSection from './components/ShippingSection';
 import VariantSection from './components/VariantSection';
 import StatusSection from './components/StatusSection';
-import OrganizationSection from './components/OrganizationSection';
 import FormSubmitBar from '../components/FormSubmitBar';
 import VariantEditSection from './components/VariantEditSection';
 import {useForm} from '@inertiajs/inertia-react';
 import {Inertia} from '@inertiajs/inertia';
-import {Collection, Image, Product, ProductType, Tag, Variant, VariantOption} from '../types';
+import {
+  Collection,
+  Image,
+  Product,
+  ProductType,
+  Tag,
+  Variant,
+  VariantOption,
+} from '../types';
 import route from 'ziggy-js';
 import BackButton from '../components/BackButton';
+import Subheader from '../components/Subheader';
+import Card from '../components/Card';
+import Label from '../components/forms/Label';
+import ProductTypeSelect from './components/ProductTypeSelect';
+import Border from '../components/Border';
+import TagsSelect from './components/TagsSelect';
+import CollectionSelect from './components/CollectionSelect';
 
 interface Props {
   product: Product;
@@ -34,8 +48,15 @@ type Form = Product & {
 };
 
 export default function ProductEdit(props: Props) {
-  const {product, variant_options, variants, variant_values, product_types, collection, tags} =
-    props;
+  const {
+    product,
+    variant_options,
+    variants,
+    variant_values,
+    product_types,
+    collection,
+    tags,
+  } = props;
 
   const formProps: Form = {
     ...product,
@@ -76,7 +97,10 @@ export default function ProductEdit(props: Props) {
   };
 
   const onEditVariantClick = (variant: Variant) => {
-    const url = route('lshopify.products.variants.edit', [product.id, variant.id]);
+    const url = route('lshopify.products.variants.edit', [
+      product.id,
+      variant.id,
+    ]);
     return Inertia.get(url);
   };
 
@@ -221,20 +245,28 @@ export default function ProductEdit(props: Props) {
                 <>
                   <PricingSection
                     variant={data.default_variant}
-                    onChange={(field, value) => setDataObject('default_variant', field, value)}
+                    onChange={(field, value) =>
+                      setDataObject('default_variant', field, value)
+                    }
                   />
                   <InventorySection
                     variant={data.default_variant}
-                    onChange={(field, value) => setDataObject('default_variant', field, value)}
+                    onChange={(field, value) =>
+                      setDataObject('default_variant', field, value)
+                    }
                   />
                   <ShippingSection
                     variant={data.default_variant}
-                    onChange={(field, value) => setDataObject('default_variant', field, value)}
+                    onChange={(field, value) =>
+                      setDataObject('default_variant', field, value)
+                    }
                   />
                   <VariantSection
                     currentVariants={data.default_variant?.options || []}
                     defaultVariants={variants}
-                    onChange={(field, value) => setDataObject('default_variant', field, value)}
+                    onChange={(field, value) =>
+                      setDataObject('default_variant', field, value)
+                    }
                   />
                 </>
               )
@@ -246,21 +278,45 @@ export default function ProductEdit(props: Props) {
               activeStatus={data.status}
               onChange={(field, value) => setData(field, value)}
             />
-            <OrganizationSection
-              productTypes={product_types}
-              productType={data.product_type}
-              defaultTags={tags}
-              tags={data.tags || []}
-              defaultCollection={collection}
-              collection={data.collections || []}
-              isProductTypeLoading={isProductTypeLoading}
-              isTagsLoading={isTagsLoading}
-              onProductTypeChange={record => setData('product_type', record)}
-              setTags={tagCollection => setData('tags', tagCollection)}
-              setCollection={collectionCollection => setData('collections', collectionCollection)}
-              onTagsCreate={value => onTagsCreate(value)}
-              onProductTypeCreate={value => onProductTypeCreate(value)}
-            />
+            <Card>
+              <Subheader text={'Organization'} />
+
+              <div className="mt-1 py-2 text-sm sm:col-span-2 sm:mt-0">
+                <Label title="Product Type" labelStyle="mb-1" />
+                <ProductTypeSelect
+                  items={product_types}
+                  selectedItem={data.product_type}
+                  isLoading={isProductTypeLoading}
+                  onChange={record => setData('product_type', record)}
+                  onCreate={value => onProductTypeCreate(value)}
+                />
+              </div>
+
+              <Border />
+
+              <Subheader text={'COLLECTIONS'} headerStyle={'text-xs'} />
+
+              <CollectionSelect
+                items={collection}
+                selectedItems={data.collections || []}
+                onChange={collectionCollection =>
+                  setData('collections', collectionCollection)
+                }
+              />
+
+              <Border />
+
+              <Subheader text={'TAGS'} headerStyle={'text-xs'} />
+
+              <TagsSelect
+                items={tags}
+                selectedItems={data.tags || []}
+                isLoading={isTagsLoading}
+                onChange={tagCollection => setData('tags', tagCollection)}
+                onCreate={value => onTagsCreate(value)}
+              />
+
+            </Card>
           </section>
         </div>
       </div>

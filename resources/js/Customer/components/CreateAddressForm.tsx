@@ -5,7 +5,10 @@ import Label from '../../components/forms/Label';
 
 interface Props {
   customer: CustomerAddress;
-  onChange: <T extends keyof CustomerAddress>(field: T, value: CustomerAddress[T]) => void;
+  onChange: <T extends keyof CustomerAddress>(
+    field: T,
+    value: CustomerAddress[T],
+  ) => void;
 }
 
 export default function CreateAddressForm({customer, onChange}: Props) {

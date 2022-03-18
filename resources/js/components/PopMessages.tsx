@@ -68,12 +68,13 @@ export default function PopMessages() {
   const [visible, setVisible] = useState(false);
   const {flash, errors, env} = usePage<Props>().props;
 
-  let flashMessage: {type: keyof FlashMessageType; message: string | null} = useMemo(() => {
-    return {
-      type: 'success',
-      message: null,
-    };
-  }, []);
+  let flashMessage: {type: keyof FlashMessageType; message: string | null} =
+    useMemo(() => {
+      return {
+        type: 'success',
+        message: null,
+      };
+    }, []);
 
   if (flash) {
     if (flash.success) {
@@ -149,7 +150,9 @@ export default function PopMessages() {
         leave="transition-opacity duration-100"
         leaveFrom="opacity-100"
         leaveTo="opacity-0">
-        <Content type={flashMessageType} setVisible={visibility => setVisible(visibility)}>
+        <Content
+          type={flashMessageType}
+          setVisible={visibility => setVisible(visibility)}>
           <div className="relative">{message}</div>
         </Content>
       </Transition>

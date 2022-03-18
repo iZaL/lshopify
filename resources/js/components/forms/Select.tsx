@@ -10,7 +10,13 @@ interface Props {
   children: ReactNode;
 }
 
-export default function Select({name, inputStyle, value, children, onChange}: Props) {
+export default function Select({
+  name,
+  inputStyle,
+  value,
+  children,
+  onChange,
+}: Props) {
   return (
     <select
       name={name}

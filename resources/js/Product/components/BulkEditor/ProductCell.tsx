@@ -27,7 +27,9 @@ export default function ProductCell({
   }, [product.tags]);
 
   const [tagValue, setTagValue] = React.useState('');
-  const [selectedTags, setSelectedTags] = React.useState<Tag[]>(product.tags ? product.tags : []);
+  const [selectedTags, setSelectedTags] = React.useState<Tag[]>(
+    product.tags ? product.tags : [],
+  );
 
   const onTagChange = (tag: Tag) => {
     onTagRemove(tag);
@@ -67,7 +69,7 @@ export default function ProductCell({
                   onTagSave();
                 }}
               />
-              <div>Add existing tags</div>
+              <div>Add existing collection</div>
               <div className="inline-flex flex-wrap">
                 {product.tags?.map((tag, idx) => (
                   <Button
@@ -92,7 +94,7 @@ export default function ProductCell({
 
       // <div onClick={()=>{}} className='flex p-1 min-w-[250px] space-x-1 flex-shrink-0'>
       //   {
-      //     product.tags?.map((tag, idx) => (
+      //     product.collection?.map((tag, idx) => (
       //       <div key={idx} className="rounded rounded-md bg-gray-200 p-1 px-2 text-sm text-gray-700 ">
       //         {tag.name}
       //       </div>

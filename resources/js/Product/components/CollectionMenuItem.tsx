@@ -10,7 +10,9 @@ interface Props {
 
 export default function CollectionMenuItem({item, checked, onChange}: Props) {
   return (
-    <li className="flex flex-row px-4 py-2 hover:bg-gray-50" onClick={() => onChange(!checked)}>
+    <li
+      className="flex flex-row px-4 py-2 hover:bg-gray-50"
+      onClick={() => onChange(!checked)}>
       <Checkbox
         name={item.name}
         checked={checked}
