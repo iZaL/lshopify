@@ -1,12 +1,12 @@
-import React from 'react'
-import CreatableSelect from 'react-select/creatable'
-import Loader from './Loader'
-import { MultiValue } from 'react-select'
+import React from 'react';
+import CreatableSelect from 'react-select/creatable';
+import Loader from './Loader';
+import {MultiValue} from 'react-select';
 
 type Item = {
-  id:string;
-  name:string;
-}
+  id: string;
+  name: string;
+};
 
 interface Props<T> {
   selectedItems: T[];
@@ -23,9 +23,8 @@ export default function MultiSelect<T extends Item>({
   onChange,
   onCreate,
 }: Props<T>) {
-
-  const onItemsChange = (tags: MultiValue<{ label: string, value: string }>) => {
-    const newTags:Item[] = tags.map(({ value,label }) => {
+  const onItemsChange = (tags: MultiValue<{label: string; value: string}>) => {
+    const newTags: Item[] = tags.map(({value, label}) => {
       return {
         id: value,
         name: label,

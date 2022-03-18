@@ -1,12 +1,12 @@
 import React from 'react';
 import CreatableSelect from 'react-select/creatable';
-import Loader from './Loader'
-import { SingleValue } from 'react-select'
+import Loader from './Loader';
+import {SingleValue} from 'react-select';
 
-type Item = &  {
-  id:string;
-  name:string;
-}
+type Item = {
+  id: string;
+  name: string;
+};
 
 interface Props<T> {
   items: T[];
@@ -23,17 +23,18 @@ export default function SingleSelect({
   onCreate,
   onChange,
   isLoading = false,
-  placeholder = 'e.g. Shirts'
+  placeholder = 'e.g. Shirts',
 }: Props<Item>) {
-
-  const onInputChange = (option: SingleValue<{value: string | undefined, label: string | undefined}>) => {
-    if(option && option.value && option.label) {
+  const onInputChange = (
+    option: SingleValue<{value: string | undefined; label: string | undefined}>,
+  ) => {
+    if (option && option.value && option.label) {
       onChange({
         id: option.value,
-        name: option.label
-      })
+        name: option.label,
+      });
     }
-  }
+  };
 
   return (
     <CreatableSelect

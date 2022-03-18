@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from 'react'
-import Main from '../Main'
-import PageHeader from '../components/PageHeader'
-import TitleSection from './components/TitleSection'
-import MediaSection from './components/MediaSection'
-import PricingSection from './components/PricingSection'
-import InventorySection from './components/InventorySection'
-import ShippingSection from './components/ShippingSection'
-import VariantSection from './components/VariantSection'
-import StatusSection from './components/StatusSection'
-import FormSubmitBar from '../components/FormSubmitBar'
-import VariantEditSection from './components/VariantEditSection'
-import { useForm } from '@inertiajs/inertia-react'
-import { Inertia } from '@inertiajs/inertia'
-import { Collection, Image, Product, ProductType, Tag, Variant, VariantOption } from '../types'
-import route from 'ziggy-js'
-import BackButton from '../components/BackButton'
-import Subheader from '../components/Subheader'
-import Card from '../components/Card'
-import Label from '../components/forms/Label'
-import Border from '../components/Border'
-import SingleSelect from '../components/SingleSelect'
-import MultiSelect from '../components/MultiSelect'
-import MultiSelectDropdown from '../components/MultiSelectDropdown'
+import React, {useEffect, useState} from 'react';
+import Main from '../Main';
+import PageHeader from '../components/PageHeader';
+import TitleSection from './components/TitleSection';
+import MediaSection from './components/MediaSection';
+import PricingSection from './components/PricingSection';
+import InventorySection from './components/InventorySection';
+import ShippingSection from './components/ShippingSection';
+import VariantSection from './components/VariantSection';
+import StatusSection from './components/StatusSection';
+import FormSubmitBar from '../components/FormSubmitBar';
+import VariantEditSection from './components/VariantEditSection';
+import {useForm} from '@inertiajs/inertia-react';
+import {Inertia} from '@inertiajs/inertia';
+import {Collection, Image, Product, ProductType, Tag, Variant, VariantOption} from '../types';
+import route from 'ziggy-js';
+import BackButton from '../components/BackButton';
+import Subheader from '../components/Subheader';
+import Card from '../components/Card';
+import Label from '../components/forms/Label';
+import Border from '../components/Border';
+import SingleSelect from '../components/SingleSelect';
+import MultiSelect from '../components/MultiSelect';
+import MultiSelectDropdown from '../components/MultiSelectDropdown';
 
 interface Props {
   product: Product;
@@ -256,16 +256,16 @@ export default function ProductEdit(props: Props) {
             <Card>
               <Subheader text={'Product Organization'} />
 
-                <div className="text-sm sm:col-span-2 sm:mt-0">
-                  <Label title="Type" labelStyle="mb-1" />
-                  <SingleSelect
-                    items={product_types}
-                    selectedItem={data.product_type}
-                    isLoading={isProductTypeLoading}
-                    onChange={record => setData('product_type', record)}
-                    onCreate={value => onProductTypeCreate(value)}
-                  />
-                </div>
+              <div className="text-sm sm:col-span-2 sm:mt-0">
+                <Label title="Type" labelStyle="mb-1" />
+                <SingleSelect
+                  items={product_types}
+                  selectedItem={data.product_type}
+                  isLoading={isProductTypeLoading}
+                  onChange={record => setData('product_type', record)}
+                  onCreate={value => onProductTypeCreate(value)}
+                />
+              </div>
 
               <Border />
 
@@ -303,7 +303,6 @@ export default function ProductEdit(props: Props) {
                   onCreate={value => onTagsCreate(value)}
                 />
               </div>
-
             </Card>
           </section>
         </div>

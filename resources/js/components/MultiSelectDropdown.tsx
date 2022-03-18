@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
-import SearchIcon from '@heroicons/react/outline/SearchIcon'
-import OutsideClickHandler from './OutsideClickHandler'
-import Button from './Button'
-import InputText from './forms/InputText'
-import Checkbox from './forms/Checkbox'
+import React, {useState} from 'react';
+import SearchIcon from '@heroicons/react/outline/SearchIcon';
+import OutsideClickHandler from './OutsideClickHandler';
+import Button from './Button';
+import InputText from './forms/InputText';
+import Checkbox from './forms/Checkbox';
 
 type Item = {
-  id:number;
-  name:string;
-}
+  id: number;
+  name: string;
+};
 
 interface Props<T> {
   items: T[];
@@ -16,7 +16,11 @@ interface Props<T> {
   onChange: (collection: T[]) => void;
 }
 
-export default function MultiSelectDropdown<T extends Item>({items, selectedItems, onChange}: Props<T>) {
+export default function MultiSelectDropdown<T extends Item>({
+  items,
+  selectedItems,
+  onChange,
+}: Props<T>) {
   const [showCollectionMenu, setShowCollectionMenu] = useState(false);
 
   const onCollectionChange = (collectionItem: T, checked: boolean) => {
@@ -47,16 +51,18 @@ export default function MultiSelectDropdown<T extends Item>({items, selectedItem
                 {items.map((item, index) => {
                   const checked = selectedItems.some(collect => collect.id === item.id);
                   return (
-                    <li className="flex flex-row px-4 py-2 hover:bg-gray-50" onClick={() => onCollectionChange(item,!checked)}>
+                    <li
+                      className="flex flex-row px-4 py-2 hover:bg-gray-50"
+                      onClick={() => onCollectionChange(item, !checked)}>
                       <Checkbox
                         name={item.name}
                         checked={checked}
-                        onChange={(e) => onCollectionChange(item,e.target.checked)}
+                        onChange={e => onCollectionChange(item, e.target.checked)}
                         inputStyle="text-sm font-weight-light"
                       />
                       <div className="px-2">{item.name}</div>
                     </li>
-                  )
+                  );
                 })}
               </ul>
             </div>
