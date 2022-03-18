@@ -52,7 +52,7 @@ class ProductCreateAction
         if (!empty($requestData->get('images'))) {
             $this->imageUploadAction->uploadToServer($requestData->get('images'))->saveInDB([
                 'imageable_id' => $product->id,
-                'imageable_type' => get_class($product),
+                'imageable_type' => 'product',
             ]);
         }
 

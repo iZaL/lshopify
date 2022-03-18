@@ -4,6 +4,7 @@ namespace IZal\Lshopify\Http\Controllers\Order\Fulfillment;
 
 use Inertia\Inertia;
 use IZal\Lshopify\Http\Controllers\Controller;
+use IZal\Lshopify\Http\Requests\OrderFulfillmentFulfillRequest;
 use IZal\Lshopify\Managers\WorkflowManager;
 use IZal\Lshopify\Models\Customer;
 use IZal\Lshopify\Models\Order;
@@ -11,9 +12,9 @@ use IZal\Lshopify\Resources\CustomerResource;
 use IZal\Lshopify\Resources\OrderResource;
 use IZal\Lshopify\Resources\WorkflowVariantResource;
 
-class FulfillmentIndexController extends Controller
+class FulfillmentController extends Controller
 {
-    public function __invoke($orderID): \Inertia\Response
+    public function index($orderID): \Inertia\Response
     {
         $order = Order::with(['customer'])->find($orderID);
         $orderResource = new OrderResource($order);
@@ -26,5 +27,29 @@ class FulfillmentIndexController extends Controller
             'order' => $orderResource,
             'customers' => $customers,
         ]);
+    }
+
+    public function store($orderID, OrderFulfillmentFulfillRequest $request)
+    {
+        $order = Order::find($orderID);
+
+        $workflowManager = (new WorkflowManager($order))->createFulfillmentWorkflow($request->variants);
+
+        return redirect()
+            ->route('lshopify.orders.show', $order->id)
+            ->with('success', 'Saved');
+    }
+
+    public function cancel($orderID, $fulfillmentID)
+    {
+        $order = Order::find($orderID);
+
+        $fulfillment = $order->fulfillments->firstWhere('id', $fulfillmentID);
+
+        $workflowManager = (new WorkflowManager($order))->cancelFulfillment($fulfillment);
+
+        return redirect()
+            ->route('lshopify.orders.show', $order->id)
+            ->with('success', 'Fulfillment Cancelled');
     }
 }

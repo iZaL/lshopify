@@ -13,8 +13,6 @@ class Tag extends BaseModel
     protected $table = 'tags';
     public $timestamps = false;
 
-
-
     protected $fillable = ['name', 'slug'];
 
     public static function newFactory()

@@ -30,7 +30,7 @@ class FulfillmentCancelControllerTest extends TestCase
         $fulfillmentWorkflow1 = $orderWorkflows->create(['type' => Workflow::TYPE_FULFILLMENT,'status' => Workflow::STATUS_SUCCESS]); // variant1
         $fulfillmentWorkflow1->variants()->attach($variant1,['quantity' => $fulfill1Qty]); //3
 
-        $this->post(route('lshopify.orders.fulfillments.cancel',[$order->id,$fulfillmentWorkflow1->id]),[
+        $this->post(route('lshopify.orders.fulfillments.delete',[$order->id,$fulfillmentWorkflow1->id]),[
             'variants' => [
                 $variant1->id => $variant1Qty,
                 $variant2->id => $variant2Qty,

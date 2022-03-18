@@ -94,17 +94,17 @@ export default function OrderView(props: Props) {
 
   const markAsFulfilled = (fulfillment: Fulfillment) => {
     Inertia.get(
-      route('lshopify.orders.fulfillments', [order.id, fulfillment.id]),
+      route('lshopify.orders.fulfillments.show', [order.id, fulfillment.id]),
     );
   };
 
   const fulfill = () => {
-    return Inertia.get(route('lshopify.orders.fulfillments', [order.id]));
+    return Inertia.get(route('lshopify.orders.fulfillments.index', [order.id]));
   };
 
   const cancelFulfillment = (fulfillment: Fulfillment) => {
     Inertia.post(
-      route('lshopify.orders.fulfillments.cancel', [order.id, fulfillment.id]),
+      route('lshopify.orders.fulfillments.delete', [order.id, fulfillment.id]),
     );
   };
 

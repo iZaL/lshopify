@@ -72,7 +72,7 @@ export default function FulfillmentView({order, pending_fulfillments}: Props) {
   };
 
   const handleSubmit = () => {
-    Inertia.post(route('lshopify.orders.fulfillments', [order.id]), {
+    Inertia.post(route('lshopify.orders.fulfillments.store', [order.id]), {
       variants: data.pending_fulfillments,
     });
   };

@@ -10,7 +10,7 @@ class FulfillmentShowControllerTest extends TestCase
     public function test_can_get_fulfillment_page()
     {
         $order = Order::factory()->create();
-        $response = $this->get(route('lshopify.orders.fulfillments', $order->id));
+        $response = $this->get(route('lshopify.orders.fulfillments.index', $order->id));
 
         $response->assertInertia(
             fn ($assert) => $assert

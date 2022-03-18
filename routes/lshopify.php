@@ -6,6 +6,9 @@ use IZal\Lshopify\Http\Controllers\CartDiscountController;
 use IZal\Lshopify\Http\Controllers\CategoryController;
 use IZal\Lshopify\Http\Controllers\Collection\CollectionController;
 use IZal\Lshopify\Http\Controllers\ImageController;
+use IZal\Lshopify\Http\Controllers\Order\DraftOrderController;
+use IZal\Lshopify\Http\Controllers\Order\Fulfillment\FulfillmentController;
+use IZal\Lshopify\Http\Controllers\Order\OrderController;
 use IZal\Lshopify\Http\Controllers\Product\ProductBulkEditorController;
 use IZal\Lshopify\Http\Controllers\Product\ProductController;
 use IZal\Lshopify\Http\Controllers\Variant\VariantController;
@@ -74,16 +77,20 @@ Route::group(['prefix' => 'collections','as' => 'collections.'], function () {
 });
 
 Route::group(['prefix' => 'orders','as' => 'orders.'], function () {
-    Route::controller(CollectionController::class)->group(function () {
+    Route::controller(OrderController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/{id}', 'show')->name('show');
         Route::post('/', 'store')->name('store');
+        Route::post('/{id}/edit', 'edit')->name('edit');
         Route::patch('/{id}', 'update')->name('update');
     });
 
-    Route::get('/{id}/fulfillments', \IZal\Lshopify\Http\Controllers\Order\Fulfillment\FulfillmentIndexController::class)->name('fulfillments');
-    Route::post('/{id}/fulfillments', \IZal\Lshopify\Http\Controllers\Order\Fulfillment\FulfillmentStoreController::class)->name('fulfillments');
-    Route::post('/{id}/fulfillments/{fulfillment_id}/cancel', \IZal\Lshopify\Http\Controllers\Order\Fulfillment\FulfillmentCancelController::class)->name('fulfillments.cancel');
+    Route::controller(FulfillmentController::class)->group(function () {
+        Route::get('/{id}/fulfillments', 'index')->name('fulfillments.index');
+        Route::post('/{id}/fulfillments', 'store')->name('fulfillments.store');
+        Route::post('/{id}/fulfillments/{fulfillment_id}/delete', 'delete')->name('fulfillments.delete');
+    });
+
     Route::get('/{id}/return', \IZal\Lshopify\Http\Controllers\Order\Fulfillment\ReturnIndexController::class)->name('return');
     Route::post('/{id}/return', \IZal\Lshopify\Http\Controllers\Order\Fulfillment\ReturnStoreController::class)->name('return');
     Route::post('/{id}/return/{return_id}/edit', \IZal\Lshopify\Http\Controllers\Order\Fulfillment\ReturnEditController::class)->name('return.edit');
@@ -98,14 +105,20 @@ Route::group(['prefix' => 'orders','as' => 'orders.'], function () {
 /*
  * Draft Orders Controller
  */
-Route::get('draft_orders', \IZal\Lshopify\Http\Controllers\Order\Draft\DraftOrderIndexController::class)->name('draft.orders.index');
-Route::get('draft_orders/new', \IZal\Lshopify\Http\Controllers\Order\Draft\DraftOrderCreateController::class)->name('draft.orders.create');
-Route::get('draft_orders/{id}/edit', \IZal\Lshopify\Http\Controllers\Order\Draft\DraftOrderEditController::class)->name('draft.orders.edit');
-Route::post('draft_orders', \IZal\Lshopify\Http\Controllers\Order\Draft\DraftOrderStoreController::class)->name('draft.orders.store');
-Route::delete('draft_orders/{id}', \IZal\Lshopify\Http\Controllers\Order\Draft\DraftOrderDeleteController::class)->name('draft.orders.destroy');
-Route::patch('draft_orders/{id}', [\IZal\Lshopify\Http\Controllers\Order\Draft\DraftOrderUpdateController::class, 'update'])->name('draft.orders.update');
-Route::post('draft_orders/{id}/customer', [\IZal\Lshopify\Http\Controllers\Order\Draft\DraftOrderUpdateController::class, 'attachCustomer'])->name('draft.orders.customer.update');
-Route::post('draft_orders/{id}/confirm', \IZal\Lshopify\Http\Controllers\Order\Draft\DraftOrderConfirmController::class)->name('draft.orders.confirm');
+Route::group(['prefix' => 'draft/orders','as' => 'draft.orders.'], function () {
+    Route::controller(DraftOrderController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::post('/', 'store')->name('store');
+        Route::delete('/{id}', 'delete')->name('destroy');
+        Route::patch('/{id}', 'update')->name('update');
+        Route::post('/{id}/customer', 'attachCustomer')->name('customer.update');
+        Route::post('/{id}/confirm','confirm')->name('confirm');
+    });
+
+});
+
 
 /*
  * Inventories Controllers

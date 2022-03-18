@@ -13,7 +13,6 @@ use IZal\Lshopify\Resources\ProductResource;
 
 class ProductBulkEditorController extends Controller
 {
-
     /**
      * @param Request $request
      * @return \Inertia\Response
@@ -36,7 +35,7 @@ class ProductBulkEditorController extends Controller
      * @param ProductUpdateAction $action
      * @return RedirectResponse
      */
-    public function update(Request $request, ProductUpdateAction $action):RedirectResponse
+    public function update(Request $request, ProductUpdateAction $action): RedirectResponse
     {
         $products = $request->get('products');
         foreach ($products as $product) {
@@ -49,5 +48,4 @@ class ProductBulkEditorController extends Controller
             ->back()
             ->with('success', 'Saved');
     }
-
 }

@@ -14,7 +14,6 @@ use IZal\Lshopify\Resources\ProductResource;
 
 class CollectionController extends Controller
 {
-
     public function index(): \Inertia\Response
     {
         $collections = Collection::with(['conditions', 'image'])->get();
@@ -63,7 +62,6 @@ class CollectionController extends Controller
         Collection $collection,
         ImageUploadAction $imageUploadAction
     ): \Illuminate\Http\RedirectResponse {
-
         $collection = $collection->find($id);
         $collection->update($request->only($collection->getFillable()));
 

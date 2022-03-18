@@ -18,7 +18,6 @@ use IZal\Lshopify\Resources\VariantResource;
 
 class VariantController extends Controller
 {
-
     public function create($productID, Request $request): \Inertia\Response
     {
         $product = Product::with(['images', 'variants'])->find($productID);
@@ -42,7 +41,6 @@ class VariantController extends Controller
 
         return Inertia::render('Product/Variant/VariantEdit', $data);
     }
-
 
     public function store(
         $productID,
@@ -98,7 +96,6 @@ class VariantController extends Controller
             ->back()
             ->with('success', 'Saved');
     }
-
 
     public function attributes($productID, VariantAttributeUpdateRequest $request): \Illuminate\Http\RedirectResponse
     {
