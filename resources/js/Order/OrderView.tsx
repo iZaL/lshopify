@@ -113,7 +113,7 @@ export default function OrderView(props: Props) {
   };
 
   const returnItems = () => {
-    Inertia.get(route('lshopify.orders.return', [order.id]));
+    Inertia.get(route('lshopify.orders.return.index', [order.id]));
   };
 
   const markAsReturned = (fulfillment: Fulfillment) => {

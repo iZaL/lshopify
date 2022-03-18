@@ -93,8 +93,8 @@ Route::group(['prefix' => 'orders','as' => 'orders.'], function () {
     });
 
     Route::controller(ReturnController::class)->group(function () {
-        Route::get('/{id}/return', 'index')->name('return');
-        Route::post('/{id}/return', 'store')->name('return');
+        Route::get('/{id}/return', 'index')->name('return.index');
+        Route::post('/{id}/return', 'store')->name('return.store');
         Route::post('/{id}/return/{return_id}/edit', 'edit')->name('return.edit');
     });
 

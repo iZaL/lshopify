@@ -66,7 +66,7 @@ export default function Refund({order}: Props) {
   };
 
   const handleSubmit = () => {
-    Inertia.post(route('lshopify.orders.return', [order.id]), {
+    Inertia.post(route('lshopify.orders.return.store', [order.id]), {
       fulfillments: data.fulfillments || [],
     });
   };

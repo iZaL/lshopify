@@ -41,7 +41,7 @@ class ReturnControllerTest extends TestCase
             ]
         ]];
 
-        $request = $this->post(route('lshopify.orders.return', $order->id), $payload);
+        $request = $this->post(route('lshopify.orders.return.store', $order->id), $payload);
 
         $this->assertDatabaseHas('workflows', [
             'type' => Workflow::TYPE_RETURNED,
