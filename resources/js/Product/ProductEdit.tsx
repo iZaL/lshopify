@@ -1,29 +1,27 @@
-import React, {useEffect, useState} from 'react';
-import Main from '../Main';
-import PageHeader from '../components/PageHeader';
-import TitleSection from './components/TitleSection';
-import MediaSection from './components/MediaSection';
-import PricingSection from './components/PricingSection';
-import InventorySection from './components/InventorySection';
-import ShippingSection from './components/ShippingSection';
-import VariantSection from './components/VariantSection';
-import StatusSection from './components/StatusSection';
-import FormSubmitBar from '../components/FormSubmitBar';
-import VariantEditSection from './components/VariantEditSection';
-import {useForm} from '@inertiajs/inertia-react';
-import {Inertia} from '@inertiajs/inertia';
-import {Collection, Image, Product, ProductType, Tag, Variant, VariantOption} from '../types';
-import route from 'ziggy-js';
-import BackButton from '../components/BackButton';
-import Subheader from '../components/Subheader';
-import Card from '../components/Card';
-import Label from '../components/forms/Label';
-import ProductTypeSelect from './components/ProductTypeSelect';
-import TagsSelect from './components/TagsSelect';
-import CollectionSelect from './components/CollectionSelect';
+import React, { useEffect, useState } from 'react'
+import Main from '../Main'
+import PageHeader from '../components/PageHeader'
+import TitleSection from './components/TitleSection'
+import MediaSection from './components/MediaSection'
+import PricingSection from './components/PricingSection'
+import InventorySection from './components/InventorySection'
+import ShippingSection from './components/ShippingSection'
+import VariantSection from './components/VariantSection'
+import StatusSection from './components/StatusSection'
+import FormSubmitBar from '../components/FormSubmitBar'
+import VariantEditSection from './components/VariantEditSection'
+import { useForm } from '@inertiajs/inertia-react'
+import { Inertia } from '@inertiajs/inertia'
+import { Collection, Image, Product, ProductType, Tag, Variant, VariantOption } from '../types'
+import route from 'ziggy-js'
+import BackButton from '../components/BackButton'
+import Subheader from '../components/Subheader'
+import Card from '../components/Card'
+import Label from '../components/forms/Label'
 import Border from '../components/Border'
 import SingleSelect from '../components/SingleSelect'
 import MultiSelect from '../components/MultiSelect'
+import MultiSelectDropdown from '../components/MultiSelectDropdown'
 
 interface Props {
   product: Product;
@@ -286,7 +284,7 @@ export default function ProductEdit(props: Props) {
 
               <div>
                 <Label title="Collections" labelStyle="mb-1" />
-                <CollectionSelect
+                <MultiSelectDropdown
                   items={collection}
                   selectedItems={data.collections || []}
                   onChange={collectionCollection => setData('collections', collectionCollection)}

@@ -1,14 +1,20 @@
 import React from 'react';
 import CreatableSelect from 'react-select/creatable';
-import { ProductType } from '../types'
 import Loader from './Loader'
+import { SingleValue } from 'react-select'
 
-interface Props {
-  items: ProductType[];
-  selectedItem: ProductType | null;
-  onChange: (record: ProductType) => void;
+type Item = &  {
+  id:string;
+  name:string;
+}
+
+interface Props<T> {
+  items: T[];
+  selectedItem: T | null;
+  onChange: (record: T) => void;
   onCreate: (value: string) => void;
   isLoading: boolean;
+  placeholder?: string;
 }
 
 export default function SingleSelect({
@@ -17,7 +23,18 @@ export default function SingleSelect({
   onCreate,
   onChange,
   isLoading = false,
-}: Props) {
+  placeholder = 'e.g. Shirts'
+}: Props<Item>) {
+
+  const onInputChange = (option: SingleValue<{value: string | undefined, label: string | undefined}>) => {
+    if(option && option.value && option.label) {
+      onChange({
+        id: option.value,
+        name: option.label
+      })
+    }
+  }
+
   return (
     <CreatableSelect
       options={items.map(({id, name}) => ({
@@ -26,7 +43,7 @@ export default function SingleSelect({
       }))}
       value={{value: selectedItem?.id, label: selectedItem?.name}}
       classNamePrefix="select"
-      onChange={option => onChange({id: option?.value || '', name: option?.label || ''})}
+      onChange={option => onInputChange(option)}
       components={{
         DropdownIndicator: () => null,
         IndicatorSeparator: () => null,
@@ -34,7 +51,7 @@ export default function SingleSelect({
       }}
       isLoading={isLoading}
       noOptionsMessage={() => null}
-      placeholder="e.g. Shirts"
+      placeholder={placeholder}
       isClearable={true}
       onCreateOption={value => onCreate(value)}
     />

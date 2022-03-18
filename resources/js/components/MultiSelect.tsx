@@ -1,28 +1,34 @@
-import React from 'react';
-import CreatableSelect from 'react-select/creatable';
-import { Tag } from '../types'
+import React from 'react'
+import CreatableSelect from 'react-select/creatable'
 import Loader from './Loader'
+import { MultiValue } from 'react-select'
 
-interface Props {
-  selectedItems: Tag[];
-  items: Tag[];
+type Item = {
+  id:string;
+  name:string;
+}
+
+interface Props<T> {
+  selectedItems: T[];
+  items: T[];
   isLoading?: boolean;
-  onChange: (collection: Tag[]) => void;
+  onChange: (collection: Item[]) => void;
   onCreate: (value: string) => void;
 }
 
-export default function MultiSelect({
+export default function MultiSelect<T extends Item>({
   selectedItems,
   items,
-  onChange,
   isLoading = false,
+  onChange,
   onCreate,
-}: Props) {
-  const onTagsChange = (tags: any) => {
-    const newTags = tags.map((option: {label: string; value: string}) => {
+}: Props<T>) {
+
+  const onItemsChange = (tags: MultiValue<{ label: string, value: string }>) => {
+    const newTags:Item[] = tags.map(({ value,label }) => {
       return {
-        id: option.value,
-        name: option.label,
+        id: value,
+        name: label,
       };
     });
     onChange(newTags);
@@ -34,7 +40,7 @@ export default function MultiSelect({
         isMulti
         className="basic-multi-select text-sm"
         classNamePrefix="select"
-        onChange={onTagsChange}
+        onChange={onItemsChange}
         components={{
           DropdownIndicator: () => null,
           IndicatorSeparator: () => null,
