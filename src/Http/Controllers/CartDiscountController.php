@@ -9,6 +9,11 @@ use IZal\Lshopify\Http\Requests\DiscountStoreRequest;
 
 class CartDiscountController extends Controller
 {
+    /**
+     * Add discount for cart
+     * @param DiscountStoreRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function add(DiscountStoreRequest $request): \Illuminate\Http\RedirectResponse
     {
         $cart = app('cart');
@@ -34,6 +39,12 @@ class CartDiscountController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Remove discount from cart
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function remove(Request $request): \Illuminate\Http\RedirectResponse
     {
         $this->validate($request, [

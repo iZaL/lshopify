@@ -2,18 +2,19 @@
 
 namespace IZal\Lshopify\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use IZal\Lshopify\Actions\DraftOrderCreateAction;
-use IZal\Lshopify\Http\Requests\CartUpdateRequest;
 use IZal\Lshopify\Models\Variant;
 use IZal\Lshopify\Resources\VariantResource;
 
 class CartController extends Controller
 {
     /**
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
-    public function add(Request $request, DraftOrderCreateAction $orderCreateAction): \Illuminate\Http\RedirectResponse
+    public function add(Request $request, DraftOrderCreateAction $orderCreateAction): RedirectResponse
     {
         $this->validate($request, [
             'variantIDs' => 'nullable|array',
@@ -49,12 +50,12 @@ class CartController extends Controller
     }
 
     /**
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function update(
         Request $request,
         DraftOrderCreateAction $orderCreateAction
-    ): \Illuminate\Http\RedirectResponse {
+    ): RedirectResponse {
 
         $this->validate($request,[
             'rowId' => 'required',
@@ -69,7 +70,7 @@ class CartController extends Controller
         return redirect()->back();
     }
 
-    public function remove(): \Illuminate\Http\RedirectResponse
+    public function remove(): RedirectResponse
     {
         $cart = app('cart');
         $cart->clear();
@@ -81,7 +82,7 @@ class CartController extends Controller
         return redirect()->back();
     }
 
-    public function clear(): \Illuminate\Http\RedirectResponse
+    public function clear(): RedirectResponse
     {
         $cart = app('cart');
         $cart->clear();
