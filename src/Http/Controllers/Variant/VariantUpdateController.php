@@ -17,7 +17,7 @@ class VariantUpdateController extends Controller
         $variant = Variant::find($variantID);
         $imageID = null;
 
-        if ($request->image && !$request->file('image')) {
+        if ($request->image && ! $request->file('image')) {
             $imageID = $request->image['id'] ?? null;
         }
 

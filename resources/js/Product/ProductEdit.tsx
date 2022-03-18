@@ -118,7 +118,7 @@ export default function ProductEdit(props: Props) {
   };
 
   const onVariantsDelete = (variantIDs: number[]) => {
-    const url = route('lshopify.products.variants.destroy', [product.id]);
+    const url = route('lshopify.products.variants.delete', [product.id]);
     const productData = {
       variants: variantIDs,
     };

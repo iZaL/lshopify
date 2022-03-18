@@ -19,7 +19,7 @@ class VariantDeleteControllerTest extends TestCase
 
         $deletingVariant = $variants[1];
 
-        $response = $this->post(route('lshopify.products.variants.destroy', $product->id), ['variants' => [$deletingVariant->id]]);
+        $response = $this->post(route('lshopify.products.variants.delete', $product->id), ['variants' => [$deletingVariant->id]]);
 
         $this->assertDatabaseMissing('variants', ['id' => $deletingVariant->id]);
     }

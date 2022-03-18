@@ -6,49 +6,58 @@ use IZal\Lshopify\Http\Controllers\CartDiscountController;
 use IZal\Lshopify\Http\Controllers\CategoryController;
 use IZal\Lshopify\Http\Controllers\Product\ProductBulkEditorController;
 use IZal\Lshopify\Http\Controllers\Product\ProductController;
+use IZal\Lshopify\Http\Controllers\Variant\VariantController;
 
-Route::controller(CartController::class)->group(function () {
-    Route::post('cart/add','add')->name('cart.add');
-    Route::post('cart/update', 'update')->name('cart.update');
-    Route::post('cart/remove', 'remove')->name('cart.remove');
-    Route::post('cart/clear', 'clear')->name('cart.clear');
+Route::group(['prefix' => 'cart', 'as' => 'cart.'], function () {
+    Route::controller(CartController::class)->group(function () {
+        Route::post('add','add')->name('add');
+        Route::post('update', 'update')->name('update');
+        Route::post('remove', 'remove')->name('remove');
+        Route::post('clear', 'clear')->name('clear');
+    });
+
+    Route::controller(CartDiscountController::class)->group(function () {
+        Route::post('discount/add', 'add')->name('discount.add');
+        Route::post('discount/remove', 'remove')->name('discount.remove');
+    });
 });
 
-Route::controller(CartDiscountController::class)->group(function () {
-    Route::post('cart/discount/add', 'add')->name('cart.discount.add');
-    Route::post('cart/discount/remove', 'remove')->name('cart.discount.remove');
-});
 
 Route::controller(CategoryController::class)->group(function () {
     Route::post('categories', 'store')->name('categories.store');
 });
 
-Route::group(['prefix' => 'products'], function () {
-    Route::controller(ProductController::class)->group(function () {
-        Route::get('/', 'index')->name('products.index');
-        Route::get('new', 'create')->name('products.create');
-        Route::get('{id}/edit', 'edit')->name('products.edit');
-        Route::post('/', 'store')->name('products.store');
-        Route::post('delete', 'delete')->name('products.delete');
-        Route::patch('/{id}/update', 'update')->name('products.update');
-    });
-    Route::controller(ProductBulkEditorController::class)->group(function () {
-        Route::get('bulk_editor', 'index')->name('products.bulk_editor.index');
-        Route::post('bulk_editor', 'update')->name('products.bulk_editor.update');
-    });
-});
+Route::group(['prefix' => 'products','as' => 'products.'], function () {
 
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('new', 'create')->name('create');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::post('/', 'store')->name('store');
+        Route::post('delete', 'delete')->name('delete');
+        Route::patch('/{id}/update', 'update')->name('update');
+    });
+
+    Route::controller(ProductBulkEditorController::class)->group(function () {
+        Route::get('bulk_editor', 'index')->name('bulk_editor.index');
+        Route::post('bulk_editor', 'update')->name('bulk_editor.update');
+    });
+
+    Route::controller(VariantController::class)->group(function () {
+        Route::get('/{id}/variants/create', 'create')->name('variants.create');
+        Route::get('/{id}/variants/{variantID}/edit', 'edit')->name('variants.edit');
+        Route::post('/{id}/variants', 'store')->name('variants.store');
+        Route::post('/{id}/variants/attributes', 'attributes')->name('variants.attributes');
+        Route::post('/{id}/variants/delete', 'delete')->name('variants.delete');
+        Route::patch('/variants/{id}', \IZal\Lshopify\Http\Controllers\Variant\VariantUpdateController::class)->name('variants.update');
+    });
+
+});
 
 
 /*
  * Variants Controllers
  */
-Route::get('products/{id}/variants/create', \IZal\Lshopify\Http\Controllers\Variant\VariantCreateController::class)->name('products.variants.create');
-Route::get('products/{id}/variants/{variantID}/edit', \IZal\Lshopify\Http\Controllers\Variant\VariantEditController::class)->name('products.variants.edit');
-Route::post('products/{id}/variants', \IZal\Lshopify\Http\Controllers\Variant\VariantStoreController::class)->name('products.variants.store');
-Route::post('products/{id}/variants/attributes', \IZal\Lshopify\Http\Controllers\Variant\VariantAttributeController::class)->name('products.variants.attributes');
-Route::post('products/{id}/variants/delete', \IZal\Lshopify\Http\Controllers\Variant\VariantDeleteController::class)->name('products.variants.destroy');
-Route::patch('variants/{id}', \IZal\Lshopify\Http\Controllers\Variant\VariantUpdateController::class)->name('variants.update');
 
 /*
  * Misc Controllers

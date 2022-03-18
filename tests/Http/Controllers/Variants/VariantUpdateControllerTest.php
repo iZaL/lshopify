@@ -85,7 +85,7 @@ class VariantUpdateControllerTest extends TestCase
         $variant->options = $options;
         $variant->save();
 
-        $response = $this->patch(route('lshopify.variants.update', $variant->id), $data);
+        $response = $this->patch(route('lshopify.products.variants.update', $variant->id), $data);
 
         $variantData = collect($data)
             ->except('options', 'image', 'id')
