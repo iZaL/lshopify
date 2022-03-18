@@ -1,40 +1,44 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use IZal\Lshopify\Http\Controllers\CartController;
+use IZal\Lshopify\Http\Controllers\CartDiscountController;
+use IZal\Lshopify\Http\Controllers\CategoryController;
+use IZal\Lshopify\Http\Controllers\Product\ProductBulkEditorController;
+use IZal\Lshopify\Http\Controllers\Product\ProductController;
 
-
-
-Route::controller(\IZal\Lshopify\Http\Controllers\CartController::class)->group(function () {
+Route::controller(CartController::class)->group(function () {
     Route::post('cart/add','add')->name('cart.add');
     Route::post('cart/update', 'update')->name('cart.update');
     Route::post('cart/remove', 'remove')->name('cart.remove');
     Route::post('cart/clear', 'clear')->name('cart.clear');
 });
 
-Route::controller(\IZal\Lshopify\Http\Controllers\CartDiscountController::class)->group(function () {
+Route::controller(CartDiscountController::class)->group(function () {
     Route::post('cart/discount/add', 'add')->name('cart.discount.add');
     Route::post('cart/discount/remove', 'remove')->name('cart.discount.remove');
 });
 
-Route::controller(\IZal\Lshopify\Http\Controllers\CategoryController::class)->group(function () {
+Route::controller(CategoryController::class)->group(function () {
     Route::post('categories', 'store')->name('categories.store');
 });
 
-Route::controller(\IZal\Lshopify\Http\Controllers\Product\ProductController::class)->group(function () {
-    Route::get('products', 'index')->name('products.index');
-    Route::get('products/new', 'create')->name('products.create');
-    Route::get('products/{id}/edit', 'edit')->name('products.edit');
-    Route::post('products', 'store')->name('products.store');
-    Route::post('products/delete', 'delete')->name('products.delete');
-    Route::patch('products/{id}', 'update')->name('products.update');
+Route::group(['prefix' => 'products'], function () {
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('/', 'index')->name('products.index');
+        Route::get('new', 'create')->name('products.create');
+        Route::get('{id}/edit', 'edit')->name('products.edit');
+        Route::post('/', 'store')->name('products.store');
+        Route::post('delete', 'delete')->name('products.delete');
+        Route::patch('/{id}/update', 'update')->name('products.update');
+    });
+    Route::controller(ProductBulkEditorController::class)->group(function () {
+        Route::get('bulk_editor', 'index')->name('products.bulk_editor.index');
+        Route::post('bulk_editor', 'update')->name('products.bulk_editor.update');
+    });
 });
 
-/*
- * Products Controller
- */
-Route::get('products/bulk_edit', \IZal\Lshopify\Http\Controllers\Product\ProductBulkEditController::class)->name('products.bulk.edit');
-Route::post('products/bulk_edit', \IZal\Lshopify\Http\Controllers\Product\ProductBulkUpdateController::class)->name('products.bulk.update');
-Route::post('products/attributes', \IZal\Lshopify\Http\Controllers\Product\ProductAttributesController::class)->name('products.attributes');
+
 
 /*
  * Variants Controllers

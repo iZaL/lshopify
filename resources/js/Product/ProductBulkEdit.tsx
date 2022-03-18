@@ -212,11 +212,7 @@ export default function ProductBulkEdit(props: Props) {
   };
 
   const handleSubmit = (): void => {
-    Inertia.post(route('lshopify.products.bulk.update'), data, {
-      // preserveScroll: false,
-      // preserveState: true,
-      // onSuccess: () => {},
-    });
+    Inertia.post(route('lshopify.products.bulk_editor.update'), data);
   };
 
   const buttons: {[key: string]: Array<ProductAttributes | VariantAttributes>} =

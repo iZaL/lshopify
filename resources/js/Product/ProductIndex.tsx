@@ -18,27 +18,68 @@ interface Props {
   search: string;
 }
 
+type Form = {
+  products: Product[];
+};
+
 export default function ProductIndex(props: Props) {
   const {products} = props;
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const {data, setData} = useForm({
-    search: props.search,
+  const [productAttributes,setProductAttributes] = useState({
     status: props.status,
+    search: props.search
+  });
+
+  const {data, setData, post, isDirty} = useForm<Form>({
+    products: products,
   });
 
   const onChange = (field: 'search' | 'status', value: string) => {
     const newData = {
-      ...data,
+      ...productAttributes,
       [field]: value,
-    };
-
+    }
     Inertia.get(route('lshopify.products.index'), newData, {
       preserveState: true,
       replace: true,
     });
-
-    setData(newData);
+    setProductAttributes(newData);
   };
+
+  const onBulkUpdate = <T extends keyof Product>(productIDs:number[], field:T,value:Product[T]) => {
+    // setData({
+    //   ...data,
+    //   products: products.map(product => {
+    //     if (productIDs.includes(product.id)) {
+    //       return {
+    //         ...product,
+    //         [field]: value,
+    //       };
+    //     }
+    //     return product;
+    //   }),
+    // });
+
+    const updatedProducts= products.map(product => {
+      if (productIDs.includes(product.id)) {
+        return {
+          ...product,
+          [field]: value,
+        };
+      }
+      return product;
+    });
+
+    Inertia.post(route('lshopify.products.bulk_editor.update'), {
+      products:updatedProducts
+    });
+  }
+
+  const onDelete = (productIDs:number[]) => {
+    Inertia.post(route('lshopify.products.delete'), {
+      product_ids: productIDs,
+    });
+  }
 
   return (
     <Main>
@@ -58,12 +99,16 @@ export default function ProductIndex(props: Props) {
             </RightSidebar>
             <ProductSearchBar
               onMoreFiltersClick={() => setSidebarOpen(!sidebarOpen)}
-              searchTerm={data.search}
-              status={data.status}
+              searchTerm={productAttributes.search}
+              status={productAttributes.status}
               tabs={props.statuses || []}
               onChange={onChange}
             />
-            <ProductsList products={products} />
+            <ProductsList
+              products={products}
+              onUpdate={onBulkUpdate}
+              onDelete={onDelete}
+            />
           </section>
         </div>
       </div>

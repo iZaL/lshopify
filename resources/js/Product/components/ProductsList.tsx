@@ -11,6 +11,8 @@ import route from 'ziggy-js';
 
 interface Props {
   products: Product[];
+  onUpdate:<T extends keyof Product>(productIDs:number[],field:T,value:Product[T])=>void;
+  onDelete: (productIDs:number[]) => void;
 }
 
 interface ModalProp {
@@ -23,7 +25,7 @@ interface ModalProp {
   onClose: () => void;
 }
 
-export default function ProductsList({products}: Props) {
+export default function ProductsList({products,onUpdate, onDelete}: Props) {
   const [showDialog, setShowDialog] = React.useState(false);
   const [modalParams, setModalParams] = React.useState<ModalProp>({
     cancelButtonTitle: 'Cancel',
@@ -58,10 +60,11 @@ export default function ProductsList({products}: Props) {
                   theme="clear"
                   buttonStyle="-ml-px px-2 border border-gray-300 font-medium"
                   onClick={() =>
-                    Inertia.get(route('lshopify.products.bulk.edit'), {
+                    Inertia.get(route('lshopify.products.bulk_editor.index'), {
                       product_ids: selectedItemIDs,
                     })
-                  }>
+                  }
+                >
                   Edit products
                 </Button>
 
@@ -84,13 +87,7 @@ export default function ProductsList({products}: Props) {
                           submitButtonTitle: 'Set as active',
                           onSubmit: () => {
                             setShowDialog(false);
-                            Inertia.post(
-                              route('lshopify.products.attributes'),
-                              {
-                                product_ids: selectedItemIDs,
-                                status: 'active',
-                              },
-                            );
+                            onUpdate(selectedItemIDs,'status', 'active');
                           },
                         }),
                     },
@@ -104,13 +101,7 @@ export default function ProductsList({products}: Props) {
                           submitButtonTitle: 'Set as draft',
                           onSubmit: () => {
                             setShowDialog(false);
-                            Inertia.post(
-                              route('lshopify.products.attributes'),
-                              {
-                                product_ids: selectedItemIDs,
-                                status: 'draft',
-                              },
-                            );
+                            onUpdate(selectedItemIDs,'status', 'draft');
                           },
                         }),
                     },
@@ -124,13 +115,7 @@ export default function ProductsList({products}: Props) {
                           submitButtonTitle: 'Archive products',
                           onSubmit: () => {
                             setShowDialog(false);
-                            Inertia.post(
-                              route('lshopify.products.attributes'),
-                              {
-                                product_ids: selectedItemIDs,
-                                status: 'archived',
-                              },
-                            );
+                            onUpdate(selectedItemIDs,'status', 'archived');
                           },
                         }),
                     },
@@ -145,9 +130,7 @@ export default function ProductsList({products}: Props) {
                           theme: 'error',
                           onSubmit: () => {
                             setShowDialog(false);
-                            Inertia.post(route('lshopify.products.delete'), {
-                              product_ids: selectedItemIDs,
-                            });
+                            onDelete(selectedItemIDs);
                           },
                         }),
                     },
