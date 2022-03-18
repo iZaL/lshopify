@@ -54,7 +54,7 @@ class DraftOrderUpdateController extends Controller
     {
         $order = DraftOrder::find($id);
 
-        if(!$order) {
+        if (!$order) {
             $order = Order::find($id);
         }
 

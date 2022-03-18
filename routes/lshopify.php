@@ -2,12 +2,19 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::post('cart/add', \IZal\Lshopify\Http\Controllers\Cart\CartAddController::class)->name('cart.add');
-Route::post('cart/update', \IZal\Lshopify\Http\Controllers\Cart\CartUpdateController::class)->name('cart.update');
-Route::post('cart/remove', \IZal\Lshopify\Http\Controllers\Cart\CartRemoveController::class)->name('cart.remove');
-Route::post('cart/clear', \IZal\Lshopify\Http\Controllers\Cart\CartClearController::class)->name('cart.clear');
-Route::post('cart/discount/add', \IZal\Lshopify\Http\Controllers\Cart\CartDiscountAddController::class)->name('cart.discount.add');
-Route::post('cart/discount/remove', \IZal\Lshopify\Http\Controllers\Cart\CartDiscountRemoveController::class)->name('cart.discount.remove');
+
+
+Route::controller(\IZal\Lshopify\Http\Controllers\CartController::class)->group(function () {
+    Route::post('cart/add','add')->name('cart.add');
+    Route::post('cart/update', 'update')->name('cart.update');
+    Route::post('cart/remove', 'remove')->name('cart.remove');
+    Route::post('cart/clear', 'clear')->name('cart.clear');
+});
+
+Route::controller(\IZal\Lshopify\Http\Controllers\CartDiscountController::class)->group(function () {
+    Route::post('cart/discount/add', 'add')->name('cart.discount.add');
+    Route::post('cart/discount/remove', 'remove')->name('cart.discount.remove');
+});
 
 /*
  * Products Controller

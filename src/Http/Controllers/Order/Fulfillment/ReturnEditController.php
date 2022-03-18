@@ -8,7 +8,7 @@ use IZal\Lshopify\Models\Order;
 
 class ReturnEditController extends Controller
 {
-    public function __invoke($orderID,$returnID, Request $request)
+    public function __invoke($orderID, $returnID, Request $request)
     {
         $order = Order::findOrFail($orderID);
         $return = $order->returns()->findOrFail($returnID);

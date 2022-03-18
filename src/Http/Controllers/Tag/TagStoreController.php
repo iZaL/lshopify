@@ -13,9 +13,9 @@ class TagStoreController extends Controller
     {
         $tag = Tag::where('name', $request->name)->first();
 
-//        if(!$tag) {
-            $action->create($request->all());
-//        }
+        //        if(!$tag) {
+        $action->create($request->all());
+        //        }
         return redirect()->back();
     }
 }

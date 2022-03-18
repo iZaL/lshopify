@@ -11,7 +11,11 @@ class DraftOrderIndexController extends Controller
 {
     public function __invoke(): \Inertia\Response
     {
-        $orders = OrderResource::collection(DraftOrder::with(['customer','success_payments'])->latest()->get());
+        $orders = OrderResource::collection(
+            DraftOrder::with(['customer', 'success_payments'])
+                ->latest()
+                ->get()
+        );
         $cart = app('cart');
 
         return Inertia::render('Order/Draft/DraftOrderIndex', ['orders' => $orders, 'cartTotal' => $cart->total()]);

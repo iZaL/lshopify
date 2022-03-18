@@ -14,10 +14,12 @@ class ProductDeleteController extends Controller
             'product_ids' => 'required|array',
         ]);
 
-        $products = Product::whereIn('id',$request->product_ids);
+        $products = Product::whereIn('id', $request->product_ids);
 
         $products->delete();
 
-        return redirect()->back()->with('success','Products Deleted');
+        return redirect()
+            ->back()
+            ->with('success', 'Products Deleted');
     }
 }

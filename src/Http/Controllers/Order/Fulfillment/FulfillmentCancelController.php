@@ -17,6 +17,8 @@ class FulfillmentCancelController extends Controller
 
         $workflowManager = (new WorkflowManager($order))->cancelFulfillment($fulfillment);
 
-        return redirect()->route('lshopify.orders.show', $order->id)->with('success', 'Fulfillment Cancelled');
+        return redirect()
+            ->route('lshopify.orders.show', $order->id)
+            ->with('success', 'Fulfillment Cancelled');
     }
 }

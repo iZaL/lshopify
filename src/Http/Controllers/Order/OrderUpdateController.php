@@ -26,10 +26,7 @@ class OrderUpdateController extends Controller
     {
         $order = Order::find($id);
 
-        $this->action->update(
-            $order,
-            $request->except('shipping', 'billing', 'customer_id', 'total', 'subtotal')
-        );
+        $this->action->update($order, $request->except('shipping', 'billing', 'customer_id', 'total', 'subtotal'));
 
         if ($request->shipping) {
             $this->action->updateShippingAddress($order, $request->shipping);

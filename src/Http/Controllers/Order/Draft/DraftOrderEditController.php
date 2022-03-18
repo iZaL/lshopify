@@ -32,7 +32,7 @@ class DraftOrderEditController extends Controller
         $customers = Customer::all();
         $customersResource = CustomerResource::collection($customers);
 
-        if (! session()->has('cartOrder') || session('cartOrder') !== $order->id) {
+        if (!session()->has('cartOrder') || session('cartOrder') !== $order->id) {
             $cart->clear();
             session()->put('cartOrder', $order->id);
             // sync DB orders with the cart, only on first request and ignore on subsequent requests.
@@ -44,7 +44,7 @@ class DraftOrderEditController extends Controller
                 $suffix = $discount->suffix === 'percentage' ? '%' : '';
                 $discount->setActions([
                     [
-                        'value' => '-'.$discount->value.$suffix,
+                        'value' => '-' . $discount->value . $suffix,
                     ],
                 ]);
                 $cart->removeConditionByName('cart');
@@ -53,7 +53,7 @@ class DraftOrderEditController extends Controller
 
             foreach ($order->variants as $variant) {
                 $cartItem = $cart->findByID($variant->id);
-                if (! $cartItem) {
+                if (!$cartItem) {
                     $cartItem = $cart->add([
                         'id' => $variant->id,
                         'name' => $variant->id,
@@ -72,7 +72,7 @@ class DraftOrderEditController extends Controller
                         $suffix = $discount->suffix === 'percentage' ? '%' : '';
                         $discount->setActions([
                             [
-                                'value' => '-'.$discount->value.$suffix,
+                                'value' => '-' . $discount->value . $suffix,
                             ],
                         ]);
                         $cart->update($cartItem->rowId, ['conditions' => $discount]);

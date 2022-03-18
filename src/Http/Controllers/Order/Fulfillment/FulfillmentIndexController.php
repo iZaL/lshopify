@@ -21,13 +21,10 @@ class FulfillmentIndexController extends Controller
         $unfulfilledVariants = (new WorkflowManager($order))->getUnfulfilledVariantsWithPivot();
         $pendingFulfillments = WorkflowVariantResource::collection($unfulfilledVariants);
 
-        return Inertia::render(
-            'Order/FulfillmentView',
-            [
-                'pending_fulfillments' => $pendingFulfillments,
-                'order' => $orderResource,
-                'customers' => $customers,
-            ]
-        );
+        return Inertia::render('Order/FulfillmentView', [
+            'pending_fulfillments' => $pendingFulfillments,
+            'order' => $orderResource,
+            'customers' => $customers,
+        ]);
     }
 }

@@ -20,7 +20,7 @@ class CollectionUpdateController extends Controller
         $collection = $collection->find($id);
         $collection->update($request->only($collection->getFillable()));
 
-        if($image = $request->image) {
+        if ($image = $request->image) {
             if ($image instanceof UploadedFile) {
                 $imageUploadAction->deleteImages($collection->images);
                 $imageUploadAction
@@ -32,8 +32,12 @@ class CollectionUpdateController extends Controller
         }
 
         if ($request->type === 'smart') {
-
-            $deletedConditions = array_diff($collection->conditions->pluck('id')->toArray(), collect($request->conditions)->pluck('id')->toArray());
+            $deletedConditions = array_diff(
+                $collection->conditions->pluck('id')->toArray(),
+                collect($request->conditions)
+                    ->pluck('id')
+                    ->toArray()
+            );
 
             $collection->conditions()->delete($deletedConditions);
 

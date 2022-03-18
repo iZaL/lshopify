@@ -9,12 +9,12 @@ use IZal\Lshopify\Models\Product;
 
 class ProductBulkUpdateController extends Controller
 {
-    public function __invoke(Request $request,ProductUpdateAction $action)
+    public function __invoke(Request $request, ProductUpdateAction $action)
     {
         $products = $request->get('products');
         foreach ($products as $product) {
             $productModel = Product::find($product['id']);
-            if($productModel) {
+            if ($productModel) {
                 $action->update($productModel, collect($product));
             }
         }

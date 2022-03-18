@@ -96,7 +96,7 @@ class CartCollection extends BaseCollection implements Serializable
 
         // Validate the required indexes
         foreach ($this->getRequiredIndexes() as $index) {
-            if (! array_key_exists($index, $item)) {
+            if (!array_key_exists($index, $item)) {
                 throw new CartMissingRequiredIndexException($index);
             }
         }
@@ -105,14 +105,14 @@ class CartCollection extends BaseCollection implements Serializable
         $quantity = $item['quantity'];
 
         // Check if the quantity value is correct
-        if (! is_numeric($quantity) || $quantity < 1) {
+        if (!is_numeric($quantity) || $quantity < 1) {
             throw new CartInvalidQuantityException();
         }
 
         // Make sure we have a proper price value
         $price = $item['price'];
 
-        if (! is_numeric($price)) {
+        if (!is_numeric($price)) {
             throw new CartInvalidPriceException();
         }
 
@@ -121,7 +121,7 @@ class CartCollection extends BaseCollection implements Serializable
         // Make sure we have proper and valid item attributes
         $attributes = Arr::get($item, 'attributes', []);
 
-        if (! is_array($attributes)) {
+        if (!is_array($attributes)) {
             throw new CartInvalidAttributesException();
         }
 
@@ -177,7 +177,7 @@ class CartCollection extends BaseCollection implements Serializable
     {
         foreach ((array) $items as $rowId) {
             // Check if the item exists
-            if (! $this->exists($rowId)) {
+            if (!$this->exists($rowId)) {
                 throw new CartItemNotFoundException();
             }
 
@@ -216,7 +216,7 @@ class CartCollection extends BaseCollection implements Serializable
         }
 
         // Check if the item exists
-        if (! $this->exists($rowId)) {
+        if (!$this->exists($rowId)) {
             throw new CartItemNotFoundException();
         }
 
@@ -293,7 +293,7 @@ class CartCollection extends BaseCollection implements Serializable
     public function item($rowId)
     {
         // Check if the item exists
-        if (! $this->exists($rowId)) {
+        if (!$this->exists($rowId)) {
             throw new CartItemNotFoundException();
         }
 
@@ -336,7 +336,7 @@ class CartCollection extends BaseCollection implements Serializable
      */
     public function removeMetaData($key = null)
     {
-        if (! $key) {
+        if (!$key) {
             $this->metaData = [];
         } else {
             Arr::forget($this->metaData, $key);
@@ -400,7 +400,7 @@ class CartCollection extends BaseCollection implements Serializable
     {
         $conditions = [];
 
-        if (! $type) {
+        if (!$type) {
             if ($includeItems) {
                 foreach ($this->items as $item) {
                     $conditions = array_merge($conditions, $item->conditions());
@@ -447,7 +447,7 @@ class CartCollection extends BaseCollection implements Serializable
         $this->conditionResults = [];
 
         foreach ($this->items as $item) {
-            if (! $item->conditionResults()) {
+            if (!$item->conditionResults()) {
                 $item->total();
             }
 
@@ -478,7 +478,7 @@ class CartCollection extends BaseCollection implements Serializable
      */
     public function itemsConditionsTotalSum($type = null)
     {
-        if (! $type) {
+        if (!$type) {
             return array_sum(
                 array_map(function ($item) {
                     return is_array($item) ? array_sum($item) : $item;
@@ -555,7 +555,7 @@ class CartCollection extends BaseCollection implements Serializable
     {
         if ($id) {
             foreach ($this->conditions as $key => $value) {
-                if (! isset($value[$target])) {
+                if (!isset($value[$target])) {
                     continue;
                 }
 
@@ -726,7 +726,7 @@ class CartCollection extends BaseCollection implements Serializable
         $data = [];
 
         foreach ($attributes as $index => $option) {
-            if (! isset($option['value'])) {
+            if (!isset($option['value'])) {
                 throw new CartMissingRequiredIndexException('value');
             }
 
@@ -746,7 +746,7 @@ class CartCollection extends BaseCollection implements Serializable
      */
     protected function generateRowId($id, $item)
     {
-        return md5($id.serialize($item));
+        return md5($id . serialize($item));
     }
 
     /**

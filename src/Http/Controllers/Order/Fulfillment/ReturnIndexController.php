@@ -14,11 +14,8 @@ class ReturnIndexController extends Controller
         $order = Order::with(['success_fulfillments.variants.image'])->find($orderID);
         $orderResource = new OrderResource($order);
 
-        return Inertia::render(
-            'Order/ReturnView',
-            [
-                'order' => $orderResource,
-            ]
-        );
+        return Inertia::render('Order/ReturnView', [
+            'order' => $orderResource,
+        ]);
     }
 }

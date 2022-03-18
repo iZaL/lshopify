@@ -15,7 +15,7 @@ class ImageDeleteController extends Controller
         ImageUploadAction $imageUploadAction
     ): \Illuminate\Http\RedirectResponse {
         $product = Product::find($productID);
-        if (! empty($request->images)) {
+        if (!empty($request->images)) {
             $imageIDs = collect($request->images)
                 ->pluck('id')
                 ->toArray();

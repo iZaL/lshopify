@@ -18,7 +18,7 @@ class DraftOrderStoreController extends Controller
     ): \Illuminate\Http\RedirectResponse {
         $cart = app('cart');
 
-        if (! $cart->items()->count()) {
+        if (!$cart->items()->count()) {
             return redirect()
                 ->back()
                 ->with('error', 'Products cannot be empty.');

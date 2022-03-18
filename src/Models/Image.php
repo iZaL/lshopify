@@ -28,6 +28,4 @@ class Image extends BaseModel
         $link = \Storage::disk(config('lshopify.storage.disk', 'public'))->url($this->attributes['name']);
         return $link;
     }
-
-
 }

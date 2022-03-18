@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 
 class LshopifyAdminMiddleware
 {
-
     public function handle($request, Closure $next)
     {
         auth()->setDefaultDriver(app('LshopifyGuard'));
@@ -19,6 +18,4 @@ class LshopifyAdminMiddleware
         }
         return redirect()->route('login');
     }
-
 }
-

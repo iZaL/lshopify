@@ -15,13 +15,15 @@ class CustomerStoreController extends Controller
         $customer = $action->create($request->customer);
         if ($request->address) {
             $extraParams = [];
-            if (! $customer->addresses()->count()) {
+            if (!$customer->addresses()->count()) {
                 $extraParams['default'] = 1;
             }
 
             $action->createCustomerAddress($customer, array_merge($request->address, $extraParams));
         }
 
-        return redirect()->back()->with('success');
+        return redirect()
+            ->back()
+            ->with('success');
     }
 }

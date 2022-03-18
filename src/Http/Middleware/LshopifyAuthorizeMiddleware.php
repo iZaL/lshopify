@@ -16,4 +16,3 @@ class LshopifyAuthorizeMiddleware
         return redirect()->route('login');
     }
 }
-

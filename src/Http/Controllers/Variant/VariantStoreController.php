@@ -16,7 +16,7 @@ class VariantStoreController extends Controller
     ): \Illuminate\Http\RedirectResponse {
         $product = Product::find($productID);
         $imageID = null;
-        if ($request->image && ! $request->file('image')) {
+        if ($request->image && !$request->file('image')) {
             $imageID = $request->image['id'] ?? null;
         }
 

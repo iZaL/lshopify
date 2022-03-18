@@ -15,7 +15,7 @@ class ImageStoreController extends Controller
         ImageUploadAction $imageUploadAction
     ): \Illuminate\Http\RedirectResponse {
         $product = Product::find($productID);
-        if (! empty($request->images)) {
+        if (!empty($request->images)) {
             $imageUploadAction
                 ->uploadToServer($request->images)
                 ->saveInDB(['imageable_id' => $product->id, 'imageable_type' => get_class($product)]);

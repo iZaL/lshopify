@@ -1,19 +1,17 @@
 <?php
 
-namespace IZal\Lshopify\Http\Controllers\Cart;
+namespace IZal\Lshopify\Http\Controllers;
 
+use Illuminate\Http\Request;
 use IZal\Lshopify\Actions\DraftOrderCreateAction;
-use IZal\Lshopify\Http\Controllers\Controller;
+use IZal\Lshopify\Http\Requests\CartUpdateRequest;
 use IZal\Lshopify\Models\Variant;
 use IZal\Lshopify\Resources\VariantResource;
-use Illuminate\Http\Request;
 
-class CartAddController extends Controller
+class CartController extends Controller
 {
-    public function __invoke(
-        Request $request,
-        DraftOrderCreateAction $orderCreateAction
-    ): \Illuminate\Http\RedirectResponse {
+    public function add(Request $request, DraftOrderCreateAction $orderCreateAction): \Illuminate\Http\RedirectResponse
+    {
         $this->validate($request, [
             'variantIDs' => 'nullable|array',
             'orderID' => 'nullable|exists:orders,id',
@@ -44,6 +42,38 @@ class CartAddController extends Controller
             }
         }
 
+        return redirect()->back();
+    }
+
+    public function update(
+        CartUpdateRequest $request,
+        DraftOrderCreateAction $orderCreateAction
+    ): \Illuminate\Http\RedirectResponse {
+        $cart = app('cart');
+        $cart->item($request->rowId);
+        $cart->update($request->rowId, $request->item);
+        return redirect()->back();
+    }
+
+    public function remove(): \Illuminate\Http\RedirectResponse
+    {
+        $cart = app('cart');
+        $cart->clear();
+
+        if (session()->has('cartOrder')) {
+            session()->forget('cartOrder');
+        }
+
+        return redirect()->back();
+    }
+
+    public function clear(): \Illuminate\Http\RedirectResponse
+    {
+        $cart = app('cart');
+        $cart->clear();
+        if (session()->has('cartOrder')) {
+            session()->forget('cartOrder');
+        }
         return redirect()->back();
     }
 }

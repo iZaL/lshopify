@@ -17,6 +17,8 @@ class PaymentStoreController extends Controller
 
         $orderManager->collectManualPayment();
 
-        return redirect()->route('lshopify.orders.show', $order->id)->with('success', 'Saved');
+        return redirect()
+            ->route('lshopify.orders.show', $order->id)
+            ->with('success', 'Saved');
     }
 }

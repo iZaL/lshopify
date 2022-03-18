@@ -23,6 +23,10 @@ class RefundShowController extends Controller
         $fulfilledVariants = (new WorkflowManager($order))->getFulfilledVariantsWithPivot();
         $fulfilledVariants = WorkflowVariantResource::collection($fulfilledVariants);
 
-        return Inertia::render('Order/Refund', ['order' => $orderResource,'pending_fulfillments' => $unfulfilledVariants, 'fulfillments' => $fulfilledVariants]);
+        return Inertia::render('Order/Refund', [
+            'order' => $orderResource,
+            'pending_fulfillments' => $unfulfilledVariants,
+            'fulfillments' => $fulfilledVariants,
+        ]);
     }
 }

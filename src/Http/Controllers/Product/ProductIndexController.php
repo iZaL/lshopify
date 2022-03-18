@@ -12,22 +12,26 @@ class ProductIndexController extends Controller
 {
     public function __invoke(Request $request): \Inertia\Response
     {
-
         $products = Product::query();
 
-        $searchTerm  = $request->get('search');
+        $searchTerm = $request->get('search');
 
-        if($searchTerm) {
-            $products->where('title', 'like', '%'.$searchTerm.'%');
+        if ($searchTerm) {
+            $products->where('title', 'like', '%' . $searchTerm . '%');
         }
 
         $status = $request->status ?? 'All';
-        if($status && $status != 'All') {
+        if ($status && $status != 'All') {
             $products->where('status', $request->status);
         }
 
         $products = ProductResource::collection($products->get());
 
-        return Inertia::render('Product/ProductIndex', ['products' => $products, 'statuses' => ['All', 'Active', 'Draft','Archived'], 'search' => $searchTerm, 'status' => $status]);
+        return Inertia::render('Product/ProductIndex', [
+            'products' => $products,
+            'statuses' => ['All', 'Active', 'Draft', 'Archived'],
+            'search' => $searchTerm,
+            'status' => $status,
+        ]);
     }
 }

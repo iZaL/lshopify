@@ -1,14 +1,15 @@
 <?php
 
-namespace IZal\Lshopify\Http\Controllers\Cart;
+namespace IZal\Lshopify\Http\Controllers;
 
+use Illuminate\Http\Request;
 use IZal\Lshopify\Cart\Condition;
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\DiscountStoreRequest;
 
-class CartDiscountAddController extends Controller
+class CartDiscountController extends Controller
 {
-    public function __invoke(DiscountStoreRequest $request): \Illuminate\Http\RedirectResponse
+    public function add(DiscountStoreRequest $request): \Illuminate\Http\RedirectResponse
     {
         $cart = app('cart');
 
@@ -29,6 +30,20 @@ class CartDiscountAddController extends Controller
             $cart->removeConditionByName('cart');
             $cart->condition($discount);
         }
+
+        return redirect()->back();
+    }
+
+    public function remove(Request $request): \Illuminate\Http\RedirectResponse
+    {
+        $this->validate($request, [
+            'discount' => 'required|array',
+            'item' => 'nullable',
+        ]);
+
+        $cart = app('cart');
+
+        $cart->removeConditionByName($request->discount['name']);
 
         return redirect()->back();
     }

@@ -82,7 +82,7 @@ abstract class BaseCollection extends Collection
             return;
         }
 
-        if (! is_array($conditions)) {
+        if (!is_array($conditions)) {
             $conditions = [$conditions];
         }
 
@@ -164,7 +164,7 @@ abstract class BaseCollection extends Collection
 
                 $type = $condition->get('type');
 
-                if (! $value) {
+                if (!$value) {
                     $this->conditionResults[$type][$name] = 0;
 
                     continue;
@@ -184,7 +184,7 @@ abstract class BaseCollection extends Collection
                     $this->conditionResults[$type][$name] = $result;
                 }
 
-                if ($result && ! head($condition->get('actions'))->get('inclusive')) {
+                if ($result && !head($condition->get('actions'))->get('inclusive')) {
                     $subtotal += $result;
                 }
             }
@@ -241,7 +241,7 @@ abstract class BaseCollection extends Collection
      */
     public function conditionsTotalSum($type = null, $includeItems = true)
     {
-        if (! $type) {
+        if (!$type) {
             return array_sum(
                 array_map(function ($item) {
                     return is_array($item) ? array_sum($item) : $item;

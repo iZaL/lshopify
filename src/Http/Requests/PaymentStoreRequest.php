@@ -6,7 +6,6 @@ class PaymentStoreRequest extends BaseFormRequest
 {
     public function rules()
     {
-        return [
-        ];
+        return [];
     }
 }

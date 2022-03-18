@@ -20,7 +20,7 @@ class CollectionEditController extends Controller
 
         $searchTerm = $request->input('searchTerm');
 
-        if($searchTerm)  {
+        if ($searchTerm) {
             $products->where('title', 'like', "%{$searchTerm}%");
         }
 

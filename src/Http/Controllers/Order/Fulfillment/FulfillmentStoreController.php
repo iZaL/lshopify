@@ -15,6 +15,8 @@ class FulfillmentStoreController extends Controller
 
         $workflowManager = (new WorkflowManager($order))->createFulfillmentWorkflow($request->variants);
 
-        return redirect()->route('lshopify.orders.show', $order->id)->with('success', 'Saved');
+        return redirect()
+            ->route('lshopify.orders.show', $order->id)
+            ->with('success', 'Saved');
     }
 }

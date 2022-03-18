@@ -14,7 +14,7 @@ class Tag extends BaseModel
     public $timestamps = false;
 
     public $morphs = [
-      'product' => 'IZal\Lshopify\Models\Product'
+        'product' => 'IZal\Lshopify\Models\Product',
     ];
 
     protected $fillable = ['name', 'slug'];
