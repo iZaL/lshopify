@@ -19,7 +19,7 @@ class CollectionProductUpdateControllerTest extends TestCase
         $product1 = $products[0];
         $product2 = $products[1];
 
-        $req = $this->post(route('lshopify.collections.products.update', $collection->id), ['products'=>[$product2, $newProduct->id]]);
+        $req = $this->post(route('lshopify.collections.products.store', $collection->id), ['products'=>[$product2, $newProduct->id]]);
 
         $this->assertDatabaseHas('collection_products', ['product_id' => $product2]);
         $this->assertDatabaseHas('collection_products', ['product_id' => $newProduct->id]);

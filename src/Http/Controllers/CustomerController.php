@@ -1,7 +1,8 @@
 <?php
 
-namespace IZal\Lshopify\Http\Controllers\Customer;
+namespace IZal\Lshopify\Http\Controllers;
 
+use Illuminate\Http\Request;
 use IZal\Lshopify\Actions\CustomerCreateAction;
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\CustomerStoreRequest;
@@ -18,7 +19,6 @@ class CustomerController extends Controller
             if (!$customer->addresses()->count()) {
                 $extraParams['default'] = 1;
             }
-
             $action->createCustomerAddress($customer, array_merge($request->address, $extraParams));
         }
 

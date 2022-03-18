@@ -25,6 +25,7 @@ class CustomerStoreControllerTest extends TestCase
             'address' => $addressData,
         ];
 
+
         $req = $this->post(route('lshopify.customers.store'), $data);
 
         $this->assertDatabaseHas('customers', $customerData);

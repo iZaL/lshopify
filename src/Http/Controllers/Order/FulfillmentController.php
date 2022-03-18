@@ -1,6 +1,6 @@
 <?php
 
-namespace IZal\Lshopify\Http\Controllers\Order\Fulfillment;
+namespace IZal\Lshopify\Http\Controllers\Order;
 
 use Inertia\Inertia;
 use IZal\Lshopify\Http\Controllers\Controller;
@@ -40,7 +40,7 @@ class FulfillmentController extends Controller
             ->with('success', 'Saved');
     }
 
-    public function cancel($orderID, $fulfillmentID)
+    public function delete($orderID, $fulfillmentID)
     {
         $order = Order::find($orderID);
 
