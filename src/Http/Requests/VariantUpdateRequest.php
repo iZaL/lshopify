@@ -2,24 +2,14 @@
 
 namespace IZal\Lshopify\Http\Requests;
 
-class VariantUpdateRequest extends BaseFormRequest
+class VariantUpdateRequest extends VariantFieldRequest
 {
     public function rules()
     {
-        return [
+        $array1 = $this->validate('');
+        return array_merge([
             'options' => 'required|array',
             'options.*.id' => 'required|string',
-            'quantity' => 'nullable|integer',
-            'price' => 'nullable|numeric',
-            'compare_at_price' => 'nullable|numeric',
-            'cost_price' => 'nullable|numeric',
-            'sku' => 'nullable|string|max:255',
-            'weight' => 'nullable|numeric',
-            'barcode' => 'nullable|string|max:255',
-            'taxable' => 'nullable|boolean',
-            'tracked' => 'nullable|boolean',
-            'requires_shipping' => 'nullable|boolean',
-            'out_of_stock_sale' => 'nullable|boolean',
-        ];
+        ],$array1);
     }
 }

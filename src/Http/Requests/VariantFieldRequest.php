@@ -4,10 +4,8 @@ namespace IZal\Lshopify\Http\Requests;
 
 class VariantFieldRequest extends BaseFormRequest
 {
-    protected function validate($prefix)
+    protected function validate($prefix = '')
     {
-
-
         $variantFields = $this->getVariantFields();
 
         // loop variantFields array and append $key to each key
