@@ -9,7 +9,6 @@ import RightSidebar from '../components/RightSidebar';
 import ProductFiltersPanel from './components/ProductFiltersPanel';
 import {Inertia} from '@inertiajs/inertia';
 import route from 'ziggy-js';
-import {useForm} from '@inertiajs/inertia-react';
 
 interface Props {
   products: Product[];
@@ -18,20 +17,12 @@ interface Props {
   search: string;
 }
 
-type Form = {
-  products: Product[];
-};
-
 export default function ProductIndex(props: Props) {
   const {products} = props;
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [productAttributes, setProductAttributes] = useState({
     status: props.status,
     search: props.search,
-  });
-
-  const {data, setData, post, isDirty} = useForm<Form>({
-    products: products,
   });
 
   const onChange = (field: 'search' | 'status', value: string) => {
@@ -51,19 +42,6 @@ export default function ProductIndex(props: Props) {
     field: T,
     value: Product[T],
   ) => {
-    // setData({
-    //   ...data,
-    //   products: products.map(product => {
-    //     if (productIDs.includes(product.id)) {
-    //       return {
-    //         ...product,
-    //         [field]: value,
-    //       };
-    //     }
-    //     return product;
-    //   }),
-    // });
-
     const updatedProducts = products.map(product => {
       if (productIDs.includes(product.id)) {
         return {
@@ -73,7 +51,6 @@ export default function ProductIndex(props: Props) {
       }
       return product;
     });
-
     Inertia.post(route('lshopify.products.bulk_editor.update'), {
       products: updatedProducts,
     });

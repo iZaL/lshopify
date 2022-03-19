@@ -25,7 +25,7 @@ class ProductController extends Controller
 {
     public function index(Request $request): \Inertia\Response
     {
-        $products = Product::query()->with(['category', 'vendor']);
+        $products = Product::query()->with(['category', 'vendor'])->withCount('variants');
 
         $searchTerm = $request->get('search');
 
@@ -61,34 +61,6 @@ class ProductController extends Controller
         return Inertia::render('Product/ProductCreate', $data);
     }
 
-    public function edit($id): \Inertia\Response
-    {
-        $product = Product::with([
-            'images',
-            'variants.image',
-            'category',
-            'tags',
-            'collections',
-            'vendor',
-            'default_variant',
-        ])->find($id);
-
-        $product = new ProductResource($product);
-
-        $data = [
-            'product' => $product,
-            'collection' => CollectionResource::collection(Collection::all()),
-            'tags' => Tag::all(),
-            'variants' => Variant::defaultVariants(),
-            'categories' => CategoryResource::collection(Category::all()),
-            'vendors' => VendorResource::collection(Vendor::all()),
-            'variant_options' => $product->variant_options,
-            'variant_values' => $product->variant_options_values,
-        ];
-
-        return Inertia::render('Product/ProductEdit', $data);
-    }
-
     public function store(
         ProductStoreRequest $request,
         ProductCreateAction $productCreateAction
@@ -110,6 +82,34 @@ class ProductController extends Controller
         return redirect()
             ->route('lshopify.products.edit', $action->id)
             ->with('success', 'Saved');
+    }
+
+    public function edit($id): \Inertia\Response
+    {
+        $product = Product::with([
+            'images',
+            'variants.image',
+            'category',
+            'tags',
+            'collections',
+            'vendor',
+            'default_variant',
+        ])->find($id);
+
+        $product = new ProductResource($product);
+
+        $data = [
+            'product' => $product,
+            'collection' => CollectionResource::collection(Collection::all()),
+            'tags' => TagResource::collection(Tag::all()),
+            'variants' => Variant::defaultVariants(),
+            'categories' => CategoryResource::collection(Category::all()),
+            'vendors' => VendorResource::collection(Vendor::all()),
+            'variant_options' => $product->variant_options,
+            'variant_values' => $product->variant_options_values,
+        ];
+
+        return Inertia::render('Product/ProductEdit', $data);
     }
 
     public function update(

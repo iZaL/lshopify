@@ -8,8 +8,17 @@ class ProductStoreRequest extends BaseFormRequest
     {
         return [
             'title' => 'required|max:255',
-            'description' => '',
-            //            'variants' =>
+            'variants.*.price' => 'nullable|numeric',
+            'variants.*.quantity' => 'nullable|integer',
+            'variants.*.compare_at_price' => 'nullable|numeric',
+            'variants.*.cost_price' => 'nullable|numeric',
+            'variants.*.sku' => 'nullable|string|max:255',
+            'variants.*.weight' => 'nullable|numeric',
+            'variants.*.barcode' => 'nullable|string|max:255',
+            'variants.*.taxable' => 'nullable|boolean',
+            'variants.*.track_quantity' => 'nullable|boolean',
+            'variants.*.requires_shipping' => 'nullable|boolean',
+            'variants.*.out_of_stock_sale' => 'nullable|boolean',
         ];
     }
 }

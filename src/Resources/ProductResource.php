@@ -26,6 +26,9 @@ class ProductResource extends JsonResource
             'seo_title' => $this->seo_title,
             'seo_description' => $this->seo_description,
             'seo_url' => $this->seo_url,
+            'available_quantity'=> $this->available_quantity,
+            'variants_count'=> $this->variants_count,
+            'inventory_tracked' => $this->is_inventory_tracked,
         ];
     }
 }

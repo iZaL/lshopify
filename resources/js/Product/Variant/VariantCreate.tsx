@@ -12,6 +12,7 @@ import ProductInfo from './components/ProductInfo';
 import InventorySection from '../components/InventorySection';
 import ShippingSection from '../components/ShippingSection';
 import route from 'ziggy-js';
+import BackButton from '../../components/BackButton'
 
 interface Props {
   product: Product;
@@ -86,7 +87,14 @@ export default function VariantCreate(props: Props) {
       <div className="p-6">
         <FormSubmitBar onSubmit={handleSubmit} />
 
-        <PageHeader text="Add Variant" />
+        <div className="flex flex-row items-center space-x-2">
+          <BackButton
+            onClick={() => {
+              Inertia.get(route('lshopify.products.edit', [product.id]));
+            }}
+          />
+          <PageHeader text="Add Variant" />
+        </div>
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
           <section className="space-y-6 lg:col-span-1 lg:col-start-1">

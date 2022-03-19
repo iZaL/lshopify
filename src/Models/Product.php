@@ -32,6 +32,11 @@ class Product extends BaseModel
         return ProductFactory::new();
     }
 
+    public function all_variants()
+    {
+        return $this->hasMany(Variant::class,'product_id');
+    }
+
     public function variants()
     {
         return $this->hasMany(Variant::class, 'product_id')
@@ -83,4 +88,23 @@ class Product extends BaseModel
 
         return [...$variants];
     }
+
+    public function getIsInventoryTrackedAttribute(): bool
+    {
+        $hasVariants = $this->variants()->count() > 0;
+        if($hasVariants) {
+            return $this->variants()->where('track_quantity',1)->count() > 0;
+        }
+        return $this->default_variant()->where('track_quantity',1)->count() > 0;
+    }
+
+    public function getAvailableQuantityAttribute()
+    {
+        $hasVariants = $this->variants()->count() > 0;
+        if($hasVariants) {
+            return $this->variants()->sum('quantity');
+        }
+        return $this->default_variant()->sum('quantity');
+    }
+
 }

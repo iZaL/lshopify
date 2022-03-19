@@ -11,6 +11,7 @@ use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\VariantAttributeUpdateRequest;
 use IZal\Lshopify\Http\Requests\VariantDeleteRequest;
 use IZal\Lshopify\Http\Requests\VariantStoreRequest;
+use IZal\Lshopify\Http\Requests\VariantUpdateRequest;
 use IZal\Lshopify\Models\Product;
 use IZal\Lshopify\Models\Variant;
 use IZal\Lshopify\Resources\ProductResource;
@@ -27,19 +28,6 @@ class VariantController extends Controller
             'variant_options' => $product->variant_options,
         ];
         return Inertia::render('Product/Variant/VariantCreate', $data);
-    }
-
-    public function edit($productID, $variantID): \Inertia\Response
-    {
-        $product = Product::with(['images', 'variants'])->find($productID);
-        $variant = Variant::find($variantID);
-        $product = new ProductResource($product);
-        $data = [
-            'product' => $product,
-            'variant' => new VariantResource($variant),
-        ];
-
-        return Inertia::render('Product/Variant/VariantEdit', $data);
     }
 
     public function store(
@@ -65,9 +53,24 @@ class VariantController extends Controller
             ->with('success', 'Saved');
     }
 
+
+    public function edit($productID, $variantID): \Inertia\Response
+    {
+        $product = Product::with(['images', 'variants'])->find($productID);
+        $variant = Variant::find($variantID);
+        $product = new ProductResource($product);
+        $data = [
+            'product' => $product,
+            'variant' => new VariantResource($variant),
+        ];
+
+        return Inertia::render('Product/Variant/VariantEdit', $data);
+    }
+
+
     public function update(
         $variantID,
-        VariantStoreRequest $request,
+        VariantUpdateRequest $request,
         VariantUpdateAction $variantUpdateAction
     ): \Illuminate\Http\RedirectResponse {
         $variant = Variant::find($variantID);

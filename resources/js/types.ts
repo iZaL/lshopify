@@ -89,6 +89,7 @@ export interface Product {
   title: string;
   description: string;
   status: ProductStatus;
+  available_quantity: string;
   category?: Category;
   vendor?: Vendor;
   default_variant: Variant;

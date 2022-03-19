@@ -47,6 +47,7 @@ export default function ProductCreate(props: Props) {
     id: 0,
     title: 'Short sleeve t-shirt',
     description: '',
+    available_quantity: '',
     default_variant: {
       id: 0,
       price: '0',

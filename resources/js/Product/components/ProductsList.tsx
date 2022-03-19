@@ -181,7 +181,7 @@ export default function ProductsList({products, onUpdate, onDelete}: Props) {
                     </Button>
                   </Table.Cell>
                   <Table.Cell>{item.status}</Table.Cell>
-                  <Table.Cell>4 in stocks for 5 variants</Table.Cell>
+                  <Table.Cell>{item.available_quantity} in stocks for {item.variants_count} variants</Table.Cell>
                   <Table.Cell>{item.category?.name}</Table.Cell>
                   <Table.Cell>{item.vendor?.name}</Table.Cell>
                 </>

@@ -198,7 +198,6 @@ export default function ProductBulkEdit(props: Props) {
           [attribute]: value,
         },
       };
-
       // update data products with new product
       setData({
         products: data.products.map(p => {
@@ -212,7 +211,9 @@ export default function ProductBulkEdit(props: Props) {
   };
 
   const handleSubmit = (): void => {
-    Inertia.post(route('lshopify.products.bulk_editor.update'), data);
+    Inertia.post(route('lshopify.products.bulk_editor.update'), data, {
+      preserveState:false
+    });
   };
 
   const buttons: {[key: string]: Array<ProductAttributes | VariantAttributes>} =
