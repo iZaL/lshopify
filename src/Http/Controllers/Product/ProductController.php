@@ -63,7 +63,7 @@ class ProductController extends Controller
 
     public function edit($id): \Inertia\Response
     {
-        $product = Product::with(['images', 'variants.image', 'category', 'tags', 'collections','vendor'])->find($id);
+        $product = Product::with(['images', 'variants.image', 'category', 'tags', 'collections','vendor', 'default_variant'])->find($id);
 
         $product = new ProductResource($product);
 

@@ -175,17 +175,14 @@ export default function ProductEdit(props: Props) {
         product_id:product.id
       },
       {
-        onSuccess: () => {
-          setIsProductTypeLoading(false);
-          Inertia.reload();
-        },
+        preserveScroll:true,
+        preserveState:false,
       },
     );
   };
 
   const onTagsCreate = (value: string) => {
     const url = route('lshopify.tags.store');
-    setIsTagsLoading(true);
     Inertia.post(
       url,
       {
@@ -194,10 +191,8 @@ export default function ProductEdit(props: Props) {
         taggable_type:'product'
       },
       {
-        onSuccess: () => {
-          setIsTagsLoading(false);
-          Inertia.reload();
-        },
+        preserveScroll:true,
+        preserveState:false,
       },
     );
   };
@@ -211,9 +206,8 @@ export default function ProductEdit(props: Props) {
         product_id:product.id
       },
       {
-        onSuccess: () => {
-          Inertia.reload();
-        },
+        preserveScroll:true,
+        preserveState: false,
       },
     );
   };
