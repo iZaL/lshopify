@@ -1,6 +1,6 @@
 <?php
 
-namespace IZal\Lshopify\Http\Controllers\Variant;
+namespace IZal\Lshopify\Http\Controllers\Product;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;

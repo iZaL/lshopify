@@ -19,7 +19,8 @@ use IZal\Lshopify\Http\Controllers\Order\ReturnController;
 use IZal\Lshopify\Http\Controllers\Product\ProductBulkEditorController;
 use IZal\Lshopify\Http\Controllers\Product\ProductController;
 use IZal\Lshopify\Http\Controllers\TagController;
-use IZal\Lshopify\Http\Controllers\Variant\VariantController;
+use IZal\Lshopify\Http\Controllers\Product\VariantController;
+use IZal\Lshopify\Http\Controllers\VendorController;
 
 Route::group(['prefix' => 'cart', 'as' => 'cart.'], function () {
     Route::controller(CartController::class)->group(function () {
@@ -122,6 +123,8 @@ Route::controller(ImageController::class)->group(function () {
 Route::get('inventories', [InventoryController::class,'index'])->name('inventories.index');
 
 Route::post('customers', [CustomerController::class,'store'])->name('customers.store');
+
+Route::post('vendors', [VendorController::class,'store'])->name('vendors.store');
 
 Route::post('tags', [TagController::class,'store'])->name('tags.store');
 

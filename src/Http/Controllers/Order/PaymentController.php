@@ -12,11 +12,8 @@ class PaymentController extends Controller
     public function store($orderID, PaymentStoreRequest $request)
     {
         $order = Order::find($orderID);
-
         $orderManager = new OrderManager($order);
-
         $orderManager->collectManualPayment();
-
         return redirect()
             ->route('lshopify.orders.show', $order->id)
             ->with('success', 'Saved');

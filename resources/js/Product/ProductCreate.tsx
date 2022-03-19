@@ -15,22 +15,30 @@ import {
   Product,
   ProductType,
   Tag,
-  VariantOption,
+  VariantOption, Vendor,
   // Options
-} from '../types';
+} from '../types'
 import {Inertia} from '@inertiajs/inertia';
 import route from 'ziggy-js';
+import StatusSection from './components/StatusSection'
+import Card from '../components/Card'
+import Subheader from '../components/Subheader'
+import Label from '../components/forms/Label'
+import SingleSelect from '../components/SingleSelect'
+import Border from '../components/Border'
+import MultiSelectDropdown from '../components/MultiSelectDropdown'
+import MultiSelect from '../components/MultiSelect'
 
 interface Props {
   collection: Collection[];
   variants: VariantOption[];
   product_types: ProductType[];
   tags: Tag[];
-  // options:Options[]
+  vendors:Vendor[];
 }
 
 export default function ProductCreate(props: Props) {
-  const {tags, collection, variants, product_types} = props;
+  const {tags, collection, variants, product_types, vendors} = props;
 
   const [isProductTypeLoading, setIsProductTypeLoading] = useState(false);
   const [isTagsLoading, setIsTagsLoading] = useState(false);
@@ -59,7 +67,6 @@ export default function ProductCreate(props: Props) {
       requires_shipping: true,
     },
     status: 'draft',
-    product_type: null,
     collections: [],
     images: [],
     tags: [],
@@ -128,6 +135,19 @@ export default function ProductCreate(props: Props) {
     );
   };
 
+  const onVendorCreate = (value: string) => {
+    const url = route('lshopify.vendors.store');
+    Inertia.post(
+      url,
+      {name: value},
+      {
+        onSuccess: () => {
+          Inertia.reload();
+        },
+      },
+    );
+  };
+
   const handleSubmit = (): void => {
     Inertia.post(route('lshopify.products.store'), data, {
       preserveScroll: false,
@@ -179,6 +199,66 @@ export default function ProductCreate(props: Props) {
                 setDataObject('default_variant', field, value)
               }
             />
+          </section>
+
+          <section className="space-y-6 lg:col-span-1 lg:col-start-3">
+            <StatusSection
+              activeStatus={data.status}
+              onChange={(field, value) => setData(field, value)}
+            />
+
+            <Card>
+              <Subheader text={'Product Organization'} />
+
+              <div className="text-sm sm:col-span-2 sm:mt-0">
+                <Label title="Type" labelStyle="mb-1" />
+                <SingleSelect
+                  items={product_types}
+                  selectedItem={data.product_type??null}
+                  isLoading={isProductTypeLoading}
+                  onChange={record => setData('product_type', record)}
+                  onCreate={value => onProductTypeCreate(value)}
+                />
+              </div>
+
+              <Border />
+
+              <div className="text-sm sm:col-span-2 sm:mt-0">
+                <Label title="Vendor" labelStyle="mb-1" />
+                <SingleSelect
+                  items={vendors}
+                  selectedItem={data.vendor?? null}
+                  onChange={record => setData('vendor', record)}
+                  onCreate={value => onVendorCreate(value)}
+                />
+              </div>
+
+              <Border />
+
+              <div>
+                <Label title="Collections" labelStyle="mb-1" />
+                <MultiSelectDropdown
+                  items={collection}
+                  selectedItems={data.collections || []}
+                  onChange={collectionCollection =>
+                    setData('collections', collectionCollection)
+                  }
+                />
+              </div>
+
+              <Border />
+
+              <div>
+                <Label title="Tags" labelStyle="mb-1" />
+                <MultiSelect
+                  items={tags}
+                  selectedItems={data.tags || []}
+                  isLoading={isTagsLoading}
+                  onChange={tagCollection => setData('tags', tagCollection)}
+                  onCreate={value => onTagsCreate(value)}
+                />
+              </div>
+            </Card>
           </section>
         </div>
       </div>

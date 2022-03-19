@@ -32,8 +32,11 @@ class ProductCreateAction
         $this->variantCreateAction->create($defaultVariantAttributes, true);
 
         // product type
-        $category = $requestData->get('product_type');
-        $product->update(['category_id' => $category['id'] ?? null]);
+//        $category = $requestData->get('product_type');
+//        $product->update(['category_id' => $category['id'] ?? null]);
+
+//        $vendor = $requestData->get('vendor');
+//        $product->update(['vendor_id' => $vendor['id'] ?? null]);
 
         // tags
         $product->syncTags(

@@ -14,10 +14,12 @@ use IZal\Lshopify\Models\Collection;
 use IZal\Lshopify\Models\Product;
 use IZal\Lshopify\Models\Tag;
 use IZal\Lshopify\Models\Variant;
+use IZal\Lshopify\Models\Vendor;
 use IZal\Lshopify\Resources\CategoryResource;
 use IZal\Lshopify\Resources\CollectionResource;
 use IZal\Lshopify\Resources\ProductResource;
 use IZal\Lshopify\Resources\TagResource;
+use IZal\Lshopify\Resources\VendorResource;
 
 class ProductController extends Controller
 {
@@ -53,6 +55,7 @@ class ProductController extends Controller
             'tags' => TagResource::collection(Tag::all()),
             'variants' => Variant::defaultVariants(),
             'product_types' => CategoryResource::collection(Category::all()),
+            'vendors' => VendorResource::collection(Vendor::all())
         ];
 
         return Inertia::render('Product/ProductCreate', $data);
@@ -60,7 +63,7 @@ class ProductController extends Controller
 
     public function edit($id): \Inertia\Response
     {
-        $product = Product::with(['images', 'variants.image', 'category', 'tags', 'collections'])->find($id);
+        $product = Product::with(['images', 'variants.image', 'category', 'tags', 'collections','vendor'])->find($id);
 
         $product = new ProductResource($product);
 
@@ -70,6 +73,7 @@ class ProductController extends Controller
             'tags' => Tag::all(),
             'variants' => Variant::defaultVariants(),
             'product_types' => CategoryResource::collection(Category::all()),
+            'vendors' => VendorResource::collection(Vendor::all()),
             'variant_options' => $product->variant_options,
             'variant_values' => $product->variant_options_values,
         ];

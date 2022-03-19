@@ -16,6 +16,7 @@ class ProductResource extends JsonResource
             'description' => $this->description,
             'image' => new ImageResource($this->default_image),
             'product_type' => new CategoryResource($this->whenLoaded('category')),
+            'vendor' => new VendorResource($this->whenLoaded('vendor')),
             'images' => ImageResource::collection($this->whenLoaded('images')),
             'default_variant' => new VariantResource($this->whenLoaded('default_variant')),
             'variants' => VariantResource::collection($this->whenLoaded('variants')),

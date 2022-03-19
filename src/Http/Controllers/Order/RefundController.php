@@ -8,7 +8,6 @@ use IZal\Lshopify\Http\Requests\PaymentStoreRequest;
 use IZal\Lshopify\Http\Requests\RefundRequest;
 use IZal\Lshopify\Managers\WorkflowManager;
 use IZal\Lshopify\Models\Order;
-use IZal\Lshopify\Models\Workflow;
 use IZal\Lshopify\Resources\OrderResource;
 use IZal\Lshopify\Resources\WorkflowVariantResource;
 

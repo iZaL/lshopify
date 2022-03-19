@@ -6,6 +6,11 @@ export interface Tag {
   name: string;
 }
 
+export interface Vendor {
+  id: string;
+  name: string;
+}
+
 export interface ProductType {
   id: string;
   name: string;
@@ -85,7 +90,8 @@ export interface Product {
   title: string;
   description: string;
   status: ProductStatus;
-  product_type: ProductType | null;
+  product_type?: ProductType;
+  vendor?: Vendor;
   default_variant: Variant;
   variants?: Variant[];
   tags?: Tag[];

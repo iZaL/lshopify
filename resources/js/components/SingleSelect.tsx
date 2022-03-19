@@ -13,7 +13,7 @@ interface Props<T> {
   selectedItem: T | null;
   onChange: (record: T) => void;
   onCreate: (value: string) => void;
-  isLoading: boolean;
+  isLoading?: boolean;
   placeholder?: string;
 }
 

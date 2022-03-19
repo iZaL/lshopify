@@ -14,7 +14,7 @@ class Product extends BaseModel
 
     protected $table = 'products';
 
-    protected $fillable = ['title', 'description', 'status', 'category_id', 'seo_title', 'seo_description', 'seo_url'];
+    protected $fillable = ['title', 'description', 'status', 'category_id', 'vendor_id', 'seo_title', 'seo_description', 'seo_url'];
 
     protected $with = ['image'];
 
@@ -43,6 +43,11 @@ class Product extends BaseModel
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class, 'vendor_id');
     }
 
     public function getDefaultImageAttribute()

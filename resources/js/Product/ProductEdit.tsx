@@ -19,8 +19,8 @@ import {
   ProductType,
   Tag,
   Variant,
-  VariantOption,
-} from '../types';
+  VariantOption, Vendor,
+} from '../types'
 import route from 'ziggy-js';
 import BackButton from '../components/BackButton';
 import Subheader from '../components/Subheader';
@@ -39,6 +39,7 @@ interface Props {
   variant_options: VariantOption[];
   variant_values: VariantOption[];
   tags: Tag[];
+  vendors:Vendor[];
 }
 
 type Form = Product & {
@@ -56,6 +57,7 @@ export default function ProductEdit(props: Props) {
     product_types,
     collection,
     tags,
+    vendors,
   } = props;
 
   const formProps: Form = {
@@ -168,7 +170,10 @@ export default function ProductEdit(props: Props) {
     setIsProductTypeLoading(true);
     Inertia.post(
       url,
-      {name: value},
+      {
+        name: value,
+        product_id:product.id
+      },
       {
         onSuccess: () => {
           setIsProductTypeLoading(false);
@@ -177,15 +182,36 @@ export default function ProductEdit(props: Props) {
       },
     );
   };
+
   const onTagsCreate = (value: string) => {
     const url = route('lshopify.tags.store');
     setIsTagsLoading(true);
     Inertia.post(
       url,
-      {name: value},
+      {
+        name: value,
+        taggable_id:product.id,
+        taggable_type:'product'
+      },
       {
         onSuccess: () => {
           setIsTagsLoading(false);
+          Inertia.reload();
+        },
+      },
+    );
+  };
+
+  const onVendorCreate = (value: string) => {
+    const url = route('lshopify.vendors.store');
+    Inertia.post(
+      url,
+      {
+        name: value,
+        product_id:product.id
+      },
+      {
+        onSuccess: () => {
           Inertia.reload();
         },
       },
@@ -288,7 +314,7 @@ export default function ProductEdit(props: Props) {
                 <Label title="Type" labelStyle="mb-1" />
                 <SingleSelect
                   items={product_types}
-                  selectedItem={data.product_type}
+                  selectedItem={data.product_type??null}
                   isLoading={isProductTypeLoading}
                   onChange={record => setData('product_type', record)}
                   onCreate={value => onProductTypeCreate(value)}
@@ -300,11 +326,10 @@ export default function ProductEdit(props: Props) {
               <div className="text-sm sm:col-span-2 sm:mt-0">
                 <Label title="Vendor" labelStyle="mb-1" />
                 <SingleSelect
-                  items={product_types}
-                  selectedItem={data.product_type}
-                  isLoading={isProductTypeLoading}
-                  onChange={record => setData('product_type', record)}
-                  onCreate={value => onProductTypeCreate(value)}
+                  items={vendors}
+                  selectedItem={data.vendor?? null}
+                  onChange={record => setData('vendor', record)}
+                  onCreate={value => onVendorCreate(value)}
                 />
               </div>
 
