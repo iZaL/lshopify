@@ -38,13 +38,13 @@ export default function InventorySection({onChange, variant}: Props) {
       </div>
 
       <Checkbox
-        name="track_quantity"
+        name="tracked"
         label="Track Quantity"
-        checked={variant.track_quantity}
-        onChange={e => onChange('track_quantity', e.target.checked)}
+        checked={variant.tracked}
+        onChange={e => onChange('tracked', e.target.checked)}
       />
 
-      {variant.track_quantity && (
+      {variant.tracked && (
         <div>
           <Checkbox
             name="out_of_stock_sale"

@@ -58,7 +58,7 @@ class CreateVariantsTable extends Migration
             $table->json('options')->nullable();
             $table->boolean('out_of_stock_sale')->default(0)->notes('continue for sell continue when out of stock');
             $table->boolean('taxable')->default(1)->notes('Charge tax on this product');
-            $table->boolean('track_quantity')->default(1);
+            $table->boolean('tracked')->default(1);
             $table->boolean('requires_shipping')->default(1);
             $table->boolean('physical_product')->default(1);
             $table->boolean('default')->default(false);

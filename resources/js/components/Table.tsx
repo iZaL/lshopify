@@ -59,7 +59,7 @@ const Row = ({children, striped = true, idx, onClick, rowStyle}: RowProps) => {
 
 const Cell = ({children, cellStyle}: CellProps) => {
   return (
-    <td className={`whitespace-nowrap py-4 text-sm text-gray-500 ${cellStyle}`}>
+    <td className={`whitespace-nowrap py-4 text-sm text-gray-800 ${cellStyle}`}>
       {children}
     </td>
   );

@@ -75,7 +75,7 @@ export interface Variant {
   image: Image | null;
   taxable: boolean;
   out_of_stock_sale: boolean;
-  track_quantity: boolean;
+  tracked: boolean;
   requires_shipping: boolean;
   physical_product: boolean;
   options: VariantOption[];
@@ -90,6 +90,8 @@ export interface Product {
   description: string;
   status: ProductStatus;
   available_quantity: string;
+  inventory_tracked?: string;
+  variants_count?: string;
   category?: Category;
   vendor?: Vendor;
   default_variant: Variant;

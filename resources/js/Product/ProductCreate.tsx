@@ -63,7 +63,7 @@ export default function ProductCreate(props: Props) {
       options: [],
       taxable: true,
       out_of_stock_sale: false,
-      track_quantity: true,
+      tracked: true,
       physical_product: true,
       requires_shipping: true,
     },

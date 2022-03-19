@@ -43,7 +43,7 @@ export default function VariantCreate(props: Props) {
     origin_country_id: '',
     options: options,
     taxable: false,
-    track_quantity: false,
+    tracked: false,
     out_of_stock_sale: true,
     physical_product: true,
     requires_shipping: true,

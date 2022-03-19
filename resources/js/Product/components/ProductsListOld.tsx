@@ -167,7 +167,7 @@ export default function ProductsListOld({products}: Props) {
               <Table.Header title="Product" />
               <Table.Header title="Status" />
               <Table.Header title="Inventory" />
-              <Table.Header title="Type" />
+              <Table.Header title="Category" />
               <Table.Header title="Vendor" />
             </Table.Row>
           </thead>

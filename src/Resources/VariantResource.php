@@ -25,7 +25,7 @@ class VariantResource extends JsonResource
             'hs_code' => $this->hs_code,
             'origin_country_id' => $this->origin_country_id,
             'taxable' => $this->taxable,
-            'track_quantity' => $this->track_quantity,
+            'tracked' => $this->tracked,
             'requires_shipping' => $this->requires_shipping,
             'out_of_stock_sale' => $this->out_of_stock_sale,
             'default' => $this->default,

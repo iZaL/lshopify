@@ -16,7 +16,7 @@ class ProductStoreRequest extends BaseFormRequest
             'variants.*.weight' => 'nullable|numeric',
             'variants.*.barcode' => 'nullable|string|max:255',
             'variants.*.taxable' => 'nullable|boolean',
-            'variants.*.track_quantity' => 'nullable|boolean',
+            'variants.*.tracked' => 'nullable|boolean',
             'variants.*.requires_shipping' => 'nullable|boolean',
             'variants.*.out_of_stock_sale' => 'nullable|boolean',
         ];

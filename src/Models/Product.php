@@ -93,9 +93,9 @@ class Product extends BaseModel
     {
         $hasVariants = $this->variants()->count() > 0;
         if($hasVariants) {
-            return $this->variants()->where('track_quantity',1)->count() > 0;
+            return $this->variants()->where('tracked',1)->count() > 0;
         }
-        return $this->default_variant()->where('track_quantity',1)->count() > 0;
+        return $this->default_variant()->where('tracked',1)->count() > 0;
     }
 
     public function getAvailableQuantityAttribute()

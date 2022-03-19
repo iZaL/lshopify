@@ -24,6 +24,6 @@ export type VariantAttributes =
   | 'requires_shipping'
   | 'taxable'
   | 'hs_code'
-  | 'track_quantity'
+  | 'tracked'
   | 'out_of_stock_sale'
   | 'origin_country_id';

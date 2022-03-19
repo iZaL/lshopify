@@ -21,7 +21,7 @@ export default function BulkEditor({variants, children}: Props) {
     'quantity',
     'hs_code',
     'out_of_stock_sale',
-    'track_quantity',
+    'tracked',
     'requires_shipping',
     'weight',
     'origin_country_id',
@@ -126,7 +126,7 @@ export default function BulkEditor({variants, children}: Props) {
                   Continue selling when out of stock
                 </div>
               )}
-              {selectedAttributes.includes('track_quantity') && (
+              {selectedAttributes.includes('tracked') && (
                 <div className="w-40 flex-shrink-0">Track Quantity</div>
               )}
               {selectedAttributes.includes('requires_shipping') && (
@@ -281,15 +281,15 @@ export default function BulkEditor({variants, children}: Props) {
                       />
                     </div>
                   )}
-                  {selectedAttributes.includes('track_quantity') && (
+                  {selectedAttributes.includes('tracked') && (
                     <div className="w-40 flex-shrink-0">
                       <Checkbox
-                        name="track_quantity"
-                        checked={variant.track_quantity}
+                        name="tracked"
+                        checked={variant.tracked}
                         onChange={e =>
                           onAttributeChange(
                             variant,
-                            'track_quantity',
+                            'tracked',
                             e.target.checked,
                           )
                         }

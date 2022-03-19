@@ -48,7 +48,7 @@ class ProductStoreControllerTest extends TestCase
                 'origin_country_id'=> '1',
                 'taxable'=> true,
                 'out_of_stock_sale'=> true,
-                'track_quantity'=> false,
+                'tracked'=> false,
                 'physical_product'=> true,
                 'requires_shipping'=> true,
                 'options'=> [

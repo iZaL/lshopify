@@ -75,7 +75,7 @@ class VariantUpdateControllerTest extends TestCase
             'origin_country_id'=> '1',
             'taxable'=> false,
             'out_of_stock_sale'=> false,
-            'track_quantity'=> false,
+            'tracked'=> false,
             'physical_product'=> true,
             'requires_shipping'=> true,
             'options'=> $optionsAfterUpdate,
