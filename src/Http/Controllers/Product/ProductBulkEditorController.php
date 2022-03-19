@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use IZal\Lshopify\Actions\ProductUpdateAction;
 use IZal\Lshopify\Http\Controllers\Controller;
+use IZal\Lshopify\Http\Requests\ProductBulkEditorUpdateRequest;
 use IZal\Lshopify\Models\Product;
 use IZal\Lshopify\Resources\ProductResource;
 
@@ -35,9 +36,10 @@ class ProductBulkEditorController extends Controller
      * @param ProductUpdateAction $action
      * @return RedirectResponse
      */
-    public function update(Request $request, ProductUpdateAction $action): RedirectResponse
+    public function update(ProductBulkEditorUpdateRequest $request, ProductUpdateAction $action): RedirectResponse
     {
         $products = $request->get('products');
+
         foreach ($products as $product) {
             $productModel = Product::find($product['id']);
             if ($productModel) {

@@ -25,7 +25,9 @@ class ProductController extends Controller
 {
     public function index(Request $request): \Inertia\Response
     {
-        $products = Product::query()->with(['category', 'vendor'])->withCount('variants');
+        $products = Product::query()
+            ->with(['category', 'vendor'])
+            ->withCount('variants');
 
         $searchTerm = $request->get('search');
 
@@ -118,7 +120,6 @@ class ProductController extends Controller
         $id
     ): \Illuminate\Http\RedirectResponse {
         $product = Product::find($id);
-
         try {
             $action->update($product, collect($request->all()));
         } catch (\Exception $e) {

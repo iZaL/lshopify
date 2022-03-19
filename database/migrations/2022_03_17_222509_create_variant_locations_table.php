@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('variant_id');
             $table->integer('location_id');
-            $table->integer('quantity')->default(0); //available quantity
+            $table->integer('available_quantity')->default(0); //available quantity
             $table->timestamps();
         });
     }

@@ -53,7 +53,6 @@ class VariantController extends Controller
             ->with('success', 'Saved');
     }
 
-
     public function edit($productID, $variantID): \Inertia\Response
     {
         $product = Product::with(['images', 'variants'])->find($productID);
@@ -66,7 +65,6 @@ class VariantController extends Controller
 
         return Inertia::render('Product/Variant/VariantEdit', $data);
     }
-
 
     public function update(
         $variantID,
