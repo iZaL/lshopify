@@ -21,10 +21,6 @@ class TagCreateAction
         $attributes = collect($attributes);
         $tag = $this->tag->create($attributes->only($this->getFillable())->toArray());
 
-        //        if($attributes->count()) {
-        //            dd($attributes->toArray());
-        //        }
-
         if (in_array('taggable_id', $attributes->keys()->toArray())) {
             $taggableType = $attributes->pull('taggable_type');
             if (isset($tag->morphs[$taggableType])) {
