@@ -13,10 +13,10 @@ import {
   Collection,
   Image,
   Product,
-  ProductType,
+  Category,
   Tag,
-  VariantOption, Vendor,
-  // Options
+  VariantOption,
+  Vendor,
 } from '../types'
 import {Inertia} from '@inertiajs/inertia';
 import route from 'ziggy-js';
@@ -32,13 +32,13 @@ import MultiSelect from '../components/MultiSelect'
 interface Props {
   collection: Collection[];
   variants: VariantOption[];
-  product_types: ProductType[];
+  categories: Category[];
   tags: Tag[];
   vendors:Vendor[];
 }
 
 export default function ProductCreate(props: Props) {
-  const {tags, collection, variants, product_types, vendors} = props;
+  const {tags, collection, variants, categories, vendors} = props;
 
   const [isProductTypeLoading, setIsProductTypeLoading] = useState(false);
   const [isTagsLoading, setIsTagsLoading] = useState(false);
@@ -213,10 +213,10 @@ export default function ProductCreate(props: Props) {
               <div className="text-sm sm:col-span-2 sm:mt-0">
                 <Label title="Type" labelStyle="mb-1" />
                 <SingleSelect
-                  items={product_types}
-                  selectedItem={data.product_type??null}
+                  items={categories}
+                  selectedItem={data.category??null}
                   isLoading={isProductTypeLoading}
-                  onChange={record => setData('product_type', record)}
+                  onChange={record => setData('category', record)}
                   onCreate={value => onProductTypeCreate(value)}
                 />
               </div>

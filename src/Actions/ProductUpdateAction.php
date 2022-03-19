@@ -29,7 +29,7 @@ class ProductUpdateAction
         tap($product)->update($productData->toArray());
 
         // product type
-        $category = $requestData->get('product_type');
+        $category = $requestData->get('category');
         $product->update(['category_id' => $category['id'] ?? null]);
 
         // Vendor

@@ -199,7 +199,7 @@ export default function ProductsListOld({products}: Props) {
               </Table.Cell>
               <Table.Cell>{product.status}</Table.Cell>
               <Table.Cell>4 in stocks for 5 variants</Table.Cell>
-              <Table.Cell>{product.product_type}</Table.Cell>
+              <Table.Cell>{product.category}</Table.Cell>
               <Table.Cell>zalsstores</Table.Cell>
             </Table.Row>
           ))}

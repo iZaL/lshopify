@@ -54,7 +54,7 @@ class ProductController extends Controller
             'collection' => CollectionResource::collection(Collection::all()),
             'tags' => TagResource::collection(Tag::all()),
             'variants' => Variant::defaultVariants(),
-            'product_types' => CategoryResource::collection(Category::all()),
+            'categories' => CategoryResource::collection(Category::all()),
             'vendors' => VendorResource::collection(Vendor::all())
         ];
 
@@ -72,7 +72,7 @@ class ProductController extends Controller
             'collection' => CollectionResource::collection(Collection::all()),
             'tags' => Tag::all(),
             'variants' => Variant::defaultVariants(),
-            'product_types' => CategoryResource::collection(Category::all()),
+            'categories' => CategoryResource::collection(Category::all()),
             'vendors' => VendorResource::collection(Vendor::all()),
             'variant_options' => $product->variant_options,
             'variant_values' => $product->variant_options_values,

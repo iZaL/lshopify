@@ -11,7 +11,7 @@ export interface Vendor {
   name: string;
 }
 
-export interface ProductType {
+export interface Category {
   id: string;
   name: string;
 }
@@ -25,7 +25,6 @@ export interface Payment {
 
 export type CollectionType = 'manual' | 'smart';
 export type CollectionDeterminer = 'all' | 'any';
-
 export type CollectionField =
   | 'product_title'
   | 'product_type'
@@ -90,7 +89,7 @@ export interface Product {
   title: string;
   description: string;
   status: ProductStatus;
-  product_type?: ProductType;
+  category?: Category;
   vendor?: Vendor;
   default_variant: Variant;
   variants?: Variant[];
