@@ -6,6 +6,20 @@ class VariantFieldRequest extends BaseFormRequest
 {
     protected function validate($prefix)
     {
+
+
+        $variantFields = $this->getVariantFields();
+
+        // loop variantFields array and append $key to each key
+        $newArray = [];
+        foreach ($variantFields as $key => $value) {
+            $newArray[$prefix . $key] = $value;
+        }
+        return $newArray;
+    }
+
+    protected function getVariantFields()
+    {
         $variantFields = [
             'price' => 'nullable|numeric',
             'quantity' => 'nullable|integer',
@@ -19,12 +33,6 @@ class VariantFieldRequest extends BaseFormRequest
             'requires_shipping' => 'nullable|boolean',
             'out_of_stock_sale' => 'nullable|boolean',
         ];
-
-        // loop variantFields array and append $key to each key
-        $newArray = [];
-        foreach ($variantFields as $key => $value) {
-            $newArray[$prefix . $key] = $value;
-        }
-        return $newArray;
+        return $variantFields;
     }
 }
