@@ -33,5 +33,4 @@ class TagCreateAction
 
         return $tag;
     }
-
 }

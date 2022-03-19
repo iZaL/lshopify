@@ -22,7 +22,6 @@ class Vendor extends BaseModel
 
     public function products(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Product::class,'vendor_id');
+        return $this->hasMany(Product::class, 'vendor_id');
     }
-
 }

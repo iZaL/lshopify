@@ -17,24 +17,24 @@ import {
   Tag,
   VariantOption,
   Vendor,
-} from '../types'
+} from '../types';
 import {Inertia} from '@inertiajs/inertia';
 import route from 'ziggy-js';
-import StatusSection from './components/StatusSection'
-import Card from '../components/Card'
-import Subheader from '../components/Subheader'
-import Label from '../components/forms/Label'
-import SingleSelect from '../components/SingleSelect'
-import Border from '../components/Border'
-import MultiSelectDropdown from '../components/MultiSelectDropdown'
-import MultiSelect from '../components/MultiSelect'
+import StatusSection from './components/StatusSection';
+import Card from '../components/Card';
+import Subheader from '../components/Subheader';
+import Label from '../components/forms/Label';
+import SingleSelect from '../components/SingleSelect';
+import Border from '../components/Border';
+import MultiSelectDropdown from '../components/MultiSelectDropdown';
+import MultiSelect from '../components/MultiSelect';
 
 interface Props {
   collection: Collection[];
   variants: VariantOption[];
   categories: Category[];
   tags: Tag[];
-  vendors:Vendor[];
+  vendors: Vendor[];
 }
 
 export default function ProductCreate(props: Props) {
@@ -214,7 +214,7 @@ export default function ProductCreate(props: Props) {
                 <Label title="Type" labelStyle="mb-1" />
                 <SingleSelect
                   items={categories}
-                  selectedItem={data.category??null}
+                  selectedItem={data.category ?? null}
                   isLoading={isProductTypeLoading}
                   onChange={record => setData('category', record)}
                   onCreate={value => onProductTypeCreate(value)}
@@ -227,7 +227,7 @@ export default function ProductCreate(props: Props) {
                 <Label title="Vendor" labelStyle="mb-1" />
                 <SingleSelect
                   items={vendors}
-                  selectedItem={data.vendor?? null}
+                  selectedItem={data.vendor ?? null}
                   onChange={record => setData('vendor', record)}
                   onCreate={value => onVendorCreate(value)}
                 />

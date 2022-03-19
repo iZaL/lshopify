@@ -9,7 +9,6 @@ class VendorAction
 {
     private Vendor $model;
 
-
     /**
      * @param Vendor $model
      */

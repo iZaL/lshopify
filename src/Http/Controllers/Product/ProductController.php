@@ -25,7 +25,7 @@ class ProductController extends Controller
 {
     public function index(Request $request): \Inertia\Response
     {
-        $products = Product::query();
+        $products = Product::query()->with(['category', 'vendor']);
 
         $searchTerm = $request->get('search');
 
@@ -55,7 +55,7 @@ class ProductController extends Controller
             'tags' => TagResource::collection(Tag::all()),
             'variants' => Variant::defaultVariants(),
             'categories' => CategoryResource::collection(Category::all()),
-            'vendors' => VendorResource::collection(Vendor::all())
+            'vendors' => VendorResource::collection(Vendor::all()),
         ];
 
         return Inertia::render('Product/ProductCreate', $data);
@@ -63,7 +63,15 @@ class ProductController extends Controller
 
     public function edit($id): \Inertia\Response
     {
-        $product = Product::with(['images', 'variants.image', 'category', 'tags', 'collections','vendor', 'default_variant'])->find($id);
+        $product = Product::with([
+            'images',
+            'variants.image',
+            'category',
+            'tags',
+            'collections',
+            'vendor',
+            'default_variant',
+        ])->find($id);
 
         $product = new ProductResource($product);
 

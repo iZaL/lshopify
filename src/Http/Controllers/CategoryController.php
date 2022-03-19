@@ -14,7 +14,7 @@ class CategoryController extends Controller
     ): \Illuminate\Http\RedirectResponse {
         $category = $action->create($request->all());
 
-        if($request->product_id) {
+        if ($request->product_id) {
             $product = Product::find($request->product_id);
             $product->category_id = $category->id;
             $product->save();

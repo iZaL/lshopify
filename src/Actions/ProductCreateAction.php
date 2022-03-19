@@ -35,8 +35,8 @@ class ProductCreateAction
         $category = $requestData->get('category');
         $product->update(['category_id' => $category['id'] ?? null]);
 
-//        $vendor = $requestData->get('vendor');
-//        $product->update(['vendor_id' => $vendor['id'] ?? null]);
+        //        $vendor = $requestData->get('vendor');
+        //        $product->update(['vendor_id' => $vendor['id'] ?? null]);
 
         // tags
         $product->syncTags(

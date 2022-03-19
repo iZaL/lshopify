@@ -21,8 +21,8 @@ export default function CollectionConditionItem(props: Props) {
         inputStyle="flex-1"
         onChange={props.onFieldChange}>
         <option value="title">Product title</option>
-        <option value="product_type">Product type</option>
-        {/*<option value="vendor">Product vendor</option>*/}
+        <option value="category">Product category</option>
+        <option value="vendor">Product vendor</option>
         <option value="product_tag">Product tag</option>
         <option value="price">Price</option>
         <option value="compare_at_price">Compare at price</option>

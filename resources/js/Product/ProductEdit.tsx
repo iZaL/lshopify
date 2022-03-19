@@ -1,27 +1,36 @@
-import React, { useEffect } from 'react'
-import Main from '../Main'
-import PageHeader from '../components/PageHeader'
-import TitleSection from './components/TitleSection'
-import MediaSection from './components/MediaSection'
-import PricingSection from './components/PricingSection'
-import InventorySection from './components/InventorySection'
-import ShippingSection from './components/ShippingSection'
-import VariantSection from './components/VariantSection'
-import StatusSection from './components/StatusSection'
-import FormSubmitBar from '../components/FormSubmitBar'
-import VariantEditSection from './components/VariantEditSection'
-import { useForm } from '@inertiajs/inertia-react'
-import { Inertia } from '@inertiajs/inertia'
-import { Category, Collection, Image, Product, Tag, Variant, VariantOption, Vendor, } from '../types'
-import route from 'ziggy-js'
-import BackButton from '../components/BackButton'
-import Subheader from '../components/Subheader'
-import Card from '../components/Card'
-import Label from '../components/forms/Label'
-import Border from '../components/Border'
-import SingleSelect from '../components/SingleSelect'
-import MultiSelect from '../components/MultiSelect'
-import MultiSelectDropdown from '../components/MultiSelectDropdown'
+import React, {useEffect} from 'react';
+import Main from '../Main';
+import PageHeader from '../components/PageHeader';
+import TitleSection from './components/TitleSection';
+import MediaSection from './components/MediaSection';
+import PricingSection from './components/PricingSection';
+import InventorySection from './components/InventorySection';
+import ShippingSection from './components/ShippingSection';
+import VariantSection from './components/VariantSection';
+import StatusSection from './components/StatusSection';
+import FormSubmitBar from '../components/FormSubmitBar';
+import VariantEditSection from './components/VariantEditSection';
+import {useForm} from '@inertiajs/inertia-react';
+import {Inertia} from '@inertiajs/inertia';
+import {
+  Category,
+  Collection,
+  Image,
+  Product,
+  Tag,
+  Variant,
+  VariantOption,
+  Vendor,
+} from '../types';
+import route from 'ziggy-js';
+import BackButton from '../components/BackButton';
+import Subheader from '../components/Subheader';
+import Card from '../components/Card';
+import Label from '../components/forms/Label';
+import Border from '../components/Border';
+import SingleSelect from '../components/SingleSelect';
+import MultiSelect from '../components/MultiSelect';
+import MultiSelectDropdown from '../components/MultiSelectDropdown';
 
 interface Props {
   product: Product;
@@ -31,7 +40,7 @@ interface Props {
   variant_options: VariantOption[];
   variant_values: VariantOption[];
   tags: Tag[];
-  vendors:Vendor[];
+  vendors: Vendor[];
 }
 
 type Form = Product & {
@@ -160,11 +169,11 @@ export default function ProductEdit(props: Props) {
       url,
       {
         name: value,
-        product_id:product.id
+        product_id: product.id,
       },
       {
-        preserveScroll:true,
-        preserveState:false,
+        preserveScroll: true,
+        preserveState: false,
       },
     );
   };
@@ -175,12 +184,12 @@ export default function ProductEdit(props: Props) {
       url,
       {
         name: value,
-        taggable_id:product.id,
-        taggable_type:'product'
+        taggable_id: product.id,
+        taggable_type: 'product',
       },
       {
-        preserveScroll:true,
-        preserveState:false,
+        preserveScroll: true,
+        preserveState: false,
       },
     );
   };
@@ -191,10 +200,10 @@ export default function ProductEdit(props: Props) {
       url,
       {
         name: value,
-        product_id:product.id
+        product_id: product.id,
       },
       {
-        preserveScroll:true,
+        preserveScroll: true,
         preserveState: false,
       },
     );
@@ -296,7 +305,7 @@ export default function ProductEdit(props: Props) {
                 <Label title="Category" labelStyle="mb-1" />
                 <SingleSelect
                   items={categories}
-                  selectedItem={data.category??null}
+                  selectedItem={data.category ?? null}
                   onChange={record => setData('category', record)}
                   onCreate={value => onProductTypeCreate(value)}
                 />
@@ -308,7 +317,7 @@ export default function ProductEdit(props: Props) {
                 <Label title="Vendor" labelStyle="mb-1" />
                 <SingleSelect
                   items={vendors}
-                  selectedItem={data.vendor?? null}
+                  selectedItem={data.vendor ?? null}
                   onChange={record => setData('vendor', record)}
                   onCreate={value => onVendorCreate(value)}
                 />

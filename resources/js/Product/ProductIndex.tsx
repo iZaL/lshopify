@@ -25,9 +25,9 @@ type Form = {
 export default function ProductIndex(props: Props) {
   const {products} = props;
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [productAttributes,setProductAttributes] = useState({
+  const [productAttributes, setProductAttributes] = useState({
     status: props.status,
-    search: props.search
+    search: props.search,
   });
 
   const {data, setData, post, isDirty} = useForm<Form>({
@@ -38,7 +38,7 @@ export default function ProductIndex(props: Props) {
     const newData = {
       ...productAttributes,
       [field]: value,
-    }
+    };
     Inertia.get(route('lshopify.products.index'), newData, {
       preserveState: true,
       replace: true,
@@ -46,7 +46,11 @@ export default function ProductIndex(props: Props) {
     setProductAttributes(newData);
   };
 
-  const onBulkUpdate = <T extends keyof Product>(productIDs:number[], field:T,value:Product[T]) => {
+  const onBulkUpdate = <T extends keyof Product>(
+    productIDs: number[],
+    field: T,
+    value: Product[T],
+  ) => {
     // setData({
     //   ...data,
     //   products: products.map(product => {
@@ -60,7 +64,7 @@ export default function ProductIndex(props: Props) {
     //   }),
     // });
 
-    const updatedProducts= products.map(product => {
+    const updatedProducts = products.map(product => {
       if (productIDs.includes(product.id)) {
         return {
           ...product,
@@ -71,15 +75,15 @@ export default function ProductIndex(props: Props) {
     });
 
     Inertia.post(route('lshopify.products.bulk_editor.update'), {
-      products:updatedProducts
+      products: updatedProducts,
     });
-  }
+  };
 
-  const onDelete = (productIDs:number[]) => {
+  const onDelete = (productIDs: number[]) => {
     Inertia.post(route('lshopify.products.delete'), {
       product_ids: productIDs,
     });
-  }
+  };
 
   return (
     <Main>

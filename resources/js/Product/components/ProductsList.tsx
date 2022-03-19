@@ -11,8 +11,12 @@ import route from 'ziggy-js';
 
 interface Props {
   products: Product[];
-  onUpdate:<T extends keyof Product>(productIDs:number[],field:T,value:Product[T])=>void;
-  onDelete: (productIDs:number[]) => void;
+  onUpdate: <T extends keyof Product>(
+    productIDs: number[],
+    field: T,
+    value: Product[T],
+  ) => void;
+  onDelete: (productIDs: number[]) => void;
 }
 
 interface ModalProp {
@@ -25,7 +29,7 @@ interface ModalProp {
   onClose: () => void;
 }
 
-export default function ProductsList({products,onUpdate, onDelete}: Props) {
+export default function ProductsList({products, onUpdate, onDelete}: Props) {
   const [showDialog, setShowDialog] = React.useState(false);
   const [modalParams, setModalParams] = React.useState<ModalProp>({
     cancelButtonTitle: 'Cancel',
@@ -63,8 +67,7 @@ export default function ProductsList({products,onUpdate, onDelete}: Props) {
                     Inertia.get(route('lshopify.products.bulk_editor.index'), {
                       product_ids: selectedItemIDs,
                     })
-                  }
-                >
+                  }>
                   Edit products
                 </Button>
 
@@ -87,7 +90,7 @@ export default function ProductsList({products,onUpdate, onDelete}: Props) {
                           submitButtonTitle: 'Set as active',
                           onSubmit: () => {
                             setShowDialog(false);
-                            onUpdate(selectedItemIDs,'status', 'active');
+                            onUpdate(selectedItemIDs, 'status', 'active');
                           },
                         }),
                     },
@@ -101,7 +104,7 @@ export default function ProductsList({products,onUpdate, onDelete}: Props) {
                           submitButtonTitle: 'Set as draft',
                           onSubmit: () => {
                             setShowDialog(false);
-                            onUpdate(selectedItemIDs,'status', 'draft');
+                            onUpdate(selectedItemIDs, 'status', 'draft');
                           },
                         }),
                     },
@@ -115,7 +118,7 @@ export default function ProductsList({products,onUpdate, onDelete}: Props) {
                           submitButtonTitle: 'Archive products',
                           onSubmit: () => {
                             setShowDialog(false);
-                            onUpdate(selectedItemIDs,'status', 'archived');
+                            onUpdate(selectedItemIDs, 'status', 'archived');
                           },
                         }),
                     },
@@ -179,8 +182,8 @@ export default function ProductsList({products,onUpdate, onDelete}: Props) {
                   </Table.Cell>
                   <Table.Cell>{item.status}</Table.Cell>
                   <Table.Cell>4 in stocks for 5 variants</Table.Cell>
-                  <Table.Cell>{item.product_type}</Table.Cell>
-                  <Table.Cell>zalsstores</Table.Cell>
+                  <Table.Cell>{item.category?.name}</Table.Cell>
+                  <Table.Cell>{item.vendor?.name}</Table.Cell>
                 </>
               );
             }}
