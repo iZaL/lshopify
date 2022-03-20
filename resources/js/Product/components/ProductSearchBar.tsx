@@ -7,15 +7,16 @@ import InputText from '../../components/forms/InputText';
 import {ProductStatus, Vendor} from '../../types';
 import Button from '../../components/Button';
 import Checkbox from '../../components/forms/Checkbox';
-import {ProductSearchAttributes} from '../types';
+import {SearchAttributes, TabAttributes} from '../types';
+
+// interface TabProps extends SearchAttributes  {
+//   statusTab:ProductStatus | 'statusTab'
+// }
 
 interface Props {
-  tabs: string[];
-  searchAttributes: ProductSearchAttributes;
-  onChange: <T extends keyof ProductSearchAttributes>(
-    field: T,
-    value: ProductSearchAttributes[T],
-  ) => void;
+  tabs: TabAttributes[];
+  searchAttributes: SearchAttributes;
+  onChange: (data: SearchAttributes) => void;
   onMoreFiltersClick: () => void;
   vendors: Vendor[];
 }
@@ -27,12 +28,55 @@ export default function ProductSearchBar({
   vendors,
   searchAttributes,
 }: Props) {
+  console.log('s', searchAttributes);
+
+  const setSearchAttributes = <T extends keyof SearchAttributes>(
+    key: T,
+    value: SearchAttributes[T],
+  ) => {
+    onChange({
+      ...searchAttributes,
+      [key]: value,
+    });
+  };
+
+  const setVendor = (vendorID: string) => {
+    const includes = searchAttributes.selected_vendors.includes(`${vendorID}`);
+    console.log('includes', includes);
+    if (includes) {
+      setSearchAttributes(
+        'selected_vendors',
+        searchAttributes.selected_vendors.filter(v => v !== `${vendorID}`),
+      );
+    } else {
+      setSearchAttributes('selected_vendors', [
+        ...searchAttributes.selected_vendors,
+        vendorID,
+      ]);
+    }
+  };
+
+  const setStatus = (tab: TabAttributes) => {
+    const includes = searchAttributes.selected_status.includes(tab);
+    if (includes) {
+      setSearchAttributes(
+        'selected_status',
+        searchAttributes.selected_status.filter(v => v !== tab),
+      );
+    } else {
+      setSearchAttributes('selected_status', [
+        ...searchAttributes.selected_status,
+        tab,
+      ]);
+    }
+  };
+
   return (
     <div className="">
       <div className="border-b border-gray-200">
         <nav className="-mb-px flex space-x-2">
           {tabs.map(tab => {
-            let active = tab === status;
+            let active = tab === searchAttributes.selected_view;
             return (
               <Button
                 theme="clear"
@@ -43,15 +87,14 @@ export default function ProductSearchBar({
                     : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
                   'mx-2 whitespace-nowrap border-b-2 py-3 px-6 text-sm font-medium',
                 )}
-                onClick={() =>
-                  onChange(
-                    'status',
-                    searchAttributes.status.includes(tab)
-                      ? searchAttributes.status.filter(status => status !== tab)
-                      : [...searchAttributes.status, tab],
-                  )
-                }>
-                {tab}
+                onClick={() => {
+                  onChange({
+                    ...searchAttributes,
+                    selected_view: tab,
+                    selected_status: [tab],
+                  });
+                }}>
+                <span className="capitalize">{tab}</span>
               </Button>
             );
           })}
@@ -70,8 +113,10 @@ export default function ProductSearchBar({
               </div>
               <InputText
                 name="search"
-                onChange={event => onChange('search', event.target.value)}
-                value={searchAttributes.search}
+                onChange={event =>
+                  setSearchAttributes('search_term', event.target.value)
+                }
+                value={searchAttributes.search_term}
                 placeholder="Search products"
               />
             </div>
@@ -95,11 +140,15 @@ export default function ProductSearchBar({
 
                     <Popover.Panel className="absolute right-0 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                       {vendors.map(vendor => {
+                        let active = searchAttributes.selected_vendors.includes(
+                          `${vendor.id}`,
+                        );
                         return (
                           <Checkbox
-                            checked
+                            key={vendor.id}
+                            checked={active}
                             name={`vendor${vendor.id}`}
-                            onChange={() => {}}
+                            onChange={() => setVendor(vendor.id)}
                             label={vendor.name}
                           />
                         );
@@ -137,22 +186,16 @@ export default function ProductSearchBar({
 
                     <Popover.Panel className="absolute right-0 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                       {tabs
-                        .filter(tab => tab !== 'All')
+                        .filter(tab => tab !== 'all')
                         .map(tab => {
+                          let active =
+                            searchAttributes.selected_status.includes(tab);
                           return (
                             <Checkbox
-                              checked={searchAttributes.status.includes(tab)}
+                              key={tab}
+                              checked={active}
                               name={`tab${tab}`}
-                              onChange={() =>
-                                onChange(
-                                  'status',
-                                  searchAttributes.status.includes(tab)
-                                    ? searchAttributes.status.filter(
-                                        status => status !== tab,
-                                      )
-                                    : [...searchAttributes.status, tab],
-                                )
-                              }
+                              onChange={() => setStatus(tab)}
                               label={tab}
                             />
                           );

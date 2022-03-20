@@ -35,18 +35,33 @@ class ProductController extends Controller
             $products->where('title', 'like', '%' . $searchTerm . '%');
         }
 
-        $status = $request->status ?? 'All';
-        if ($status && $status != 'All') {
-            $products->where('status', $request->status);
+        $statuses = collect($request->get('selected_status') ?? [])->unique();
+
+        $selectedView = $request->selected_view ?? 'all';
+        if ($selectedView && $selectedView != 'all') {
+            if ($statuses->count() > 0) {
+                $products->whereIn('status', $statuses->toArray());
+            } else {
+                $products->where('status', $selectedView);
+            }
+        }
+
+        $selectedVendors = collect($request->get('selected_vendors') ?? [])->unique();
+
+        if($selectedVendors->count() > 0) {
+            $products->whereIn('vendor_id', $selectedVendors->toArray());
         }
 
         $products = ProductResource::collection($products->get());
+        $vendors = VendorResource::collection(Vendor::all());
 
         return Inertia::render('Product/ProductIndex', [
             'products' => $products,
-            'statuses' => ['All', 'Active', 'Draft', 'Archived'],
-            'search' => $searchTerm,
-            'status' => $status,
+            'selected_status' => $statuses,
+            'selected_vendors' => $selectedVendors,
+            'search_term' => $searchTerm,
+            'selected_view' => $selectedView,
+            'vendors' => $vendors,
         ]);
     }
 

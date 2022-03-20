@@ -7,9 +7,12 @@ class VariantStoreRequest extends VariantFieldRequest
     public function rules()
     {
         $array1 = $this->validate('');
-        return array_merge([
-            'options' => 'required|array',
-            'options.*.id' => 'required|string',
-        ],$array1);
+        return array_merge(
+            [
+                'options' => 'required|array',
+                'options.*.id' => 'required|string',
+            ],
+            $array1
+        );
     }
 }

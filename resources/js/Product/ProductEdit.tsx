@@ -144,8 +144,8 @@ export default function ProductEdit(props: Props) {
       value: value,
     };
     Inertia.post(url, productData, {
-      preserveState: true,
-      preserveScroll: true,
+      preserveState: false,
+      preserveScroll: false,
     });
   };
 

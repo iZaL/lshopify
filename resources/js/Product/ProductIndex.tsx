@@ -9,39 +9,31 @@ import RightSidebar from '../components/RightSidebar';
 import ProductFiltersPanel from './components/ProductFiltersPanel';
 import {Inertia} from '@inertiajs/inertia';
 import route from 'ziggy-js';
-import {ProductSearchAttributes} from './types';
+import {SearchAttributes, TabAttributes} from './types';
 
-interface Props {
+interface Props extends SearchAttributes {
   products: Product[];
-  statuses: ProductStatus[];
-  status: ProductStatus;
-  search: string;
+  vendors: Vendor[];
 }
 
-export default function ProductIndex(props: Props) {
-  const {products} = props;
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [searchAttributes, setSearchAttributes] =
-    useState<ProductSearchAttributes>({
-      status: [props.status],
-      search: props.search,
-      vendors: [],
-      tags: [],
-    });
+const tabs: TabAttributes[] = ['all', 'active', 'draft', 'archived'];
 
-  const onChange = <T extends keyof ProductSearchAttributes>(
-    field: T,
-    value: ProductSearchAttributes[T],
-  ) => {
-    const newData = {
-      ...searchAttributes,
-      [field]: value,
-    };
-    Inertia.get(route('lshopify.products.index'), newData, {
+export default function ProductIndex(props: Props) {
+  const {
+    products,
+    selected_status,
+    selected_vendors,
+    search_term,
+    selected_view,
+    vendors,
+  } = props;
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const onChange = (data: SearchAttributes) => {
+    Inertia.get(route('lshopify.products.index'), data, {
       preserveState: true,
       replace: true,
     });
-    setSearchAttributes(newData);
   };
 
   const onBulkUpdate = <T extends keyof Product>(
@@ -69,6 +61,7 @@ export default function ProductIndex(props: Props) {
     });
   };
 
+  console.log('props', props);
   return (
     <Main>
       <div className="p-6">
@@ -87,14 +80,15 @@ export default function ProductIndex(props: Props) {
             </RightSidebar>
             <ProductSearchBar
               onMoreFiltersClick={() => setSidebarOpen(!sidebarOpen)}
-              searchAttributes={searchAttributes}
-              vendors={
-                products
-                  .filter(product => !!product.vendor)
-                  .map(product => product.vendor) as Vendor[]
-              }
-              tabs={props.statuses || []}
+              vendors={vendors || []}
+              tabs={tabs}
               onChange={onChange}
+              searchAttributes={{
+                selected_status,
+                selected_vendors,
+                search_term,
+                selected_view,
+              }}
             />
             <ProductsList
               products={products}
