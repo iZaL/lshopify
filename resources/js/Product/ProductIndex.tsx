@@ -1,19 +1,20 @@
-import React, {useState} from 'react';
-import Main from '../Main';
-import PageHeader from '../components/PageHeader';
-import {Product, ProductStatus, Vendor} from '../types';
-import ProductIndexActionButtons from './components/ProductIndexActionButtons';
-import ProductSearchBar from './components/ProductSearchBar';
-import ProductsList from './components/ProductsList';
-import RightSidebar from '../components/RightSidebar';
-import ProductFiltersPanel from './components/ProductFiltersPanel';
-import {Inertia} from '@inertiajs/inertia';
-import route from 'ziggy-js';
-import {SearchAttributes, TabAttributes} from './types';
+import React, { useEffect, useState } from 'react'
+import Main from '../Main'
+import PageHeader from '../components/PageHeader'
+import { Product, Vendor } from '../types'
+import ProductIndexActionButtons from './components/ProductIndexActionButtons'
+import ProductSearchBar from './components/ProductSearchBar'
+import ProductsList from './components/ProductsList'
+import RightSidebar from '../components/RightSidebar'
+import ProductFiltersPanel from './components/ProductFiltersPanel'
+import { Inertia } from '@inertiajs/inertia'
+import route from 'ziggy-js'
+import { SearchAttributes, TabAttributes } from './types'
 
-interface Props extends SearchAttributes {
+interface Props {
   products: Product[];
   vendors: Vendor[];
+  search_attributes:SearchAttributes;
 }
 
 const tabs: TabAttributes[] = ['all', 'active', 'draft', 'archived'];
@@ -21,15 +22,16 @@ const tabs: TabAttributes[] = ['all', 'active', 'draft', 'archived'];
 export default function ProductIndex(props: Props) {
   const {
     products,
-    selected_status,
-    selected_vendors,
-    search_term,
-    selected_view,
+    search_attributes,
     vendors,
   } = props;
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const [searchAttributes, setSearchAttributes] = useState(search_attributes);
+
   const onChange = (data: SearchAttributes) => {
+    setSearchAttributes(data);
     Inertia.get(route('lshopify.products.index'), data, {
       preserveState: true,
       replace: true,
@@ -61,7 +63,6 @@ export default function ProductIndex(props: Props) {
     });
   };
 
-  console.log('props', props);
   return (
     <Main>
       <div className="p-6">
@@ -76,19 +77,15 @@ export default function ProductIndex(props: Props) {
               isOpen={sidebarOpen}
               onClose={() => setSidebarOpen(false)}
               title={'More Filters'}>
-              <ProductFiltersPanel />
+              <ProductFiltersPanel
+              />
             </RightSidebar>
             <ProductSearchBar
               onMoreFiltersClick={() => setSidebarOpen(!sidebarOpen)}
               vendors={vendors || []}
               tabs={tabs}
               onChange={onChange}
-              searchAttributes={{
-                selected_status,
-                selected_vendors,
-                search_term,
-                selected_view,
-              }}
+              searchAttributes={searchAttributes}
             />
             <ProductsList
               products={products}

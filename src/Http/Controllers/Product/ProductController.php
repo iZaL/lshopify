@@ -26,23 +26,30 @@ class ProductController extends Controller
     public function index(Request $request): \Inertia\Response
     {
         $products = Product::query()
-            ->with(['category', 'vendor'])
+            ->with(['category', 'vendor','tags'])
             ->withCount('variants');
 
-        $searchTerm = $request->get('search');
+        $searchTerm = $request->search_term;
+        $tagTerm = $request->get('tag_term');
 
         if ($searchTerm) {
             $products->where('title', 'like', '%' . $searchTerm . '%');
         }
 
+        if($tagTerm) {
+            $products->whereHas('tags', function($query) use ($tagTerm) {
+                $query->where('name', 'like', '%' . $tagTerm . '%');
+            });
+        }
+
         $statuses = collect($request->get('selected_status') ?? [])->unique();
 
-        $selectedView = $request->selected_view ?? 'all';
-        if ($selectedView && $selectedView != 'all') {
-            if ($statuses->count() > 0) {
-                $products->whereIn('status', $statuses->toArray());
-            } else {
-                $products->where('status', $selectedView);
+        $selectedTab = $request->selected_view ?? 'all';
+        if ($statuses->count() > 0) {
+            $products->whereIn('status', $statuses->toArray());
+        } else {
+            if ($selectedTab && $selectedTab != 'all') {
+                $products->where('status', $selectedTab);
             }
         }
 
@@ -57,10 +64,13 @@ class ProductController extends Controller
 
         return Inertia::render('Product/ProductIndex', [
             'products' => $products,
-            'selected_status' => $statuses,
-            'selected_vendors' => $selectedVendors,
-            'search_term' => $searchTerm,
-            'selected_view' => $selectedView,
+            'search_attributes' => [
+                'selected_status' => $statuses,
+                'selected_vendors' => $selectedVendors,
+                'search_term' => $searchTerm,
+                'selected_view' => $selectedTab,
+                'tag_term' => $tagTerm
+            ],
             'vendors' => $vendors,
         ]);
     }

@@ -19,16 +19,16 @@ export default function RightSidebar({
       <Dialog
         as="div"
         static
-        className="fixed inset-0 overflow-hidden"
+        className="fixed inset-0 overflow-hidden z-20"
         open={isOpen}
         onClose={() => onClose()}>
         <div className="">
           <Transition.Child
             as={Fragment}
-            enter="ease-in-out duration-300"
+            enter="ease-in-out duration-100"
             enterFrom="opacity-0"
             enterTo="opacity-100"
-            leave="ease-in-out duration-300"
+            leave="ease-in-out duration-100"
             leaveFrom="opacity-100"
             leaveTo="opacity-0">
             <Dialog.Overlay className="absolute inset-0 bg-gray-300 bg-opacity-75 transition-opacity" />
