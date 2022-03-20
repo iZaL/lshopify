@@ -18,6 +18,11 @@ interface HeaderProps {
   children: React.ReactNode;
 }
 
+interface SmartTableProps<T> {
+  items: T[];
+  children: React.ReactNode;
+}
+
 const SmartTableContext = React.createContext<
   SmartTableContextData<ItemWithID>
 >({
@@ -27,14 +32,11 @@ const SmartTableContext = React.createContext<
   items: [],
 });
 
-const SmartTable = <Item extends ItemWithID>({
+const SmartTable = <T extends ItemWithID>({
   items,
   children,
-}: {
-  items: Item[];
-  children: React.ReactNode;
-}) => {
-  const [selectedItemIDs, setSelectedItemIDs] = useState<Item['id'][]>([]);
+}: SmartTableProps<T>) => {
+  const [selectedItemIDs, setSelectedItemIDs] = useState<T['id'][]>([]);
 
   useEffect(() => {
     setSelectedItemIDs([]);

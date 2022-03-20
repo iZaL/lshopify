@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Main from '../Main';
 import PageHeader from '../components/PageHeader';
-import {Product, ProductStatus} from '../types';
+import {Product, ProductStatus, Vendor} from '../types';
 import ProductIndexActionButtons from './components/ProductIndexActionButtons';
 import ProductSearchBar from './components/ProductSearchBar';
 import ProductsList from './components/ProductsList';
@@ -9,6 +9,7 @@ import RightSidebar from '../components/RightSidebar';
 import ProductFiltersPanel from './components/ProductFiltersPanel';
 import {Inertia} from '@inertiajs/inertia';
 import route from 'ziggy-js';
+import {ProductSearchAttributes} from './types';
 
 interface Props {
   products: Product[];
@@ -20,21 +21,27 @@ interface Props {
 export default function ProductIndex(props: Props) {
   const {products} = props;
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [productAttributes, setProductAttributes] = useState({
-    status: props.status,
-    search: props.search,
-  });
+  const [searchAttributes, setSearchAttributes] =
+    useState<ProductSearchAttributes>({
+      status: [props.status],
+      search: props.search,
+      vendors: [],
+      tags: [],
+    });
 
-  const onChange = (field: 'search' | 'status', value: string) => {
+  const onChange = <T extends keyof ProductSearchAttributes>(
+    field: T,
+    value: ProductSearchAttributes[T],
+  ) => {
     const newData = {
-      ...productAttributes,
+      ...searchAttributes,
       [field]: value,
     };
     Inertia.get(route('lshopify.products.index'), newData, {
       preserveState: true,
       replace: true,
     });
-    setProductAttributes(newData);
+    setSearchAttributes(newData);
   };
 
   const onBulkUpdate = <T extends keyof Product>(
@@ -80,8 +87,12 @@ export default function ProductIndex(props: Props) {
             </RightSidebar>
             <ProductSearchBar
               onMoreFiltersClick={() => setSidebarOpen(!sidebarOpen)}
-              searchTerm={productAttributes.search}
-              status={productAttributes.status}
+              searchAttributes={searchAttributes}
+              vendors={
+                products
+                  .filter(product => !!product.vendor)
+                  .map(product => product.vendor) as Vendor[]
+              }
               tabs={props.statuses || []}
               onChange={onChange}
             />

@@ -144,10 +144,8 @@ export default function ProductEdit(props: Props) {
       value: value,
     };
     Inertia.post(url, productData, {
-      preserveScroll: false,
-      onSuccess: () => {
-        Inertia.reload();
-      },
+      preserveState: true,
+      preserveScroll: true,
     });
   };
 

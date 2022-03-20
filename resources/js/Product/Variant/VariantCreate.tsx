@@ -12,7 +12,7 @@ import ProductInfo from './components/ProductInfo';
 import InventorySection from '../components/InventorySection';
 import ShippingSection from '../components/ShippingSection';
 import route from 'ziggy-js';
-import BackButton from '../../components/BackButton'
+import BackButton from '../../components/BackButton';
 
 interface Props {
   product: Product;

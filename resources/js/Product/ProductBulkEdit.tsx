@@ -212,7 +212,7 @@ export default function ProductBulkEdit(props: Props) {
 
   const handleSubmit = (): void => {
     Inertia.post(route('lshopify.products.bulk_editor.update'), data, {
-      preserveState:false
+      preserveState: false,
     });
   };
 
@@ -220,13 +220,7 @@ export default function ProductBulkEdit(props: Props) {
     {
       General: ['title', 'status', 'tags'],
       Pricing: ['price', 'cost_price', 'compare_at_price', 'taxable'],
-      Inventory: [
-        'sku',
-        'barcode',
-        'quantity',
-        'out_of_stock_sale',
-        'tracked',
-      ],
+      Inventory: ['sku', 'barcode', 'quantity', 'out_of_stock_sale', 'tracked'],
       Shipping: ['weight', 'requires_shipping', 'hs_code'],
       SEO: ['seo_title', 'seo_description', 'seo_url'],
     };

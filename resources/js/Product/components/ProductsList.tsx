@@ -177,19 +177,28 @@ export default function ProductsList({products, onUpdate, onDelete}: Props) {
                           imageStyle={'w-14 h-14'}
                         />
                       )}
-                      {item.title}
+                      <span className="inline-block font-medium">
+                        {item.title}
+                      </span>
                     </Button>
                   </Table.Cell>
                   <Table.Cell>{item.status}</Table.Cell>
                   <Table.Cell>
-                    {
-                      item.inventory_tracked ? (
-                        item.available_quantity == 0 ? <span className='text-red-500'>0 in stock</span> :
-                          `${item.available_quantity} in stock ${item.variants_count > 0 ?` for ${item.variants_count} variants ` : ''}`
+                    {item.inventory_tracked ? (
+                      item.available_quantity == 0 ? (
+                        <span className="text-red-500">0 in stock</span>
                       ) : (
-                        <span className='text-gray-500'>Inventory not tracked</span>
+                        `${item.available_quantity} in stock ${
+                          item.variants_count > 0
+                            ? ` for ${item.variants_count} variants `
+                            : ''
+                        }`
                       )
-                    }
+                    ) : (
+                      <span className="text-gray-500">
+                        Inventory not tracked
+                      </span>
+                    )}
                   </Table.Cell>
                   <Table.Cell>{item.category?.name}</Table.Cell>
                   <Table.Cell>{item.vendor?.name}</Table.Cell>
