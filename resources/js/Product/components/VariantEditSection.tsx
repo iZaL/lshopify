@@ -17,6 +17,9 @@ import Button from '../../components/Button';
 import classNames from 'classnames';
 import Checkbox from '../../components/forms/Checkbox';
 import InputText from '../../components/forms/InputText';
+import DropdownAlt from '../../components/DropdownAlt'
+import MultiSelectDropdown from '../../components/MultiSelectDropdown'
+import PopoverButton from '../../components/PopoverButton'
 
 interface Props {
   currentVariants: Variant[];
@@ -51,6 +54,10 @@ export default function VariantEditSection({
   const [showDialog, setShowDialog] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
+
+  // console.log('variantValues', variantValues);
+  // console.log('variantOptions', variantOptions);
+  // console.log('currentVariants', currentVariants);
 
   const onVariantOptionsChange = (
     variant: Variant,
@@ -199,6 +206,28 @@ export default function VariantEditSection({
         <li className="text-blue-500" onClick={() => setCheckedVariantIDs([])}>
           None
         </li>
+        {/*<div className='z-30 bg-white'>*/}
+        {/*  {*/}
+        {/*    variantOptions.map((option, index) => {*/}
+        {/*      return (*/}
+        {/*        <PopoverButton title={option.id} buttonStyle='text-sm border-none py-0 hover:bg-white' >*/}
+        {/*          {*/}
+        {/*            variantValues?.map((value) => {*/}
+        {/*              if(value.id === option.id) {*/}
+        {/*                return (*/}
+        {/*                  <Checkbox name={value.id} checked={true} onChange={()=>onVariantOptionClick(value)} label={value.name} />*/}
+        {/*                )*/}
+        {/*              }*/}
+        {/*              return null;*/}
+
+        {/*            })*/}
+        {/*          }*/}
+        {/*        </PopoverButton>*/}
+        {/*      )*/}
+        {/*    })*/}
+        {/*  }*/}
+        {/*</div>*/}
+
         {variantValues.map((option, i) => {
           return (
             <li
@@ -403,9 +432,15 @@ export default function VariantEditSection({
                         }
                        `}>
                         {variantOptions.map((option: VariantOption, idx) => {
-                          const currentOption = ensure(
-                            variant.options?.find(v => v.name === option.id),
-                          );
+                          // console.log('option',option);
+                          // console.log('variant.options',variant.options);
+
+                          const currentOption = variant.options?.find(v => v.id === option.id) as VariantOption;
+
+                          if(!currentOption) {
+                            return null;
+                          }
+
                           return (
                             <div key={idx}>
                               <InputText
@@ -421,6 +456,7 @@ export default function VariantEditSection({
                               />
                             </div>
                           );
+
                         })}
 
                         <div className="">

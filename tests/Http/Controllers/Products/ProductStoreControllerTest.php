@@ -28,7 +28,7 @@ class ProductStoreControllerTest extends TestCase
         $tag2 = Tag::factory()->create();
         $category = Category::factory()->create();
 
-        Storage::fake('images');
+//        Storage::fake('images');
 
         $images = [UploadedFile::fake()->image('image.jpg'), UploadedFile::fake()->image('image.jpg')];
 
@@ -53,7 +53,7 @@ class ProductStoreControllerTest extends TestCase
                 'requires_shipping'=> true,
                 'options'=> [
                     [
-                        'id'=> '2',
+                        'id'=> 'Color',
                         'name'=> 'Color',
                         'options'=> [
                             [
@@ -67,7 +67,7 @@ class ProductStoreControllerTest extends TestCase
                         ],
                     ],
                     [
-                        'id'=> '1',
+                        'id'=> 'Size',
                         'name'=> 'Size',
                         'options'=> [
                             [
@@ -81,7 +81,7 @@ class ProductStoreControllerTest extends TestCase
                         ],
                     ],
                     [
-                        'id'=> '3',
+                        'id'=> 'Material',
                         'name'=> 'Material',
                         'options'=> [
                             [

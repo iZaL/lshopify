@@ -86,7 +86,7 @@ class Variant extends BaseModel
     public function getTitleAttribute()
     {
         return collect($this->options)
-            ->pluck('id')
+            ->pluck('name')
             ->join(' / ');
     }
 }

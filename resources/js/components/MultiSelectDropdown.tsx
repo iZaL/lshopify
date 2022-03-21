@@ -6,7 +6,7 @@ import InputText from './forms/InputText';
 import Checkbox from './forms/Checkbox';
 
 type Item = {
-  id: number;
+  id: number|string;
   name: string;
 };
 

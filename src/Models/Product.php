@@ -73,7 +73,7 @@ class Product extends BaseModel
     {
         return $this->variants
             ->pluck('options')
-            ->unique('id')
+            ->unique('name')
             ->collapse()
             ->toArray();
     }
@@ -83,7 +83,7 @@ class Product extends BaseModel
         $variants = $this->variants
             ->pluck('options')
             ->collapse()
-            ->unique()
+            ->unique('name')
             ->toArray();
 
         return [...$variants];

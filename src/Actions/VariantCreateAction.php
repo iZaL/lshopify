@@ -64,8 +64,8 @@ class VariantCreateAction
 
             foreach ($variant1Array as $variant1Arr) {
                 $variant1Options[] = [
-                    'name' => $variant1['name'],
-                    'id' => $variant1Arr['id'],
+                    'name' => $variant1Arr['id'],
+                    'id' => $variant1['name'],
                 ];
             }
         }
@@ -79,8 +79,8 @@ class VariantCreateAction
 
             foreach ($variant2Array as $variant2Arr) {
                 $variant2Options[] = [
-                    'name' => $variant2['name'],
-                    'id' => $variant2Arr['id'],
+                    'name' => $variant2Arr['id'],
+                    'id' => $variant2['name'],
                 ];
             }
         }
@@ -94,8 +94,8 @@ class VariantCreateAction
 
             foreach ($variant3Array as $variant3Arr) {
                 $variant3Options[] = [
-                    'name' => $variant3['name'],
-                    'id' => $variant3Arr['id'],
+                    'name' => $variant3Arr['id'],
+                    'id' => $variant3['name'],
                 ];
             }
         }
@@ -106,6 +106,7 @@ class VariantCreateAction
             $optionsArray = $variant3Options
                 ? $optionsArray->crossJoin($variant2Options, $variant3Options)
                 : $optionsArray->crossJoin($variant2Options);
+
         } else {
             // If only 1 option, turn into assosiative array
             $optionsArray = [];

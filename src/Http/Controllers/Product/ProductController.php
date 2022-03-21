@@ -119,6 +119,9 @@ class ProductController extends Controller
     ): \Illuminate\Http\RedirectResponse {
         $product = Product::getModel();
 
+//        $action = $productCreateAction->create($product, collect($request->all()));
+
+//        dd('wa');
         DB::beginTransaction();
 
         try {
