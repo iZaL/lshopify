@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Main from '../Main'
 import PageHeader from '../components/PageHeader'
-import { Category, Product, Vendor } from '../types'
+import { Category, Collection, Product, Vendor } from '../types'
 import ProductIndexActionButtons from './components/ProductIndexActionButtons'
 import ProductSearchBar from './components/ProductSearchBar'
 import ProductsList from './components/ProductsList'
@@ -13,13 +13,16 @@ interface Props {
   products: Product[];
   vendors: Vendor[];
   categories: Category[];
+  collections:{
+    data:Collection[]
+  };
   search_attributes: SearchAttributes;
 }
 
 const tabs: TabAttributes[] = ['all', 'active', 'draft', 'archived'];
 
 export default function ProductIndex(props: Props) {
-  const {products, search_attributes, vendors, categories} = props;
+  const {products, search_attributes, vendors, categories,collections} = props;
   const [searchAttributes, setSearchAttributes] = useState(search_attributes);
 
   const onChange = (data: SearchAttributes) => {
@@ -67,6 +70,7 @@ export default function ProductIndex(props: Props) {
             <ProductSearchBar
               vendors={vendors || []}
               categories={categories || []}
+              collections={collections.data || []}
               tabs={tabs}
               onChange={onChange}
               searchAttributes={searchAttributes}

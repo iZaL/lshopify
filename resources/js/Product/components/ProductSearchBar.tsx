@@ -4,13 +4,13 @@ import {SortAscendingIcon, XIcon} from '@heroicons/react/solid';
 import classNames from 'classnames';
 import {Popover} from '@headlessui/react';
 import InputText from '../../components/forms/InputText';
-import {Category, Vendor} from '../../types';
+import { Category, Collection, Vendor } from '../../types'
 import Button from '../../components/Button';
 import Checkbox from '../../components/forms/Checkbox';
 import {SearchAttributes, TabAttributes} from '../types';
 import RightSidebar from '../../components/RightSidebar';
-import DisclosurePanel from './ProductFiltersPanel';
 import PopoverButton from '../../components/PopoverButton';
+import DisclosurePanel from '../../components/DisclosurePanel'
 
 interface Props {
   tabs: TabAttributes[];
@@ -18,6 +18,7 @@ interface Props {
   onChange: (data: SearchAttributes) => void;
   vendors: Vendor[];
   categories: Category[];
+  collections: Collection[];
 }
 
 export default function ProductSearchBar({
@@ -26,6 +27,7 @@ export default function ProductSearchBar({
   vendors,
   searchAttributes,
   categories,
+  collections,
 }: Props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -54,6 +56,21 @@ export default function ProductSearchBar({
       setSearchAttributes('selected_vendors', [
         ...searchAttributes.selected_vendors,
         vendorID,
+      ]);
+    }
+  };
+
+  const setCollection = (collectionID: Collection['id']) => {
+    const includes = searchAttributes.selected_collections.includes(collectionID);
+    if (includes) {
+      setSearchAttributes(
+        'selected_collections',
+        searchAttributes.selected_collections.filter(v => v !== collectionID),
+      );
+    } else {
+      setSearchAttributes('selected_collections', [
+        ...searchAttributes.selected_collections,
+        collectionID,
       ]);
     }
   };
@@ -115,9 +132,9 @@ export default function ProductSearchBar({
         onClose={() => setSidebarOpen(false)}
         title={'More Filters'}>
         <div className="absolute inset-0 px-4 text-sm sm:px-6">
-          <div className="space-y-6">
+          <div className="space-y-4">
             <DisclosurePanel title="Product Vendor">
-              <div className="flex flex-col">
+              <div className="flex flex-col space-y-1">
                 {vendors.map(vendor => {
                   return (
                     <Checkbox
@@ -140,7 +157,7 @@ export default function ProductSearchBar({
             </DisclosurePanel>
 
             <DisclosurePanel title="Product Status">
-              <div className="flex flex-col">
+              <div className="flex flex-col space-y-1">
                 {tabs
                   .filter(tab => tab !== 'all')
                   .map(tab => {
@@ -179,7 +196,7 @@ export default function ProductSearchBar({
             </DisclosurePanel>
 
             <DisclosurePanel title="Product Type">
-              <div className="flex flex-col">
+              <div className="flex flex-col space-y-1">
                 {categories.map(category => {
                   return (
                     <Checkbox
@@ -200,6 +217,30 @@ export default function ProductSearchBar({
                 disabled={!searchAttributes.selected_categories.length}
               />
             </DisclosurePanel>
+
+            <DisclosurePanel title="Collections">
+              <div className="flex flex-col space-y-1">
+                {collections.map(collection => {
+                  return (
+                    <Checkbox
+                      key={collection.id}
+                      checked={searchAttributes.selected_collections.includes(
+                        collection.id,
+                      )}
+                      name={`collection${collection.id}`}
+                      onChange={() => setCollection(collection.id)}
+                      label={collection.name}
+                    />
+                  );
+                })}
+              </div>
+              <ClearButton
+                field={'selected_collections'}
+                value={[]}
+                disabled={!searchAttributes.selected_collections.length}
+              />
+            </DisclosurePanel>
+
           </div>
         </div>
       </RightSidebar>
@@ -225,6 +266,7 @@ export default function ProductSearchBar({
                     selected_view: tab,
                     selected_status: [],
                     selected_categories: [],
+                    selected_collections: [],
                   });
                 }}>
                 <span className="capitalize">{tab}</span>

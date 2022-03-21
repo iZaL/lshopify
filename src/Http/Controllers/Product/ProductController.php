@@ -64,17 +64,33 @@ class ProductController extends Controller
             $products->whereIn('category_id', $selectedCategories->toArray());
         }
 
+        $selectedCollections = collect($request->get('selected_collections') ?? [])->unique();
+        if($selectedCollections->count() > 0) {
+            $products->whereHas('collections', function($query) use ($selectedCollections) {
+                $query->whereIn('collections.id', $selectedCollections->toArray());
+            });
+        }
+
         $products = ProductResource::collection($products->get());
         $vendors = VendorResource::collection(Vendor::all());
         $categories = CategoryResource::collection(Category::all());
 
+        $collections = Collection::query();
+        if($request->get('collection_term')) {
+            $collections = $collections->where('title', 'like', '%' . $request->get('collection_term') . '%');
+        }
+//        $collections = CollectionResource::collection($collections->get());
+        $collections = CollectionResource::collection($collections->paginate(5));
+
         return Inertia::render('Product/ProductIndex', [
             'products' => $products,
             'categories' => $categories,
+            'collections' => $collections,
             'search_attributes' => [
                 'selected_status' => $statuses,
                 'selected_vendors' => $selectedVendors,
                 'selected_categories' => $selectedCategories,
+                'selected_collections' => $selectedCollections,
                 'search_term' => $searchTerm,
                 'selected_view' => $selectedTab,
                 'tag_term' => $tagTerm

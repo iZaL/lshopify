@@ -5,8 +5,6 @@ import {Collection} from '../types';
 import CollectionIndexActionButtons from './components/CollectionIndexActionButtons';
 import CollectionList from './components/CollectionList';
 import RightSidebar from '../components/RightSidebar';
-import ProductFiltersPanel from '../Product/components/ProductFiltersPanel';
-import ProductSearchBar from '../Product/components/ProductSearchBar';
 import CollectionSearchBar from './components/CollectionSearchBar';
 
 interface Props {
