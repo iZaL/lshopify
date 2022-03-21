@@ -1,10 +1,6 @@
 import React, {useState} from 'react';
 import {SearchIcon} from '@heroicons/react/outline';
-import {
-  ChevronDownIcon,
-  SortAscendingIcon,
-  XIcon,
-} from '@heroicons/react/solid';
+import {SortAscendingIcon, XIcon} from '@heroicons/react/solid';
 import classNames from 'classnames';
 import {Popover} from '@headlessui/react';
 import InputText from '../../components/forms/InputText';
@@ -13,9 +9,8 @@ import Button from '../../components/Button';
 import Checkbox from '../../components/forms/Checkbox';
 import {SearchAttributes, TabAttributes} from '../types';
 import RightSidebar from '../../components/RightSidebar';
-import ProductFiltersPanel from './ProductFiltersPanel';
-import PopoverButton from '../../components/PopoverButton';
 import DisclosurePanel from './ProductFiltersPanel';
+import PopoverButton from '../../components/PopoverButton';
 
 interface Props {
   tabs: TabAttributes[];
@@ -93,6 +88,26 @@ export default function ProductSearchBar({
     }
   };
 
+  const ClearButton = <T extends keyof SearchAttributes>({
+    field,
+    value,
+    disabled = false,
+  }: {
+    field: T;
+    value: SearchAttributes[T];
+    disabled?: boolean;
+  }) => {
+    return (
+      <Button
+        theme={'clear'}
+        onClick={() => setSearchAttributes(field, value)}
+        buttonStyle={'text-gray-400'}
+        disabled={disabled}>
+        Clear
+      </Button>
+    );
+  };
+
   return (
     <div className="">
       <RightSidebar
@@ -117,6 +132,11 @@ export default function ProductSearchBar({
                   );
                 })}
               </div>
+              <ClearButton
+                field={'selected_vendors'}
+                value={[]}
+                disabled={!searchAttributes.selected_vendors.length}
+              />
             </DisclosurePanel>
 
             <DisclosurePanel title="Product Status">
@@ -135,19 +155,27 @@ export default function ProductSearchBar({
                     );
                   })}
               </div>
+              <ClearButton
+                field={'selected_status'}
+                value={[]}
+                disabled={!searchAttributes.selected_status.length}
+              />
             </DisclosurePanel>
 
             <DisclosurePanel title="Tagged with">
-              <div className="flex flex-col">
-                <InputText
-                  name="tag"
-                  value={searchAttributes.tag_term}
-                  onChange={event =>
-                    setSearchAttributes('tag_term', event.target.value)
-                  }
-                  inputStyle="w-36"
-                />
-              </div>
+              <InputText
+                name="tag"
+                value={searchAttributes.tag_term}
+                onChange={event =>
+                  setSearchAttributes('tag_term', event.target.value)
+                }
+                inputStyle="w-36"
+              />
+              <ClearButton
+                field={'tag_term'}
+                value={''}
+                disabled={!searchAttributes.tag_term}
+              />
             </DisclosurePanel>
 
             <DisclosurePanel title="Product Type">
@@ -166,6 +194,11 @@ export default function ProductSearchBar({
                   );
                 })}
               </div>
+              <ClearButton
+                field={'selected_categories'}
+                value={[]}
+                disabled={!searchAttributes.selected_categories.length}
+              />
             </DisclosurePanel>
           </div>
         </div>

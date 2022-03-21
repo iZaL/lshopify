@@ -34,7 +34,7 @@ export default function Button({
   }
 
   if (disabled) {
-    themeStyle = 'text-gray-300 bg-white border cursor-default';
+    themeStyle = 'text-gray-300 bg-white border-none cursor-default';
   }
 
   return (
