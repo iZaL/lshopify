@@ -211,7 +211,7 @@ export default function VariantEditSection({
         })}
       </ul>
 
-      <div className="overflow-x-auto overflow-y-auto text-sm">
+      <div className="overflow-x-auto  text-sm">
         {checkedVariantIDs.length ? (
           <div className="flex h-12 w-full flex-row items-center py-2 ">
             <Button

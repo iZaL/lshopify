@@ -30,7 +30,7 @@ export default function DraftOrderIndex(props: Props) {
         </div>
 
         <div className="mx-auto max-w-7xl py-6 ">
-          <section className="overflow-hidden rounded-lg bg-white shadow">
+          <section className="rounded-lg bg-white shadow">
             {/*<RightSidebar*/}
             {/*  isOpen={sidebarOpen}*/}
             {/*  onClose={() => setSidebarOpen(false)}*/}

@@ -29,8 +29,8 @@ class ProductController extends Controller
             ->with(['category', 'vendor','tags'])
             ->withCount('variants');
 
-        $searchTerm = $request->search_term;
-        $tagTerm = $request->get('tag_term');
+        $searchTerm = $request->get('product_search');
+        $tagTerm = $request->get('tag_search');
 
         if ($searchTerm) {
             $products->where('title', 'like', '%' . $searchTerm . '%');
@@ -74,10 +74,11 @@ class ProductController extends Controller
         $products = ProductResource::collection($products->get());
         $vendors = VendorResource::collection(Vendor::all());
         $categories = CategoryResource::collection(Category::all());
-
         $collections = Collection::query();
-        if($request->get('collection_term')) {
-            $collections = $collections->where('name', 'like', '%' . $request->get('collection_term') . '%');
+
+        $collectionSearch = $request->get('collection_search');
+        if($collectionSearch) {
+            $collections = $collections->where('name', 'like', '%' . $collectionSearch . '%');
         }
         $collections = CollectionResource::collection($collections->paginate(5));
 
@@ -90,9 +91,10 @@ class ProductController extends Controller
                 'selected_vendors' => $selectedVendors,
                 'selected_categories' => $selectedCategories,
                 'selected_collections' => $selectedCollections,
-                'search_term' => $searchTerm,
+                'product_search' => $searchTerm,
+                'tag_search' => $tagTerm,
+                'collection_search',$collectionSearch,
                 'selected_view' => $selectedTab,
-                'tag_term' => $tagTerm
             ],
             'vendors' => $vendors,
         ]);

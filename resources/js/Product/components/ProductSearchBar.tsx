@@ -183,20 +183,20 @@ export default function ProductSearchBar({
             <DisclosurePanel title="Tagged with">
               <InputText
                 name="tag"
-                value={searchAttributes.tag_term}
+                value={searchAttributes.tag_search}
                 onChange={event =>
-                  setSearchAttributes('tag_term', event.target.value)
+                  setSearchAttributes('tag_search', event.target.value)
                 }
                 inputStyle="w-36"
               />
               <ClearButton
-                field={'tag_term'}
+                field={'tag_search'}
                 value={''}
-                disabled={!searchAttributes.tag_term}
+                disabled={!searchAttributes.tag_search}
               />
             </DisclosurePanel>
 
-            <DisclosurePanel title="Product Type">
+            <DisclosurePanel title="Category">
               <div className="flex flex-col space-y-1">
                 {categories.map(category => {
                   return (
@@ -223,9 +223,9 @@ export default function ProductSearchBar({
               <div className="relative rounded-md shadow-sm">
                 <InputText
                   name="collection_term"
-                  value={searchAttributes.search_term}
+                  value={searchAttributes.product_search}
                   onChange={event =>
-                    setSearchAttributes('collection_term', event.target.value)
+                    setSearchAttributes('collection_search', event.target.value)
                   }
                   placeholder="Search for collections"
                   leftComponent={
@@ -277,9 +277,9 @@ export default function ProductSearchBar({
                 )}
                 onClick={() => {
                   onChange({
-                    tag_term: '',
-                    search_term: '',
-                    collection_term: '',
+                    tag_search: '',
+                    product_search: '',
+                    collection_search: '',
                     selected_view: tab,
                     selected_vendors: [],
                     selected_status: [],
@@ -305,10 +305,10 @@ export default function ProductSearchBar({
                 />
               </div>
               <InputText
-                name="search_term"
-                value={searchAttributes.search_term}
+                name="product_search"
+                value={searchAttributes.product_search}
                 onChange={event =>
-                  setSearchAttributes('search_term', event.target.value)
+                  setSearchAttributes('product_search', event.target.value)
                 }
                 placeholder="Search products"
               />
@@ -339,9 +339,9 @@ export default function ProductSearchBar({
                     <div className="flex items-center">
                       <InputText
                         name="tag"
-                        value={searchAttributes.tag_term}
+                        value={searchAttributes.tag_search}
                         onChange={event =>
-                          setSearchAttributes('tag_term', event.target.value)
+                          setSearchAttributes('tag_search', event.target.value)
                         }
                         inputStyle="w-36"
                       />
@@ -459,13 +459,13 @@ export default function ProductSearchBar({
             </div>
           ) : null}
 
-          {searchAttributes.tag_term ? (
+          {searchAttributes.tag_search ? (
             <div className="inline-flex space-x-1 whitespace-nowrap rounded-md bg-gray-200 py-1 pl-2">
               <span>Tagged with </span>
-              <span>{searchAttributes.tag_term}</span>
+              <span>{searchAttributes.tag_search}</span>
               <Button
                 theme="clear"
-                onClick={() => setSearchAttributes('tag_term', '')}
+                onClick={() => setSearchAttributes('tag_search', '')}
                 buttonStyle="hover:bg-gray-100">
                 <XIcon className="h-4 text-gray-500" />
               </Button>
@@ -474,7 +474,7 @@ export default function ProductSearchBar({
 
           {searchAttributes.selected_categories.length ? (
             <div className="inline-flex space-x-1 whitespace-nowrap rounded-md bg-gray-200 py-1 pl-2">
-              <span>Product type is</span>
+              <span>Category is</span>
               <span>
                 {searchAttributes.selected_categories
                   .map(categoryID =>
