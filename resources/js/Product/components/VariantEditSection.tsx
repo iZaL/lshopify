@@ -108,13 +108,6 @@ export default function VariantEditSection({
     onChange(variants);
   };
 
-  const ensure = <T extends {}>(argument: T | undefined | null) => {
-    if (argument === undefined || argument === null) {
-      throw new TypeError('invalid value');
-    }
-    return argument;
-  };
-
   const onImageSubmit = () => {
     setShowDialog(null);
     if (selectedVariant) {
@@ -196,49 +189,48 @@ export default function VariantEditSection({
         </div>
       </div>
 
-      <ul className="flex flex-row flex-wrap space-x-4 text-sm">
-        <li className="">Select:</li>
-        <li
-          className="text-blue-500"
+      <div className="flex flex-row flex-wrap space-x-4 text-sm text-blue-500">
+        <span className="text-gray-900">Select:</span>
+        <Button
+          theme='clear'
           onClick={() => setCheckedVariantIDs(currentVariants.map(v => v.id))}>
           All
-        </li>
-        <li className="text-blue-500" onClick={() => setCheckedVariantIDs([])}>
+        </Button>
+        <Button theme='clear' onClick={() => setCheckedVariantIDs([])}>
           None
-        </li>
-        {/*<div className='z-30 bg-white'>*/}
-        {/*  {*/}
-        {/*    variantOptions.map((option, index) => {*/}
-        {/*      return (*/}
-        {/*        <PopoverButton title={option.id} buttonStyle='text-sm border-none py-0 hover:bg-white' >*/}
-        {/*          {*/}
-        {/*            variantValues?.map((value) => {*/}
-        {/*              if(value.id === option.id) {*/}
-        {/*                return (*/}
-        {/*                  <Checkbox name={value.id} checked={true} onChange={()=>onVariantOptionClick(value)} label={value.name} />*/}
-        {/*                )*/}
-        {/*              }*/}
-        {/*              return null;*/}
+        </Button>
+        <div className='z-30 bg-white'>
+          {
+            variantOptions.map((option, index) => {
+              return (
+                <PopoverButton title={option.id} buttonStyle='text-sm border-none py-0 hover:bg-white' >
+                  {
+                    variantValues?.map((value) => {
+                      if(value.id === option.id) {
+                        return (
+                          <Checkbox name={value.id} checked={true} onChange={()=>onVariantOptionClick(value)} label={value.name} />
+                        )
+                      }
+                      return null;
+                    })
+                  }
+                </PopoverButton>
+              )
+            })
+          }
+        </div>
 
-        {/*            })*/}
-        {/*          }*/}
-        {/*        </PopoverButton>*/}
-        {/*      )*/}
-        {/*    })*/}
-        {/*  }*/}
-        {/*</div>*/}
-
-        {variantValues.map((option, i) => {
-          return (
-            <li
-              key={i}
-              className="text-blue-500"
-              onClick={() => onVariantOptionClick(option)}>
-              {option.name}
-            </li>
-          );
-        })}
-      </ul>
+        {/*{variantValues.map((option, i) => {*/}
+        {/*  return (*/}
+        {/*    <li*/}
+        {/*      key={i}*/}
+        {/*      className="text-blue-500"*/}
+        {/*      onClick={() => onVariantOptionClick(option)}>*/}
+        {/*      {option.name}*/}
+        {/*    </li>*/}
+        {/*  );*/}
+        {/*})}*/}
+      </div>
 
       <div className="overflow-x-auto  text-sm">
         {checkedVariantIDs.length ? (

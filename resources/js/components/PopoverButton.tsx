@@ -17,8 +17,7 @@ export default function PopoverButton({
     <Popover className="relative inline-block text-left">
       <Popover.Button
         className={classNames(
-          `group hidden justify-center border border-gray-300 px-4
-                       py-2 text-sm font-medium text-gray-900 hover:bg-gray-50 hover:text-gray-900 sm:inline-flex
+          `px-2 py-2 group hidden justify-center border border-gray-300 text-sm hover:bg-gray-50 sm:inline-flex
             `,
           buttonStyle
         )}>
