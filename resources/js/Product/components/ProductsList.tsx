@@ -12,7 +12,7 @@ import route from 'ziggy-js';
 interface Props {
   products: Product[];
   onUpdate: <T extends keyof Product>(
-    productIDs: number[],
+    productIDs: Product['id'][],
     field: T,
     value: Product[T],
   ) => void;

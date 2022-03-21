@@ -7,5 +7,5 @@ export interface SearchAttributes {
   selected_status: TabAttributes[];
   selected_vendors: string[];
   selected_view: TabAttributes;
-  tag_term:string;
+  tag_term: string;
 }

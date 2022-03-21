@@ -3,11 +3,11 @@ import {XIcon} from '@heroicons/react/solid';
 
 export default function TabPill({
   title,
-  onClick,
+  onClose,
   hideCloseIcon = false,
 }: {
   title: string;
-  onClick: () => void;
+  onClose: () => void;
   hideCloseIcon?: boolean;
 }) {
   return (
@@ -16,7 +16,7 @@ export default function TabPill({
       {!hideCloseIcon && (
         <XIcon
           className="w-6 cursor-pointer hover:rounded hover:rounded-md hover:bg-gray-300"
-          onClick={onClick}
+          onClick={onClose}
         />
       )}
     </div>

@@ -1,13 +1,18 @@
-import React, { Fragment } from 'react'
-import { SearchIcon } from '@heroicons/react/outline'
-import { ChevronDownIcon, SortAscendingIcon } from '@heroicons/react/solid'
-import classNames from 'classnames'
-import { Popover, Transition } from '@headlessui/react'
-import InputText from '../../components/forms/InputText'
-import { Vendor } from '../../types'
-import Button from '../../components/Button'
-import Checkbox from '../../components/forms/Checkbox'
-import { SearchAttributes, TabAttributes } from '../types'
+import React from 'react';
+import {SearchIcon} from '@heroicons/react/outline';
+import {
+  ChevronDownIcon,
+  SortAscendingIcon,
+  XIcon,
+} from '@heroicons/react/solid';
+import classNames from 'classnames';
+import {Popover} from '@headlessui/react';
+import InputText from '../../components/forms/InputText';
+import {Vendor} from '../../types';
+import Button from '../../components/Button';
+import Checkbox from '../../components/forms/Checkbox';
+import {SearchAttributes, TabAttributes} from '../types';
+import TabPill from '../../components/TabPill';
 
 interface Props {
   tabs: TabAttributes[];
@@ -24,7 +29,6 @@ export default function ProductSearchBar({
   vendors,
   searchAttributes,
 }: Props) {
-
   const setSearchAttributes = <T extends keyof SearchAttributes>(
     key: T,
     value: SearchAttributes[T],
@@ -35,7 +39,7 @@ export default function ProductSearchBar({
     });
   };
 
-  const setVendor = (vendorID: string) => {
+  const setVendor = (vendorID: Vendor['id']) => {
     const includes = searchAttributes.selected_vendors.includes(vendorID);
     if (includes) {
       setSearchAttributes(
@@ -70,24 +74,23 @@ export default function ProductSearchBar({
       <div className="border-b border-gray-200">
         <nav className="-mb-px flex space-x-2">
           {tabs.map(tab => {
-            let active = tab === searchAttributes.selected_view;
             return (
               <Button
                 theme="clear"
                 key={tab}
                 buttonStyle={classNames(
-                  active
+                  tab === searchAttributes.selected_view
                     ? 'border-green-800 text-green-800'
                     : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
                   'mx-2 whitespace-nowrap border-b-2 py-3 px-6 text-sm font-medium',
                 )}
                 onClick={() => {
                   onChange({
-                    tag_term:'',
-                    search_term:'',
-                    selected_vendors:[],
+                    tag_term: '',
+                    search_term: '',
+                    selected_vendors: [],
                     selected_view: tab,
-                    selected_status:[]
+                    selected_status: [],
                   });
                 }}>
                 <span className="capitalize">{tab}</span>
@@ -97,7 +100,7 @@ export default function ProductSearchBar({
         </nav>
       </div>
 
-      <div className="my-5 divide-y divide-gray-200 px-4">
+      <div className="my-5 px-4">
         <div className="mt-6 grid grid-cols-12 gap-6">
           <div className="col-span-12 sm:col-span-6">
             <div className="relative rounded-md shadow-sm">
@@ -111,7 +114,7 @@ export default function ProductSearchBar({
                 name="search_term"
                 value={searchAttributes.search_term}
                 onChange={event =>
-                  setSearchAttributes('search_term',event.target.value)
+                  setSearchAttributes('search_term', event.target.value)
                 }
                 placeholder="Search products"
               />
@@ -136,13 +139,12 @@ export default function ProductSearchBar({
 
                     <Popover.Panel className="absolute right-0 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                       {vendors.map(vendor => {
-                        let active = searchAttributes.selected_vendors.includes(
-                          vendor.id,
-                        );
                         return (
                           <Checkbox
                             key={vendor.id}
-                            checked={active}
+                            checked={searchAttributes.selected_vendors.includes(
+                              vendor.id,
+                            )}
                             name={`vendor${vendor.id}`}
                             onChange={() => setVendor(vendor.id)}
                             label={vendor.name}
@@ -166,7 +168,7 @@ export default function ProductSearchBar({
                           name="tag"
                           value={searchAttributes.tag_term}
                           onChange={event =>
-                            setSearchAttributes('tag_term',event.target.value)
+                            setSearchAttributes('tag_term', event.target.value)
                           }
                           inputStyle="w-36"
                         />
@@ -187,12 +189,12 @@ export default function ProductSearchBar({
                       {tabs
                         .filter(tab => tab !== 'all')
                         .map(tab => {
-                          let active =
-                            searchAttributes.selected_status.includes(tab);
                           return (
                             <Checkbox
                               key={tab}
-                              checked={active}
+                              checked={searchAttributes.selected_status.includes(
+                                tab,
+                              )}
                               name={`tab${tab}`}
                               onChange={() => setStatus(tab)}
                               label={tab}
@@ -256,6 +258,62 @@ export default function ProductSearchBar({
             </div>
           </div>
         </div>
+
+        <div className="flex flex-row items-center space-x-2 pt-2 text-sm text-gray-800">
+          {searchAttributes.selected_vendors.length ? (
+            <div className="inline-flex space-x-1 rounded-md bg-gray-200 py-1 pl-2 ">
+              <span>Product vendor is </span>
+              {searchAttributes.selected_vendors
+                .map(vendorID => vendors.find(({id}) => vendorID))
+                .map(vendor => {
+                  if (!vendor) return null;
+                  return <span>{vendor.name}</span>;
+                })}
+              <Button
+                theme="clear"
+                onClick={() => setSearchAttributes('selected_vendors', [])}
+                buttonStyle="hover:bg-gray-100">
+                <XIcon className="h-4 text-gray-500" />
+              </Button>
+            </div>
+          ) : null}
+
+          {searchAttributes.selected_status.length ? (
+            <div className="inline-flex space-x-1 rounded-md bg-gray-200 py-1 pl-2 ">
+              <span>Product status is </span>
+              {searchAttributes.selected_status.map(status => (
+                <span>{status}</span>
+              ))}
+              <Button
+                theme="clear"
+                onClick={() => setSearchAttributes('selected_status', [])}
+                buttonStyle="hover:bg-gray-100">
+                <XIcon className="h-4 text-gray-500" />
+              </Button>
+            </div>
+          ) : null}
+        </div>
+
+        {/*<div className="inline-flex bg-gray-200 rounded-md pl-2 py-1 ">*/}
+        {/*  {searchAttributes.selected_status.length ? (*/}
+        {/*    <div className='flex flex-row bg-gray-200 items-center space-x-2 px-2 py-1 '>*/}
+        {/*      <div className=''>Product status is</div>*/}
+        {/*      {searchAttributes.selected_status*/}
+        {/*        .map(status => {*/}
+        {/*          return (*/}
+        {/*            <div>{status}</div>*/}
+        {/*          );*/}
+        {/*        })}*/}
+        {/*    </div>*/}
+        {/*  ) : null}*/}
+        {/*  <Button*/}
+        {/*    theme='clear'*/}
+        {/*    onClick={() => setSearchAttributes('selected_status',[]) }*/}
+        {/*    buttonStyle="hover:bg-gray-100"*/}
+        {/*  >*/}
+        {/*    <XIcon className='text-gray-500 h-4'  />*/}
+        {/*  </Button>*/}
+        {/*</div>*/}
       </div>
     </div>
   );
