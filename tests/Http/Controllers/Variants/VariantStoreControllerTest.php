@@ -90,3 +90,18 @@ class VariantStoreControllerTest extends TestCase
         $this->assertDatabaseHas('variants', $variantData);
     }
 }
+
+^ array:3 [▼
+  "id" => "Size"
+  "name" => "Size"
+  "options" => array:2 [▼
+    0 => array:2 [▼
+      "id" => "M"
+      "name" => "M"
+    ]
+    1 => array:2 [▼
+      "id" => "L"
+      "name" => "L"
+    ]
+  ]
+]

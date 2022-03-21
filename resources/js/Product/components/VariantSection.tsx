@@ -20,12 +20,12 @@ export default function VariantSection({
 }: Props) {
   const [hasVariants, setHasVariants] = useState(false);
   const pendingVariants = defaultVariants.filter(
-    ({id}) => !currentVariants.some(v => v.id === id),
+    ({name}) => !currentVariants.some(v => v.name === name),
   );
   const onVariantAdd = () => {
-    const variantKeys = currentVariants.map(({id}) => id);
+    const variantKeys = currentVariants.map(({name}) => name);
     const randomVariant = defaultVariants.find(
-      ({id}) => !variantKeys.includes(id),
+      ({name}) => !variantKeys.includes(name),
     );
     if (randomVariant) {
       const variants = [...currentVariants, {...randomVariant, options: []}];
@@ -47,7 +47,7 @@ export default function VariantSection({
     newVariant: VariantOption,
   ) => {
     const variants = currentVariants.filter(
-      variant => variant.id !== oldVariant.id,
+      variant => variant.name !== oldVariant.name,
     );
     const newVariants = [
       ...variants,
@@ -57,7 +57,7 @@ export default function VariantSection({
   };
 
   const onVariantRemove = (variant: VariantOption) => {
-    const variants = currentVariants.filter(v => v.id !== variant.id);
+    const variants = currentVariants.filter(v => v.name !== variant.name);
     onChange('options', variants);
   };
 
@@ -66,7 +66,7 @@ export default function VariantSection({
     options: VariantOption[],
   ) => {
     const variants = currentVariants.map(variant => {
-      if (variant.id === currentVariant.id) {
+      if (variant.name === currentVariant.name) {
         return {
           ...currentVariant,
           options: options,

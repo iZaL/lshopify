@@ -14,12 +14,23 @@ class VariantControllerTest extends TestCase
 
         $data = [
             'id'=> 0,
-            'new_options'=> [
+            'options'=> [
                 [
+                    'id'=> '2',
                     'name'=> 'Color',
-                    'value' => 'Black',
+                    'options'=> [
+                        [
+                            'id'=> 'Black',
+                            'name'=> 'Black',
+                        ],
+                        [
+                            'id'=> 'Brown',
+                            'name'=> 'Brown',
+                        ],
+                    ],
                 ],
                 [
+                    'id'=> '1',
                     'name'=> 'Size',
                     'options'=> [
                         [

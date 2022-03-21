@@ -37,8 +37,8 @@ export default function VariantOptionsEdit({
       ): VariantOption & {
         edited?: boolean;
       } => {
-        return o.name === option.name
-          ? {...option, id: e.target.value, edited: true}
+        return o.id === option.id
+          ? {...option, name: e.target.value, edited: true}
           : o;
       },
     );
@@ -53,13 +53,13 @@ export default function VariantOptionsEdit({
           {options.map((o, i) => {
             return (
               <li key={i}>
-                <Label title={o.name} />
+                <Label title={o.id} />
                 <InputText
-                  name={o.name}
+                  name={o.id}
                   onChange={e => {
                     onVariantOptionsChange(o, e);
                   }}
-                  value={o.id}
+                  value={o.name}
                 />
               </li>
             );

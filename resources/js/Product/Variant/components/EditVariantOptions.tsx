@@ -26,9 +26,9 @@ export default function EditVariantOptions({
 
   const currentVariantOptions: VariantOption[] = variantOptions.map(v => {
     return {
-      id: v.id,
       name: v.name,
-      options: variantValues.filter(value => value.name === v.name),
+      id: v.id,
+      options: variantValues.filter(value => value.id === v.id),
     };
   });
 
@@ -42,7 +42,7 @@ export default function EditVariantOptions({
     let currentVariants: number[] = [];
     variants.map(variant => {
       return (currentVariants = variant.options?.some(
-        ({id}) => id === option.id,
+        ({name}) => name === option.name,
       )
         ? [...currentVariants, variant.id]
         : [...currentVariants]);
@@ -59,8 +59,8 @@ export default function EditVariantOptions({
           <div className="flex flex-row items-center text-sm" key={i}>
             <div className="w-40">
               <InputText
-                name={`name${option.id}`}
-                value={option.name}
+                name={`name${option.name}`}
+                value={option.id}
                 onChange={() => onVariantOptionsUpdate()}
               />
             </div>
@@ -70,7 +70,7 @@ export default function EditVariantOptions({
                   return (
                     <TabPill
                       key={idx}
-                      title={o.id}
+                      title={o.name}
                       onClose={() => onVariantOptionsRemove(o)}
                     />
                   );
@@ -100,7 +100,7 @@ export default function EditVariantOptions({
               with the following options:
             </p>
             <li className="p-4">
-              {deletingOption?.name} : {deletingOption?.id}
+              {deletingOption?.id} : {deletingOption?.name}
             </li>
           </div>
         ) : (

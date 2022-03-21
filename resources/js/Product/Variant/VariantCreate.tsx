@@ -24,8 +24,8 @@ export default function VariantCreate(props: Props) {
 
   const options = variant_options.map((o): VariantOption => {
     return {
-      id: '',
-      name: o.name,
+      name: '',
+      id: o.id,
     };
   });
 

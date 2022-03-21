@@ -51,11 +51,11 @@ export default function VariantOptionsItem({
               IndicatorSeparator: () => null,
             }}
             noOptionsMessage={() => null}
-            options={variants.map(({id, name}) => ({
-              value: id,
-              label: name,
+            options={variants.map(({name, id}) => ({
+              value: name,
+              label: id,
             }))}
-            value={{value: variant.id, label: variant.name}}
+            value={{value: variant.name, label: variant.id}}
           />
         </div>
         <div className="md:col-span-2">
@@ -70,9 +70,9 @@ export default function VariantOptionsItem({
             noOptionsMessage={() => null}
             isClearable={false}
             placeholder={'select options'}
-            value={variant.options?.map(({id, name}) => ({
-              value: id,
-              label: name,
+            value={variant.options?.map(({name, id}) => ({
+              value: name,
+              label: id,
             }))}
             onChange={values =>
               onVariantOptionsChange(

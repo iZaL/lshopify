@@ -56,10 +56,10 @@ class Variant extends BaseModel
     public static function defaultVariants()
     {
         return [
-            ['id' => '1', 'name' => 'Size'],
-            ['id' => '2', 'name' => 'Color'],
-            ['id' => '3', 'name' => 'Material'],
-            ['id' => '4', 'name' => 'Style'],
+            ['id' => 'Size', 'name' => 'Size'],
+            ['id' => 'Color', 'name' => 'Color'],
+            ['id' => 'Material', 'name' => 'Material'],
+            ['id' => 'Style', 'name' => 'Style'],
         ];
     }
 

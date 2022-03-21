@@ -62,7 +62,7 @@ export default function VariantEditSection({
         return {
           ...v,
           options: v.options?.map(o => {
-            return o.name === option.name ? {...option, id: value} : o;
+            return o.id === option.id ? {...option, id: value} : o;
           }),
         };
       }
@@ -136,7 +136,7 @@ export default function VariantEditSection({
   const onVariantOptionClick = (option: VariantOption) => {
     let variantIDs: Array<number> = [];
     currentVariants.map(variant => {
-      return (variantIDs = variant.options?.some(({id}) => id === option.id)
+      return (variantIDs = variant.options?.some(({name}) => name === option.name)
         ? [...variantIDs, variant.id]
         : [...variantIDs]);
     });
@@ -205,7 +205,7 @@ export default function VariantEditSection({
               key={i}
               className="text-blue-500"
               onClick={() => onVariantOptionClick(option)}>
-              {option.id}
+              {option.name}
             </li>
           );
         })}
@@ -340,7 +340,7 @@ export default function VariantEditSection({
                 {variantOptions.map((option, i) => {
                   return (
                     <div className="text-sm font-semibold" key={i}>
-                      {option.name}
+                      {option.id}
                     </div>
                   );
                 })}
@@ -404,13 +404,13 @@ export default function VariantEditSection({
                        `}>
                         {variantOptions.map((option: VariantOption, idx) => {
                           const currentOption = ensure(
-                            variant.options?.find(v => v.name === option.name),
+                            variant.options?.find(v => v.name === option.id),
                           );
                           return (
                             <div key={idx}>
                               <InputText
-                                name={currentOption.id}
-                                value={currentOption.id}
+                                name={currentOption.name}
+                                value={currentOption.name}
                                 onChange={e =>
                                   onVariantOptionsChange(
                                     variant,
