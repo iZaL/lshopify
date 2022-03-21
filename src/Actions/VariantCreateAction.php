@@ -59,11 +59,9 @@ class VariantCreateAction
         $variant1 = $variantsArray[0] ?? [];
         $variant1Options = [];
 
-        dd($variant1);
         if (isset($variant1['options'])) {
             $variant1Array = $variant1['options'];
 
-            dd($variant1Array);
             foreach ($variant1Array as $variant1Arr) {
                 $variant1Options[] = [
                     'name' => $variant1['name'],
