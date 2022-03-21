@@ -7,12 +7,14 @@ interface Props {
   checked: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputStyle?: string;
+  labelStyle?: string;
 }
 
 export default function Checkbox({
   name,
   label,
   inputStyle,
+  labelStyle,
   checked = false,
   onChange,
 }: Props) {
@@ -31,7 +33,7 @@ export default function Checkbox({
       />
       {label && (
         <div className="text-sm">
-          <label htmlFor="comments" className="">
+          <label htmlFor="comments" className={labelStyle}>
             {label}
           </label>
         </div>

@@ -361,6 +361,7 @@ export default function ProductSearchBar({
                             name={`tab${tab}`}
                             onChange={() => setStatus(tab)}
                             label={tab}
+                            labelStyle="capitalize"
                           />
                         );
                       })}
@@ -421,9 +422,9 @@ export default function ProductSearchBar({
           </div>
         </div>
 
-        <div className="flex flex-row items-center space-x-2 pt-2 text-sm text-gray-800">
+        <div className="flex flex-row flex-wrap items-center space-x-2 space-y-2 pt-2 text-sm text-gray-800">
           {searchAttributes.selected_vendors.length ? (
-            <div className="inline-flex space-x-1 rounded-md bg-gray-200 py-1 pl-2">
+            <div className="mt-2 ml-2 inline-flex space-x-1 whitespace-nowrap rounded-md bg-gray-200 py-1 pl-2">
               <span>Product vendor is</span>
               <span>
                 {searchAttributes.selected_vendors
@@ -442,11 +443,11 @@ export default function ProductSearchBar({
           ) : null}
 
           {searchAttributes.selected_status.length ? (
-            <div className="inline-flex space-x-1 rounded-md bg-gray-200 py-1 pl-2 ">
+            <div className="inline-flex space-x-1 whitespace-nowrap rounded-md bg-gray-200 py-1 pl-2">
               <span>Product status is </span>
-              <span>
+              <span className="capitalize">
                 {searchAttributes.selected_status
-                  .map(status => (status === 'active' ? 'Active' : 'Inactive'))
+                  .map(status => status)
                   .join(', ')}
               </span>
               <Button
@@ -459,7 +460,7 @@ export default function ProductSearchBar({
           ) : null}
 
           {searchAttributes.tag_term ? (
-            <div className="inline-flex space-x-1 rounded-md bg-gray-200 py-1 pl-2 ">
+            <div className="inline-flex space-x-1 whitespace-nowrap rounded-md bg-gray-200 py-1 pl-2">
               <span>Tagged with </span>
               <span>{searchAttributes.tag_term}</span>
               <Button
@@ -472,7 +473,7 @@ export default function ProductSearchBar({
           ) : null}
 
           {searchAttributes.selected_categories.length ? (
-            <div className="inline-flex space-x-1 rounded-md bg-gray-200 py-1 pl-2">
+            <div className="inline-flex space-x-1 whitespace-nowrap rounded-md bg-gray-200 py-1 pl-2">
               <span>Product type is</span>
               <span>
                 {searchAttributes.selected_categories
@@ -486,6 +487,27 @@ export default function ProductSearchBar({
               <Button
                 theme="clear"
                 onClick={() => setSearchAttributes('selected_categories', [])}
+                buttonStyle="hover:bg-gray-100">
+                <XIcon className="h-4 text-gray-500" />
+              </Button>
+            </div>
+          ) : null}
+
+          {searchAttributes.selected_collections.length ? (
+            <div className="inline-flex space-x-1 whitespace-nowrap rounded-md bg-gray-200 py-1 pl-2">
+              <span>Collection is</span>
+              <span>
+                {searchAttributes.selected_collections
+                  .map(collectionID =>
+                    collections.find(({id}) => id === collectionID),
+                  )
+                  .map(collection => (collection ? collection.name : null))
+                  .join(', ')}
+              </span>
+
+              <Button
+                theme="clear"
+                onClick={() => setSearchAttributes('selected_collections', [])}
                 buttonStyle="hover:bg-gray-100">
                 <XIcon className="h-4 text-gray-500" />
               </Button>
