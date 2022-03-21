@@ -4,10 +4,11 @@ export type TabAttributes = 'all' | ProductStatus;
 
 export interface SearchAttributes {
   search_term: string;
-  selected_status: TabAttributes[];
+  collection_term: string;
   selected_categories: string[];
+  tag_term: string;
   selected_collections: number[];
   selected_vendors: string[];
+  selected_status: TabAttributes[];
   selected_view: TabAttributes;
-  tag_term: string;
 }

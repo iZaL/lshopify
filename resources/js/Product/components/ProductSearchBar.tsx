@@ -4,13 +4,13 @@ import {SortAscendingIcon, XIcon} from '@heroicons/react/solid';
 import classNames from 'classnames';
 import {Popover} from '@headlessui/react';
 import InputText from '../../components/forms/InputText';
-import { Category, Collection, Vendor } from '../../types'
+import {Category, Collection, Vendor} from '../../types';
 import Button from '../../components/Button';
 import Checkbox from '../../components/forms/Checkbox';
 import {SearchAttributes, TabAttributes} from '../types';
 import RightSidebar from '../../components/RightSidebar';
 import PopoverButton from '../../components/PopoverButton';
-import DisclosurePanel from '../../components/DisclosurePanel'
+import DisclosurePanel from '../../components/DisclosurePanel';
 
 interface Props {
   tabs: TabAttributes[];
@@ -61,7 +61,8 @@ export default function ProductSearchBar({
   };
 
   const setCollection = (collectionID: Collection['id']) => {
-    const includes = searchAttributes.selected_collections.includes(collectionID);
+    const includes =
+      searchAttributes.selected_collections.includes(collectionID);
     if (includes) {
       setSearchAttributes(
         'selected_collections',
@@ -219,6 +220,23 @@ export default function ProductSearchBar({
             </DisclosurePanel>
 
             <DisclosurePanel title="Collections">
+              <div className="relative rounded-md shadow-sm">
+                <InputText
+                  name="collection_term"
+                  value={searchAttributes.search_term}
+                  onChange={event =>
+                    setSearchAttributes('collection_term', event.target.value)
+                  }
+                  placeholder="Search for collections"
+                  leftComponent={
+                    <SearchIcon
+                      className="h-5 w-5 text-gray-400"
+                      aria-hidden="true"
+                    />
+                  }
+                />
+              </div>
+
               <div className="flex flex-col space-y-1">
                 {collections.map(collection => {
                   return (
@@ -240,7 +258,6 @@ export default function ProductSearchBar({
                 disabled={!searchAttributes.selected_collections.length}
               />
             </DisclosurePanel>
-
           </div>
         </div>
       </RightSidebar>
@@ -262,8 +279,9 @@ export default function ProductSearchBar({
                   onChange({
                     tag_term: '',
                     search_term: '',
-                    selected_vendors: [],
+                    collection_term: '',
                     selected_view: tab,
+                    selected_vendors: [],
                     selected_status: [],
                     selected_categories: [],
                     selected_collections: [],

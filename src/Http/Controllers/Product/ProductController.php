@@ -77,9 +77,8 @@ class ProductController extends Controller
 
         $collections = Collection::query();
         if($request->get('collection_term')) {
-            $collections = $collections->where('title', 'like', '%' . $request->get('collection_term') . '%');
+            $collections = $collections->where('name', 'like', '%' . $request->get('collection_term') . '%');
         }
-//        $collections = CollectionResource::collection($collections->get());
         $collections = CollectionResource::collection($collections->paginate(5));
 
         return Inertia::render('Product/ProductIndex', [

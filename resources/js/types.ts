@@ -82,7 +82,7 @@ export interface Variant {
   product?: Product;
 }
 
-export type ProductStatus = 'active' | 'draft' | 'archived' ;
+export type ProductStatus = 'active' | 'draft' | 'archived';
 
 export interface Product {
   id: number;

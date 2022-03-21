@@ -1,20 +1,20 @@
-import React, { useState } from 'react'
-import Main from '../Main'
-import PageHeader from '../components/PageHeader'
-import { Category, Collection, Product, Vendor } from '../types'
-import ProductIndexActionButtons from './components/ProductIndexActionButtons'
-import ProductSearchBar from './components/ProductSearchBar'
-import ProductsList from './components/ProductsList'
-import { Inertia } from '@inertiajs/inertia'
-import route from 'ziggy-js'
-import { SearchAttributes, TabAttributes } from './types'
+import React, {useState} from 'react';
+import Main from '../Main';
+import PageHeader from '../components/PageHeader';
+import {Category, Collection, Product, Vendor} from '../types';
+import ProductIndexActionButtons from './components/ProductIndexActionButtons';
+import ProductSearchBar from './components/ProductSearchBar';
+import ProductsList from './components/ProductsList';
+import {Inertia} from '@inertiajs/inertia';
+import route from 'ziggy-js';
+import {SearchAttributes, TabAttributes} from './types';
 
 interface Props {
   products: Product[];
   vendors: Vendor[];
   categories: Category[];
-  collections:{
-    data:Collection[]
+  collections: {
+    data: Collection[];
   };
   search_attributes: SearchAttributes;
 }
@@ -22,7 +22,7 @@ interface Props {
 const tabs: TabAttributes[] = ['all', 'active', 'draft', 'archived'];
 
 export default function ProductIndex(props: Props) {
-  const {products, search_attributes, vendors, categories,collections} = props;
+  const {products, search_attributes, vendors, categories, collections} = props;
   const [searchAttributes, setSearchAttributes] = useState(search_attributes);
 
   const onChange = (data: SearchAttributes) => {
