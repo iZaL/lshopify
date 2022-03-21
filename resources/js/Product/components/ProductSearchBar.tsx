@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react';
 import {SearchIcon} from '@heroicons/react/outline';
 import {
   ChevronDownIcon,
@@ -8,14 +8,14 @@ import {
 import classNames from 'classnames';
 import {Popover} from '@headlessui/react';
 import InputText from '../../components/forms/InputText';
-import { Category, Vendor } from '../../types'
+import {Category, Vendor} from '../../types';
 import Button from '../../components/Button';
 import Checkbox from '../../components/forms/Checkbox';
 import {SearchAttributes, TabAttributes} from '../types';
-import RightSidebar from '../../components/RightSidebar'
-import ProductFiltersPanel from './ProductFiltersPanel'
-import PopoverButton from '../../components/PopoverButton'
-import DisclosurePanel from './ProductFiltersPanel'
+import RightSidebar from '../../components/RightSidebar';
+import ProductFiltersPanel from './ProductFiltersPanel';
+import PopoverButton from '../../components/PopoverButton';
+import DisclosurePanel from './ProductFiltersPanel';
 
 interface Props {
   tabs: TabAttributes[];
@@ -32,12 +32,11 @@ export default function ProductSearchBar({
   searchAttributes,
   categories,
 }: Props) {
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const onMoreFiltersClick= () => {
-    setSidebarOpen(!sidebarOpen)
-  }
+  const onMoreFiltersClick = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
 
   const setSearchAttributes = <T extends keyof SearchAttributes>(
     key: T,
@@ -96,15 +95,14 @@ export default function ProductSearchBar({
 
   return (
     <div className="">
-
       <RightSidebar
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
         title={'More Filters'}>
         <div className="absolute inset-0 px-4 text-sm sm:px-6">
           <div className="space-y-6">
-            <DisclosurePanel title='Product Vendor'>
-              <div className='flex flex-col'>
+            <DisclosurePanel title="Product Vendor">
+              <div className="flex flex-col">
                 {vendors.map(vendor => {
                   return (
                     <Checkbox
@@ -119,20 +117,17 @@ export default function ProductSearchBar({
                   );
                 })}
               </div>
-
             </DisclosurePanel>
 
-            <DisclosurePanel title='Product Status'>
-              <div className='flex flex-col'>
+            <DisclosurePanel title="Product Status">
+              <div className="flex flex-col">
                 {tabs
                   .filter(tab => tab !== 'all')
                   .map(tab => {
                     return (
                       <Checkbox
                         key={tab}
-                        checked={searchAttributes.selected_status.includes(
-                          tab,
-                        )}
+                        checked={searchAttributes.selected_status.includes(tab)}
                         name={`tab${tab}`}
                         onChange={() => setStatus(tab)}
                         label={tab}
@@ -140,11 +135,10 @@ export default function ProductSearchBar({
                     );
                   })}
               </div>
-
             </DisclosurePanel>
 
-            <DisclosurePanel title='Tagged with'>
-              <div className='flex flex-col'>
+            <DisclosurePanel title="Tagged with">
+              <div className="flex flex-col">
                 <InputText
                   name="tag"
                   value={searchAttributes.tag_term}
@@ -154,30 +148,25 @@ export default function ProductSearchBar({
                   inputStyle="w-36"
                 />
               </div>
-
             </DisclosurePanel>
 
-            <DisclosurePanel title='Product Type'>
-              <div className='flex flex-col'>
-                {categories
-                  .map(category => {
-                    return (
-                      <Checkbox
-                        key={category.id}
-                        checked={searchAttributes.selected_categories.includes(
-                          category.id,
-                        )}
-                        name={`category${category.id}`}
-                        onChange={() => setCategory(category.id)}
-                        label={category.name}
-                      />
-                    );
-                  })}
-
+            <DisclosurePanel title="Product Type">
+              <div className="flex flex-col">
+                {categories.map(category => {
+                  return (
+                    <Checkbox
+                      key={category.id}
+                      checked={searchAttributes.selected_categories.includes(
+                        category.id,
+                      )}
+                      name={`category${category.id}`}
+                      onChange={() => setCategory(category.id)}
+                      label={category.name}
+                    />
+                  );
+                })}
               </div>
-
             </DisclosurePanel>
-
           </div>
         </div>
       </RightSidebar>
@@ -253,7 +242,7 @@ export default function ProductSearchBar({
                     })}
                   </PopoverButton>
 
-                  <PopoverButton title='Tagged' buttonStyle='-ml-px'>
+                  <PopoverButton title="Tagged" buttonStyle="-ml-px">
                     <div className="flex items-center">
                       <InputText
                         name="tag"
@@ -266,7 +255,7 @@ export default function ProductSearchBar({
                     </div>
                   </PopoverButton>
 
-                  <PopoverButton title={'Status'} buttonStyle='-ml-px'>
+                  <PopoverButton title={'Status'} buttonStyle="-ml-px">
                     {tabs
                       .filter(tab => tab !== 'all')
                       .map(tab => {
@@ -394,7 +383,9 @@ export default function ProductSearchBar({
               <span>Product type is</span>
               <span>
                 {searchAttributes.selected_categories
-                  .map(categoryID => categories.find(({id}) => id === categoryID))
+                  .map(categoryID =>
+                    categories.find(({id}) => id === categoryID),
+                  )
                   .map(category => (category ? category.name : null))
                   .join(', ')}
               </span>
@@ -407,7 +398,6 @@ export default function ProductSearchBar({
               </Button>
             </div>
           ) : null}
-
         </div>
       </div>
     </div>

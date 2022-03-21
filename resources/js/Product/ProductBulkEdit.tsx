@@ -17,7 +17,7 @@ import {
 } from './components/BulkEditor/types';
 import TagsPopup from './components/BulkEditor/TagsPopup';
 import Cell from './components/BulkEditor/Cell';
-import TabPill from '../components/TabPill'
+import TabPill from '../components/TabPill';
 
 interface Props {
   products: Product[];

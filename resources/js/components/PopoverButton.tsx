@@ -1,28 +1,26 @@
-import React from 'react'
-import { ChevronDownIcon } from '@heroicons/react/solid'
-import { Popover } from '@headlessui/react'
-import classNames from 'classnames'
+import React from 'react';
+import {ChevronDownIcon} from '@heroicons/react/solid';
+import {Popover} from '@headlessui/react';
+import classNames from 'classnames';
 
 export default function PopoverButton({
   title,
   children,
-  buttonStyle
+  buttonStyle,
 }: {
-  title:string;
+  title: string;
   children: React.ReactNode;
-  buttonStyle?:string
+  buttonStyle?: string;
 }) {
   return (
     <Popover className="relative inline-block text-left">
       <Popover.Button
-        className={
-          classNames(
-            buttonStyle,
-            `group hidden justify-center border border-gray-300 px-4
+        className={classNames(
+          buttonStyle,
+          `group hidden justify-center border border-gray-300 px-4
                        py-2 text-sm font-medium text-gray-900 hover:bg-gray-50 hover:text-gray-900 sm:inline-flex
             `,
-          )
-        }>
+        )}>
         <span>{title}</span>
         <ChevronDownIcon
           className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"

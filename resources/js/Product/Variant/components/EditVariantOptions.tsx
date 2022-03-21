@@ -3,7 +3,7 @@ import {Variant, VariantOption} from '../../../types';
 import InputText from '../../../components/forms/InputText';
 import {XIcon} from '@heroicons/react/solid';
 import Modal from '../../../components/Modal';
-import TabPill from '../../../components/TabPill'
+import TabPill from '../../../components/TabPill';
 
 interface Props {
   variants: Variant[];

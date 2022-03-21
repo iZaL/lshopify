@@ -28,78 +28,82 @@ const DisclosureButton = ({open, title}: {open: boolean; title: string}) => {
   );
 };
 
-export default function DisclosurePanel({title,children}:{title:string;children:React.ReactNode}) {
+export default function DisclosurePanel({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <Disclosure as="div" className="">
       {({open}) => (
         <>
           <DisclosureButton open={open} title={title} />
           <Disclosure.Panel className="pt-4" static={open}>
-            <div className="space-y-4">
-              {children}
-            </div>
+            <div className="space-y-4">{children}</div>
           </Disclosure.Panel>
         </>
       )}
     </Disclosure>
 
-  // <div className="absolute inset-0 px-4 text-sm sm:px-6">
-  //     <div className="space-y-6">
-  //
-  //       <Disclosure as="div" className="">
-  //         {({open}) => (
-  //           <>
-  //             <DisclosureButton open={open} title={'Tagged with'} />
-  //             <Disclosure.Panel className="pt-4">
-  //               <div className="space-y-4">
-  //                 <div className="flex items-center">
-  //                   <input
-  //                     id={`filter-mobile-1-1`}
-  //                     name={`1[]`}
-  //                     defaultValue={1}
-  //                     type="checkbox"
-  //                     defaultChecked={true}
-  //                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-  //                   />
-  //                   <label
-  //                     htmlFor={`filter-mobile-1-1`}
-  //                     className="ml-3 min-w-0 flex-1 text-gray-500">
-  //                     zalsvendor
-  //                   </label>
-  //                 </div>
-  //               </div>
-  //             </Disclosure.Panel>
-  //           </>
-  //         )}
-  //       </Disclosure>
-  //
-  //       <Disclosure as="div" className="">
-  //         {({open}) => (
-  //           <>
-  //             <DisclosureButton open={open} title={'Status'} />
-  //             <Disclosure.Panel className="pt-4">
-  //               <div className="space-y-4">
-  //                 <div className="flex items-center">
-  //                   <input
-  //                     id={`filter-mobile-1-1`}
-  //                     name={`1[]`}
-  //                     defaultValue={1}
-  //                     type="checkbox"
-  //                     defaultChecked={true}
-  //                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-  //                   />
-  //                   <label
-  //                     htmlFor={`filter-mobile-1-1`}
-  //                     className="ml-3 min-w-0 flex-1 text-gray-500">
-  //                     zalsvendor
-  //                   </label>
-  //                 </div>
-  //               </div>
-  //             </Disclosure.Panel>
-  //           </>
-  //         )}
-  //       </Disclosure>
-  //     </div>
-  //   </div>
+    // <div className="absolute inset-0 px-4 text-sm sm:px-6">
+    //     <div className="space-y-6">
+    //
+    //       <Disclosure as="div" className="">
+    //         {({open}) => (
+    //           <>
+    //             <DisclosureButton open={open} title={'Tagged with'} />
+    //             <Disclosure.Panel className="pt-4">
+    //               <div className="space-y-4">
+    //                 <div className="flex items-center">
+    //                   <input
+    //                     id={`filter-mobile-1-1`}
+    //                     name={`1[]`}
+    //                     defaultValue={1}
+    //                     type="checkbox"
+    //                     defaultChecked={true}
+    //                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+    //                   />
+    //                   <label
+    //                     htmlFor={`filter-mobile-1-1`}
+    //                     className="ml-3 min-w-0 flex-1 text-gray-500">
+    //                     zalsvendor
+    //                   </label>
+    //                 </div>
+    //               </div>
+    //             </Disclosure.Panel>
+    //           </>
+    //         )}
+    //       </Disclosure>
+    //
+    //       <Disclosure as="div" className="">
+    //         {({open}) => (
+    //           <>
+    //             <DisclosureButton open={open} title={'Status'} />
+    //             <Disclosure.Panel className="pt-4">
+    //               <div className="space-y-4">
+    //                 <div className="flex items-center">
+    //                   <input
+    //                     id={`filter-mobile-1-1`}
+    //                     name={`1[]`}
+    //                     defaultValue={1}
+    //                     type="checkbox"
+    //                     defaultChecked={true}
+    //                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+    //                   />
+    //                   <label
+    //                     htmlFor={`filter-mobile-1-1`}
+    //                     className="ml-3 min-w-0 flex-1 text-gray-500">
+    //                     zalsvendor
+    //                   </label>
+    //                 </div>
+    //               </div>
+    //             </Disclosure.Panel>
+    //           </>
+    //         )}
+    //       </Disclosure>
+    //     </div>
+    //   </div>
   );
 }
