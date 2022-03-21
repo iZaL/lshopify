@@ -1,15 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import Main from '../Main';
-import PageHeader from '../components/PageHeader';
-import {Category, Product, Vendor} from '../types';
-import ProductIndexActionButtons from './components/ProductIndexActionButtons';
-import ProductSearchBar from './components/ProductSearchBar';
-import ProductsList from './components/ProductsList';
-import RightSidebar from '../components/RightSidebar';
-import ProductFiltersPanel from './components/ProductFiltersPanel';
-import {Inertia} from '@inertiajs/inertia';
-import route from 'ziggy-js';
-import {SearchAttributes, TabAttributes} from './types';
+import React, { useState } from 'react'
+import Main from '../Main'
+import PageHeader from '../components/PageHeader'
+import { Category, Product, Vendor } from '../types'
+import ProductIndexActionButtons from './components/ProductIndexActionButtons'
+import ProductSearchBar from './components/ProductSearchBar'
+import ProductsList from './components/ProductsList'
+import { Inertia } from '@inertiajs/inertia'
+import route from 'ziggy-js'
+import { SearchAttributes, TabAttributes } from './types'
 
 interface Props {
   products: Product[];
@@ -22,14 +20,12 @@ const tabs: TabAttributes[] = ['all', 'active', 'draft', 'archived'];
 
 export default function ProductIndex(props: Props) {
   const {products, search_attributes, vendors, categories} = props;
-
   const [searchAttributes, setSearchAttributes] = useState(search_attributes);
 
   const onChange = (data: SearchAttributes) => {
     setSearchAttributes(data);
     Inertia.get(route('lshopify.products.index'), data, {
       preserveState: true,
-      replace: true,
     });
   };
 
@@ -67,7 +63,7 @@ export default function ProductIndex(props: Props) {
         </div>
 
         <div className="mx-auto max-w-7xl py-6 ">
-          <section className="overflow-hidden rounded-lg bg-white shadow">
+          <section className="rounded-lg bg-white shadow">
             <ProductSearchBar
               vendors={vendors || []}
               categories={categories || []}
