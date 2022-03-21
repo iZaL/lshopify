@@ -78,6 +78,11 @@ class Variant extends BaseModel
         return $this->belongsToMany(DraftOrder::class, 'order_variants');
     }
 
+    public function new_options()
+    {
+        return $this->hasMany(VariantOption::class, 'variant_id');
+    }
+
     public function getTitleAttribute()
     {
         return collect($this->options)
@@ -85,3 +90,6 @@ class Variant extends BaseModel
             ->join(' / ');
     }
 }
+
+
+// variants =

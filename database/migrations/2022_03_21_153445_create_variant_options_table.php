@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('variant_locations', function (Blueprint $table) {
+        Schema::create('variant_options', function (Blueprint $table) {
             $table->id();
             $table->integer('variant_id');
-            $table->integer('location_id');
-            $table->integer('available_quantity')->default(0); //available quantity
+            $table->string('name'); // size, color, etc
+//            $table->string('value'); // small, blue, etc
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('variant_locations');
+        Schema::dropIfExists('variant_options');
     }
 };
