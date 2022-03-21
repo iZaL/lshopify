@@ -3,7 +3,7 @@ import {Variant, VariantOption} from '../../../types';
 import InputText from '../../../components/forms/InputText';
 import {XIcon} from '@heroicons/react/solid';
 import Modal from '../../../components/Modal';
-import TagClose from '../../../components/TagClose';
+import TabPill from '../../../components/TabPill'
 
 interface Props {
   variants: Variant[];
@@ -68,10 +68,10 @@ export default function EditVariantOptions({
               <div className="flex flex-row items-center space-x-2" key={i}>
                 {option.options?.map((o, idx) => {
                   return (
-                    <TagClose
+                    <TabPill
                       key={idx}
                       title={o.id}
-                      onClick={() => onVariantOptionsRemove(o)}
+                      onClose={() => onVariantOptionsRemove(o)}
                     />
                   );
                 })}

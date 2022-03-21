@@ -4,7 +4,6 @@ import FormSubmitBar from '../components/FormSubmitBar';
 import {useForm} from '@inertiajs/inertia-react';
 import {Product, Tag, Variant} from '../types';
 import Card from '../components/Card';
-import TagClose from '../components/TagClose';
 import BackButton from '../components/BackButton';
 import {Inertia} from '@inertiajs/inertia';
 import route from 'ziggy-js';
@@ -18,6 +17,7 @@ import {
 } from './components/BulkEditor/types';
 import TagsPopup from './components/BulkEditor/TagsPopup';
 import Cell from './components/BulkEditor/Cell';
+import TabPill from '../components/TabPill'
 
 interface Props {
   products: Product[];
@@ -255,19 +255,19 @@ export default function ProductBulkEdit(props: Props) {
               />
 
               {selectedProductAttributes.map((attribute, idx) => (
-                <TagClose
+                <TabPill
                   key={idx}
                   title={attributeLabels[attribute] ?? '-'}
-                  hideIcon={attribute === 'title'}
-                  onClick={() => onProductButtonClick(attribute)}
+                  hideCloseIcon={attribute === 'title'}
+                  onClose={() => onProductButtonClick(attribute)}
                 />
               ))}
 
               {selectedVariantAttributes.map((attribute, idx) => (
-                <TagClose
+                <TabPill
                   key={idx}
                   title={attributeLabels[attribute] ?? '-'}
-                  onClick={() => onVariantButtonClick(attribute)}
+                  onClose={() => onVariantButtonClick(attribute)}
                 />
               ))}
             </>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react'
 import {SearchIcon} from '@heroicons/react/outline';
 import {
   ChevronDownIcon,
@@ -8,27 +8,37 @@ import {
 import classNames from 'classnames';
 import {Popover} from '@headlessui/react';
 import InputText from '../../components/forms/InputText';
-import {Vendor} from '../../types';
+import { Category, Vendor } from '../../types'
 import Button from '../../components/Button';
 import Checkbox from '../../components/forms/Checkbox';
 import {SearchAttributes, TabAttributes} from '../types';
-import TabPill from '../../components/TabPill';
+import RightSidebar from '../../components/RightSidebar'
+import ProductFiltersPanel from './ProductFiltersPanel'
+import PopoverButton from '../../components/PopoverButton'
+import DisclosurePanel from './ProductFiltersPanel'
 
 interface Props {
   tabs: TabAttributes[];
   searchAttributes: SearchAttributes;
   onChange: (data: SearchAttributes) => void;
-  onMoreFiltersClick: () => void;
   vendors: Vendor[];
+  categories: Category[];
 }
 
 export default function ProductSearchBar({
-  onMoreFiltersClick,
   tabs,
   onChange,
   vendors,
   searchAttributes,
+  categories,
 }: Props) {
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const onMoreFiltersClick= () => {
+    setSidebarOpen(!sidebarOpen)
+  }
+
   const setSearchAttributes = <T extends keyof SearchAttributes>(
     key: T,
     value: SearchAttributes[T],
@@ -69,8 +79,109 @@ export default function ProductSearchBar({
     }
   };
 
+  const setCategory = (categoryID: Category['id']) => {
+    const includes = searchAttributes.selected_categories.includes(categoryID);
+    if (includes) {
+      setSearchAttributes(
+        'selected_categories',
+        searchAttributes.selected_status.filter(v => v !== categoryID),
+      );
+    } else {
+      setSearchAttributes('selected_categories', [
+        ...searchAttributes.selected_categories,
+        categoryID,
+      ]);
+    }
+  };
+
   return (
     <div className="">
+
+      <RightSidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        title={'More Filters'}>
+        <div className="absolute inset-0 px-4 text-sm sm:px-6">
+          <div className="space-y-6">
+            <DisclosurePanel title='Product Vendor'>
+              <div className='flex flex-col'>
+                {vendors.map(vendor => {
+                  return (
+                    <Checkbox
+                      key={vendor.id}
+                      checked={searchAttributes.selected_vendors.includes(
+                        vendor.id,
+                      )}
+                      name={`vendor${vendor.id}`}
+                      onChange={() => setVendor(vendor.id)}
+                      label={vendor.name}
+                    />
+                  );
+                })}
+              </div>
+
+            </DisclosurePanel>
+
+            <DisclosurePanel title='Product Status'>
+              <div className='flex flex-col'>
+                {tabs
+                  .filter(tab => tab !== 'all')
+                  .map(tab => {
+                    return (
+                      <Checkbox
+                        key={tab}
+                        checked={searchAttributes.selected_status.includes(
+                          tab,
+                        )}
+                        name={`tab${tab}`}
+                        onChange={() => setStatus(tab)}
+                        label={tab}
+                      />
+                    );
+                  })}
+              </div>
+
+            </DisclosurePanel>
+
+            <DisclosurePanel title='Tagged with'>
+              <div className='flex flex-col'>
+                <InputText
+                  name="tag"
+                  value={searchAttributes.tag_term}
+                  onChange={event =>
+                    setSearchAttributes('tag_term', event.target.value)
+                  }
+                  inputStyle="w-36"
+                />
+              </div>
+
+            </DisclosurePanel>
+
+            <DisclosurePanel title='Product Type'>
+              <div className='flex flex-col'>
+                {categories
+                  .map(category => {
+                    return (
+                      <Checkbox
+                        key={category.id}
+                        checked={searchAttributes.selected_categories.includes(
+                          category.id,
+                        )}
+                        name={`category${category.id}`}
+                        onChange={() => setCategory(category.id)}
+                        label={category.name}
+                      />
+                    );
+                  })}
+
+              </div>
+
+            </DisclosurePanel>
+
+          </div>
+        </div>
+      </RightSidebar>
+
       <div className="border-b border-gray-200">
         <nav className="-mb-px flex space-x-2">
           {tabs.map(tab => {
@@ -91,6 +202,7 @@ export default function ProductSearchBar({
                     selected_vendors: [],
                     selected_view: tab,
                     selected_status: [],
+                    selected_categories: [],
                   });
                 }}>
                 <span className="capitalize">{tab}</span>
@@ -125,84 +237,52 @@ export default function ProductSearchBar({
             <div className="relative z-10 inline-flex rounded-md shadow-sm sm:space-x-3 sm:shadow-none">
               <Popover.Group className="flex items-center">
                 <div className="inline-flex sm:shadow-sm">
-                  <Popover className="relative inline-block text-left">
-                    <Popover.Button
-                      className="group hidden justify-center rounded-l-md border border-gray-300 px-4
-                       py-2 text-sm font-medium text-gray-900 hover:bg-gray-50 hover:text-gray-900 sm:inline-flex
-                      ">
-                      <span>Vendor</span>
-                      <ChevronDownIcon
-                        className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                        aria-hidden="true"
-                      />
-                    </Popover.Button>
+                  <PopoverButton title={'Vendor'} buttonStyle={'rounded-l-md '}>
+                    {vendors.map(vendor => {
+                      return (
+                        <Checkbox
+                          key={vendor.id}
+                          checked={searchAttributes.selected_vendors.includes(
+                            vendor.id,
+                          )}
+                          name={`vendor${vendor.id}`}
+                          onChange={() => setVendor(vendor.id)}
+                          label={vendor.name}
+                        />
+                      );
+                    })}
+                  </PopoverButton>
 
-                    <Popover.Panel className="absolute right-0 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      {vendors.map(vendor => {
+                  <PopoverButton title='Tagged' buttonStyle='-ml-px'>
+                    <div className="flex items-center">
+                      <InputText
+                        name="tag"
+                        value={searchAttributes.tag_term}
+                        onChange={event =>
+                          setSearchAttributes('tag_term', event.target.value)
+                        }
+                        inputStyle="w-36"
+                      />
+                    </div>
+                  </PopoverButton>
+
+                  <PopoverButton title={'Status'} buttonStyle='-ml-px'>
+                    {tabs
+                      .filter(tab => tab !== 'all')
+                      .map(tab => {
                         return (
                           <Checkbox
-                            key={vendor.id}
-                            checked={searchAttributes.selected_vendors.includes(
-                              vendor.id,
+                            key={tab}
+                            checked={searchAttributes.selected_status.includes(
+                              tab,
                             )}
-                            name={`vendor${vendor.id}`}
-                            onChange={() => setVendor(vendor.id)}
-                            label={vendor.name}
+                            name={`tab${tab}`}
+                            onChange={() => setStatus(tab)}
+                            label={tab}
                           />
                         );
                       })}
-                    </Popover.Panel>
-                  </Popover>
-                  <Popover className="relative inline-block text-left">
-                    <Popover.Button className="relative -ml-px hidden items-center border border-gray-300 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-50 sm:inline-flex">
-                      <span>Tagged</span>
-                      <ChevronDownIcon
-                        className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                        aria-hidden="true"
-                      />
-                    </Popover.Button>
-
-                    <Popover.Panel className="absolute right-0 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <div className="flex items-center">
-                        <InputText
-                          name="tag"
-                          value={searchAttributes.tag_term}
-                          onChange={event =>
-                            setSearchAttributes('tag_term', event.target.value)
-                          }
-                          inputStyle="w-36"
-                        />
-                      </div>
-                    </Popover.Panel>
-                  </Popover>
-
-                  <Popover className="relative inline-block text-left">
-                    <Popover.Button className="relative -ml-px hidden items-center border border-gray-300 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-50 sm:inline-flex">
-                      <span>Status</span>
-                      <ChevronDownIcon
-                        className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                        aria-hidden="true"
-                      />
-                    </Popover.Button>
-
-                    <Popover.Panel className="absolute right-0 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      {tabs
-                        .filter(tab => tab !== 'all')
-                        .map(tab => {
-                          return (
-                            <Checkbox
-                              key={tab}
-                              checked={searchAttributes.selected_status.includes(
-                                tab,
-                              )}
-                              name={`tab${tab}`}
-                              onChange={() => setStatus(tab)}
-                              label={tab}
-                            />
-                          );
-                        })}
-                    </Popover.Panel>
-                  </Popover>
+                  </PopoverButton>
 
                   <button
                     type="button"
@@ -261,14 +341,15 @@ export default function ProductSearchBar({
 
         <div className="flex flex-row items-center space-x-2 pt-2 text-sm text-gray-800">
           {searchAttributes.selected_vendors.length ? (
-            <div className="inline-flex space-x-1 rounded-md bg-gray-200 py-1 pl-2 ">
-              <span>Product vendor is </span>
-              {searchAttributes.selected_vendors
-                .map(vendorID => vendors.find(({id}) => vendorID))
-                .map(vendor => {
-                  if (!vendor) return null;
-                  return <span>{vendor.name}</span>;
-                })}
+            <div className="inline-flex space-x-1 rounded-md bg-gray-200 py-1 pl-2">
+              <span>Product vendor is</span>
+              <span>
+                {searchAttributes.selected_vendors
+                  .map(vendorID => vendors.find(({id}) => id === vendorID))
+                  .map(vendor => (vendor ? vendor.name : null))
+                  .join(', ')}
+              </span>
+
               <Button
                 theme="clear"
                 onClick={() => setSearchAttributes('selected_vendors', [])}
@@ -281,9 +362,11 @@ export default function ProductSearchBar({
           {searchAttributes.selected_status.length ? (
             <div className="inline-flex space-x-1 rounded-md bg-gray-200 py-1 pl-2 ">
               <span>Product status is </span>
-              {searchAttributes.selected_status.map(status => (
-                <span>{status}</span>
-              ))}
+              <span>
+                {searchAttributes.selected_status
+                  .map(status => (status === 'active' ? 'Active' : 'Inactive'))
+                  .join(', ')}
+              </span>
               <Button
                 theme="clear"
                 onClick={() => setSearchAttributes('selected_status', [])}
@@ -292,28 +375,40 @@ export default function ProductSearchBar({
               </Button>
             </div>
           ) : null}
-        </div>
 
-        {/*<div className="inline-flex bg-gray-200 rounded-md pl-2 py-1 ">*/}
-        {/*  {searchAttributes.selected_status.length ? (*/}
-        {/*    <div className='flex flex-row bg-gray-200 items-center space-x-2 px-2 py-1 '>*/}
-        {/*      <div className=''>Product status is</div>*/}
-        {/*      {searchAttributes.selected_status*/}
-        {/*        .map(status => {*/}
-        {/*          return (*/}
-        {/*            <div>{status}</div>*/}
-        {/*          );*/}
-        {/*        })}*/}
-        {/*    </div>*/}
-        {/*  ) : null}*/}
-        {/*  <Button*/}
-        {/*    theme='clear'*/}
-        {/*    onClick={() => setSearchAttributes('selected_status',[]) }*/}
-        {/*    buttonStyle="hover:bg-gray-100"*/}
-        {/*  >*/}
-        {/*    <XIcon className='text-gray-500 h-4'  />*/}
-        {/*  </Button>*/}
-        {/*</div>*/}
+          {searchAttributes.tag_term ? (
+            <div className="inline-flex space-x-1 rounded-md bg-gray-200 py-1 pl-2 ">
+              <span>Tagged with </span>
+              <span>{searchAttributes.tag_term}</span>
+              <Button
+                theme="clear"
+                onClick={() => setSearchAttributes('tag_term', '')}
+                buttonStyle="hover:bg-gray-100">
+                <XIcon className="h-4 text-gray-500" />
+              </Button>
+            </div>
+          ) : null}
+
+          {searchAttributes.selected_categories.length ? (
+            <div className="inline-flex space-x-1 rounded-md bg-gray-200 py-1 pl-2">
+              <span>Product type is</span>
+              <span>
+                {searchAttributes.selected_categories
+                  .map(categoryID => categories.find(({id}) => id === categoryID))
+                  .map(category => (category ? category.name : null))
+                  .join(', ')}
+              </span>
+
+              <Button
+                theme="clear"
+                onClick={() => setSearchAttributes('selected_categories', [])}
+                buttonStyle="hover:bg-gray-100">
+                <XIcon className="h-4 text-gray-500" />
+              </Button>
+            </div>
+          ) : null}
+
+        </div>
       </div>
     </div>
   );

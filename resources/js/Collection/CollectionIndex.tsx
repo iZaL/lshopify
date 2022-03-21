@@ -39,7 +39,7 @@ export default function CollectionIndex(props: Props) {
               isOpen={sidebarOpen}
               onClose={() => setSidebarOpen(false)}
               title={'More Filters'}>
-              <ProductFiltersPanel />
+              {/*<ProductFiltersPanel />*/}
             </RightSidebar>
             <CollectionSearchBar
               tabs={tabs}

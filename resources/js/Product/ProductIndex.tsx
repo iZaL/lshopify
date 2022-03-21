@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Main from '../Main';
 import PageHeader from '../components/PageHeader';
-import {Product, Vendor} from '../types';
+import { Category, Product, Vendor } from '../types'
 import ProductIndexActionButtons from './components/ProductIndexActionButtons';
 import ProductSearchBar from './components/ProductSearchBar';
 import ProductsList from './components/ProductsList';
@@ -14,15 +14,15 @@ import {SearchAttributes, TabAttributes} from './types';
 interface Props {
   products: Product[];
   vendors: Vendor[];
+  categories: Category[];
   search_attributes: SearchAttributes;
 }
 
 const tabs: TabAttributes[] = ['all', 'active', 'draft', 'archived'];
 
 export default function ProductIndex(props: Props) {
-  const {products, search_attributes, vendors} = props;
+  const {products, search_attributes, vendors,categories} = props;
 
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchAttributes, setSearchAttributes] = useState(search_attributes);
 
   const onChange = (data: SearchAttributes) => {
@@ -68,15 +68,9 @@ export default function ProductIndex(props: Props) {
 
         <div className="mx-auto max-w-7xl py-6 ">
           <section className="overflow-hidden rounded-lg bg-white shadow">
-            <RightSidebar
-              isOpen={sidebarOpen}
-              onClose={() => setSidebarOpen(false)}
-              title={'More Filters'}>
-              <ProductFiltersPanel />
-            </RightSidebar>
             <ProductSearchBar
-              onMoreFiltersClick={() => setSidebarOpen(!sidebarOpen)}
               vendors={vendors || []}
+              categories={categories || []}
               tabs={tabs}
               onChange={onChange}
               searchAttributes={searchAttributes}

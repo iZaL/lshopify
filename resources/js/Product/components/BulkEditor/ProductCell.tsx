@@ -5,7 +5,6 @@ import React, {useEffect} from 'react';
 import VariantImage from '../../Variant/components/VariantImage';
 import {Popover} from '@headlessui/react';
 import Button from '../../../components/Button';
-import TagClose from '../../../components/TagClose';
 import {XIcon} from '@heroicons/react/solid';
 import classNames from 'classnames';
 

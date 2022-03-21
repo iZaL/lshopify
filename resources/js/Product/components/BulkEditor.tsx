@@ -1,53 +1,27 @@
 import React, {Fragment, useState} from 'react';
 import {Popover, Transition} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/solid';
-import TagClose from '../../components/TagClose';
+import TabPill from '../../components/TabPill'
 
 type Field = string;
-// interface Field {
-//   name:string;
-//   label:string;
-// }
 
 interface Props {
   collection: any;
-  // attributes:any;
-  // defaultAttributes:any;
   onChange: (attributes: any) => void;
-  // collection:Product[]|Order[];
-  // fields:Field[];
 }
 
 export default function BulkEditor(props: Props) {
   console.log('props', props);
 
   const defaultAttributes = ['sku', 'price', 'compare_at_price'];
-  const attributes = {
-    title: 'Title',
-    description: 'Description',
-    price: 'Price',
-    cost_price: 'Cost Price',
-    compare_at_price: 'Compare At Price',
-    weight: 'Weight',
-    sku: 'SKU',
-    out_of_stock_sale: 'Inventory Policy',
-    requires_shipping: 'Shipping',
-    quantity: 'Quantity',
-  };
 
-  const generalAttributes = [attributes.title];
-
-  // return null;
-  // console.log('props',props);
-  // const { collection, fields } = props;
-  //
   const [selectedFields, setSelectedFields] =
     useState<Field[]>(defaultAttributes);
 
   return (
     <>
       {selectedFields.map((field, idx) => {
-        return <TagClose key={idx} title={field} onClick={() => {}} />;
+        return <TabPill key={idx} title={field} onClose={() => {}} />;
       })}
       <div className="col-span-12 sm:col-span-6">
         <div className="relative z-0 inline-flex rounded-md shadow-sm sm:space-x-3 sm:shadow-none">

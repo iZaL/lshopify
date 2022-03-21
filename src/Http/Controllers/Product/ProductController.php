@@ -59,14 +59,22 @@ class ProductController extends Controller
             $products->whereIn('vendor_id', $selectedVendors->toArray());
         }
 
+        $selectedCategories = collect($request->get('selected_categories') ?? [])->unique();
+        if($selectedCategories->count() > 0) {
+            $products->whereIn('category_id', $selectedCategories->toArray());
+        }
+
         $products = ProductResource::collection($products->get());
         $vendors = VendorResource::collection(Vendor::all());
+        $categories = CategoryResource::collection(Category::all());
 
         return Inertia::render('Product/ProductIndex', [
             'products' => $products,
+            'categories' => $categories,
             'search_attributes' => [
                 'selected_status' => $statuses,
                 'selected_vendors' => $selectedVendors,
+                'selected_categories' => $selectedCategories,
                 'search_term' => $searchTerm,
                 'selected_view' => $selectedTab,
                 'tag_term' => $tagTerm
