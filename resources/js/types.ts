@@ -55,9 +55,9 @@ export interface Image extends File {
 }
 
 export interface VariantOption {
-  name: string;
   id: string;
-  options?: Array<{name: string; id: string}>;
+  name: string;
+  values?: Array<{id: string;name: string; }>;
 }
 
 export interface Variant {

@@ -62,7 +62,7 @@ class ProductUpdateAction
             );
 
             if (isset($defaultVariantAttributes['options']) && !empty($defaultVariantAttributes['options'])) {
-                $this->variantCreateAction->createVariantsWithOptions(
+                $this->variantCreateAction->createVariantOptionWithValues(
                     $defaultVariant,
                     $defaultVariantAttributes['options']
                 );

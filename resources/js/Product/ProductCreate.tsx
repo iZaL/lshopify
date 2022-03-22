@@ -31,14 +31,14 @@ import MultiSelect from '../components/MultiSelect';
 
 interface Props {
   collection: Collection[];
-  variants: VariantOption[];
+  default_variant_options: VariantOption[];
   categories: Category[];
   tags: Tag[];
   vendors: Vendor[];
 }
 
 export default function ProductCreate(props: Props) {
-  const {tags, collection, variants, categories, vendors} = props;
+  const {tags, collection, default_variant_options, categories, vendors} = props;
 
   const [isProductTypeLoading, setIsProductTypeLoading] = useState(false);
   const [isTagsLoading, setIsTagsLoading] = useState(false);
@@ -194,8 +194,8 @@ export default function ProductCreate(props: Props) {
               }
             />
             <VariantSection
-              currentVariants={data.default_variant.options || []}
-              defaultVariants={variants}
+              currentVariantOptions={data.default_variant.options || []}
+              defaultVariantOptions={default_variant_options}
               onChange={(field, value) =>
                 setDataObject('default_variant', field, value)
               }

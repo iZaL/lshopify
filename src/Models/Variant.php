@@ -53,7 +53,7 @@ class Variant extends BaseModel
         return VariantFactory::new();
     }
 
-    public static function defaultVariants()
+    public static function defaultVariantOptions()
     {
         return [
             ['id' => 'Size', 'name' => 'Size'],

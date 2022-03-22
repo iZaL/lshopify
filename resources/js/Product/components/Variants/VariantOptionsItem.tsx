@@ -9,16 +9,16 @@ interface Props {
   variants: VariantOption[];
   variant: VariantOption;
   onVariantRemove: (variant: VariantOption) => void;
-  onVariantChange: (variant: VariantOption, value: any) => void;
-  onVariantOptionsChange: (variant: VariantOption, values: any) => void;
+  onVariantOptionChange: (variant: VariantOption, value: any) => void;
+  onVariantValuesChange: (variant: VariantOption, values: any) => void;
 }
 
 export default function VariantOptionsItem({
   variants,
   iteration,
-  onVariantChange,
+  onVariantOptionChange,
   variant,
-  onVariantOptionsChange,
+  onVariantValuesChange,
   onVariantRemove,
   showRemoveItemButton,
 }: Props) {
@@ -41,7 +41,7 @@ export default function VariantOptionsItem({
             className="basic-multi-select"
             classNamePrefix="select"
             onChange={option =>
-              onVariantChange(variant, {
+              onVariantOptionChange(variant, {
                 id: option?.value,
                 name: option?.label,
               })
@@ -70,12 +70,12 @@ export default function VariantOptionsItem({
             noOptionsMessage={() => null}
             isClearable={false}
             placeholder={'select options'}
-            value={variant.options?.map(({name, id}) => ({
+            value={variant.values?.map(({name, id}) => ({
               value: name,
               label: id,
             }))}
             onChange={values =>
-              onVariantOptionsChange(
+              onVariantValuesChange(
                 variant,
                 values.map(value => ({id: value.value, name: value.label})),
               )

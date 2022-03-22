@@ -35,7 +35,7 @@ import MultiSelectDropdown from '../components/MultiSelectDropdown';
 interface Props {
   product: Product;
   collection: Collection[];
-  variants: VariantOption[];
+  default_variant_options: VariantOption[];
   categories: Category[];
   variant_options: VariantOption[];
   variant_values: VariantOption[];
@@ -53,7 +53,7 @@ export default function ProductEdit(props: Props) {
   const {
     product,
     variant_options,
-    variants,
+    default_variant_options,
     variant_values,
     categories,
     collection,
@@ -279,8 +279,8 @@ export default function ProductEdit(props: Props) {
                     }
                   />
                   <VariantSection
-                    currentVariants={data.default_variant?.options || []}
-                    defaultVariants={variants}
+                    currentVariantOptions={data.default_variant?.options || []}
+                    defaultVariantOptions={default_variant_options}
                     onChange={(field, value) =>
                       setDataObject('default_variant', field, value)
                     }

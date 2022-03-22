@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Variant, VariantOption} from '../../../types';
 import InputText from '../../../components/forms/InputText';
-import {XIcon} from '@heroicons/react/solid';
 import Modal from '../../../components/Modal';
 import TabPill from '../../../components/TabPill';
 
@@ -28,7 +27,7 @@ export default function EditVariantOptions({
     return {
       name: v.name,
       id: v.id,
-      options: variantValues.filter(value => value.id === v.id),
+      values: variantValues.filter(value => value.id === v.id),
     };
   });
 
@@ -66,7 +65,7 @@ export default function EditVariantOptions({
             </div>
             <div className="m-auto flex-1 px-4 text-sm text-gray-700">
               <div className="flex flex-row items-center space-x-2" key={i}>
-                {option.options?.map((o, idx) => {
+                {option.values?.map((o, idx) => {
                   return (
                     <TabPill
                       key={idx}

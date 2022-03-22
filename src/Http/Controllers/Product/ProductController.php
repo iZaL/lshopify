@@ -105,7 +105,7 @@ class ProductController extends Controller
         $data = [
             'collection' => CollectionResource::collection(Collection::all()),
             'tags' => TagResource::collection(Tag::all()),
-            'variants' => Variant::defaultVariants(),
+            'default_variant_options' => Variant::defaultVariantOptions(),
             'categories' => CategoryResource::collection(Category::all()),
             'vendors' => VendorResource::collection(Vendor::all()),
         ];
@@ -157,7 +157,7 @@ class ProductController extends Controller
             'product' => $product,
             'collection' => CollectionResource::collection(Collection::all()),
             'tags' => TagResource::collection(Tag::all()),
-            'variants' => Variant::defaultVariants(),
+            'default_variant_options' => Variant::defaultVariantOptions(),
             'categories' => CategoryResource::collection(Category::all()),
             'vendors' => VendorResource::collection(Vendor::all()),
             'variant_options' => $product->variant_options,

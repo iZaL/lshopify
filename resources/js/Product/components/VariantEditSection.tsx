@@ -68,7 +68,7 @@ export default function VariantEditSection({
       if (v.id === variant.id) {
         return {
           ...v,
-          options: v.options?.map(o => {
+          values: v.options?.map(o => {
             return o.id === option.id ? {...option, id: value} : o;
           }),
         };

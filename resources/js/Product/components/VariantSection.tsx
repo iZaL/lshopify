@@ -8,68 +8,68 @@ import {Variant, VariantOption} from '../../types';
 import Button from '../../components/Button';
 
 interface Props {
-  currentVariants: VariantOption[];
-  defaultVariants: VariantOption[];
+  currentVariantOptions: VariantOption[];
+  defaultVariantOptions: VariantOption[];
   onChange: (name: keyof Variant, options: VariantOption[]) => void;
 }
 
 export default function VariantSection({
-  currentVariants,
-  defaultVariants,
+  currentVariantOptions,
+  defaultVariantOptions,
   onChange,
 }: Props) {
   const [hasVariants, setHasVariants] = useState(false);
-  const pendingVariants = defaultVariants.filter(
-    ({name}) => !currentVariants.some(v => v.name === name),
+  const pendingVariants = defaultVariantOptions.filter(
+    ({name}) => !currentVariantOptions.some(v => v.name === name),
   );
   const onVariantAdd = () => {
-    const variantKeys = currentVariants.map(({name}) => name);
-    const randomVariant = defaultVariants.find(
+    const variantKeys = currentVariantOptions.map(({name}) => name);
+    const randomVariant = defaultVariantOptions.find(
       ({name}) => !variantKeys.includes(name),
     );
     if (randomVariant) {
-      const variants = [...currentVariants, {...randomVariant, options: []}];
+      const variants = [...currentVariantOptions, {...randomVariant, values: []}];
       onChange('options', variants);
     }
   };
 
   const onVariantsHideShow = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHasVariants(e.target.checked);
-    if (currentVariants.length === 0) {
+    if (currentVariantOptions.length === 0) {
       onVariantAdd();
     } else {
       onChange('options', []);
     }
   };
 
-  const onVariantChange = (
+  const onVariantOptionChange = (
     oldVariant: VariantOption,
     newVariant: VariantOption,
   ) => {
-    const variants = currentVariants.filter(
+    const variants = currentVariantOptions.filter(
       variant => variant.name !== oldVariant.name,
     );
     const newVariants = [
       ...variants,
-      {...newVariant, options: oldVariant.options},
+      {...newVariant, values: oldVariant.values},
     ];
     onChange('options', newVariants);
   };
 
   const onVariantRemove = (variant: VariantOption) => {
-    const variants = currentVariants.filter(v => v.name !== variant.name);
+    const variants = currentVariantOptions.filter(v => v.name !== variant.name);
     onChange('options', variants);
   };
 
-  const onVariantOptionsChange = (
-    currentVariant: VariantOption,
-    options: VariantOption[],
+  const onVariantValuesChange = (
+    currentVariantOption: VariantOption,
+    values: VariantOption[],
   ) => {
-    const variants = currentVariants.map(variant => {
-      if (variant.name === currentVariant.name) {
+    const variants = currentVariantOptions.map(variant => {
+      if (variant.name === currentVariantOption.name) {
         return {
-          ...currentVariant,
-          options: options,
+          ...currentVariantOption,
+          values: values,
         };
       }
       return variant;
@@ -91,22 +91,22 @@ export default function VariantSection({
         <>
           <Border />
           <Subheader text="OPTIONS" headerStyle="text-sm" />
-          {currentVariants.map((variant: VariantOption, index) => {
+          {currentVariantOptions.map((variant: VariantOption, index) => {
             return (
               <VariantOptionsItem
                 key={index}
                 iteration={index + 1}
                 variant={variant}
                 variants={pendingVariants}
-                onVariantChange={onVariantChange}
-                onVariantOptionsChange={onVariantOptionsChange}
+                onVariantOptionChange={onVariantOptionChange}
+                onVariantValuesChange={onVariantValuesChange}
                 onVariantRemove={onVariantRemove}
-                showRemoveItemButton={currentVariants.length > 1}
+                showRemoveItemButton={currentVariantOptions.length > 1}
               />
             );
           })}
 
-          {currentVariants.length <= 2 && (
+          {currentVariantOptions.length <= 2 && (
             <Button onClick={onVariantAdd} theme="default">
               Add another option
             </Button>
