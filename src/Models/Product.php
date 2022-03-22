@@ -75,6 +75,17 @@ class Product extends BaseModel
             ->pluck('options')
             ->unique('name')
             ->collapse()
+            ->map(function ($option) {
+                return [
+                    'id' => $option['id'],
+                    'name' => $option['id'],
+                ];
+            })
+//            ->pluck('id')
+//            ->each(function ($option) {
+//                $option['id'] = $option['id'];
+//                $option['name'] = $option['id'];
+//            })
             ->toArray();
     }
 

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Card from '../../components/Card';
 import Subheader from '../../components/Subheader';
-import {Image, Variant, VariantOption} from '../../types';
+import { Image, Variant, VariantOption, VariantValue } from '../../types'
 import Modal from '../../components/Modal';
 import EditPrices from './Variants/EditPrices';
 import EditQuantities from './Variants/EditQuantities';
@@ -17,21 +17,19 @@ import Button from '../../components/Button';
 import classNames from 'classnames';
 import Checkbox from '../../components/forms/Checkbox';
 import InputText from '../../components/forms/InputText';
-import DropdownAlt from '../../components/DropdownAlt'
-import MultiSelectDropdown from '../../components/MultiSelectDropdown'
 import PopoverButton from '../../components/PopoverButton'
 
 interface Props {
   currentVariants: Variant[];
   variantOptions: VariantOption[];
-  variantValues: VariantOption[];
+  variantValues: VariantValue[];
   onChange: (variants: Variant[]) => void;
   onAddVariantClick: () => void;
   onEditVariantClick: (variant: Variant) => void;
   onImagesUpload: (images: Image[]) => void;
-  onVariantsDelete: (variantIDs: number[]) => void;
+  onVariantsDelete: (variantIDs: Variant['id'][]) => void;
   onBulkAttributesSet: <T extends keyof Variant>(
-    variantIDs: number[],
+    variantIDs: Variant['id'][],
     field: T,
     value: Variant[T],
   ) => void;
@@ -50,14 +48,10 @@ export default function VariantEditSection({
   onVariantsDelete,
   onBulkAttributesSet,
 }: Props) {
-  const [checkedVariantIDs, setCheckedVariantIDs] = useState<Array<number>>([]);
+  const [checkedVariantIDs, setCheckedVariantIDs] = useState<Variant['id'][]>([]);
   const [showDialog, setShowDialog] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
-
-  // console.log('variantValues', variantValues);
-  // console.log('variantOptions', variantOptions);
-  // console.log('currentVariants', currentVariants);
 
   const onVariantOptionsChange = (
     variant: Variant,
@@ -68,8 +62,8 @@ export default function VariantEditSection({
       if (v.id === variant.id) {
         return {
           ...v,
-          values: v.options?.map(o => {
-            return o.id === option.id ? {...option, id: value} : o;
+          options: v.options?.map(o => {
+            return o.id === option.id ? {...option, name: value} : o;
           }),
         };
       }
@@ -115,7 +109,6 @@ export default function VariantEditSection({
     } else {
       onApplyAll('image', selectedImage);
     }
-    // setSelectedVariant(null);
   };
 
   const onCheckboxChange = (variantID: number) => {
@@ -133,10 +126,10 @@ export default function VariantEditSection({
     }
   };
 
-  const onVariantOptionClick = (option: VariantOption) => {
+  const onOptionValueClick = (value: VariantValue) => {
     let variantIDs: Array<number> = [];
     currentVariants.map(variant => {
-      return (variantIDs = variant.options?.some(({name}) => name === option.name)
+      return (variantIDs = variant.options?.some(({name}) => name === value.name)
         ? [...variantIDs, variant.id]
         : [...variantIDs]);
     });
@@ -201,14 +194,15 @@ export default function VariantEditSection({
         </Button>
         <div className='z-30 bg-white'>
           {
-            variantOptions.map((option, index) => {
+            variantOptions.map((option, idx) => {
               return (
-                <PopoverButton title={option.id} buttonStyle='text-sm border-none py-0 hover:bg-white' >
+                <PopoverButton key={idx} title={option.id} buttonStyle='text-sm border-none py-0 hover:bg-white' >
                   {
-                    variantValues?.map((value) => {
+                    variantValues?.map((value, idx) => {
+                      console.log('value',value);
                       if(value.id === option.id) {
                         return (
-                          <Checkbox name={value.id} checked={true} onChange={()=>onVariantOptionClick(value)} label={value.name} />
+                          <Checkbox key={idx} name={value.id} checked={true} onChange={()=>onOptionValueClick(value)} label={value.name} />
                         )
                       }
                       return null;
@@ -219,17 +213,6 @@ export default function VariantEditSection({
             })
           }
         </div>
-
-        {/*{variantValues.map((option, i) => {*/}
-        {/*  return (*/}
-        {/*    <li*/}
-        {/*      key={i}*/}
-        {/*      className="text-blue-500"*/}
-        {/*      onClick={() => onVariantOptionClick(option)}>*/}
-        {/*      {option.name}*/}
-        {/*    </li>*/}
-        {/*  );*/}
-        {/*})}*/}
       </div>
 
       <div className="overflow-x-auto  text-sm">

@@ -5,30 +5,30 @@ import Button from '../../../components/Button';
 
 interface Props {
   iteration: number;
-  showRemoveItemButton: boolean;
-  variants: VariantOption[];
-  variant: VariantOption;
-  onVariantRemove: (variant: VariantOption) => void;
+  showRemoveOptionButton: boolean;
+  variantOption: VariantOption;
+  pendingVariantOptions: VariantOption[];
+  onVariantOptionRemove: (variant: VariantOption) => void;
   onVariantOptionChange: (variant: VariantOption, value: any) => void;
   onVariantValuesChange: (variant: VariantOption, values: any) => void;
 }
 
 export default function VariantOptionsItem({
-  variants,
   iteration,
+  variantOption,
+  showRemoveOptionButton,
+  pendingVariantOptions,
   onVariantOptionChange,
-  variant,
   onVariantValuesChange,
-  onVariantRemove,
-  showRemoveItemButton,
+  onVariantOptionRemove,
 }: Props) {
   return (
     <>
       <div className="flex flex-row justify-between">
         <div className="font-semi-bold text-sm">VariantOption {iteration}</div>
-        {showRemoveItemButton && (
+        {showRemoveOptionButton && (
           <Button
-            onClick={() => (variant ? onVariantRemove(variant) : null)}
+            onClick={() => (variantOption ? onVariantOptionRemove(variantOption) : null)}
             theme="clear">
             <div className="text-sm text-blue-700">Remove</div>
           </Button>
@@ -41,7 +41,7 @@ export default function VariantOptionsItem({
             className="basic-multi-select"
             classNamePrefix="select"
             onChange={option =>
-              onVariantOptionChange(variant, {
+              onVariantOptionChange(variantOption, {
                 id: option?.value,
                 name: option?.label,
               })
@@ -51,11 +51,11 @@ export default function VariantOptionsItem({
               IndicatorSeparator: () => null,
             }}
             noOptionsMessage={() => null}
-            options={variants.map(({name, id}) => ({
-              value: name,
+            options={pendingVariantOptions.map(({name, id}) => ({
               label: id,
+              value: name,
             }))}
-            value={{value: variant.name, label: variant.id}}
+            value={{label: variantOption.id,value: variantOption.name}}
           />
         </div>
         <div className="md:col-span-2">
@@ -70,13 +70,13 @@ export default function VariantOptionsItem({
             noOptionsMessage={() => null}
             isClearable={false}
             placeholder={'select options'}
-            value={variant.values?.map(({name, id}) => ({
+            value={variantOption.values?.map(({name, id}) => ({
               value: name,
               label: id,
             }))}
             onChange={values =>
               onVariantValuesChange(
-                variant,
+                variantOption,
                 values.map(value => ({id: value.value, name: value.label})),
               )
             }

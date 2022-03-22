@@ -19,9 +19,9 @@ import {
   Product,
   Tag,
   Variant,
-  VariantOption,
+  VariantOption, VariantValue,
   Vendor,
-} from '../types';
+} from '../types'
 import route from 'ziggy-js';
 import BackButton from '../components/BackButton';
 import Subheader from '../components/Subheader';
@@ -38,14 +38,14 @@ interface Props {
   default_variant_options: VariantOption[];
   categories: Category[];
   variant_options: VariantOption[];
-  variant_values: VariantOption[];
+  variant_values: VariantValue[];
   tags: Tag[];
   vendors: Vendor[];
 }
 
 type Form = Product & {
   variant_options: VariantOption[];
-  variant_values: VariantOption[];
+  variant_values: VariantValue[];
   _method: string;
 };
 
@@ -69,6 +69,10 @@ export default function ProductEdit(props: Props) {
   };
 
   const {data, setData, post, isDirty} = useForm<Form>(formProps);
+
+  useEffect(() => {
+    console.log('data changed', data);
+  }, [data]);
 
   useEffect(() => {
     setData({
@@ -125,10 +129,7 @@ export default function ProductEdit(props: Props) {
       variants: variantIDs,
     };
     Inertia.post(url, productData, {
-      preserveScroll: false,
-      onSuccess: () => {
-        Inertia.reload();
-      },
+      preserveState:false
     });
   };
 

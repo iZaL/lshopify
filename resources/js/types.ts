@@ -54,10 +54,15 @@ export interface Image extends File {
   url: string;
 }
 
+export interface VariantValue {
+  id: string;
+  name: string;
+}
+
 export interface VariantOption {
   id: string;
   name: string;
-  values?: Array<{id: string;name: string; }>;
+  values?: VariantValue[];
 }
 
 export interface Variant {

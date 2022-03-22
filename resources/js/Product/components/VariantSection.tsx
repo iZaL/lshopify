@@ -4,7 +4,7 @@ import Subheader from '../../components/Subheader';
 import Checkbox from '../../components/forms/Checkbox';
 import Border from '../../components/Border';
 import VariantOptionsItem from './Variants/VariantOptionsItem';
-import {Variant, VariantOption} from '../../types';
+import { Variant, VariantOption, VariantValue } from '../../types'
 import Button from '../../components/Button';
 
 interface Props {
@@ -63,7 +63,7 @@ export default function VariantSection({
 
   const onVariantValuesChange = (
     currentVariantOption: VariantOption,
-    values: VariantOption[],
+    values: VariantValue[],
   ) => {
     const variants = currentVariantOptions.map(variant => {
       if (variant.name === currentVariantOption.name) {
@@ -96,12 +96,12 @@ export default function VariantSection({
               <VariantOptionsItem
                 key={index}
                 iteration={index + 1}
-                variant={variant}
-                variants={pendingVariants}
+                variantOption={variant}
+                pendingVariantOptions={pendingVariants}
                 onVariantOptionChange={onVariantOptionChange}
                 onVariantValuesChange={onVariantValuesChange}
-                onVariantRemove={onVariantRemove}
-                showRemoveItemButton={currentVariantOptions.length > 1}
+                onVariantOptionRemove={onVariantRemove}
+                showRemoveOptionButton={currentVariantOptions.length > 1}
               />
             );
           })}
