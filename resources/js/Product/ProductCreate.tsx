@@ -58,7 +58,6 @@ export default function ProductCreate(props: Props) {
       barcode: '',
       weight: '',
       hs_code: '',
-      origin_country_id: '',
       image: null,
       options: [],
       taxable: true,
@@ -66,6 +65,7 @@ export default function ProductCreate(props: Props) {
       tracked: true,
       physical_product: true,
       requires_shipping: true,
+      origin_country_id:''
     },
     status: 'draft',
     collections: [],

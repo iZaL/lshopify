@@ -30,6 +30,7 @@ export default function VariantCreate(props: Props) {
   });
 
   const {data, setData, post} = useForm<Variant & {images: Image[]}>({
+    origin_country_id: '',
     id: 0,
     price: '0',
     compare_at_price: '0',
@@ -40,14 +41,13 @@ export default function VariantCreate(props: Props) {
     image: null,
     weight: '',
     hs_code: '',
-    origin_country_id: '',
     options: options,
     taxable: false,
     tracked: false,
     out_of_stock_sale: true,
     physical_product: true,
     requires_shipping: true,
-    images: product.images || [],
+    images: product.images || []
   });
 
   useEffect(() => {
