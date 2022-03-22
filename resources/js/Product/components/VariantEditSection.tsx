@@ -111,13 +111,6 @@ export default function VariantEditSection({
     }
   };
 
-  const onCheckboxChange = (variantID: number) => {
-    const checkedBox = checkedVariantIDs.includes(variantID)
-      ? checkedVariantIDs.filter(vID => vID !== variantID)
-      : [...checkedVariantIDs, variantID];
-    setCheckedVariantIDs(checkedBox);
-  };
-
   const onSelectedAllChange = () => {
     if (currentVariants.length === checkedVariantIDs.length) {
       setCheckedVariantIDs([]);
@@ -126,12 +119,27 @@ export default function VariantEditSection({
     }
   };
 
+  const onCheckboxChange = (variantID: number) => {
+    const checkedBox = checkedVariantIDs.includes(variantID)
+      ? checkedVariantIDs.filter(vID => vID !== variantID)
+      : [...checkedVariantIDs, variantID];
+    setCheckedVariantIDs(checkedBox);
+  };
+
   const onOptionValueClick = (value: VariantValue) => {
-    let variantIDs: Array<number> = [];
-    currentVariants.map(variant => {
-      return (variantIDs = variant.options?.some(({name}) => name === value.name)
-        ? [...variantIDs, variant.id]
-        : [...variantIDs]);
+    let variantIDs: Array<number> = checkedVariantIDs;
+
+    //select all variants where the option is equal to value
+    currentVariants.forEach(variant => {
+      variant.options.forEach(option => {
+        if (option.id === value.id && option.name === value.name) {
+          if(variantIDs.includes(variant.id)) {
+            variantIDs = variantIDs.filter(vID => vID !== variant.id);
+          } else {
+            variantIDs.push(variant.id);
+          }
+        }
+      });
     });
     setCheckedVariantIDs([...variantIDs]);
   };
@@ -146,6 +154,7 @@ export default function VariantEditSection({
     });
     onChange(newVariants);
   };
+
 
   return (
     <Card>
@@ -199,10 +208,16 @@ export default function VariantEditSection({
                 <PopoverButton key={idx} title={option.id} buttonStyle='text-sm border-none py-0 hover:bg-white' >
                   {
                     variantValues?.map((value, idx) => {
-                      console.log('value',value);
+
+                      // check if option name is selected in checkedVariantIDs
+                      const checked = checkedVariantIDs.some(vID => {
+                        const variant = currentVariants.find(v => v.id === vID);
+                        return variant?.options?.some(({name}) => name === value.name);
+                      });
+
                       if(value.id === option.id) {
                         return (
-                          <Checkbox key={idx} name={value.id} checked={true} onChange={()=>onOptionValueClick(value)} label={value.name} />
+                          <Checkbox key={idx} name={value.id} checked={checked} onChange={()=>onOptionValueClick(value)} label={value.name} />
                         )
                       }
                       return null;
