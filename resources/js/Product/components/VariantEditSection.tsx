@@ -1,22 +1,22 @@
-import React, {useState} from 'react';
-import Card from '../../components/Card';
-import Subheader from '../../components/Subheader';
+import React, { useState } from 'react'
+import Card from '../../components/Card'
+import Subheader from '../../components/Subheader'
 import { Image, Variant, VariantOption, VariantValue } from '../../types'
-import Modal from '../../components/Modal';
-import EditPrices from './Variants/EditPrices';
-import EditQuantities from './Variants/EditQuantities';
-import EditHSCodes from './Variants/EditHSCodes';
-import VariantImage from '../Variant/components/VariantImage';
-import DZFileUploadBox from '../../components/forms/DZFileUploadBox';
-import EditOriginCountry from './Variants/EditOriginCountry';
-import EditVariantOptions from '../Variant/components/EditVariantOptions';
-import BulkEditor from '../Variant/components/BulkEditor';
-import ModalFooter from '../../components/ModalFooter';
-import DropdownButton from '../../components/DropdownButton';
-import Button from '../../components/Button';
-import classNames from 'classnames';
-import Checkbox from '../../components/forms/Checkbox';
-import InputText from '../../components/forms/InputText';
+import Modal from '../../components/Modal'
+import EditPrices from './Variants/EditPrices'
+import EditQuantities from './Variants/EditQuantities'
+import EditHSCodes from './Variants/EditHSCodes'
+import VariantImage from '../Variant/components/VariantImage'
+import DZFileUploadBox from '../../components/forms/DZFileUploadBox'
+import EditOriginCountry from './Variants/EditOriginCountry'
+import EditVariantOptions from '../Variant/components/EditVariantOptions'
+import BulkEditor from '../Variant/components/BulkEditor'
+import ModalFooter from '../../components/ModalFooter'
+import DropdownButton from '../../components/DropdownButton'
+import Button from '../../components/Button'
+import classNames from 'classnames'
+import Checkbox from '../../components/forms/Checkbox'
+import InputText from '../../components/forms/InputText'
 import PopoverButton from '../../components/PopoverButton'
 
 interface Props {
@@ -128,16 +128,10 @@ export default function VariantEditSection({
 
   const onOptionValueClick = (value: VariantValue) => {
     let variantIDs: Array<number> = checkedVariantIDs;
-
-    //select all variants where the option is equal to value
     currentVariants.forEach(variant => {
       variant.options.forEach(option => {
         if (option.id === value.id && option.name === value.name) {
-          if(variantIDs.includes(variant.id)) {
-            variantIDs = variantIDs.filter(vID => vID !== variant.id);
-          } else {
-            variantIDs.push(variant.id);
-          }
+          variantIDs = variantIDs.includes(variant.id) ? variantIDs.filter(vID => vID !== variant.id) : [...variantIDs, variant.id];
         }
       });
     });
@@ -208,8 +202,6 @@ export default function VariantEditSection({
                 <PopoverButton key={idx} title={option.id} buttonStyle='text-sm border-none py-0 hover:bg-white' >
                   {
                     variantValues?.map((value, idx) => {
-
-                      // check if option name is selected in checkedVariantIDs
                       const checked = checkedVariantIDs.some(vID => {
                         const variant = currentVariants.find(v => v.id === vID);
                         return variant?.options?.some(({name}) => name === value.name);

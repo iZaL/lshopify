@@ -81,11 +81,6 @@ class Product extends BaseModel
                     'name' => $option['id'],
                 ];
             })
-//            ->pluck('id')
-//            ->each(function ($option) {
-//                $option['id'] = $option['id'];
-//                $option['name'] = $option['id'];
-//            })
             ->toArray();
     }
 
@@ -96,7 +91,6 @@ class Product extends BaseModel
             ->collapse()
             ->unique('name')
             ->toArray();
-
         return [...$variants];
     }
 
