@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Variant, VariantOption} from '../../../types';
+import {Variant, VariantOption, VariantValue} from '../../../types';
 import InputText from '../../../components/forms/InputText';
 import Modal from '../../../components/Modal';
 import TabPill from '../../../components/TabPill';
@@ -7,14 +7,12 @@ import TabPill from '../../../components/TabPill';
 interface Props {
   variants: Variant[];
   variantOptions: VariantOption[];
-  variantValues: VariantOption[];
   onDelete: (variants: number[]) => void;
 }
 
 export default function EditVariantOptions({
   variants,
   variantOptions,
-  variantValues,
   onDelete,
 }: Props) {
   const [showDialog, setShowDialog] = useState(false);
@@ -27,7 +25,7 @@ export default function EditVariantOptions({
     return {
       name: v.name,
       id: v.id,
-      values: variantValues.filter(value => value.id === v.id),
+      values: v.values,
     };
   });
 
@@ -37,16 +35,19 @@ export default function EditVariantOptions({
 
   const onVariantOptionsUpdate = () => {};
 
-  const onVariantOptionsRemove = (option: VariantOption) => {
+  const onVariantOptionValueRemove = (
+    option: VariantOption,
+    value: VariantValue,
+  ) => {
     let currentVariants: number[] = [];
     variants.map(variant => {
       return (currentVariants = variant.options?.some(
-        ({name}) => name === option.name,
+        ({id, name}) => id === option.id && name === value.name,
       )
         ? [...currentVariants, variant.id]
         : [...currentVariants]);
     });
-    setDeletingOption(option);
+    setDeletingOption(value);
     setDeletingVariants(currentVariants);
     setShowDialog(true);
   };
@@ -65,12 +66,12 @@ export default function EditVariantOptions({
             </div>
             <div className="m-auto flex-1 px-4 text-sm text-gray-700">
               <div className="flex flex-row items-center space-x-2" key={i}>
-                {option.values?.map((o, idx) => {
+                {option.values?.map((value, idx) => {
                   return (
                     <TabPill
                       key={idx}
-                      title={o.name}
-                      onClose={() => onVariantOptionsRemove(o)}
+                      title={value.name}
+                      onClose={() => onVariantOptionValueRemove(option, value)}
                     />
                   );
                 })}

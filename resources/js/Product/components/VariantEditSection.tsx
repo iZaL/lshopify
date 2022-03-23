@@ -20,17 +20,14 @@ import InputText from '../../components/forms/InputText';
 import PopoverButton from '../../components/PopoverButton';
 import Border from '../../components/Border';
 import TabPill from '../../components/TabPill';
-import {DotsVerticalIcon, ViewListIcon} from '@heroicons/react/outline';
+import {ViewListIcon} from '@heroicons/react/outline';
 import {Disclosure} from '@headlessui/react';
-import {ChevronRightIcon} from '@heroicons/react/solid';
 import CreatableSelect from 'react-select/creatable';
 
 interface Props {
   defaultVariantOptions: VariantOption[];
   currentVariants: Variant[];
   variantOptions: VariantOption[];
-  variantOptionsNew: VariantOption[];
-  variantValues: VariantValue[];
   onChange: (variants: Variant[]) => void;
   onAddVariantClick: () => void;
   onEditVariantClick: (variant: Variant) => void;
@@ -48,9 +45,7 @@ interface Props {
 export default function VariantEditSection({
   defaultVariantOptions,
   currentVariants,
-  variantOptionsNew,
   variantOptions,
-  variantValues,
   images,
   onChange,
   onAddVariantClick,
@@ -172,23 +167,7 @@ export default function VariantEditSection({
     oldVariant: VariantOption,
     newVariant: VariantOption,
   ) => {
-    // const variants = variantOptionsNew.filter(
-    //   variant => variant.name !== oldVariant.name,
-    // );
-    // const newVariants = [
-    //   ...variants,
-    //   {...newVariant, values: oldVariant.values},
-    // ];
-
-    // const variants = variantOptionsNew.filter(
-    //   option => option.name !== oldVariant.name,
-    // );
-    // const newVariants = [
-    //   ...variants,
-    //   {...newVariant, values: oldVariant.values},
-    // ];
-
-    const newVariants = variantOptionsNew.map(option => {
+    const newVariants = variantOptions.map(option => {
       if (option.name === oldVariant.name) {
         return {
           ...newVariant,
@@ -197,22 +176,11 @@ export default function VariantEditSection({
       }
       return option;
     });
-
-    // const newVariants = variantOptionsNew.map((variantOption) => {
-    //   if(variantOption.id === newVariant.id) {
-    //     return newVariant;
-    //   }
-    //   return variantOption;
-    // });
-
-    console.log('newVariants', newVariants);
-
-    // console.log('newVariants', newVariants);
-    onDataSet('variant_options_new', newVariants);
+    onDataSet('variant_options', newVariants);
   };
 
   const pendingVariants = defaultVariantOptions.filter(
-    ({name}) => !variantOptions.some(v => v.name === name),
+    ({name}) => !variantOptions.some(v => v.id === name),
   );
 
   return (
@@ -221,7 +189,7 @@ export default function VariantEditSection({
         <Subheader text="Options" />
         <Border />
 
-        {variantOptionsNew.map((option, idx) => (
+        {variantOptions.map((option, idx) => (
           <div key={idx}>
             <Disclosure>
               {({open}) => (
@@ -333,137 +301,6 @@ export default function VariantEditSection({
             <Border />
           </div>
         ))}
-        {/*{variantOptions.map((option, idx) => (*/}
-        {/*  <div key={idx}>*/}
-        {/*    <Disclosure>*/}
-        {/*      {({open}) => (*/}
-        {/*        <>*/}
-        {/*          {!open && (*/}
-        {/*            <div*/}
-        {/*              key={idx}*/}
-        {/*              className="flex flex-row items-center space-x-6 py-2">*/}
-        {/*              <div className="space-p-0 inline-flex">*/}
-        {/*                <ViewListIcon className="w-6 text-gray-500" />*/}
-        {/*              </div>*/}
-        {/*              <div className="flex-grow">*/}
-        {/*                <div className="text-sm font-semibold">*/}
-        {/*                  {option.name}*/}
-        {/*                </div>*/}
-        {/*                <div className="flex space-x-2 pt-1">*/}
-        {/*                  {variantValues*/}
-        {/*                    .filter(value => value.id === option.id)*/}
-        {/*                    .map((value, idx) => (*/}
-        {/*                      <TabPill*/}
-        {/*                        key={idx}*/}
-        {/*                        title={value.name}*/}
-        {/*                        hideCloseIcon={true}*/}
-        {/*                      />*/}
-        {/*                    ))}*/}
-        {/*                </div>*/}
-        {/*              </div>*/}
-        {/*              <Disclosure.Button as={'div'}>*/}
-        {/*                <Button*/}
-        {/*                  theme="default"*/}
-        {/*                  buttonStyle="py-1 px-3 text-sm"*/}
-        {/*                  // onClick={() => setShowDialog(option.id)}*/}
-        {/*                >*/}
-        {/*                  Edit*/}
-        {/*                </Button>*/}
-        {/*              </Disclosure.Button>*/}
-        {/*            </div>*/}
-        {/*          )}*/}
-
-        {/*          <Disclosure.Panel>*/}
-        {/*            <div className="flex flex-row items-center space-x-6 py-2">*/}
-        {/*              <div className="space-p-0 inline-flex">*/}
-        {/*                <ViewListIcon className="w-6 text-gray-500" />*/}
-        {/*              </div>*/}
-        {/*              <div className="flex-grow space-y-1">*/}
-        {/*                <div>{option.name}</div>*/}
-
-        {/*                <CreatableSelect*/}
-        {/*                  className="basic-multi-select"*/}
-        {/*                  classNamePrefix="select"*/}
-        {/*                  onChange={newOption => {*/}
-        {/*                    if (newOption) {*/}
-        {/*                      onVariantOptionChange(option, {*/}
-        {/*                        id: newOption.value,*/}
-        {/*                        name: newOption.label,*/}
-        {/*                      });*/}
-        {/*                    }*/}
-        {/*                  }}*/}
-        {/*                  components={{*/}
-        {/*                    DropdownIndicator: () => null,*/}
-        {/*                    IndicatorSeparator: () => null,*/}
-        {/*                  }}*/}
-        {/*                  noOptionsMessage={() => null}*/}
-        {/*                  options={pendingVariants.map(({name, id}) => ({*/}
-        {/*                    label: id,*/}
-        {/*                    value: name,*/}
-        {/*                  }))}*/}
-        {/*                  value={{label: option.id, value: option.name}}*/}
-        {/*                />*/}
-
-        {/*                <div className={'flex-1'}>Option values</div>*/}
-        {/*                {variantValues*/}
-        {/*                  .filter(value => value.id === option.id)*/}
-        {/*                  .map((value, idx) => (*/}
-        {/*                    <InputText*/}
-        {/*                      name={value.name}*/}
-        {/*                      onChange={() => {}}*/}
-        {/*                      value={value.name}*/}
-        {/*                      key={idx}*/}
-        {/*                    />*/}
-        {/*                  ))}*/}
-        {/*              </div>*/}
-        {/*            </div>*/}
-
-        {/*            <Disclosure.Button as={'div'}>*/}
-        {/*              <Button*/}
-        {/*                theme="default"*/}
-        {/*                buttonStyle="py-1 px-3 text-sm"*/}
-        {/*                // onClick={() => setShowDialog(option.id)}*/}
-        {/*              >*/}
-        {/*                Done*/}
-        {/*              </Button>*/}
-        {/*            </Disclosure.Button>*/}
-        {/*          </Disclosure.Panel>*/}
-        {/*        </>*/}
-        {/*      )}*/}
-        {/*    </Disclosure>*/}
-
-        {/*    <Border />*/}
-        {/*  </div>*/}
-        {/*))}*/}
-        {/*{*/}
-        {/*  variantOptions.map((option,idx) => (*/}
-        {/*    <>*/}
-        {/*      <div key={idx} className='flex flex-row space-x-6 items-center py-2'>*/}
-        {/*        <div className='inline-flex space-p-0'>*/}
-        {/*          <ViewListIcon className='w-6 text-gray-500'/>*/}
-        {/*        </div>*/}
-        {/*        <div className='flex-grow'>*/}
-        {/*          <div className='text-sm font-semibold'>{option.name}</div>*/}
-        {/*          <div className='flex space-x-2 pt-1'>*/}
-        {/*            {*/}
-        {/*              variantValues.filter((value) => value.id === option.id).map((value,idx) => (*/}
-        {/*                <TabPill key={idx} title={value.name} hideCloseIcon={true}/>*/}
-        {/*              ))*/}
-        {/*            }*/}
-        {/*          </div>*/}
-        {/*        </div>*/}
-        {/*        <Button*/}
-        {/*          theme='default'*/}
-        {/*          buttonStyle='py-1 px-3 text-sm'*/}
-        {/*          // onClick={() => setShowDialog(option.id)}*/}
-        {/*        >*/}
-        {/*          Edit*/}
-        {/*        </Button>*/}
-        {/*      </div>*/}
-        {/*      <Border />*/}
-        {/*    </>*/}
-        {/*  ))*/}
-        {/*}*/}
       </Card>
 
       <Card>
@@ -513,7 +350,7 @@ export default function VariantEditSection({
             None
           </Button>
           <div className="z-30 bg-white">
-            {variantOptionsNew.map((option, idx) => {
+            {variantOptions.map((option, idx) => {
               return (
                 <PopoverButton
                   key={idx}
@@ -652,9 +489,7 @@ export default function VariantEditSection({
                     }
                     onChange={() => onSelectedAllChange()}
                     name=""
-                    // indeterminate={}
                     inputStyle="line-through indeterminate"
-                    // indeterminate={true}
                   />
                 </div>
                 <div className="flex w-16 items-center justify-center " />
@@ -742,9 +577,6 @@ export default function VariantEditSection({
                         }
                        `}>
                           {variantOptions.map((option: VariantOption, idx) => {
-                            // console.log('option',option);
-                            // console.log('variant.options',variant.options);
-
                             const currentOption = variant.options?.find(
                               v => v.id === option.id,
                             ) as VariantOption;
@@ -954,7 +786,6 @@ export default function VariantEditSection({
           <EditVariantOptions
             variants={currentVariants}
             variantOptions={variantOptions}
-            variantValues={variantValues}
             onDelete={variants => {
               setShowDialog(null);
               onVariantsDelete(variants);

@@ -160,9 +160,7 @@ class ProductController extends Controller
             'default_variant_options' => Variant::defaultVariantOptions(),
             'categories' => CategoryResource::collection(Category::all()),
             'vendors' => VendorResource::collection(Vendor::all()),
-            'variant_options' => $product->variant_options,
-            'variant_values' => $product->variant_options_values,
-            'variant_options_new' => $product->variant_options_new,
+            'variant_options' => $product->variant_options_new,
         ];
 
         return Inertia::render('Product/ProductEdit', $data);
