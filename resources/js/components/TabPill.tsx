@@ -7,7 +7,7 @@ export default function TabPill({
   hideCloseIcon = false,
 }: {
   title: string;
-  onClose: () => void;
+  onClose?: () => void;
   hideCloseIcon?: boolean;
 }) {
   return (

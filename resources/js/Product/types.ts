@@ -1,4 +1,4 @@
-import { ProductStatus } from '../types'
+import {ProductStatus} from '../types';
 
 export type TabAttributes = 'all' | ProductStatus;
 

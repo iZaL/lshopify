@@ -7,7 +7,6 @@ export default function PopoverButton({
   title,
   children,
   buttonStyle,
-
 }: {
   title: string;
   children: React.ReactNode;
@@ -17,9 +16,9 @@ export default function PopoverButton({
     <Popover className="relative inline-block text-left">
       <Popover.Button
         className={classNames(
-          `px-2 py-2 group hidden justify-center border border-gray-300 text-sm hover:bg-gray-50 sm:inline-flex
+          `group hidden justify-center border border-gray-300 px-2 py-2 text-sm hover:bg-gray-50 sm:inline-flex
             `,
-          buttonStyle
+          buttonStyle,
         )}>
         <span>{title}</span>
         <ChevronDownIcon

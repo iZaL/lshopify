@@ -28,7 +28,9 @@ export default function VariantOptionsItem({
         <div className="font-semi-bold text-sm">VariantOption {iteration}</div>
         {showRemoveOptionButton && (
           <Button
-            onClick={() => (variantOption ? onVariantOptionRemove(variantOption) : null)}
+            onClick={() =>
+              variantOption ? onVariantOptionRemove(variantOption) : null
+            }
             theme="clear">
             <div className="text-sm text-blue-700">Remove</div>
           </Button>
@@ -55,7 +57,7 @@ export default function VariantOptionsItem({
               label: id,
               value: name,
             }))}
-            value={{label: variantOption.id,value: variantOption.name}}
+            value={{label: variantOption.id, value: variantOption.name}}
           />
         </div>
         <div className="md:col-span-2">

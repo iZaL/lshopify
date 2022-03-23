@@ -47,7 +47,7 @@ export default function VariantCreate(props: Props) {
     out_of_stock_sale: true,
     physical_product: true,
     requires_shipping: true,
-    images: product.images || []
+    images: product.images || [],
   });
 
   useEffect(() => {

@@ -223,7 +223,7 @@ export default function ProductSearchBar({
               <div className="relative rounded-md shadow-sm">
                 <InputText
                   name="collection_term"
-                  value={searchAttributes.product_search}
+                  value={searchAttributes.product_search || ''}
                   onChange={event =>
                     setSearchAttributes('collection_search', event.target.value)
                   }
@@ -306,7 +306,7 @@ export default function ProductSearchBar({
               </div>
               <InputText
                 name="product_search"
-                value={searchAttributes.product_search}
+                value={searchAttributes.product_search || ''}
                 onChange={event =>
                   setSearchAttributes('product_search', event.target.value)
                 }

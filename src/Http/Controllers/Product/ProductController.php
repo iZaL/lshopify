@@ -162,6 +162,7 @@ class ProductController extends Controller
             'vendors' => VendorResource::collection(Vendor::all()),
             'variant_options' => $product->variant_options,
             'variant_values' => $product->variant_options_values,
+            'variant_options_new' => $product->variant_options_new,
         ];
 
         return Inertia::render('Product/ProductEdit', $data);

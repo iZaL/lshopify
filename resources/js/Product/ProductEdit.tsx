@@ -19,9 +19,10 @@ import {
   Product,
   Tag,
   Variant,
-  VariantOption, VariantValue,
+  VariantOption,
+  VariantValue,
   Vendor,
-} from '../types'
+} from '../types';
 import route from 'ziggy-js';
 import BackButton from '../components/BackButton';
 import Subheader from '../components/Subheader';
@@ -39,12 +40,14 @@ interface Props {
   categories: Category[];
   variant_options: VariantOption[];
   variant_values: VariantValue[];
+  variant_options_new: VariantOption[];
   tags: Tag[];
   vendors: Vendor[];
 }
 
 type Form = Product & {
   variant_options: VariantOption[];
+  variant_options_new: VariantOption[];
   variant_values: VariantValue[];
   _method: string;
 };
@@ -53,6 +56,7 @@ export default function ProductEdit(props: Props) {
   const {
     product,
     variant_options,
+    variant_options_new,
     default_variant_options,
     variant_values,
     categories,
@@ -64,6 +68,7 @@ export default function ProductEdit(props: Props) {
   const formProps: Form = {
     ...product,
     variant_options: variant_options,
+    variant_options_new: variant_options_new,
     variant_values: variant_values,
     _method: 'PATCH',
   };
@@ -129,7 +134,7 @@ export default function ProductEdit(props: Props) {
       variants: variantIDs,
     };
     Inertia.post(url, productData, {
-      preserveState:false
+      preserveState: false,
     });
   };
 
@@ -247,7 +252,9 @@ export default function ProductEdit(props: Props) {
 
             {product.variants?.length ? (
               <VariantEditSection
+                variantOptionsNew={data.variant_options_new}
                 currentVariants={data.variants || []}
+                defaultVariantOptions={default_variant_options}
                 variantOptions={data.variant_options || []}
                 variantValues={data.variant_values || []}
                 images={data.images || []}
@@ -257,6 +264,7 @@ export default function ProductEdit(props: Props) {
                 onVariantsDelete={variantIDs => onVariantsDelete(variantIDs)}
                 onBulkAttributesSet={onBulkAttributesSet}
                 onChange={variantIDs => setData('variants', variantIDs)}
+                onDataSet={(field, value) => setData(field, value)}
               />
             ) : (
               data.default_variant && (
@@ -353,3 +361,17 @@ export default function ProductEdit(props: Props) {
     </Main>
   );
 }
+
+//create
+// options: Array(2)
+// 0:
+// id: "Color"
+// name: "Color"
+// values: Array(2)
+// 0:
+// id: "Black"
+// name: "Black"
+//   [[Prototype]]: Object
+// 1:
+// id: "Blue"
+// name: "Blue"

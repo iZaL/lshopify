@@ -4,7 +4,7 @@ import Subheader from '../../components/Subheader';
 import Checkbox from '../../components/forms/Checkbox';
 import Border from '../../components/Border';
 import VariantOptionsItem from './Variants/VariantOptionsItem';
-import { Variant, VariantOption, VariantValue } from '../../types'
+import {Variant, VariantOption, VariantValue} from '../../types';
 import Button from '../../components/Button';
 
 interface Props {
@@ -28,7 +28,10 @@ export default function VariantSection({
       ({name}) => !variantKeys.includes(name),
     );
     if (randomVariant) {
-      const variants = [...currentVariantOptions, {...randomVariant, values: []}];
+      const variants = [
+        ...currentVariantOptions,
+        {...randomVariant, values: []},
+      ];
       onChange('options', variants);
     }
   };

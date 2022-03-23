@@ -73,7 +73,7 @@ class Product extends BaseModel
     {
         return $this->variants
             ->pluck('options')
-            ->unique('name')
+            ->unique('id')
             ->collapse()
             ->map(function ($option) {
                 return [
@@ -92,6 +92,30 @@ class Product extends BaseModel
             ->unique('name')
             ->toArray();
         return [...$variants];
+    }
+
+    public function getVariantOptionsNewAttribute(): array
+    {
+        $variants = $this->variants
+            ->pluck('options')
+            ->collapse()
+            ->groupBy('id')
+            ->map(function ($option) {
+                return [
+                    'id' => $option[0]['id'],
+                    'name' => $option[0]['id'],
+                    'values' => $option->pluck('name')->unique()->values()->map(function ($value) {
+                        return [
+                            'id' => $value,
+                            'name' => $value,
+                        ];
+                    })->toArray(),
+                ];
+            })
+            ->values()
+            ->toArray();
+
+        return $variants;
     }
 
     public function getIsInventoryTrackedAttribute(): bool

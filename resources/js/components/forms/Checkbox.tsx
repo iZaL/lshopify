@@ -18,6 +18,7 @@ export default function Checkbox({
   checked = false,
   onChange,
 }: Props) {
+  // @ts-ignore
   return (
     <div className="relative inline-flex items-center space-x-2">
       <input

@@ -38,7 +38,8 @@ interface Props {
 }
 
 export default function ProductCreate(props: Props) {
-  const {tags, collection, default_variant_options, categories, vendors} = props;
+  const {tags, collection, default_variant_options, categories, vendors} =
+    props;
 
   const [isProductTypeLoading, setIsProductTypeLoading] = useState(false);
   const [isTagsLoading, setIsTagsLoading] = useState(false);
@@ -65,7 +66,7 @@ export default function ProductCreate(props: Props) {
       tracked: true,
       physical_product: true,
       requires_shipping: true,
-      origin_country_id:''
+      origin_country_id: '',
     },
     status: 'draft',
     collections: [],
