@@ -303,7 +303,7 @@ export default function VariantEditSection({
                         <ViewListIcon className="w-6 text-gray-500" />
                       </div>
                       <div className="flex-grow space-y-1">
-                        <div>{option.name}</div>
+                        <div>Option name</div>
 
                         <CreatableSelect
                           className="basic-multi-select"
@@ -323,10 +323,10 @@ export default function VariantEditSection({
                           }}
                           noOptionsMessage={() => null}
                           options={pendingVariants.map(({name, id}) => ({
-                            label: id,
-                            value: name,
+                            label: name,
+                            value: id,
                           }))}
-                          value={{label: option.id, value: option.name}}
+                          value={{label: option.name, value: option.id}}
                         />
 
                         <div className={'flex-1'}>Option values</div>
@@ -414,7 +414,7 @@ export default function VariantEditSection({
               return (
                 <PopoverButton
                   key={idx}
-                  title={option.id}
+                  title={option.name}
                   buttonStyle="text-sm border-none py-0 hover:bg-white">
                   {option.values?.map((value, idx) => {
                     const checked = checkedVariantIDs.some(vID => {
@@ -574,7 +574,7 @@ export default function VariantEditSection({
                   {variantOptions.map((option, i) => {
                     return (
                       <div className="text-sm font-semibold" key={i}>
-                        {option.id}
+                        {option.name}
                       </div>
                     );
                   })}

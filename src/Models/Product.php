@@ -71,6 +71,7 @@ class Product extends BaseModel
 
     public function getVariantOptionsAttribute(): array
     {
+        return [];
         return $this->variants
             ->pluck('options')
             ->unique('id')
@@ -86,6 +87,7 @@ class Product extends BaseModel
 
     public function getVariantOptionsValuesAttribute(): array
     {
+        return [];
         $variants = $this->variants
             ->pluck('options')
             ->collapse()
@@ -96,6 +98,8 @@ class Product extends BaseModel
 
     public function getVariantOptionsNewAttribute(): array
     {
+        return $this->variants->pluck('options')->toArray();
+        dd($this->variants->pluck('options'));
         $variants = $this->variants
             ->pluck('options')
             ->collapse()
@@ -104,7 +108,7 @@ class Product extends BaseModel
                 return [
                     'id' => $option[0]['id'],
                     'name' => $option[0]['id'],
-                    'values' => $option->pluck('name')->unique()->values()->map(function ($value) {
+                    'values' => $option[0]['values']->map(function ($value) {
                         return [
                             'id' => $value,
                             'name' => $value,
@@ -115,6 +119,7 @@ class Product extends BaseModel
             ->values()
             ->toArray();
 
+        dd($variants);
         return $variants;
     }
 
