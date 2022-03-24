@@ -39,7 +39,7 @@ interface Props {
     value: Variant[T],
   ) => void;
   images: Image[];
-  onDataSet: (field: any, value: any) => void;
+  onDataSet: (data:any) => void;
 }
 
 export default function VariantEditSection({
@@ -61,6 +61,8 @@ export default function VariantEditSection({
   const [showDialog, setShowDialog] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
+
+  console.log('variantOptions',variantOptions);
 
   const onVariantOptionsChange = (
     variant: Variant,
@@ -164,24 +166,92 @@ export default function VariantEditSection({
   };
 
   const onVariantOptionChange = (
-    oldVariant: VariantOption,
-    newVariant: VariantOption,
+    oldVariantOption: VariantOption,
+    newVariantOption: VariantOption,
   ) => {
-    const newVariants = variantOptions.map(option => {
-      if (option.name === oldVariant.name) {
+    const newVariantOptions = variantOptions.map(option => {
+      if (option.name === oldVariantOption.name) {
         return {
-          ...newVariant,
-          values: newVariant.values,
+          ...newVariantOption,
+          values: newVariantOption.values,
         };
       }
       return option;
     });
-    onDataSet('variant_options', newVariants);
+    // let variants: Array<Variant> = [];
+
+    // currentVariants.forEach(variant => {
+    //   variant.options.forEach(option => {
+    //     if (option.id === variantOption.id && option.name === value.name) {
+    //       variantIDs = variantIDs.includes(variant.id)
+    //         ? variantIDs.filter(vID => vID !== variant.id)
+    //         : [...variantIDs, variant.id];
+    //     }
+    //   });
+    // })
+
+    // update options changes to variants
+    const variants = currentVariants.map((variant) => {
+      if(variant.options.some(option => option.id === oldVariantOption.id)) {
+        return {
+          ...variant,
+          options: variant.options.map(option => {
+            if(option.id === oldVariantOption.id) {
+              return {
+                ...newVariantOption,
+                values: newVariantOption.values,
+              };
+            }
+            return option;
+          })
+        }
+      }
+      return variant;
+    });
+
+      onDataSet({
+        'variant_options':newVariantOptions,
+        'variants':variants,
+      });
+
   };
 
   const pendingVariants = defaultVariantOptions.filter(
     ({name}) => !variantOptions.some(v => v.id === name),
   );
+
+  const onVariantOptionValueChange = (option:VariantOption,value:VariantValue, fieldValue:string) => {
+    const newOption = {
+      ...option,
+      values: option.values?.map((v, i) => {
+        if (v.id === value.id) {
+          return {
+            id: fieldValue,
+            name: fieldValue,
+          };
+        }
+        return v;
+      }),
+    }
+
+    const hasBlankValue = newOption.values?.some(v => v.name === '');
+    if (hasBlankValue) {
+      onVariantOptionChange(option,newOption);
+    } else {
+      addWithEmptyValue(newOption);
+    }
+  }
+
+  const addWithEmptyValue = (option:VariantOption) => {
+    const hasBlankValue = option.values?.some(v => v.name === '');
+    if(!hasBlankValue) {
+      const newOption = {
+        ...option,
+        values: option.values?.length ? [...option.values, {id: '', name: ''}] : [{id: '', name: ''}],
+      }
+      onVariantOptionChange(option,newOption);
+    }
+  }
 
   return (
     <>
@@ -219,7 +289,7 @@ export default function VariantEditSection({
                         <Button
                           theme="default"
                           buttonStyle="py-1 px-3 text-sm"
-                          // onClick={() => setShowDialog(option.id)}
+                          onClick={() => addWithEmptyValue(option)}
                         >
                           Edit
                         </Button>
@@ -264,20 +334,10 @@ export default function VariantEditSection({
                           <InputText
                             name={value.name}
                             onChange={e =>
-                              onVariantOptionChange(option, {
-                                ...option,
-                                values: option.values?.map((v, i) => {
-                                  if (v.id === value.id) {
-                                    return {
-                                      ...v,
-                                      name: e.target.value,
-                                    };
-                                  }
-                                  return v;
-                                }),
-                              })
+                              onVariantOptionValueChange(option, value, e.target.value)
                             }
                             value={value.name}
+                            placeholder={'Add another value'}
                             key={idx}
                           />
                         ))}
@@ -499,17 +559,17 @@ export default function VariantEditSection({
                 <div
                   className={`grid items-center gap-6
                 ${
-                  variantOptions.length === 3 &&
-                  'grid-cols-[repeat(4,10rem),9rem,9rem,auto]'
-                }
+                    variantOptions.length === 3 &&
+                    'grid-cols-[repeat(4,10rem),9rem,9rem,auto]'
+                  }
                 ${
-                  variantOptions.length === 2 &&
-                  'grid-cols-[repeat(3,10rem),9rem,9rem,auto]'
-                }
+                    variantOptions.length === 2 &&
+                    'grid-cols-[repeat(3,10rem),9rem,9rem,auto]'
+                  }
                 ${
-                  variantOptions.length === 1 &&
-                  'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
-                }
+                    variantOptions.length === 1 &&
+                    'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
+                  }
                 `}>
                   {variantOptions.map((option, i) => {
                     return (
@@ -527,147 +587,152 @@ export default function VariantEditSection({
             </div>
           )}
 
-          <ul className="max-w-full">
-            {currentVariants.map((variant: Variant, i) => {
-              return (
-                <li
-                  key={i}
-                  className={classNames(
-                    checkedVariantIDs.includes(variant.id)
-                      ? 'bg-blue-50 dark:bg-gray-700'
-                      : '',
-                    'position-relative box-border inline-block min-w-full border-t border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-900',
-                  )}>
-                  <div className="flex items-center">
-                    <div className="flex items-center">
-                      <div className="flex w-12 items-center justify-center">
-                        <Checkbox
-                          checked={checkedVariantIDs.includes(variant.id)}
-                          onChange={() => onCheckboxChange(variant.id)}
-                          name=""
-                        />
-                      </div>
-                      <div className="mr-2 w-14">
-                        <VariantImage
-                          imageStyle="w-12 h-10"
-                          image={variant.image}
-                          onClick={() => {
-                            setSelectedVariant(variant);
-                            setShowDialog('add_images');
-                          }}
-                        />
-                      </div>
-                    </div>
+          {/*<ul className="max-w-full">*/}
+          {/*  {currentVariants.map((variant: Variant, i) => {*/}
+          {/*    return (*/}
+          {/*      <li*/}
+          {/*        key={i}*/}
+          {/*        className={classNames(*/}
+          {/*          checkedVariantIDs.includes(variant.id)*/}
+          {/*            ? 'bg-blue-50 dark:bg-gray-700'*/}
+          {/*            : '',*/}
+          {/*          'position-relative box-border inline-block min-w-full border-t border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-900',*/}
+          {/*        )}>*/}
+          {/*        <div className="flex items-center">*/}
+          {/*          <div className="flex items-center">*/}
+          {/*            <div className="flex w-12 items-center justify-center">*/}
+          {/*              <Checkbox*/}
+          {/*                checked={checkedVariantIDs.includes(variant.id)}*/}
+          {/*                onChange={() => onCheckboxChange(variant.id)}*/}
+          {/*                name=""*/}
+          {/*              />*/}
+          {/*            </div>*/}
+          {/*            <div className="mr-2 w-14">*/}
+          {/*              <VariantImage*/}
+          {/*                imageStyle="w-12 h-10"*/}
+          {/*                image={variant.image}*/}
+          {/*                onClick={() => {*/}
+          {/*                  setSelectedVariant(variant);*/}
+          {/*                  setShowDialog('add_images');*/}
+          {/*                }}*/}
+          {/*              />*/}
+          {/*            </div>*/}
+          {/*          </div>*/}
 
-                    <div className="flex items-start">
-                      <div className="max-w-100 min-w-0 self-center ">
-                        <div
-                          className={`grid items-center gap-6
-                        ${
-                          variantOptions.length === 3 &&
-                          'grid-cols-[repeat(4,10rem),9rem,9rem,auto]'
-                        }
-                        ${
-                          variantOptions.length === 2 &&
-                          'grid-cols-[repeat(3,10rem),9rem,9rem,auto]'
-                        }
-                        ${
-                          variantOptions.length === 1 &&
-                          'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
-                        }
-                       `}>
-                          {variantOptions.map((option: VariantOption, idx) => {
-                            const currentOption = variant.options?.find(
-                              v => v.id === option.id,
-                            ) as VariantOption;
+          {/*          <div className="flex items-start">*/}
+          {/*            <div className="max-w-100 min-w-0 self-center ">*/}
+          {/*              <div*/}
+          {/*                className={`grid items-center gap-6*/}
+          {/*              ${*/}
+          {/*                  variantOptions.length === 3 &&*/}
+          {/*                  'grid-cols-[repeat(4,10rem),9rem,9rem,auto]'*/}
+          {/*                }*/}
+          {/*              ${*/}
+          {/*                  variantOptions.length === 2 &&*/}
+          {/*                  'grid-cols-[repeat(3,10rem),9rem,9rem,auto]'*/}
+          {/*                }*/}
+          {/*              ${*/}
+          {/*                  variantOptions.length === 1 &&*/}
+          {/*                  'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'*/}
+          {/*                }*/}
+          {/*             `}>*/}
+          {/*                {variantOptions.map((option: VariantOption, idx) => {*/}
+          {/*                  // console.log('option',option);*/}
+          {/*                  // console.log('variant.options',variant.options);*/}
 
-                            if (!currentOption) {
-                              return null;
-                            }
+          {/*                  const currentOption = variant.options?.find(*/}
+          {/*                    v => v.id === option.id,*/}
+          {/*                  ) as VariantOption;*/}
 
-                            return (
-                              <div key={idx}>
-                                <InputText
-                                  name={currentOption.name}
-                                  value={currentOption.name}
-                                  onChange={e =>
-                                    onVariantOptionsChange(
-                                      variant,
-                                      currentOption,
-                                      e.target.value,
-                                    )
-                                  }
-                                />
-                              </div>
-                            );
-                          })}
+          {/*                  console.log('currentOption',currentOption);*/}
 
-                          <div className="">
-                            <InputText
-                              name="price"
-                              value={variant.price}
-                              onChange={e =>
-                                onVariantAttributeChange(
-                                  variant,
-                                  'price',
-                                  e.target.value,
-                                )
-                              }
-                            />
-                          </div>
-                          <div className="">
-                            <InputText
-                              name="quantity"
-                              value={variant.quantity}
-                              onChange={e =>
-                                onVariantAttributeChange(
-                                  variant,
-                                  'quantity',
-                                  e.target.value,
-                                )
-                              }
-                            />
-                          </div>
-                          <div className="">
-                            <InputText
-                              name="sku"
-                              value={variant.sku}
-                              onChange={e =>
-                                onVariantAttributeChange(
-                                  variant,
-                                  'sku',
-                                  e.target.value,
-                                )
-                              }
-                            />
-                          </div>
-                          <div className="sticky top-0 right-0 flex hidden h-full bg-gray-100 py-4 px-2 shadow shadow-md dark:bg-gray-900 sm:block">
-                            <div className="box-border flex flex-row flex-nowrap  items-center space-x-4">
-                              <Button
-                                theme="default"
-                                buttonStyle="text-xs"
-                                onClick={() => onEditVariantClick(variant)}>
-                                Edit
-                              </Button>
-                              <Button
-                                theme="default"
-                                buttonStyle="text-xs"
-                                onClick={() => {
-                                  setSelectedVariant(variant);
-                                  setShowDialog('delete_variant');
-                                }}>
-                                Delete
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
+          {/*                  if (!currentOption) {*/}
+          {/*                    return null;*/}
+          {/*                  }*/}
+
+          {/*                  return (*/}
+          {/*                    <div key={idx}>*/}
+          {/*                      <InputText*/}
+          {/*                        name={currentOption.name}*/}
+          {/*                        value={currentOption.name}*/}
+          {/*                        onChange={e =>*/}
+          {/*                          onVariantOptionsChange(*/}
+          {/*                            variant,*/}
+          {/*                            currentOption,*/}
+          {/*                            e.target.value,*/}
+          {/*                          )*/}
+          {/*                        }*/}
+          {/*                      />*/}
+          {/*                    </div>*/}
+          {/*                  );*/}
+          {/*                })}*/}
+
+          {/*                <div className="">*/}
+          {/*                  <InputText*/}
+          {/*                    name="price"*/}
+          {/*                    value={variant.price}*/}
+          {/*                    onChange={e =>*/}
+          {/*                      onVariantAttributeChange(*/}
+          {/*                        variant,*/}
+          {/*                        'price',*/}
+          {/*                        e.target.value,*/}
+          {/*                      )*/}
+          {/*                    }*/}
+          {/*                  />*/}
+          {/*                </div>*/}
+          {/*                <div className="">*/}
+          {/*                  <InputText*/}
+          {/*                    name="quantity"*/}
+          {/*                    value={variant.quantity}*/}
+          {/*                    onChange={e =>*/}
+          {/*                      onVariantAttributeChange(*/}
+          {/*                        variant,*/}
+          {/*                        'quantity',*/}
+          {/*                        e.target.value,*/}
+          {/*                      )*/}
+          {/*                    }*/}
+          {/*                  />*/}
+          {/*                </div>*/}
+          {/*                <div className="">*/}
+          {/*                  <InputText*/}
+          {/*                    name="sku"*/}
+          {/*                    value={variant.sku}*/}
+          {/*                    onChange={e =>*/}
+          {/*                      onVariantAttributeChange(*/}
+          {/*                        variant,*/}
+          {/*                        'sku',*/}
+          {/*                        e.target.value,*/}
+          {/*                      )*/}
+          {/*                    }*/}
+          {/*                  />*/}
+          {/*                </div>*/}
+          {/*                <div className="sticky top-0 right-0 flex hidden h-full bg-gray-100 py-4 px-2 shadow shadow-md dark:bg-gray-900 sm:block">*/}
+          {/*                  <div className="box-border flex flex-row flex-nowrap  items-center space-x-4">*/}
+          {/*                    <Button*/}
+          {/*                      theme="default"*/}
+          {/*                      buttonStyle="text-xs"*/}
+          {/*                      onClick={() => onEditVariantClick(variant)}>*/}
+          {/*                      Edit*/}
+          {/*                    </Button>*/}
+          {/*                    <Button*/}
+          {/*                      theme="default"*/}
+          {/*                      buttonStyle="text-xs"*/}
+          {/*                      onClick={() => {*/}
+          {/*                        setSelectedVariant(variant);*/}
+          {/*                        setShowDialog('delete_variant');*/}
+          {/*                      }}>*/}
+          {/*                      Delete*/}
+          {/*                    </Button>*/}
+          {/*                  </div>*/}
+          {/*                </div>*/}
+          {/*              </div>*/}
+          {/*            </div>*/}
+          {/*          </div>*/}
+          {/*        </div>*/}
+          {/*      </li>*/}
+          {/*    );*/}
+          {/*  })}*/}
+          {/*</ul>*/}
         </div>
 
         <Modal
