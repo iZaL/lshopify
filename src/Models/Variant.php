@@ -85,15 +85,14 @@ class Variant extends BaseModel
 
     public function getTitleAttribute()
     {
-        $title = $this->options;
-
-        if(!$title) {
-            $title = 'Default variant';
-        } else {
-            dd($title);
-            $title = implode(', ', $title);
-        }
-
+//        $title = $this->options;
+//
+//        if(!$title) {
+//            $title = 'Default variant';
+//        } else {
+//            dd($title);
+//            $title = implode(', ', $title);
+//        }
 
         return collect($this->options)
             ->pluck('name')

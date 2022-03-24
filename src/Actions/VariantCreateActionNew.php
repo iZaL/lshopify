@@ -4,8 +4,9 @@ namespace IZal\Lshopify\Actions;
 
 use IZal\Lshopify\Models\Variant;
 use Illuminate\Support\Collection;
+use JetBrains\PhpStorm\ArrayShape;
 
-class VariantCreateAction
+class VariantCreateActionNew
 {
     /**
      * @var Variant
@@ -39,10 +40,11 @@ class VariantCreateAction
 
     public function createVariantOptionWithValues(Variant $variant, $variantAttributes): self
     {
+
         $variantOptions = $this->prepareOptions($variantAttributes);
         foreach ($variantOptions as $variantOption) {
             $newVariant = $variant->replicate(['default']);
-            $newVariant->options = $variantOption;
+            $newVariant->options = [$variantOption];
             $newVariant->save();
         }
         return $this;
@@ -55,21 +57,11 @@ class VariantCreateAction
 
     private function prepareOptions(array $variantsArray): Collection
     {
-        $variant1Option = $variantsArray[0] ?? [];
-        $variant1OptionValues = [];
+//        $variant1Option = $variantsArray[0] ?? [];
 
-        if (isset($variant1Option['values']) && !empty($variant1Option['values'])) {
-            $variant1Array = $variant1Option['values'];
+        $variant1Option = $variantsArray[0] ? $this->createVariantOption($variantsArray[0]) : [];
 
-            foreach ($variant1Array as $variant1Arr) {
-                $variant1OptionValues[] = [
-                    'name' => $variant1Arr['id'],
-                    'id' => $variant1Option['name'],
-                ];
-            }
-        }
-
-        $variant2Option = $variantsArray[1] ?? [];
+        $variant2Option = isset($variantsArray[1]) ? $this->createVariantOption($variantsArray[1]) : [];
 
         $variant2OptionValues = [];
 
@@ -78,13 +70,13 @@ class VariantCreateAction
 
             foreach ($variant2Array as $variant2Arr) {
                 $variant2OptionValues[] = [
-                    'name' => $variant2Arr['id'],
-                    'id' => $variant2Option['name'],
+                    'name' => $variant2Arr['name'],
+                    'id' => $variant2Option['id'],
                 ];
             }
         }
 
-        $variant3Option = $variantsArray[2] ?? [];
+        $variant3Option = isset($variantsArray[2]) ? $this->createVariantOption($variantsArray[2]) : [];
 
         $variant3OptionValues = [];
 
@@ -99,7 +91,9 @@ class VariantCreateAction
             }
         }
 
-        $optionsArray = collect($variant1OptionValues);
+        $optionsArray = collect($variant1Option);
+//        dd($optionsArray);
+//        $optionsArray = collect($variant1OptionValues);
 
         if ($variant2OptionValues) {
             $optionsArray = $variant3OptionValues
@@ -107,14 +101,35 @@ class VariantCreateAction
                 : $optionsArray->crossJoin($variant2OptionValues);
 
         } else {
-            // If only 1 option, turn into assosiative array
-            $optionsArray = [];
-            foreach ($variant1OptionValues as $option) {
-                $optionsArray[] = [$option];
-            }
-            $optionsArray = collect($optionsArray);
+            $optionsArray = collect([$variant1Option]);
         }
-
         return $optionsArray;
     }
+
+    #[ArrayShape(['id' => "int", 'name' => "mixed", 'values' => "mixed"])] private function createVariantOption($option): array
+    {
+        $id = rand(1000,9999);
+
+        $newOption = [
+            'id' => $id,
+            'name' => $option['name'],
+        ];
+
+        $values = collect($option['values'])->map(function ($value) use ($newOption)  {
+            return $this->createVariantOptionValue($newOption, $value);
+        });
+
+        $newOption['values'] = $values->toArray();
+
+        return $newOption;
+    }
+    #[ArrayShape(['id' => "int", 'name' => "mixed"])] private function createVariantOptionValue($option, $value): array
+    {
+        $id = rand(1000,9999);
+        return [
+            'id' => $id,
+            'name' => $value['name']
+        ];
+    }
+
 }
