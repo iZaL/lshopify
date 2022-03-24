@@ -69,57 +69,16 @@ class Product extends BaseModel
         return $this->image;
     }
 
-    public function getVariantOptionsAttribute(): array
-    {
-        return [];
-        return $this->variants
-            ->pluck('options')
-            ->unique('id')
-            ->collapse()
-            ->map(function ($option) {
-                return [
-                    'id' => $option['id'],
-                    'name' => $option['id'],
-                ];
-            })
-            ->toArray();
-    }
-
-    public function getVariantOptionsValuesAttribute(): array
-    {
-        return [];
-        $variants = $this->variants
-            ->pluck('options')
-            ->collapse()
-            ->unique('name')
-            ->toArray();
-        return [...$variants];
-    }
-
     public function getVariantOptionsNewAttribute(): array
     {
-        return $this->variants->pluck('options')->toArray();
-        dd($this->variants->pluck('options'));
-        $variants = $this->variants
-            ->pluck('options')
-            ->collapse()
-            ->groupBy('id')
-            ->map(function ($option) {
-                return [
-                    'id' => $option[0]['id'],
-                    'name' => $option[0]['id'],
-                    'values' => $option[0]['values']->map(function ($value) {
-                        return [
-                            'id' => $value,
-                            'name' => $value,
-                        ];
-                    })->toArray(),
-                ];
-            })
-            ->values()
-            ->toArray();
-
-        dd($variants);
+        $variants = $this->variants->pluck('options')->collapse()->toArray();
+//        $variants = $this->variants
+//            ->pluck('options')
+//            ->collapse()
+//            ->groupBy('id')
+//            ->values()
+//            ->collapse()
+//            ->toArray();
         return $variants;
     }
 

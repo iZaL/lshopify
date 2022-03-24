@@ -44,7 +44,7 @@ class VariantCreateAction
         $variantOptions = $this->prepareOptions($variantAttributes);
         foreach ($variantOptions as $variantOption) {
             $newVariant = $variant->replicate(['default']);
-            $newVariant->options = $variantOption;
+            $newVariant->options = [$variantOption];
             $newVariant->save();
         }
         return $this;

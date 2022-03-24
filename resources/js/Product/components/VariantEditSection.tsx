@@ -169,8 +169,10 @@ export default function VariantEditSection({
     oldVariantOption: VariantOption,
     newVariantOption: VariantOption,
   ) => {
+    console.log('oldVariantOption',oldVariantOption);
+    console.log('newVariantOption',newVariantOption);
     const newVariantOptions = variantOptions.map(option => {
-      if (option.name === oldVariantOption.name) {
+      if (option.id === oldVariantOption.id) {
         return {
           ...newVariantOption,
           values: newVariantOption.values,
@@ -192,20 +194,21 @@ export default function VariantEditSection({
 
     // update options changes to variants
     const variants = currentVariants.map((variant) => {
-      if(variant.options.some(option => option.id === oldVariantOption.id)) {
-        return {
-          ...variant,
-          options: variant.options.map(option => {
-            if(option.id === oldVariantOption.id) {
-              return {
-                ...newVariantOption,
-                values: newVariantOption.values,
-              };
-            }
-            return option;
-          })
-        }
-      }
+      console.log('v',variant);
+      // if(variant.options.some(option => option.id === oldVariantOption.id)) {
+      //   return {
+      //     ...variant,
+      //     options: variant.options.map(option => {
+      //       if(option.id === oldVariantOption.id) {
+      //         return {
+      //           ...newVariantOption,
+      //           values: newVariantOption.values,
+      //         };
+      //       }
+      //       return option;
+      //     })
+      //   }
+      // }
       return variant;
     });
 
@@ -243,7 +246,8 @@ export default function VariantEditSection({
   }
 
   const addWithEmptyValue = (option:VariantOption) => {
-    const hasBlankValue = option.values?.some(v => v.name === '');
+    // console.log('option',option);
+    const hasBlankValue = option.values?.some(v => v.id === '');
     if(!hasBlankValue) {
       const newOption = {
         ...option,
