@@ -2,12 +2,12 @@
 
 namespace IZal\Lshopify\Tests\Http\Controllers\Products;
 
+use Illuminate\Support\Facades\DB;
 use IZal\Lshopify\Models\Category;
 use IZal\Lshopify\Models\Collection;
 use IZal\Lshopify\Models\Product;
 use IZal\Lshopify\Models\Tag;
 use Illuminate\Http\UploadedFile;
-use Storage;
 use IZal\Lshopify\Tests\TestCase;
 
 class ProductStoreControllerTest extends TestCase
@@ -18,7 +18,7 @@ class ProductStoreControllerTest extends TestCase
             $json = addslashes(json_encode($json));
         }
 
-        return \DB::raw("CAST('{$json}' AS JSON)");
+        return DB::raw("CAST('{$json}' AS JSON)");
     }
 
     public function test_store_products()
@@ -27,8 +27,6 @@ class ProductStoreControllerTest extends TestCase
         $tag1 = Tag::factory()->create();
         $tag2 = Tag::factory()->create();
         $category = Category::factory()->create();
-
-//        Storage::fake('images');
 
         $images = [UploadedFile::fake()->image('image.jpg'), UploadedFile::fake()->image('image.jpg')];
 
@@ -55,7 +53,7 @@ class ProductStoreControllerTest extends TestCase
                     [
                         'id'=> 'Color',
                         'name'=> 'Color',
-                        'options'=> [
+                        'values'=> [
                             [
                                 'id'=> 'Black',
                                 'name'=> 'Black',
@@ -69,7 +67,7 @@ class ProductStoreControllerTest extends TestCase
                     [
                         'id'=> 'Size',
                         'name'=> 'Size',
-                        'options'=> [
+                        'values'=> [
                             [
                                 'id'=> 'XL',
                                 'name'=> 'XL',
@@ -83,7 +81,7 @@ class ProductStoreControllerTest extends TestCase
                     [
                         'id'=> 'Material',
                         'name'=> 'Material',
-                        'options'=> [
+                        'values'=> [
                             [
                                 'id'=> 'Cotton',
                                 'name'=> 'Cotton',
@@ -94,7 +92,7 @@ class ProductStoreControllerTest extends TestCase
 
             ],
             'status'=> 'draft',
-            'product_type'=> [
+            'category'=> [
                 'id'=> $category->id,
                 'name'=> $category->name,
             ],

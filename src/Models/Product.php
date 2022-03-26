@@ -69,6 +69,26 @@ class Product extends BaseModel
         return $this->image;
     }
 
+    public function getVariantOptionsAttribute(): array
+    {
+        return $this->variants
+            ->pluck('options')
+            ->unique('id')
+            ->collapse()
+            ->toArray();
+    }
+
+    public function getVariantOptionsValuesAttribute(): array
+    {
+        $variants = $this->variants
+            ->pluck('options')
+            ->collapse()
+            ->unique()
+            ->toArray();
+
+        return [...$variants];
+    }
+
     public function getVariantOptionsNewAttribute(): array
     {
         $variants = $this->variants
@@ -77,8 +97,8 @@ class Product extends BaseModel
             ->groupBy('id')
             ->map(function ($option) {
                 return [
-                    'id' => $option[0]['id'],
-                    'name' => $option[0]['id'],
+                    'id' => $option[0]['id'] ?? null,
+                    'name' => $option[0]['id'] ?? null,
                     'values' => $option->pluck('name')->unique()->values()->map(function ($value) {
                         return [
                             'id' => $value,

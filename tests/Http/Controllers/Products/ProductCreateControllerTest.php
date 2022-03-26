@@ -12,9 +12,10 @@ class ProductCreateControllerTest extends TestCase
         $response->assertInertia(
             fn ($assert) => $assert
             ->has('collection')
-            ->has('variants')
+            ->has('default_variant_options')
             ->has('tags')
-            ->has('product_types')
+            ->has('categories')
+            ->has('vendors')
         );
     }
 }

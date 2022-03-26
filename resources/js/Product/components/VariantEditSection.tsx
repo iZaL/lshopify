@@ -62,8 +62,6 @@ export default function VariantEditSection({
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
 
-  console.log('variantOptions', variantOptions);
-
   const onVariantOptionsChange = (
     variant: Variant,
     option: VariantOption,

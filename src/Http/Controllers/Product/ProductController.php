@@ -118,10 +118,6 @@ class ProductController extends Controller
         ProductCreateAction $productCreateAction
     ): \Illuminate\Http\RedirectResponse {
         $product = Product::getModel();
-
-//        $action = $productCreateAction->create($product, collect($request->all()));
-
-//        dd('wa');
         DB::beginTransaction();
 
         try {

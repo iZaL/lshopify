@@ -20,11 +20,11 @@ class ProductEditControllerTest extends TestCase
             fn ($assert) => $assert
             ->has('product')
             ->has('collection')
-            ->has('variants')
+            ->has('default_variant_options')
             ->has('tags')
-            ->has('product_types')
+            ->has('categories')
             ->has('variant_options')
-            ->has('variant_values')
+            ->has('vendors')
         );
     }
 }
