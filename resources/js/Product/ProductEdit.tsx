@@ -254,10 +254,12 @@ export default function ProductEdit(props: Props) {
                 onVariantsDelete={variantIDs => onVariantsDelete(variantIDs)}
                 onBulkAttributesSet={onBulkAttributesSet}
                 onChange={variantIDs => setData('variants', variantIDs)}
-                onDataSet={(incomingData) => setData({
-                  ...data,
-                  ...incomingData,
-                })}
+                onDataSet={incomingData =>
+                  setData({
+                    ...data,
+                    ...incomingData,
+                  })
+                }
               />
             ) : (
               data.default_variant && (

@@ -39,7 +39,7 @@ interface Props {
     value: Variant[T],
   ) => void;
   images: Image[];
-  onDataSet: (data:any) => void;
+  onDataSet: (data: any) => void;
 }
 
 export default function VariantEditSectionNew({
@@ -62,7 +62,7 @@ export default function VariantEditSectionNew({
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
 
-  console.log('variantOptions',variantOptions);
+  console.log('variantOptions', variantOptions);
 
   const onVariantOptionsChange = (
     variant: Variant,
@@ -169,8 +169,8 @@ export default function VariantEditSectionNew({
     oldVariantOption: VariantOption,
     newVariantOption: VariantOption,
   ) => {
-    console.log('oldVariantOption',oldVariantOption);
-    console.log('newVariantOption',newVariantOption);
+    console.log('oldVariantOption', oldVariantOption);
+    console.log('newVariantOption', newVariantOption);
     const newVariantOptions = variantOptions.map(option => {
       if (option.id === oldVariantOption.id) {
         return {
@@ -193,8 +193,8 @@ export default function VariantEditSectionNew({
     // })
 
     // update options changes to variants
-    const variants = currentVariants.map((variant) => {
-      console.log('v',variant);
+    const variants = currentVariants.map(variant => {
+      console.log('v', variant);
       // if(variant.options.some(option => option.id === oldVariantOption.id)) {
       //   return {
       //     ...variant,
@@ -213,17 +213,20 @@ export default function VariantEditSectionNew({
     });
 
     onDataSet({
-      'variant_options':newVariantOptions,
-      'variants':variants,
+      variant_options: newVariantOptions,
+      variants: variants,
     });
-
   };
 
   const pendingVariants = defaultVariantOptions.filter(
     ({name}) => !variantOptions.some(v => v.id === name),
   );
 
-  const onVariantOptionValueChange = (option:VariantOption,value:VariantValue, fieldValue:string) => {
+  const onVariantOptionValueChange = (
+    option: VariantOption,
+    value: VariantValue,
+    fieldValue: string,
+  ) => {
     const newOption = {
       ...option,
       values: option.values?.map((v, i) => {
@@ -235,27 +238,29 @@ export default function VariantEditSectionNew({
         }
         return v;
       }),
-    }
+    };
 
     const hasBlankValue = newOption.values?.some(v => v.name === '');
     if (hasBlankValue) {
-      onVariantOptionChange(option,newOption);
+      onVariantOptionChange(option, newOption);
     } else {
       addWithEmptyValue(newOption);
     }
-  }
+  };
 
-  const addWithEmptyValue = (option:VariantOption) => {
+  const addWithEmptyValue = (option: VariantOption) => {
     // console.log('option',option);
     const hasBlankValue = option.values?.some(v => v.id === '');
-    if(!hasBlankValue) {
+    if (!hasBlankValue) {
       const newOption = {
         ...option,
-        values: option.values?.length ? [...option.values, {id: '', name: ''}] : [{id: '', name: ''}],
-      }
-      onVariantOptionChange(option,newOption);
+        values: option.values?.length
+          ? [...option.values, {id: '', name: ''}]
+          : [{id: '', name: ''}],
+      };
+      onVariantOptionChange(option, newOption);
     }
-  }
+  };
 
   return (
     <>
@@ -293,8 +298,7 @@ export default function VariantEditSectionNew({
                         <Button
                           theme="default"
                           buttonStyle="py-1 px-3 text-sm"
-                          onClick={() => addWithEmptyValue(option)}
-                        >
+                          onClick={() => addWithEmptyValue(option)}>
                           Edit
                         </Button>
                       </Disclosure.Button>
@@ -338,7 +342,11 @@ export default function VariantEditSectionNew({
                           <InputText
                             name={value.name}
                             onChange={e =>
-                              onVariantOptionValueChange(option, value, e.target.value)
+                              onVariantOptionValueChange(
+                                option,
+                                value,
+                                e.target.value,
+                              )
                             }
                             value={value.name}
                             placeholder={'Add another value'}
@@ -563,17 +571,17 @@ export default function VariantEditSectionNew({
                 <div
                   className={`grid items-center gap-6
                 ${
-                    variantOptions.length === 3 &&
-                    'grid-cols-[repeat(4,10rem),9rem,9rem,auto]'
-                  }
+                  variantOptions.length === 3 &&
+                  'grid-cols-[repeat(4,10rem),9rem,9rem,auto]'
+                }
                 ${
-                    variantOptions.length === 2 &&
-                    'grid-cols-[repeat(3,10rem),9rem,9rem,auto]'
-                  }
+                  variantOptions.length === 2 &&
+                  'grid-cols-[repeat(3,10rem),9rem,9rem,auto]'
+                }
                 ${
-                    variantOptions.length === 1 &&
-                    'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
-                  }
+                  variantOptions.length === 1 &&
+                  'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
+                }
                 `}>
                   {variantOptions.map((option, i) => {
                     return (

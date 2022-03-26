@@ -39,7 +39,7 @@ interface Props {
     value: Variant[T],
   ) => void;
   images: Image[];
-  onDataSet: (data:any) => void;
+  onDataSet: (data: any) => void;
 }
 
 export default function VariantEditSection({
@@ -62,7 +62,7 @@ export default function VariantEditSection({
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
 
-  console.log('variantOptions',variantOptions);
+  console.log('variantOptions', variantOptions);
 
   const onVariantOptionsChange = (
     variant: Variant,
@@ -169,58 +169,36 @@ export default function VariantEditSection({
     oldVariantOption: VariantOption,
     newVariantOption: VariantOption,
   ) => {
-    const newVariantOptions = variantOptions.map(option => {
-      if (option.name === oldVariantOption.name) {
-        return {
-          ...newVariantOption,
-          values: newVariantOption.values,
-        };
-      }
-      return option;
-    });
-
-
-    // let variants: Array<Variant> = [];
-
-    // currentVariants.forEach(variant => {
-    //   variant.options.forEach(option => {
-    //     if (option.id === variantOption.id && option.name === value.name) {
-    //       variantIDs = variantIDs.includes(variant.id)
-    //         ? variantIDs.filter(vID => vID !== variant.id)
-    //         : [...variantIDs, variant.id];
-    //     }
-    //   });
-    // })
+    const newVariantOptions = variantOptions.map(option =>
+      option.id === oldVariantOption.id ? newVariantOption : option,
+    );
 
     // update options changes to variants
-    const variants = currentVariants.map((variant) => {
-      if(variant.options.some(option => option.id === oldVariantOption.id)) {
+    const variants = currentVariants.map(variant => {
+      if (variant.options.some(option => option.id === oldVariantOption.id)) {
         return {
           ...variant,
           options: variant.options.map(option => {
-            if(option.id === oldVariantOption.id) {
+            if (option.id === oldVariantOption.id) {
               return {
-                ...newVariantOption,
-                values: newVariantOption.values,
+                id: newVariantOption.id, //Size
+                name:
+                  newVariantOption.values?.find(
+                    value => value.id === option.name,
+                  )?.name || option.name, // Medium
               };
             }
             return option;
-          })
-        }
+          }),
+        };
       }
       return variant;
     });
 
-    setTimeout(() => {
-      onDataSet({
-        'variant_options':newVariantOptions,
-        'variants':variants,
-      });
-    }, 0);
-
-    console.log('v',variants);
-
-
+    onDataSet({
+      variant_options: newVariantOptions,
+      variants: variants,
+    });
   };
 
   const pendingVariants = defaultVariantOptions.filter(
@@ -242,9 +220,6 @@ export default function VariantEditSection({
                     <div
                       key={idx}
                       className="flex flex-row items-center space-x-6 py-2">
-                      <div className="space-p-0 inline-flex">
-                        <ViewListIcon className="w-6 text-gray-500" />
-                      </div>
                       <div className="flex-grow">
                         <div className="text-sm font-semibold">
                           {option.name}
@@ -260,11 +235,7 @@ export default function VariantEditSection({
                         </div>
                       </div>
                       <Disclosure.Button as={'div'}>
-                        <Button
-                          theme="default"
-                          buttonStyle="py-1 px-3 text-sm"
-                          // onClick={() => setShowDialog(option.id)}
-                        >
+                        <Button theme="default" buttonStyle="py-1 px-3 text-sm">
                           Edit
                         </Button>
                       </Disclosure.Button>
@@ -273,9 +244,6 @@ export default function VariantEditSection({
 
                   <Disclosure.Panel>
                     <div className="flex flex-row items-center space-x-6 py-2">
-                      <div className="space-p-0 inline-flex">
-                        <ViewListIcon className="w-6 text-gray-500" />
-                      </div>
                       <div className="flex-grow space-y-1">
                         <div>{option.name}</div>
 
@@ -307,20 +275,22 @@ export default function VariantEditSection({
                         {option.values?.map((value, idx) => (
                           <InputText
                             name={value.name}
-                            onChange={e =>
-                              onVariantOptionChange(option, {
-                                ...option,
-                                values: option.values?.map((v, i) => {
-                                  if (v.id === value.id) {
-                                    return {
-                                      ...v,
-                                      name: e.target.value,
-                                    };
-                                  }
-                                  return v;
-                                }),
-                              })
-                            }
+                            onChange={e => {
+                              if (e.target.value) {
+                                onVariantOptionChange(option, {
+                                  ...option,
+                                  values: option.values?.map((v, i) => {
+                                    if (v.id === value.id) {
+                                      return {
+                                        id: value.name,
+                                        name: e.target.value,
+                                      };
+                                    }
+                                    return v;
+                                  }),
+                                });
+                              }
+                            }}
                             value={value.name}
                             key={idx}
                           />
@@ -329,11 +299,7 @@ export default function VariantEditSection({
                     </div>
 
                     <Disclosure.Button as={'div'}>
-                      <Button
-                        theme="default"
-                        buttonStyle="py-1 px-3 text-sm"
-                        // onClick={() => setShowDialog(option.id)}
-                      >
+                      <Button theme="default" buttonStyle="py-1 px-3 text-sm">
                         Done
                       </Button>
                     </Disclosure.Button>
@@ -347,7 +313,7 @@ export default function VariantEditSection({
         ))}
       </Card>
 
-      <Card>
+      <Card cardStyle="mt-4">
         <div className="flex flex-row items-center justify-between space-x-4 text-sm">
           <div className="flex-1">
             <Subheader text="Variants" />
@@ -393,7 +359,7 @@ export default function VariantEditSection({
           <Button theme="clear" onClick={() => setCheckedVariantIDs([])}>
             None
           </Button>
-          <div className="z-30 bg-white">
+          <div className="z-20 bg-white">
             {variantOptions.map((option, idx) => {
               return (
                 <PopoverButton
@@ -543,17 +509,17 @@ export default function VariantEditSection({
                 <div
                   className={`grid items-center gap-6
                 ${
-                    variantOptions.length === 3 &&
-                    'grid-cols-[repeat(4,10rem),9rem,9rem,auto]'
-                  }
+                  variantOptions.length === 3 &&
+                  'grid-cols-[repeat(4,10rem),9rem,9rem,auto]'
+                }
                 ${
-                    variantOptions.length === 2 &&
-                    'grid-cols-[repeat(3,10rem),9rem,9rem,auto]'
-                  }
+                  variantOptions.length === 2 &&
+                  'grid-cols-[repeat(3,10rem),9rem,9rem,auto]'
+                }
                 ${
-                    variantOptions.length === 1 &&
-                    'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
-                  }
+                  variantOptions.length === 1 &&
+                  'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
+                }
                 `}>
                   {variantOptions.map((option, i) => {
                     return (
@@ -608,32 +574,25 @@ export default function VariantEditSection({
                         <div
                           className={`grid items-center gap-6
                         ${
-                            variantOptions.length === 3 &&
-                            'grid-cols-[repeat(4,10rem),9rem,9rem,auto]'
-                          }
+                          variantOptions.length === 3 &&
+                          'grid-cols-[repeat(4,10rem),9rem,9rem,auto]'
+                        }
                         ${
-                            variantOptions.length === 2 &&
-                            'grid-cols-[repeat(3,10rem),9rem,9rem,auto]'
-                          }
+                          variantOptions.length === 2 &&
+                          'grid-cols-[repeat(3,10rem),9rem,9rem,auto]'
+                        }
                         ${
-                            variantOptions.length === 1 &&
-                            'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
-                          }
+                          variantOptions.length === 1 &&
+                          'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
+                        }
                        `}>
                           {variantOptions.map((option: VariantOption, idx) => {
-                            // console.log('option',option);
-                            // console.log('variant.options',variant.options);
-
                             const currentOption = variant.options?.find(
                               v => v.id === option.id,
                             ) as VariantOption;
-
-                            console.log('currentOption',currentOption);
-
                             if (!currentOption) {
                               return null;
                             }
-
                             return (
                               <div key={idx}>
                                 <InputText
