@@ -68,7 +68,8 @@ class Collection extends BaseModel
         \Illuminate\Database\Eloquent\Builder $products,
         $condition,
         string $determiner = 'all'
-    ): \Illuminate\Database\Eloquent\Builder {
+    ): \Illuminate\Database\Eloquent\Builder
+    {
         $conditionManager = new CollectionCriteriaManager($condition);
 
         $field = $conditionManager->resolveField();
@@ -86,6 +87,10 @@ class Collection extends BaseModel
             $products
                 ->join('categories', 'categories.id', '=', 'products.category_id')
                 ->$where('categories.name', $criteria, $value);
+        } elseif ($field === 'vendor') {
+            $products
+                ->join('vendors', 'vendors.id', '=', 'products.vendor_id')
+                ->where('vendors.name', $criteria, $value);
         } else {
             $products->$where('title', $criteria, $value);
         }

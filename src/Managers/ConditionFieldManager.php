@@ -17,6 +17,7 @@ class ConditionFieldManager
             'weight',
             'stock',
             'variant_title',
+            'vendor'
         ];
 
         if (!in_array($field, $allowedFields)) {
