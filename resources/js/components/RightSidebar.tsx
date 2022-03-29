@@ -31,7 +31,7 @@ export default function RightSidebar({
             leave="ease-in-out duration-100"
             leaveFrom="opacity-100"
             leaveTo="opacity-0">
-            <Dialog.Overlay className="absolute inset-0 bg-gray-300 bg-opacity-75 transition-opacity" />
+            <Dialog.Overlay className="absolute inset-0 bg-gray-300 bg-opacity-30 transition-opacity" />
           </Transition.Child>
 
           <div className="fixed inset-y-0 right-0 flex max-w-full pl-10">

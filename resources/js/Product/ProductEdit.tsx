@@ -32,6 +32,7 @@ import Border from '../components/Border';
 import SingleSelect from '../components/SingleSelect';
 import MultiSelect from '../components/MultiSelect';
 import MultiSelectDropdown from '../components/MultiSelectDropdown';
+import VariantsListSection from './components/VariantsListSection'
 
 interface Props {
   product: Product;
@@ -243,7 +244,7 @@ export default function ProductEdit(props: Props) {
             />
 
             {product.variants?.length ? (
-              <VariantEditSection
+              <VariantsListSection
                 variantOptions={data.variant_options}
                 currentVariants={data.variants || []}
                 defaultVariantOptions={default_variant_options}

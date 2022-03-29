@@ -169,6 +169,7 @@ export default function ProductSearchBar({
                         name={`tab${tab}`}
                         onChange={() => setStatus(tab)}
                         label={tab}
+                        labelStyle={'capitalize'}
                       />
                     );
                   })}
