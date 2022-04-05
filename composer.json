@@ -5,7 +5,7 @@
   "license": "MIT",
   "require": {
     "php": "^8.0",
-    "illuminate/support": "^v9.0",
+    "illuminate/support": "^9.0",
     "inertiajs/inertia-laravel": "^v0.5.4",
     "tightenco/ziggy": "^1.4"
   },
