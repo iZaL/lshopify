@@ -40,11 +40,20 @@ const Table = ({children}: Props) => {
   );
 };
 
+const Header = ({title, children = null, headerStyle}: HeaderProps) => {
+  return (
+    <th
+      className={`py-4 px-2 text-left text-sm font-medium text-gray-900 ${headerStyle}`}>
+      {title ? title : children}
+    </th>
+  );
+};
+
 const Row = ({children, striped = true, idx, onClick, rowStyle}: RowProps) => {
   return (
     <tr
       className={classNames(
-        'whitespace-nowrap',
+        '',
         striped
           ? `${idx && idx % 2 !== 0 ? 'bg-gray-50' : 'bg-white'}`
           : 'bg-white',
@@ -59,18 +68,9 @@ const Row = ({children, striped = true, idx, onClick, rowStyle}: RowProps) => {
 
 const Cell = ({children, cellStyle}: CellProps) => {
   return (
-    <td className={`py-4 px-4 text-sm text-gray-800 ${cellStyle}`}>
+    <td className={`py-4 px-2 text-left text-sm text-gray-800 ${cellStyle}`}>
       {children}
     </td>
-  );
-};
-
-const Header = ({title, children = null, headerStyle}: HeaderProps) => {
-  return (
-    <th
-      className={`py-4 px-4 text-left text-sm font-medium text-gray-900 ${headerStyle}`}>
-      {title ? title : children}
-    </th>
   );
 };
 

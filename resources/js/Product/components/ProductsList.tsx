@@ -177,7 +177,7 @@ export default function ProductsList({products, onUpdate, onDelete}: Props) {
                           imageStyle={'w-14 h-14'}
                         />
                       )}
-                      <span className="inline-block font-medium">
+                      <span className="text-left font-medium">
                         {item.title}
                       </span>
                     </Button>

@@ -101,7 +101,7 @@ const SmartHeader = ({children}: SmartHeaderProps<ItemWithID>) => {
   }
 
   return (
-    <div className="absolute top-0 left-24 z-20 bg-white pt-2">
+    <div className="absolute top-0 left-16 z-20 bg-white pt-2">
       <div className="flex flex-row">
         <Button
           theme="clear"
