@@ -42,7 +42,7 @@ class CollectionController extends Controller
 
     public function edit(Request $request, $id): \Inertia\Response
     {
-        $collection = new CollectionResource(Collection::with(['conditions', 'products.image'])->find($id));
+        $collection = new CollectionResource(Collection::with(['conditions', 'products.image','image'])->find($id));
         $products = Product::query();
         $searchTerm = $request->input('searchTerm');
         if ($searchTerm) {

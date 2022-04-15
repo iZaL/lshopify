@@ -357,17 +357,3 @@ export default function ProductEdit(props: Props) {
     </Main>
   );
 }
-
-//create
-// options: Array(2)
-// 0:
-// id: "Color"
-// name: "Color"
-// values: Array(2)
-// 0:
-// id: "Black"
-// name: "Black"
-//   [[Prototype]]: Object
-// 1:
-// id: "Blue"
-// name: "Blue"

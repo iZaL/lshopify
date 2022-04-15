@@ -14,6 +14,7 @@ class CollectionResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'determiner' => $this->determiner,
+            'description' => $this->description,
             'type' => $this->type,
             'image' => new ImageResource($this->whenLoaded('image')),
             'conditions' => CollectionConditionResource::collection($this->whenLoaded('conditions')),

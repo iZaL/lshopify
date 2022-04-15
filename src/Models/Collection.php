@@ -15,7 +15,7 @@ class Collection extends BaseModel
     protected $table = 'collections';
     public $timestamps = false;
 
-    protected $fillable = ['name', 'slug', 'type', 'determiner'];
+    protected $fillable = ['name', 'slug', 'type', 'determiner','description'];
 
     public static function newFactory()
     {

@@ -24,11 +24,15 @@ export default function CollectionEdit(props: Props) {
 
   const {data, setData, isDirty} = useForm<
     Collection & {searchTerm: string; sortTerm: string}
-  >({
+    >({
     ...collection,
     searchTerm: '',
     sortTerm: '',
   });
+
+  useEffect(() => {
+    console.log('data changed', data);
+  }, [data]);
 
   useEffect(() => {
     setData({
@@ -87,11 +91,42 @@ export default function CollectionEdit(props: Props) {
     });
   };
 
-  const onImageSubmit = (img?: Image) => {
-    setData({
-      ...data,
-      image: img ? img : null,
+  const onImageSubmit = (img: Image) => {
+    const url = route('lshopify.images.store');
+    // setData({
+    //   ...data,
+    //   image: img,
+    // });
+    const productData = {
+      images: [img],
+      imageable_id: collection.id,
+      imageable_type: 'collection',
+    };
+    Inertia.post(url, productData, {
+      onSuccess: () => {
+        Inertia.reload();
+      },
+      preserveState: false,
     });
+  };
+
+  const onImageRemove = () => {
+    let url = route('lshopify.images.delete');
+    // setData({
+    //   ...data,
+    //   image: null,
+    // });
+    if(collection.image) {
+      const productData = {
+        images: [collection.image],
+      };
+      Inertia.post(url, productData, {
+        onSuccess: () => {
+          Inertia.reload();
+        },
+        preserveState: false,
+      });
+    }
   };
 
   return (
@@ -144,7 +179,7 @@ export default function CollectionEdit(props: Props) {
           <section className="space-y-6 lg:col-span-1 lg:col-start-3">
             <ImageSelect
               data={data}
-              onImageRemove={() => onImageSubmit()}
+              onImageRemove={() => onImageRemove()}
               onConfirm={img => onImageSubmit(img)}
             />
           </section>

@@ -32,6 +32,7 @@ export default function TitleSection({onChange, name, description}: T) {
       <div>
         <Label title="Description (optional)" />
         <TextArea
+          richText={true}
           name="description"
           placeholder="Summer collection, Under 100$, Staff picks"
           onChange={(value) => onChange('description', value)}
