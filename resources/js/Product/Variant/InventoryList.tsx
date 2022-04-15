@@ -35,7 +35,6 @@ export default function InventoryList({
 
       <Table>
         <SmartTable.Header>
-          <Table.Header />
           <Table.Header title="Product" />
           <Table.Header title="SKU" />
           <Table.Header title="Available" />
@@ -45,15 +44,6 @@ export default function InventoryList({
           {({item}) => {
             return (
               <>
-                <Table.Cell cellStyle={'w-16'}>
-                  {item.image && (
-                    <VariantImage
-                      onClick={() => {}}
-                      image={item.image}
-                      imageStyle="w-16 h-12"
-                    />
-                  )}
-                </Table.Cell>
                 <Table.Cell>
                   {item.product?.title && (
                     <span className="font-bold">
