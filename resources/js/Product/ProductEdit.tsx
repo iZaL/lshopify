@@ -33,6 +33,7 @@ import SingleSelect from '../components/SingleSelect';
 import MultiSelect from '../components/MultiSelect';
 import MultiSelectDropdown from '../components/MultiSelectDropdown';
 import VariantsListSection from './components/VariantsListSection';
+import {deleteImages, uploadImages} from '../api';
 
 interface Props {
   product: Product;
@@ -106,21 +107,6 @@ export default function ProductEdit(props: Props) {
     return Inertia.get(url);
   };
 
-  const onImagesUpload = (images: Image[]) => {
-    const url = route('lshopify.images.store');
-    const productData = {
-      images: images,
-      imageable_id: product.id,
-      imageable_type: 'product',
-    };
-    setData('images', [...(data.images || []), ...images]);
-    Inertia.post(url, productData, {
-      onSuccess: () => {
-        Inertia.reload();
-      },
-    });
-  };
-
   const onVariantsDelete = (variantIDs: number[]) => {
     const url = route('lshopify.products.variants.delete', [product.id]);
     const productData = {
@@ -148,15 +134,22 @@ export default function ProductEdit(props: Props) {
     });
   };
 
-  const onImagesDelete = (images: Image[]) => {
-    const url = route('lshopify.images.delete');
-    const productData = {
-      images: images,
-    };
-    Inertia.post(url, productData, {
+  const onImagesUpload = (images: Image[]) => {
+    uploadImages(images, product.id, 'product', {
       onSuccess: () => {
         Inertia.reload();
       },
+      preserveState: false,
+      preserveScroll: true,
+    });
+  };
+
+  const onImagesDelete = (images: Image[]) => {
+    deleteImages(images, {
+      onSuccess: () => {
+        Inertia.reload();
+      },
+      preserveState: false,
     });
   };
 

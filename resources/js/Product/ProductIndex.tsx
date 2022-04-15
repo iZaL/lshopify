@@ -10,7 +10,9 @@ import route from 'ziggy-js';
 import {SearchAttributes, TabAttributes} from './types';
 
 interface Props {
-  products: Product[];
+  products: {
+    data: Product[];
+  };
   vendors: Vendor[];
   categories: Category[];
   collections: {
@@ -37,7 +39,7 @@ export default function ProductIndex(props: Props) {
     field: T,
     value: Product[T],
   ) => {
-    const updatedProducts = products.map(product => {
+    const updatedProducts = products.data.map(product => {
       if (productIDs.includes(product.id)) {
         return {
           ...product,
@@ -76,7 +78,7 @@ export default function ProductIndex(props: Props) {
               searchAttributes={searchAttributes}
             />
             <ProductsList
-              products={products}
+              products={products.data || []}
               onUpdate={onBulkUpdate}
               onDelete={onDelete}
             />

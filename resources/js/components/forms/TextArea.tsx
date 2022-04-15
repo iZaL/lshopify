@@ -1,15 +1,11 @@
-import React, { useState } from 'react'
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import {
-  convertFromHTML,
-  ContentState,
-  EditorState,
-} from 'draft-js'
+import React, {useState} from 'react';
+import {Editor} from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import {convertFromHTML, ContentState, EditorState} from 'draft-js';
 import {stateToHTML} from 'draft-js-export-html';
 
 interface TextAreaProps {
-  richText?: boolean
+  richText?: boolean;
   name: string;
   autocomplete?: string;
   placeholder?: string;
@@ -28,8 +24,7 @@ export default function TextArea({
   style,
   ...props
 }: TextAreaProps) {
-
-  if(!richText) {
+  if (!richText) {
     return (
       <div className="mt-1 flex rounded-md shadow-sm">
         <textarea
@@ -42,13 +37,17 @@ export default function TextArea({
           {...props}
         />
       </div>
-    )
+    );
   }
 
   const html = convertFromHTML(value ? value : '');
-  const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromBlockArray(html.contentBlocks, html.entityMap)));
+  const [editorState, setEditorState] = useState(
+    EditorState.createWithContent(
+      ContentState.createFromBlockArray(html.contentBlocks, html.entityMap),
+    ),
+  );
 
-  const onEditorStateChange = (content:EditorState) => {
+  const onEditorStateChange = (content: EditorState) => {
     const htmlContent = stateToHTML(content.getCurrentContent());
     const currentContentState = editorState.getCurrentContent();
     const newContentState = content.getCurrentContent();
@@ -59,7 +58,7 @@ export default function TextArea({
   };
 
   return (
-    <div className="z-30 mt-1 flex border border-gray-300 rounded-md shadow-sm">
+    <div className="z-30 mt-1 flex rounded-md border border-gray-300 shadow-sm">
       <Editor
         placeholder={placeholder}
         editorState={editorState}

@@ -35,7 +35,7 @@ export default function TitleSection({onChange, name, description}: T) {
           richText={true}
           name="description"
           placeholder="Summer collection, Under 100$, Staff picks"
-          onChange={(value) => onChange('description', value)}
+          onChange={value => onChange('description', value)}
           value={description || undefined}
         />
       </div>

@@ -13,6 +13,7 @@ import BackButton from '../components/BackButton';
 import ImageSelect from '../components/ImageSelect';
 import CollectionTypeSection from './components/CollectionTypeSection';
 import Card from '../components/Card';
+import {deleteImages, uploadImages} from '../api';
 
 interface Props {
   collection: Collection;
@@ -24,7 +25,7 @@ export default function CollectionEdit(props: Props) {
 
   const {data, setData, isDirty} = useForm<
     Collection & {searchTerm: string; sortTerm: string}
-    >({
+  >({
     ...collection,
     searchTerm: '',
     sortTerm: '',
@@ -92,17 +93,7 @@ export default function CollectionEdit(props: Props) {
   };
 
   const onImageSubmit = (img: Image) => {
-    const url = route('lshopify.images.store');
-    // setData({
-    //   ...data,
-    //   image: img,
-    // });
-    const productData = {
-      images: [img],
-      imageable_id: collection.id,
-      imageable_type: 'collection',
-    };
-    Inertia.post(url, productData, {
+    uploadImages([img], collection.id, 'collection', {
       onSuccess: () => {
         Inertia.reload();
       },
@@ -111,16 +102,8 @@ export default function CollectionEdit(props: Props) {
   };
 
   const onImageRemove = () => {
-    let url = route('lshopify.images.delete');
-    // setData({
-    //   ...data,
-    //   image: null,
-    // });
-    if(collection.image) {
-      const productData = {
-        images: [collection.image],
-      };
-      Inertia.post(url, productData, {
+    if (collection.image) {
+      deleteImages([collection.image], {
         onSuccess: () => {
           Inertia.reload();
         },

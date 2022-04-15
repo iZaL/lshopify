@@ -182,7 +182,7 @@ export default function ProductsList({products, onUpdate, onDelete}: Props) {
                       </span>
                     </Button>
                   </Table.Cell>
-                  <Table.Cell>{item.status}</Table.Cell>
+                  <Table.Cell cellStyle="capitalize">{item.status}</Table.Cell>
                   <Table.Cell>
                     {item.inventory_tracked ? (
                       item.available_quantity == 0 ? (

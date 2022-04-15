@@ -71,7 +71,7 @@ class ProductController extends Controller
             });
         }
 
-        $products = ProductResource::collection($products->get());
+        $products = ProductResource::collection($products->paginate(50));
         $vendors = VendorResource::collection(Vendor::all());
         $categories = CategoryResource::collection(Category::all());
         $collections = Collection::query();
