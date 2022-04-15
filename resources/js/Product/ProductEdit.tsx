@@ -32,7 +32,7 @@ import Border from '../components/Border';
 import SingleSelect from '../components/SingleSelect';
 import MultiSelect from '../components/MultiSelect';
 import MultiSelectDropdown from '../components/MultiSelectDropdown';
-import VariantsListSection from './components/VariantsListSection'
+import VariantsListSection from './components/VariantsListSection';
 
 interface Props {
   product: Product;

@@ -34,7 +34,7 @@ export default function TitleSection({onChange, name, description}: T) {
         <TextArea
           name="description"
           placeholder="Summer collection, Under 100$, Staff picks"
-          onChange={e => onChange('description', e.target.value)}
+          onChange={(value) => onChange('description', value)}
           value={description || undefined}
         />
       </div>

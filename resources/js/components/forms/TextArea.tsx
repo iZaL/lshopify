@@ -1,32 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react'
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import {
+  convertFromHTML,
+  ContentState,
+  EditorState,
+} from 'draft-js'
+import {stateToHTML} from 'draft-js-export-html';
 
 interface TextAreaProps {
   name: string;
   autocomplete?: string;
   placeholder?: string;
   style?: string;
-  onChange: (value: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onChange: (value: any) => void;
   value?: string;
 }
 
 export default function TextArea({
-  name,
-  autocomplete,
   placeholder,
-  style,
   onChange,
-  ...props
+  value,
 }: TextAreaProps) {
+
+  const html = convertFromHTML(value ? value : '');
+  const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromBlockArray(html.contentBlocks, html.entityMap)));
+
+  const onEditorStateChange = (content:EditorState) => {
+    const htmlContent = stateToHTML(content.getCurrentContent());
+    const currentContentState = editorState.getCurrentContent();
+    const newContentState = content.getCurrentContent();
+    if (currentContentState !== newContentState) {
+      onChange(htmlContent);
+    }
+    setEditorState(content);
+  };
+
   return (
-    <div className="mt-1 flex rounded-md shadow-sm">
-      <textarea
-        name={name}
-        id={name}
-        autoComplete={autocomplete ? autocomplete : ''}
+    <div className="z-30 mt-1 flex border border-gray-300 rounded-md shadow-sm">
+      <Editor
         placeholder={placeholder}
-        onChange={onChange}
-        className={`focus:blue-500 block w-full rounded-md border border-gray-300 py-2 px-4 shadow-sm focus:border-blue-500 focus:outline-none dark:border-gray-500 dark:bg-gray-800 sm:text-sm ${style}`}
-        {...props}
+        editorState={editorState}
+        onEditorStateChange={onEditorStateChange}
       />
     </div>
   );

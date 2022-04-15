@@ -507,17 +507,17 @@ export default function VariantsListSection({
                 <div
                   className={`grid items-center gap-6
                 ${
-                    variantOptions.length === 3 &&
-                    'grid-cols-[repeat(4,10rem),9rem,9rem,auto]'
-                  }
+                  variantOptions.length === 3 &&
+                  'grid-cols-[repeat(4,10rem),9rem,9rem,auto]'
+                }
                 ${
-                    variantOptions.length === 2 &&
-                    'grid-cols-[repeat(3,10rem),9rem,9rem,auto]'
-                  }
+                  variantOptions.length === 2 &&
+                  'grid-cols-[repeat(3,10rem),9rem,9rem,auto]'
+                }
                 ${
-                    variantOptions.length === 1 &&
-                    'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
-                  }
+                  variantOptions.length === 1 &&
+                  'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
+                }
                 `}>
                   {variantOptions.map((option, i) => {
                     return (
@@ -572,17 +572,17 @@ export default function VariantsListSection({
                         <div
                           className={`grid items-center gap-6
                         ${
-                            variantOptions.length === 3 &&
-                            'grid-cols-[repeat(4,10rem),9rem,9rem,auto]'
-                          }
+                          variantOptions.length === 3 &&
+                          'grid-cols-[repeat(4,10rem),9rem,9rem,auto]'
+                        }
                         ${
-                            variantOptions.length === 2 &&
-                            'grid-cols-[repeat(3,10rem),9rem,9rem,auto]'
-                          }
+                          variantOptions.length === 2 &&
+                          'grid-cols-[repeat(3,10rem),9rem,9rem,auto]'
+                        }
                         ${
-                            variantOptions.length === 1 &&
-                            'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
-                          }
+                          variantOptions.length === 1 &&
+                          'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
+                        }
                        `}>
                           {variantOptions.map((option: VariantOption, idx) => {
                             const currentOption = variant.options?.find(
