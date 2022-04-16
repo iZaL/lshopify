@@ -25,7 +25,7 @@ class VariantCreateAction
                 ->toArray()
         );
 
-        if (isset($variantAttributes['options']) && !empty($variantAttributes['options'])) {
+        if (!empty($variantAttributes['options'])) {
             if ($resolveOptions) {
                 $this->createVariantOptionWithValues($variant, $variantAttributes['options']);
             } else {
@@ -41,6 +41,7 @@ class VariantCreateAction
     {
         $variantOptions = $this->resolveOptions($options);
         foreach ($variantOptions as $variantOption) {
+//            dd($variantOption);
             $newVariant = $variant->replicate(['default']);
             $newVariant->options = $variantOption;
             $newVariant->save();
@@ -55,55 +56,76 @@ class VariantCreateAction
 
     private function resolveOptions(array $options): Collection
     {
-        $option1 = $options[0] ?? [];
-        $option1Values = [];
-        if (isset($option1['values']) && !empty($option1['values'])) {
-            foreach ($option1['values'] as $value) {
-                $option1Values[] = [
-                    'id' => $option1['id'],
+        $optionValues = collect([]);
+        foreach ($options as $option) {
+            $values = [];
+            foreach ($option['values'] as $value) {
+                $values[] = [
+                    'id' => $option['id'],
                     'name' => $value['name'],
                 ];
             }
+            $optionValues[] = $values;
         }
 
-        $option2 = $options[1] ?? [];
-        $option2Values = [];
-        if (isset($option2['values']) && !empty($option2['values'])) {
-            foreach ($option2['values'] as $value) {
-                $option2Values[] = [
-                    'id' => $option2['id'],
-                    'name' => $value['name'],
-                ];
-            }
-        }
+        $option1 = collect($optionValues->first());
 
-        $option3 = $options[2] ?? [];
-        $option3Values = [];
-        if (isset($option3['values']) && !empty($option3['values'])) {
-            foreach ($option3['values'] as $value) {
-                $option3Values[] = [
-                    'id' => $option3['id'],
-                    'name' => $value['name'],
-                ];
-            }
-        }
+        $optionRest = $optionValues->slice(1)->all();
 
-        $optionsMatrix = collect($option1Values);
-
-        if ($option2Values) {
-            $optionsMatrix = $option3Values
-                ? $optionsMatrix->crossJoin($option2Values, $option3Values)
-                : $optionsMatrix->crossJoin($option2Values);
-
-        } else {
-            // If only 1 option, turn into assosiative array
-            $optionsMatrix = [];
-            foreach ($option1Values as $option) {
-                $optionsMatrix[] = [$option];
-            }
-            $optionsMatrix = collect($optionsMatrix);
-        }
-
-        return $optionsMatrix;
+        return $option1->crossJoin(...$optionRest);
     }
+
+//    private function resolveOptions(array $options): Collection
+//    {
+//        $option1 = $options[0] ?? [];
+//        $option1Values = [];
+//        if (!empty($option1['values'])) {
+//            foreach ($option1['values'] as $value) {
+//                $option1Values[] = [
+//                    'id' => $option1['id'],
+//                    'name' => $value['name'],
+//                ];
+//            }
+//        }
+//
+//        $option2 = $options[1] ?? [];
+//        $option2Values = [];
+//        if (!empty($option2['values'])) {
+//            foreach ($option2['values'] as $value) {
+//                $option2Values[] = [
+//                    'id' => $option2['id'],
+//                    'name' => $value['name'],
+//                ];
+//            }
+//        }
+//
+//        $option3 = $options[2] ?? [];
+//        $option3Values = [];
+//        if (!empty($option3['values'])) {
+//            foreach ($option3['values'] as $value) {
+//                $option3Values[] = [
+//                    'id' => $option3['id'],
+//                    'name' => $value['name'],
+//                ];
+//            }
+//        }
+//
+//        $optionsMatrix = collect($option1Values);
+//
+//        if ($option2Values) {
+//            $optionsMatrix = $option3Values
+//                ? $optionsMatrix->crossJoin($option2Values, $option3Values)
+//                : $optionsMatrix->crossJoin($option2Values);
+//
+//        } else {
+//            // If only 1 option, turn into assosiative array
+//            $optionsMatrix = [];
+//            foreach ($option1Values as $option) {
+//                $optionsMatrix[] = [$option];
+//            }
+//            $optionsMatrix = collect($optionsMatrix);
+//        }
+//
+//        return $optionsMatrix;
+//    }
 }
