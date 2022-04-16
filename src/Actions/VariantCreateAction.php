@@ -17,7 +17,7 @@ class VariantCreateAction
         $this->variant = $variant;
     }
 
-    public function create(array $variantAttributes, $parseOptions = false): Variant
+    public function create(array $variantAttributes, $resolveOptions = false): Variant
     {
         $variant = $this->variant->create(
             collect($variantAttributes)
@@ -26,7 +26,7 @@ class VariantCreateAction
         );
 
         if (isset($variantAttributes['options']) && !empty($variantAttributes['options'])) {
-            if ($parseOptions) {
+            if ($resolveOptions) {
                 $this->createVariantOptionWithValues($variant, $variantAttributes['options']);
             } else {
                 $variant->options = $variantAttributes['options'];
@@ -37,9 +37,9 @@ class VariantCreateAction
         return $variant;
     }
 
-    public function createVariantOptionWithValues(Variant $variant, $variantAttributes): self
+    public function createVariantOptionWithValues(Variant $variant, $options): self
     {
-        $variantOptions = $this->prepareOptions($variantAttributes);
+        $variantOptions = $this->resolveOptions($options);
         foreach ($variantOptions as $variantOption) {
             $newVariant = $variant->replicate(['default']);
             $newVariant->options = $variantOption;
@@ -53,68 +53,57 @@ class VariantCreateAction
         return $this->variant->getFillable();
     }
 
-    private function prepareOptions(array $variantsArray): Collection
+    private function resolveOptions(array $options): Collection
     {
-        $variant1Option = $variantsArray[0] ?? [];
-        $variant1OptionValues = [];
-
-        if (isset($variant1Option['values']) && !empty($variant1Option['values'])) {
-            $variant1Array = $variant1Option['values'];
-
-            foreach ($variant1Array as $variant1Arr) {
-                $variant1OptionValues[] = [
-                    'id' => $variant1Option['id'],
-                    'name' => $variant1Arr['name'],
+        $option1 = $options[0] ?? [];
+        $option1Values = [];
+        if (isset($option1['values']) && !empty($option1['values'])) {
+            foreach ($option1['values'] as $value) {
+                $option1Values[] = [
+                    'id' => $option1['id'],
+                    'name' => $value['name'],
                 ];
             }
         }
 
-        $variant2Option = $variantsArray[1] ?? [];
-
-        $variant2OptionValues = [];
-
-        if (isset($variant2Option['values']) && !empty($variant2Option['values'])) {
-            $variant2Array = $variant2Option['values'];
-
-            foreach ($variant2Array as $variant2Arr) {
-                $variant2OptionValues[] = [
-                    'id' => $variant2Option['id'],
-                    'name' => $variant2Arr['name'],
+        $option2 = $options[1] ?? [];
+        $option2Values = [];
+        if (isset($option2['values']) && !empty($option2['values'])) {
+            foreach ($option2['values'] as $value) {
+                $option2Values[] = [
+                    'id' => $option2['id'],
+                    'name' => $value['name'],
                 ];
             }
         }
 
-        $variant3Option = $variantsArray[2] ?? [];
-
-        $variant3OptionValues = [];
-
-        if (isset($variant3Option['values']) && !empty($variant3Option['values'])) {
-            $variant3Array = $variant3Option['values'];
-
-            foreach ($variant3Array as $variant3Arr) {
-                $variant3OptionValues[] = [
-                    'id' => $variant3Option['id'],
-                    'name' => $variant3Arr['name'],
+        $option3 = $options[2] ?? [];
+        $option3Values = [];
+        if (isset($option3['values']) && !empty($option3['values'])) {
+            foreach ($option3['values'] as $value) {
+                $option3Values[] = [
+                    'id' => $option3['id'],
+                    'name' => $value['name'],
                 ];
             }
         }
 
-        $optionsArray = collect($variant1OptionValues);
+        $optionsMatrix = collect($option1Values);
 
-        if ($variant2OptionValues) {
-            $optionsArray = $variant3OptionValues
-                ? $optionsArray->crossJoin($variant2OptionValues, $variant3OptionValues)
-                : $optionsArray->crossJoin($variant2OptionValues);
+        if ($option2Values) {
+            $optionsMatrix = $option3Values
+                ? $optionsMatrix->crossJoin($option2Values, $option3Values)
+                : $optionsMatrix->crossJoin($option2Values);
 
         } else {
             // If only 1 option, turn into assosiative array
-            $optionsArray = [];
-            foreach ($variant1OptionValues as $option) {
-                $optionsArray[] = [$option];
+            $optionsMatrix = [];
+            foreach ($option1Values as $option) {
+                $optionsMatrix[] = [$option];
             }
-            $optionsArray = collect($optionsArray);
+            $optionsMatrix = collect($optionsMatrix);
         }
 
-        return $optionsArray;
+        return $optionsMatrix;
     }
 }
