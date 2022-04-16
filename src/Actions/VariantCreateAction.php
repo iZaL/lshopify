@@ -63,8 +63,8 @@ class VariantCreateAction
 
             foreach ($variant1Array as $variant1Arr) {
                 $variant1OptionValues[] = [
-                    'name' => $variant1Arr['id'],
-                    'id' => $variant1Option['name'],
+                    'id' => $variant1Option['id'],
+                    'name' => $variant1Arr['name'],
                 ];
             }
         }
@@ -78,8 +78,8 @@ class VariantCreateAction
 
             foreach ($variant2Array as $variant2Arr) {
                 $variant2OptionValues[] = [
-                    'name' => $variant2Arr['id'],
-                    'id' => $variant2Option['name'],
+                    'id' => $variant2Option['id'],
+                    'name' => $variant2Arr['name'],
                 ];
             }
         }
@@ -93,8 +93,8 @@ class VariantCreateAction
 
             foreach ($variant3Array as $variant3Arr) {
                 $variant3OptionValues[] = [
-                    'name' => $variant3Arr['id'],
-                    'id' => $variant3Option['name'],
+                    'id' => $variant3Option['id'],
+                    'name' => $variant3Arr['name'],
                 ];
             }
         }
