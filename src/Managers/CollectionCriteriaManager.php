@@ -27,7 +27,7 @@ class CollectionCriteriaManager
             'weight',
             'stock',
             'variant_title',
-            'vendor'
+            'vendor',
         ];
 
         if (!in_array($field, $allowedFields)) {

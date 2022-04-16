@@ -40,7 +40,6 @@ class VariantCreateActionNew
 
     public function createVariantOptionWithValues(Variant $variant, $variantAttributes): self
     {
-
         $variantOptions = $this->prepareOptions($variantAttributes);
         foreach ($variantOptions as $variantOption) {
             $newVariant = $variant->replicate(['default']);
@@ -57,7 +56,7 @@ class VariantCreateActionNew
 
     private function prepareOptions(array $variantsArray): Collection
     {
-//        $variant1Option = $variantsArray[0] ?? [];
+        //        $variant1Option = $variantsArray[0] ?? [];
 
         $variant1Option = $variantsArray[0] ? $this->createVariantOption($variantsArray[0]) : [];
 
@@ -92,30 +91,29 @@ class VariantCreateActionNew
         }
 
         $optionsArray = collect($variant1Option);
-//        dd($optionsArray);
-//        $optionsArray = collect($variant1OptionValues);
+        //        dd($optionsArray);
+        //        $optionsArray = collect($variant1OptionValues);
 
         if ($variant2OptionValues) {
             $optionsArray = $variant3OptionValues
                 ? $optionsArray->crossJoin($variant2OptionValues, $variant3OptionValues)
                 : $optionsArray->crossJoin($variant2OptionValues);
-
         } else {
             $optionsArray = collect([$variant1Option]);
         }
         return $optionsArray;
     }
 
-    #[ArrayShape(['id' => "int", 'name' => "mixed", 'values' => "mixed"])] private function createVariantOption($option): array
-    {
-        $id = rand(1000,9999);
+    #[ArrayShape(['id' => 'int', 'name' => 'mixed', 'values' => 'mixed'])]
+    private function createVariantOption($option): array {
+        $id = rand(1000, 9999);
 
         $newOption = [
             'id' => $id,
             'name' => $option['name'],
         ];
 
-        $values = collect($option['values'])->map(function ($value) use ($newOption)  {
+        $values = collect($option['values'])->map(function ($value) use ($newOption) {
             return $this->createVariantOptionValue($newOption, $value);
         });
 
@@ -123,13 +121,12 @@ class VariantCreateActionNew
 
         return $newOption;
     }
-    #[ArrayShape(['id' => "int", 'name' => "mixed"])] private function createVariantOptionValue($option, $value): array
-    {
-        $id = rand(1000,9999);
+    #[ArrayShape(['id' => 'int', 'name' => 'mixed'])]
+    private function createVariantOptionValue($option, $value): array {
+        $id = rand(1000, 9999);
         return [
             'id' => $id,
-            'name' => $value['name']
+            'name' => $value['name'],
         ];
     }
-
 }

@@ -4,12 +4,7 @@ namespace IZal\Lshopify\Models;
 
 class VariantOption extends BaseModel
 {
-    protected $fillable = [
-        'variant_id',
-        'name',
-        'position',
-        'values',
-    ];
+    protected $fillable = ['variant_id', 'name', 'position', 'values'];
 
     protected $casts = [
         'values' => 'array',
@@ -17,7 +12,6 @@ class VariantOption extends BaseModel
 
     public function variant()
     {
-        return $this->belongsTo(Variant::class,'variant_id');
+        return $this->belongsTo(Variant::class, 'variant_id');
     }
-
 }

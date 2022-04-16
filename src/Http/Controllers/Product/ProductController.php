@@ -26,7 +26,7 @@ class ProductController extends Controller
     public function index(Request $request): \Inertia\Response
     {
         $products = Product::query()
-            ->with(['category', 'vendor','tags'])
+            ->with(['category', 'vendor', 'tags'])
             ->withCount('variants');
 
         $searchTerm = $request->get('product_search');
@@ -36,8 +36,8 @@ class ProductController extends Controller
             $products->where('title', 'like', '%' . $searchTerm . '%');
         }
 
-        if($tagTerm) {
-            $products->whereHas('tags', function($query) use ($tagTerm) {
+        if ($tagTerm) {
+            $products->whereHas('tags', function ($query) use ($tagTerm) {
                 $query->where('name', 'like', '%' . $tagTerm . '%');
             });
         }
@@ -55,18 +55,18 @@ class ProductController extends Controller
 
         $selectedVendors = collect($request->get('selected_vendors') ?? [])->unique();
 
-        if($selectedVendors->count() > 0) {
+        if ($selectedVendors->count() > 0) {
             $products->whereIn('vendor_id', $selectedVendors->toArray());
         }
 
         $selectedCategories = collect($request->get('selected_categories') ?? [])->unique();
-        if($selectedCategories->count() > 0) {
+        if ($selectedCategories->count() > 0) {
             $products->whereIn('category_id', $selectedCategories->toArray());
         }
 
         $selectedCollections = collect($request->get('selected_collections') ?? [])->unique();
-        if($selectedCollections->count() > 0) {
-            $products->whereHas('collections', function($query) use ($selectedCollections) {
+        if ($selectedCollections->count() > 0) {
+            $products->whereHas('collections', function ($query) use ($selectedCollections) {
                 $query->whereIn('collections.id', $selectedCollections->toArray());
             });
         }
@@ -77,7 +77,7 @@ class ProductController extends Controller
         $collections = Collection::query();
 
         $collectionSearch = $request->get('collection_search');
-        if($collectionSearch) {
+        if ($collectionSearch) {
             $collections = $collections->where('name', 'like', '%' . $collectionSearch . '%');
         }
         $collections = CollectionResource::collection($collections->paginate(5));
@@ -93,7 +93,8 @@ class ProductController extends Controller
                 'selected_collections' => $selectedCollections,
                 'product_search' => $searchTerm,
                 'tag_search' => $tagTerm,
-                'collection_search',$collectionSearch,
+                'collection_search',
+                $collectionSearch,
                 'selected_view' => $selectedTab,
             ],
             'vendors' => $vendors,

@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 interface Props {
-  name: string;
+  name?: string;
   label?: string;
   checked: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -18,7 +18,6 @@ export default function Checkbox({
   checked = false,
   onChange,
 }: Props) {
-  // @ts-ignore
   return (
     <div className="relative inline-flex items-center space-x-2">
       <input

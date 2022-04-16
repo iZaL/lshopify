@@ -20,7 +20,6 @@ import InputText from '../../components/forms/InputText';
 import PopoverButton from '../../components/PopoverButton';
 import Border from '../../components/Border';
 import TabPill from '../../components/TabPill';
-import {ViewListIcon} from '@heroicons/react/outline';
 import {Disclosure} from '@headlessui/react';
 import CreatableSelect from 'react-select/creatable';
 
@@ -505,20 +504,17 @@ export default function VariantsListSection({
 
               <div className="w-full">
                 <div
-                  className={`grid items-center gap-6
-                ${
-                  variantOptions.length === 3 &&
-                  'grid-cols-[repeat(4,10rem),9rem,9rem,auto]'
-                }
-                ${
-                  variantOptions.length === 2 &&
-                  'grid-cols-[repeat(3,10rem),9rem,9rem,auto]'
-                }
-                ${
-                  variantOptions.length === 1 &&
-                  'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
-                }
-                `}>
+                  className={classNames(
+                    'grid items-center gap-6',
+                    variantOptions.length === 4 &&
+                      'grid-cols-[repeat(5,10rem),9rem,9rem,auto]',
+                    variantOptions.length === 3 &&
+                      'grid-cols-[repeat(4,10rem),9rem,9rem,auto]',
+                    variantOptions.length === 2 &&
+                      'grid-cols-[repeat(3,10rem),9rem,9rem,auto]',
+                    variantOptions.length === 1 &&
+                      'grid-cols-[repeat(2,10rem),9rem,9rem,auto]',
+                  )}>
                   {variantOptions.map((option, i) => {
                     return (
                       <div className="text-sm font-semibold" key={i}>
@@ -541,9 +537,8 @@ export default function VariantsListSection({
                 <li
                   key={i}
                   className={classNames(
-                    checkedVariantIDs.includes(variant.id)
-                      ? 'bg-blue-50 dark:bg-gray-700'
-                      : '',
+                    checkedVariantIDs.includes(variant.id) &&
+                      'bg-blue-50 dark:bg-gray-700',
                     'position-relative box-border inline-block min-w-full border-t border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-900',
                   )}>
                   <div className="flex items-center">
@@ -552,7 +547,6 @@ export default function VariantsListSection({
                         <Checkbox
                           checked={checkedVariantIDs.includes(variant.id)}
                           onChange={() => onCheckboxChange(variant.id)}
-                          name=""
                         />
                       </div>
                       <div className="mr-2 w-14">
@@ -570,20 +564,17 @@ export default function VariantsListSection({
                     <div className="flex items-start">
                       <div className="max-w-100 min-w-0 self-center ">
                         <div
-                          className={`grid items-center gap-6
-                        ${
-                          variantOptions.length === 3 &&
-                          'grid-cols-[repeat(4,10rem),9rem,9rem,auto]'
-                        }
-                        ${
-                          variantOptions.length === 2 &&
-                          'grid-cols-[repeat(3,10rem),9rem,9rem,auto]'
-                        }
-                        ${
-                          variantOptions.length === 1 &&
-                          'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
-                        }
-                       `}>
+                          className={classNames(
+                            'grid items-center gap-6',
+                            variantOptions.length === 4 &&
+                              'grid-cols-[repeat(5,10rem),9rem,9rem,auto]',
+                            variantOptions.length === 3 &&
+                              'grid-cols-[repeat(4,10rem),9rem,9rem,auto]',
+                            variantOptions.length === 2 &&
+                              'grid-cols-[repeat(3,10rem),9rem,9rem,auto]',
+                            variantOptions.length === 1 &&
+                              'grid-cols-[repeat(2,10rem),9rem,9rem,auto]',
+                          )}>
                           {variantOptions.map((option: VariantOption, idx) => {
                             const currentOption = variant.options?.find(
                               v => v.id === option.id,

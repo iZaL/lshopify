@@ -109,7 +109,7 @@ export default function VariantSection({
             );
           })}
 
-          {currentVariantOptions.length <= 2 && (
+          {currentVariantOptions.length <= 4 && (
             <Button onClick={onVariantAdd} theme="default">
               Add another option
             </Button>

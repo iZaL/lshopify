@@ -85,14 +85,14 @@ class Variant extends BaseModel
 
     public function getTitleAttribute()
     {
-//        $title = $this->options;
-//
-//        if(!$title) {
-//            $title = 'Default variant';
-//        } else {
-//            dd($title);
-//            $title = implode(', ', $title);
-//        }
+        //        $title = $this->options;
+        //
+        //        if(!$title) {
+        //            $title = 'Default variant';
+        //        } else {
+        //            dd($title);
+        //            $title = implode(', ', $title);
+        //        }
 
         return collect($this->options)
             ->pluck('name')
@@ -112,19 +112,18 @@ class Variant extends BaseModel
             ->toArray();
     }
 
-//    public function getVariantOptionsValuesAttribute(): array
-//    {
-//        $variants = $this
-//            ->pluck('options')
-//            ->collapse()
-//            ->unique('name')
-//            ->toArray();
-//        return [...$variants];
-//    }
+    //    public function getVariantOptionsValuesAttribute(): array
+    //    {
+    //        $variants = $this
+    //            ->pluck('options')
+    //            ->collapse()
+    //            ->unique('name')
+    //            ->toArray();
+    //        return [...$variants];
+    //    }
 
     public function getOptionsArrayAttribute()
     {
-
         //
 
         return $this->options;
@@ -132,6 +131,5 @@ class Variant extends BaseModel
         dd($options);
     }
 }
-
 
 // variants =

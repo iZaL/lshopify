@@ -15,7 +15,7 @@ class Collection extends BaseModel
     protected $table = 'collections';
     public $timestamps = false;
 
-    protected $fillable = ['name', 'slug', 'type', 'determiner','description'];
+    protected $fillable = ['name', 'slug', 'type', 'determiner', 'description'];
 
     public static function newFactory()
     {
@@ -68,8 +68,7 @@ class Collection extends BaseModel
         \Illuminate\Database\Eloquent\Builder $products,
         $condition,
         string $determiner = 'all'
-    ): \Illuminate\Database\Eloquent\Builder
-    {
+    ): \Illuminate\Database\Eloquent\Builder {
         $conditionManager = new CollectionCriteriaManager($condition);
 
         $field = $conditionManager->resolveField();

@@ -99,12 +99,17 @@ class Product extends BaseModel
                 return [
                     'id' => $option[0]['id'] ?? null,
                     'name' => $option[0]['id'] ?? null,
-                    'values' => $option->pluck('name')->unique()->values()->map(function ($value) {
-                        return [
-                            'id' => $value,
-                            'name' => $value,
-                        ];
-                    })->toArray(),
+                    'values' => $option
+                        ->pluck('name')
+                        ->unique()
+                        ->values()
+                        ->map(function ($value) {
+                            return [
+                                'id' => $value,
+                                'name' => $value,
+                            ];
+                        })
+                        ->toArray(),
                 ];
             })
             ->values()
