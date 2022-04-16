@@ -5,7 +5,7 @@ admin panel mimics shopify admin panel. The name is subject to change once the p
 
 The admin panel frontend is built with InertiaJS and ReactJS with Typescript. 
 
-```angular2html
+```
 #install the package through composer
 
 composer require izal/lshopify
@@ -17,12 +17,14 @@ composer require izal/lshopify
 # next run the following command
 php artisan vendor:publish --provider="\IZal\Lshopify\Providers\LshopifyServiceProvider" 
 
-
 ```
 after the above command is run, the following files will be created
-resources/views/lshopify.blade.php
+####resources/views/lshopify.blade.php
+####config/lshopify.php
+####public/vendor/lshopify/app.css
+####public/vendor/lshopify/app.js
 
 now you can navigate to the following url
-http://yousite.test/admin
+http://yousite.test/store
 
 

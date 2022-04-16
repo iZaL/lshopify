@@ -356,7 +356,7 @@ export default function VariantsListSection({
           <Button theme="clear" onClick={() => setCheckedVariantIDs([])}>
             None
           </Button>
-          <div className="z-20 bg-white">
+          <div className="z-30 bg-white">
             {variantOptions.map((option, idx) => {
               return (
                 <PopoverButton
