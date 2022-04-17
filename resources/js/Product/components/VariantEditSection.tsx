@@ -20,7 +20,6 @@ import InputText from '../../components/forms/InputText';
 import PopoverButton from '../../components/PopoverButton';
 import Border from '../../components/Border';
 import TabPill from '../../components/TabPill';
-import {ViewListIcon} from '@heroicons/react/outline';
 import {Disclosure} from '@headlessui/react';
 import CreatableSelect from 'react-select/creatable';
 
