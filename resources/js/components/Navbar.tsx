@@ -3,6 +3,7 @@ import {MenuAlt2Icon} from '@heroicons/react/outline';
 import {SearchIcon} from '@heroicons/react/solid';
 import {Menu, Transition} from '@headlessui/react';
 import classNames from 'classnames';
+import { useSidebarStore } from '../store'
 
 const userNavigation = [
   {name: 'Your Profile', href: '#'},
@@ -11,14 +12,13 @@ const userNavigation = [
 ];
 
 export default function Navbar() {
-  // const setSidebarOpen = useSetRecoilState(sidebarState);
+  const { toggle } = useSidebarStore();
 
   return (
     <div className="relative flex h-16 flex-shrink-0 bg-white shadow dark:bg-gray-900">
       <button
         className="border-r border-gray-200 px-4 text-gray-500 focus:outline-none md:hidden"
-        onClick={() => {}}
-      >
+        onClick={() => toggle()}>
         <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
       </button>
       <div className="flex flex-1 justify-between px-4">

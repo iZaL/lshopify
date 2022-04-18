@@ -1,20 +1,20 @@
-import React, { Fragment, useState } from 'react'
-// import {sidebarState} from '../atoms';
+import React, {Fragment} from 'react';
 import SidebarNav from './SidebarNav';
 import {Dialog, Transition} from '@headlessui/react';
 import {XIcon} from '@heroicons/react/outline';
+import { useSidebarStore } from '../store'
 
 export default function MobileSidebar() {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const { isOpen,toggle} = useSidebarStore();
 
   return (
-    <Transition.Root show={sidebarOpen} as={Fragment}>
+    <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
         as="div"
         static
         className="fixed inset-0 z-40 flex md:hidden"
-        open={sidebarOpen}
-        onClose={setSidebarOpen}>
+        open={isOpen}
+        onClose={toggle}>
         <Transition.Child
           as={Fragment}
           enter="transition-opacity ease-linear duration-300"
@@ -45,7 +45,7 @@ export default function MobileSidebar() {
               <div className="absolute top-0 right-0 -mr-12 pt-2">
                 <button
                   className="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                  onClick={() => setSidebarOpen(false)}>
+                  onClick={() => toggle()}>
                   <XIcon className="h-6 w-6 text-white" aria-hidden="true" />
                 </button>
               </div>
