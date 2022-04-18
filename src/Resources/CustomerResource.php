@@ -15,8 +15,10 @@ class CustomerResource extends JsonResource
             'full_name' => $this->full_name,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
+            'location' => $this->location,
             'phone' => $this->phone,
             'email' => $this->email,
+            'orders_count' => $this->orders_count,
             'addresses' => CustomerAddressResource::collection($this->whenLoaded('addresses')),
         ];
     }

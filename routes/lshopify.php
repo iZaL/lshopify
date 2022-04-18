@@ -122,7 +122,10 @@ Route::controller(ImageController::class)->group(function () {
 
 Route::get('inventories', [InventoryController::class,'index'])->name('inventories.index');
 
-Route::post('customers', [CustomerController::class,'store'])->name('customers.store');
+Route::group(['prefix' => 'customers','as' => 'customers.'], function () {
+    Route::get('/', [CustomerController::class, 'index'])->name('index');
+    Route::post('/', [CustomerController::class, 'store'])->name('store');
+});
 
 Route::post('vendors', [VendorController::class,'store'])->name('vendors.store');
 

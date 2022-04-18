@@ -17,7 +17,7 @@ class CreateDiscountsTable extends Migration
             $table->id();
             $table->unsignedInteger('order_id');
             $table->unsignedInteger('variant_id')->nullable();
-            $table->string('value');
+            $table->float('value');
             $table->string('suffix')->default('amount');
             $table->string('type')->default('discount');
             $table->string('target')->default('subtotal');

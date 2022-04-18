@@ -55,6 +55,11 @@ export default function SidebarNav() {
           active={route().current('lshopify.draft.orders.*')}
         />
       </Navigator.Item>
+      <Navigator.Item
+        name="Customers"
+        active={route().current() === 'lshopify.customers.index'}
+        href={route('lshopify.customers.index')}
+      />
     </Navigator>
   );
 }

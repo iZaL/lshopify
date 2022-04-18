@@ -12,7 +12,7 @@ class Discount extends BaseModel
 
     protected $casts = [];
 
-    protected $fillable = ['order_id', 'variant_id', 'value', 'suffix', 'reason', 'name', 'target', 'reason'];
+    protected $fillable = ['order_id', 'variant_id', 'value', 'suffix', 'name', 'target', 'reason'];
 
     public static function newFactory()
     {

@@ -28,7 +28,7 @@ class Customer extends BaseModel
 
     public function orders()
     {
-        return $this->hasMany(DraftOrder::class);
+        return $this->hasMany(Order::class);
     }
 
     public function default_address()
@@ -45,4 +45,16 @@ class Customer extends BaseModel
     {
         return $this->hasMany(CustomerAddress::class);
     }
+
+    public function getLocationAttribute()
+    {
+        $address = $this->default_address;
+        return Str::title($address->city . ', ' . $address->country);
+    }
+
+//    public function getOrdersCount()
+//    {
+//        return $this->orders()->count();
+//    }
+
 }
