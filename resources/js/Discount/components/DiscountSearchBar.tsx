@@ -1,5 +1,5 @@
-import React from 'react'
-import classNames from 'classnames'
+import React from 'react';
+import classNames from 'classnames';
 
 interface TabProps {
   name: string;
@@ -45,7 +45,6 @@ export default function DiscountSearchBar({tabs}: Props) {
           </nav>
         </div>
       </div>
-
     </div>
   );
 }

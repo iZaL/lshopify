@@ -6,8 +6,6 @@ interface Props {
 
 export default function Border({borderStyle}: Props) {
   return (
-    <div
-      className={`my-3 w-full border-t border-gray-200 dark:border-gray-500 ${borderStyle}`}
-    />
+    <div className={`my-3 w-full border-t border-gray-200 ${borderStyle}`} />
   );
 }

@@ -537,9 +537,8 @@ export default function VariantsListSection({
                 <li
                   key={i}
                   className={classNames(
-                    checkedVariantIDs.includes(variant.id) &&
-                      'bg-blue-50 dark:bg-gray-700',
-                    'position-relative box-border inline-block min-w-full border-t border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-900',
+                    checkedVariantIDs.includes(variant.id) && 'bg-blue-50',
+                    'position-relative box-border inline-block min-w-full border-t border-gray-200 hover:bg-gray-100',
                   )}>
                   <div className="flex items-center">
                     <div className="flex items-center">
@@ -638,7 +637,7 @@ export default function VariantsListSection({
                               }
                             />
                           </div>
-                          <div className="sticky top-0 right-0 flex hidden h-full bg-gray-100 py-4 px-2 shadow shadow-md dark:bg-gray-900 sm:block">
+                          <div className="sticky top-0 right-0 flex hidden h-full bg-gray-100 py-4 px-2 shadow shadow-md sm:block">
                             <div className="box-border flex flex-row flex-nowrap  items-center space-x-4">
                               <Button
                                 theme="default"

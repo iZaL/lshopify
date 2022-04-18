@@ -3,7 +3,7 @@ import {MenuAlt2Icon} from '@heroicons/react/outline';
 import {SearchIcon} from '@heroicons/react/solid';
 import {Menu, Transition} from '@headlessui/react';
 import classNames from 'classnames';
-import { useSidebarStore } from '../store'
+import {useSidebarStore} from '../store';
 
 const userNavigation = [
   {name: 'Your Profile', href: '#'},
@@ -12,10 +12,10 @@ const userNavigation = [
 ];
 
 export default function Navbar() {
-  const { toggle } = useSidebarStore();
+  const {toggle} = useSidebarStore();
 
   return (
-    <div className="relative flex h-16 flex-shrink-0 bg-white shadow dark:bg-gray-900">
+    <div className="relative flex h-16 flex-shrink-0 bg-white shadow ">
       <button
         className="border-r border-gray-200 px-4 text-gray-500 focus:outline-none md:hidden"
         onClick={() => toggle()}>
@@ -30,7 +30,7 @@ export default function Navbar() {
               </div>
               <input
                 id="search_field"
-                className="block h-full w-full border-transparent py-2 pl-8 pr-3 text-gray-900 placeholder-gray-500 focus:border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0 dark:bg-gray-900 dark:text-white sm:text-sm"
+                className="block h-full w-full border-transparent py-2 pl-8 pr-3 text-gray-900 placeholder-gray-500 focus:border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0 dark:text-white sm:text-sm"
                 placeholder="Search"
                 type="search"
                 name="search"

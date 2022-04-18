@@ -97,7 +97,7 @@ const DZFileUploadBox = React.memo(
             {...getRootProps({className: 'dropzone'})}
             className={classNames(
               images.length ? 'h-auto' : 'h-24',
-              'flex cursor-pointer items-center justify-center rounded-lg border-4 border-dashed border-gray-200 bg-gray-100 dark:bg-gray-700',
+              'flex cursor-pointer items-center justify-center rounded-lg border-4 border-dashed border-gray-200 bg-gray-100',
             )}>
             <input {...getInputProps()} />
             <div className="relative">

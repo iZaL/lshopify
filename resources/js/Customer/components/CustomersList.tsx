@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonTheme, Customer, Product } from '../../types'
+import {ButtonTheme, Customer, Product} from '../../types';
 import {Inertia} from '@inertiajs/inertia';
 import Button from '../../components/Button';
 import Table from '../../components/Table';
@@ -8,11 +8,10 @@ import SmartTable from '../../components/SmartTable';
 import route from 'ziggy-js';
 
 interface Props {
-  customers:Customer[]
+  customers: Customer[];
 }
 
 export default function CustomersList({customers}: Props) {
-
   return (
     <>
       <SmartTable items={customers}>
@@ -42,29 +41,29 @@ export default function CustomersList({customers}: Props) {
                   items={[
                     {
                       title: 'Set as active',
-                      onClick: () => {}
+                      onClick: () => {},
                     },
                     {
                       title: 'Set as draft',
-                      onClick: () => {}
-                        // showDialogBox({
-                        //   ...modalParams,
-                        //   title: `Set ${selectedItemIDs.length} products as draft?`,
-                        //   body: 'Setting products as draft will hide them from all sales channels and apps.',
-                        //   submitButtonTitle: 'Set as draft',
-                        //   onSubmit: () => {
-                        //     setShowDialog(false);
-                        //     onUpdate(selectedItemIDs, 'status', 'draft');
-                        //   },
-                        // }),
+                      onClick: () => {},
+                      // showDialogBox({
+                      //   ...modalParams,
+                      //   title: `Set ${selectedItemIDs.length} products as draft?`,
+                      //   body: 'Setting products as draft will hide them from all sales channels and apps.',
+                      //   submitButtonTitle: 'Set as draft',
+                      //   onSubmit: () => {
+                      //     setShowDialog(false);
+                      //     onUpdate(selectedItemIDs, 'status', 'draft');
+                      //   },
+                      // }),
                     },
                     {
                       title: 'Archive products',
-                      onClick: () => {}
+                      onClick: () => {},
                     },
                     {
                       title: 'Delete products',
-                      onClick: () => {}
+                      onClick: () => {},
                     },
                     {
                       title: 'Add tags',
@@ -105,12 +104,8 @@ export default function CustomersList({customers}: Props) {
                     </Button>
                   </Table.Cell>
                   <Table.Cell cellStyle="capitalize"></Table.Cell>
-                  <Table.Cell>
-                    {item.location}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {item.orders_count} orders
-                  </Table.Cell>
+                  <Table.Cell>{item.location}</Table.Cell>
+                  <Table.Cell>{item.orders_count} orders</Table.Cell>
                   <Table.Cell></Table.Cell>
                 </>
               );
@@ -118,7 +113,6 @@ export default function CustomersList({customers}: Props) {
           </SmartTable.Body>
         </Table>
       </SmartTable>
-
     </>
   );
 }

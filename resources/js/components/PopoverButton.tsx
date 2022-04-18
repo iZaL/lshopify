@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, {Fragment} from 'react';
 import {ChevronDownIcon} from '@heroicons/react/solid';
 import {Popover, Transition} from '@headlessui/react';
 import classNames from 'classnames';

@@ -24,10 +24,10 @@ export default function Button({
       } border-yellow-300 hover:bg-yellow-900 focus:ring-1 focus:ring-offset-2 focus:ring-yellow-500 focus:border-yellow-500`;
       break;
     case 'clear':
-      themeStyle = `dark:text-gray-100 bg-transparent`;
+      themeStyle = `bg-transparent`;
       break;
     case 'default':
-      themeStyle = `text-gray-800 dark:text-gray-100 dark:hover:text-gray-900 ${
+      themeStyle = `text-gray-800 ${
         border && 'border'
       } border-gray-300 hover:bg-gray-100 `;
       break;

@@ -24,7 +24,7 @@ export default function FulfillmentItems({
   }
 
   return (
-    <div className="divide-y dark:divide-gray-500">
+    <div className="divide-y">
       {variants.map((variant, i) => {
         const trueVariant = currentVariants.find(({id}) => id === variant.id);
 
@@ -45,9 +45,7 @@ export default function FulfillmentItems({
                       <ProductTitle product={variant.product} />
                     </div>
                   )}
-                  <div className="space-x-2 text-gray-500 dark:text-gray-100">
-                    {variant.title}
-                  </div>
+                  <div className="space-x-2 text-gray-500">{variant.title}</div>
                 </div>
               </div>
 

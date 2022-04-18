@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react';
 import Main from '../Main';
 import PageHeader from '../components/PageHeader';
 import FormSubmitBar from '../components/FormSubmitBar';
@@ -9,20 +9,18 @@ import route from 'ziggy-js';
 import Subheader from '../components/Subheader';
 import Card from '../components/Card';
 import Border from '../components/Border';
-import BackButton from '../components/BackButton'
-import Label from '../components/forms/Label'
-import InputText from '../components/forms/InputText'
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import BackButton from '../components/BackButton';
+import Label from '../components/forms/Label';
+import InputText from '../components/forms/InputText';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 interface Props {
   discount_type: 'code' | 'automatic';
 }
 
-export default function DiscountCreate({discount_type}:Props) {
-
-  const {data, setData, isDirty} = useForm({
-  });
+export default function DiscountCreate({discount_type}: Props) {
+  const {data, setData, isDirty} = useForm({});
 
   const [startDate, setStartDate] = useState(new Date());
 
@@ -55,9 +53,11 @@ export default function DiscountCreate({discount_type}:Props) {
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
           <section className="space-y-6 space-y-6 lg:col-span-2 lg:col-start-1">
-
             <Card>
-              <Subheader headerStyle='first-letter:capitalize'  text={`${discount_type} discount`} />
+              <Subheader
+                headerStyle="first-letter:capitalize"
+                text={`${discount_type} discount`}
+              />
 
               <div>
                 <Label title="Title" />
@@ -67,13 +67,14 @@ export default function DiscountCreate({discount_type}:Props) {
                   onChange={e => {}}
                   value={''}
                 />
-                <p className="block py-1 text-sm text-gray-500">Customers will see this in cart and at checkout.</p>
+                <p className="block py-1 text-sm text-gray-500">
+                  Customers will see this in cart and at checkout.
+                </p>
               </div>
-
             </Card>
 
             <Card>
-              <Subheader text='Types' />
+              <Subheader text="Types" />
 
               <div className="flex flex-col space-y-2 text-sm">
                 <div className="inline-flex items-center">
@@ -97,29 +98,30 @@ export default function DiscountCreate({discount_type}:Props) {
                   <div className="ml-3">Fixed amount</div>
                 </div>
               </div>
-
             </Card>
 
             <Card>
-              <Subheader text='Value' />
+              <Subheader text="Value" />
 
               <div>
                 <Label title="Discount value" />
-                <div className='w-48'>
+                <div className="w-48">
                   <InputText
                     name="title"
                     placeholder={''}
                     onChange={e => {}}
                     value={''}
-                    inputStyle=''
-                    rightComponent={<span className="text-sm text-gray-400">%</span>}
+                    inputStyle=""
+                    rightComponent={
+                      <span className="text-sm text-gray-400">%</span>
+                    }
                   />
                 </div>
               </div>
 
               <Border />
 
-              <Subheader headerStyle={'text-xs'} text={'APPLIES TO'}/>
+              <Subheader headerStyle={'text-xs'} text={'APPLIES TO'} />
               <div className="flex flex-col space-y-2 text-sm">
                 <div className="inline-flex items-center">
                   <input
@@ -152,11 +154,10 @@ export default function DiscountCreate({discount_type}:Props) {
                   <div className="ml-3">Specific products</div>
                 </div>
               </div>
-
             </Card>
 
             <Card>
-              <Subheader text='Minimum requirements' />
+              <Subheader text="Minimum requirements" />
 
               <div className="flex flex-col space-y-2 text-sm">
                 <div className="inline-flex items-center">
@@ -169,16 +170,17 @@ export default function DiscountCreate({discount_type}:Props) {
                   />
                   <div className="ml-3">
                     <div>Minimum purchase amount (OMR)</div>
-                    <div className='w-48'>
+                    <div className="w-48">
                       <InputText
                         name="title"
                         placeholder={''}
                         onChange={e => {}}
                         value={''}
-                        inputStyle=''
-                        rightComponent={<span className="text-sm text-gray-400">%</span>}
+                        inputStyle=""
+                        rightComponent={
+                          <span className="text-sm text-gray-400">%</span>
+                        }
                       />
-
                     </div>
                   </div>
                 </div>
@@ -193,31 +195,33 @@ export default function DiscountCreate({discount_type}:Props) {
                   />
                   <div className="ml-3">
                     <div>Minimum quantity of items</div>
-                    <div className='w-48'>
+                    <div className="w-48">
                       <InputText
                         name="title"
                         placeholder={''}
                         onChange={e => {}}
                         value={''}
-                        inputStyle=''
-                        rightComponent={<span className="text-sm text-gray-400">%</span>}
+                        inputStyle=""
+                        rightComponent={
+                          <span className="text-sm text-gray-400">%</span>
+                        }
                       />
-
                     </div>
                   </div>
                 </div>
-
               </div>
-
             </Card>
 
             <Card>
-              <Subheader text='Active dates' />
+              <Subheader text="Active dates" />
 
-              <div className='flex flex-row space-x-4'>
-                <div className='flex-1'>
+              <div className="flex flex-row space-x-4">
+                <div className="flex-1">
                   <Label title={'Start date'} />
-                  <DatePicker selected={startDate} onChange={(date:Date) => setStartDate(date)} />
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date: Date) => setStartDate(date)}
+                  />
                   {/*<InputText*/}
                   {/*  name="title"*/}
                   {/*  placeholder={''}*/}
@@ -226,19 +230,18 @@ export default function DiscountCreate({discount_type}:Props) {
                   {/*  inputStyle=''*/}
                   {/*/>*/}
                 </div>
-                <div className='flex-1'>
+                <div className="flex-1">
                   <Label title={'End date'} />
                   <InputText
                     name="title"
                     placeholder={''}
                     onChange={e => {}}
                     value={''}
-                    inputStyle=''
+                    inputStyle=""
                   />
                 </div>
               </div>
             </Card>
-
           </section>
         </div>
       </div>
