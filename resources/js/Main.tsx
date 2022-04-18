@@ -3,9 +3,8 @@ import Sidebar from './components/Sidebar';
 import MobileSidebar from './components/MobileSidebar';
 import Navbar from './components/Navbar';
 import {Helmet} from 'react-helmet';
-import {useRecoilValue} from 'recoil';
-import {darkModeState} from './atoms';
 import PopMessages from './components/PopMessages';
+import classNames from 'classnames'
 
 export default function Main({
   title,
@@ -14,10 +13,9 @@ export default function Main({
   title?: string;
   children: React.ReactNode;
 }) {
-  const darkMode = useRecoilValue(darkModeState);
 
   return (
-    <div className={darkMode ? 'dark' : ''}>
+    <div className={classNames('')}>
       <Helmet>
         <title>{title ? title : 'Laravel Shopify'}</title>
       </Helmet>

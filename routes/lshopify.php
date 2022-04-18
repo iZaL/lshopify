@@ -8,6 +8,7 @@ use IZal\Lshopify\Http\Controllers\Collection\CollectionController;
 use IZal\Lshopify\Http\Controllers\Collection\CollectionProductController;
 use IZal\Lshopify\Http\Controllers\CustomerController;
 use IZal\Lshopify\Http\Controllers\DashboardController;
+use IZal\Lshopify\Http\Controllers\DiscountController;
 use IZal\Lshopify\Http\Controllers\ImageController;
 use IZal\Lshopify\Http\Controllers\InventoryController;
 use IZal\Lshopify\Http\Controllers\Order\DraftOrderController;
@@ -126,6 +127,14 @@ Route::group(['prefix' => 'customers','as' => 'customers.'], function () {
     Route::get('/', [CustomerController::class, 'index'])->name('index');
     Route::post('/', [CustomerController::class, 'store'])->name('store');
 });
+
+
+Route::group(['prefix' => 'discounts','as' => 'discounts.'], function () {
+    Route::get('/', [DiscountController::class, 'index'])->name('index');
+    Route::get('/create', [DiscountController::class, 'create'])->name('create');
+    Route::post('/', [DiscountController::class, 'store'])->name('store');
+});
+
 
 Route::post('vendors', [VendorController::class,'store'])->name('vendors.store');
 

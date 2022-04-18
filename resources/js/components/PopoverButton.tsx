@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Fragment } from 'react'
 import {ChevronDownIcon} from '@heroicons/react/solid';
-import {Popover} from '@headlessui/react';
+import {Popover, Transition} from '@headlessui/react';
 import classNames from 'classnames';
 
 export default function PopoverButton({
@@ -27,9 +27,18 @@ export default function PopoverButton({
         />
       </Popover.Button>
 
-      <Popover.Panel className="absolute right-0 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
-        {children}
-      </Popover.Panel>
+      <Transition
+        as={Fragment}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95">
+        <Popover.Panel className="absolute right-0 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+          {children}
+        </Popover.Panel>
+      </Transition>
     </Popover>
   );
 }

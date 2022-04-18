@@ -60,6 +60,11 @@ export default function SidebarNav() {
         active={route().current() === 'lshopify.customers.index'}
         href={route('lshopify.customers.index')}
       />
+      <Navigator.Item
+        name="Discounts"
+        active={route().current() === 'lshopify.discounts.index'}
+        href={route('lshopify.discounts.index')}
+      />
     </Navigator>
   );
 }

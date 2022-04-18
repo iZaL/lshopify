@@ -1,12 +1,11 @@
-import React, {Fragment} from 'react';
-import {useRecoilState} from 'recoil';
-import {sidebarState} from '../atoms';
+import React, { Fragment, useState } from 'react'
+// import {sidebarState} from '../atoms';
 import SidebarNav from './SidebarNav';
 import {Dialog, Transition} from '@headlessui/react';
 import {XIcon} from '@heroicons/react/outline';
 
 export default function MobileSidebar() {
-  const [sidebarOpen, setSidebarOpen] = useRecoilState(sidebarState);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
     <Transition.Root show={sidebarOpen} as={Fragment}>
