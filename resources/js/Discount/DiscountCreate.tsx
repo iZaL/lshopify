@@ -1,19 +1,19 @@
-import React, {useState} from 'react';
-import Main from '../Main';
-import PageHeader from '../components/PageHeader';
-import FormSubmitBar from '../components/FormSubmitBar';
-import {useForm} from '@inertiajs/inertia-react';
-import {Collection} from '../types';
-import {Inertia} from '@inertiajs/inertia';
-import route from 'ziggy-js';
-import Subheader from '../components/Subheader';
-import Card from '../components/Card';
-import Border from '../components/Border';
-import BackButton from '../components/BackButton';
-import Label from '../components/forms/Label';
-import InputText from '../components/forms/InputText';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import React, { useState } from 'react'
+import Main from '../Main'
+import PageHeader from '../components/PageHeader'
+import FormSubmitBar from '../components/FormSubmitBar'
+import { useForm } from '@inertiajs/inertia-react'
+import { Inertia } from '@inertiajs/inertia'
+import route from 'ziggy-js'
+import Subheader from '../components/Subheader'
+import Card from '../components/Card'
+import Border from '../components/Border'
+import BackButton from '../components/BackButton'
+import Label from '../components/forms/Label'
+import InputText from '../components/forms/InputText'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import { format } from 'date-fns'
 
 interface Props {
   discount_type: 'code' | 'automatic';
@@ -23,6 +23,7 @@ export default function DiscountCreate({discount_type}: Props) {
   const {data, setData, isDirty} = useForm({});
 
   const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
   const handleSubmit = () => {
     const url = route('lshopify.collections.store');
@@ -159,54 +160,56 @@ export default function DiscountCreate({discount_type}: Props) {
             <Card>
               <Subheader text="Minimum requirements" />
 
-              <div className="flex flex-col space-y-2 text-sm">
-                <div className="inline-flex items-center">
+              <div className="relative flex items-start text-sm">
+                <div className="flex items-center h-5">
                   <input
                     type="radio"
                     value="manual"
                     name="type"
-                    checked={false}
+                    checked={true}
                     onChange={() => {}}
                   />
-                  <div className="ml-3">
-                    <div>Minimum purchase amount (OMR)</div>
-                    <div className="w-48">
-                      <InputText
-                        name="title"
-                        placeholder={''}
-                        onChange={e => {}}
-                        value={''}
-                        inputStyle=""
-                        rightComponent={
-                          <span className="text-sm text-gray-400">%</span>
-                        }
-                      />
-                    </div>
+                </div>
+                <div className="ml-3">
+                  <div>Minimum purchase amount (OMR)</div>
+                  <div className="w-48">
+                    <InputText
+                      name="title"
+                      placeholder={''}
+                      onChange={e => {}}
+                      value={''}
+                      inputStyle=""
+                      rightComponent={
+                        <span className="text-sm text-gray-400">%</span>
+                      }
+                    />
                   </div>
                 </div>
+              </div>
 
-                <div className="inline-flex items-center">
+              <div className="relative flex items-start text-sm">
+                <div className="flex items-center h-5">
                   <input
                     type="radio"
                     value="manual"
                     name="type"
-                    checked={false}
+                    checked={true}
                     onChange={() => {}}
                   />
-                  <div className="ml-3">
-                    <div>Minimum quantity of items</div>
-                    <div className="w-48">
-                      <InputText
-                        name="title"
-                        placeholder={''}
-                        onChange={e => {}}
-                        value={''}
-                        inputStyle=""
-                        rightComponent={
-                          <span className="text-sm text-gray-400">%</span>
-                        }
-                      />
-                    </div>
+                </div>
+                <div className="ml-3">
+                  <div>Minimum quantity of items</div>
+                  <div className="w-48">
+                    <InputText
+                      name="title"
+                      placeholder={''}
+                      onChange={e => {}}
+                      value={''}
+                      inputStyle=""
+                      rightComponent={
+                        <span className="text-sm text-gray-400">%</span>
+                      }
+                    />
                   </div>
                 </div>
               </div>
@@ -218,29 +221,66 @@ export default function DiscountCreate({discount_type}: Props) {
               <div className="flex flex-row space-x-4">
                 <div className="flex-1">
                   <Label title={'Start date'} />
+
                   <DatePicker
                     selected={startDate}
                     onChange={(date: Date) => setStartDate(date)}
+                    startDate={startDate}
+                    customInput={
+                      <div className='w-full'><InputText name='' onChange={()=>{}} value={format(startDate,'d/M/yyyy')}/></div>
+                    }
                   />
-                  {/*<InputText*/}
-                  {/*  name="title"*/}
-                  {/*  placeholder={''}*/}
-                  {/*  onChange={e => {}}*/}
-                  {/*  value={''}*/}
-                  {/*  inputStyle=''*/}
-                  {/*/>*/}
                 </div>
+
+                <div className='flex-1'>
+                  <Label title={'Start time'} />
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date:Date) => setStartDate(date)}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={15}
+                    timeCaption="Time"
+                    dateFormat="h:mm aa"
+                    customInput={
+                      <div className='w-full'><InputText name='' onChange={()=>{}} value={format(startDate,'h:mm aa')}/></div>
+                    }
+                  />
+                </div>
+
+              </div>
+
+              <div className="flex flex-row space-x-4">
                 <div className="flex-1">
                   <Label title={'End date'} />
-                  <InputText
-                    name="title"
-                    placeholder={''}
-                    onChange={e => {}}
-                    value={''}
-                    inputStyle=""
+                  <DatePicker
+                    selected={endDate}
+                    onChange={(date: Date) => setEndDate(date)}
+                    startDate={endDate}
+                    customInput={
+                      <div className='w-full'><InputText name='' onChange={()=>{}} value={format(endDate,'d/M/yyyy')}/></div>
+                    }
                   />
                 </div>
+
+                <div className='flex-1'>
+                  <Label title={'End time'} />
+                  <DatePicker
+                    selected={endDate}
+                    onChange={(date:Date) => setEndDate(date)}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={15}
+                    timeCaption="Time"
+                    dateFormat="h:mm aa"
+                    customInput={
+                      <div className='w-full'><InputText name='' onChange={()=>{}} value={format(endDate,'h:mm aa')}/></div>
+                    }
+                  />
+                </div>
+
               </div>
+
             </Card>
           </section>
         </div>

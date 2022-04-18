@@ -35,7 +35,7 @@ export default function DiscountIndex(props: Props) {
         </div>
 
         <div className="mt-2 text-xl">Manage discounts and promotions</div>
-        <div className="mt-4 text-sm text-gray-500">
+        <div className="mt-4 text-sm text-gray-500 font-light">
           Discount codes are a great way to offer a discount to your customers.
           You can create one for each product, or for an entire order.
         </div>
@@ -62,7 +62,7 @@ export default function DiscountIndex(props: Props) {
         <div className="mt-2 text-xl">
           Create discounts that apply automatically
         </div>
-        <div className="mt-4 text-sm text-gray-500">
+        <div className="mt-4 text-sm text-gray-500 font-light">
           Create and manage discounts that apply automatically to a customer’s
           cart.
         </div>
