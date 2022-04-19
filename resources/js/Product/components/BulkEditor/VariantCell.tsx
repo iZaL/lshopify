@@ -13,7 +13,7 @@ export default function VariantCell({
   attribute: keyof Variant;
   onChange: (value: string | boolean) => void;
 }) {
-  let textAttributes: Array<keyof Variant> = [
+  const textAttributes: Array<keyof Variant> = [
     'price',
     'compare_at_price',
     'cost_price',
@@ -24,14 +24,14 @@ export default function VariantCell({
     'hs_code',
   ];
 
-  let booleanAttributes: Array<keyof Variant> = [
+  const booleanAttributes: Array<keyof Variant> = [
     'out_of_stock_sale',
     'tracked',
     'taxable',
     'requires_shipping',
   ];
 
-  let placeholders: AttributeLabel = {
+  const placeholders: AttributeLabel = {
     price: 'OMR',
     compare_at_price: 'OMR',
     cost_price: 'OMR',

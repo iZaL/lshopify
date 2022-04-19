@@ -50,7 +50,7 @@ export default function Refund({
     value: number,
   ) => {
     if (value <= trueVariant.pivot_quantity) {
-      let collection =
+      const collection =
         type === 'pending_fulfillments'
           ? data.pending_fulfillments
           : data.fulfillments;
