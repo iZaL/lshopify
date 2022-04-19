@@ -118,6 +118,20 @@ export interface VariantPivot extends Variant {
   pivot_total: string;
 }
 
+export interface Fulfillment {
+  id: number;
+  title: string;
+  type: 'fulfilled' | 'returned' | 'refund' | 'removed';
+  status: 'removed' | 'success' | 'pending' | 'failed' | 'cancelled';
+  can_cancel: boolean;
+  can_mark_as_returned: boolean;
+  can_return: boolean;
+  can_add_tracking: boolean;
+  total_variants_count: string;
+  variants: VariantPivot[];
+  order?: Order;
+}
+
 export interface Order extends OrderForm {
   id: number;
   total: string;
@@ -197,19 +211,6 @@ export type Shipping = CustomerAddress;
 
 export type Billing = CustomerAddress;
 
-export interface Fulfillment {
-  id: number;
-  title: string;
-  type: 'fulfilled' | 'returned' | 'refund' | 'removed';
-  status: 'removed' | 'success' | 'pending' | 'failed' | 'cancelled';
-  can_cancel: boolean;
-  can_mark_as_returned: boolean;
-  can_return: boolean;
-  can_add_tracking: boolean;
-  total_variants_count: string;
-  variants: VariantPivot[];
-  order?: Order;
-}
 
 export type FulfillmentVariant = VariantPivot;
 

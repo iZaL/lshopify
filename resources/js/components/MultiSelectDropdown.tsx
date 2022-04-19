@@ -51,12 +51,13 @@ export default function MultiSelectDropdown<T extends Item>({
           <div className="relative">
             <div className="absolute top-0 left-0 z-30 h-[12rem] w-full overflow-y-scroll rounded-md bg-blue-50 bg-white shadow-md focus:border-none focus:outline-none">
               <ul role="button" className="font-weight-light ">
-                {items.map((item, index) => {
+                {items.map((item,idx ) => {
                   const checked = selectedItems.some(
                     collect => collect.id === item.id,
                   );
                   return (
                     <li
+                      key={idx}
                       className="flex flex-row px-4 py-2 hover:bg-gray-50"
                       onClick={() => onCollectionChange(item, !checked)}>
                       <Checkbox
