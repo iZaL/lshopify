@@ -46,14 +46,14 @@ export default function AddressCard({address, onSave, title}: Props) {
         onConfirm={() => setShowDialog(false)}>
         <AddressForm address={address}>
           {attributes => (
-              <ModalFooter
-                onProceed={() => {
-                  setShowDialog(false);
-                  onSave(attributes);
-                }}
-                onHideModal={() => setShowDialog(false)}
-              />
-            )}
+            <ModalFooter
+              onProceed={() => {
+                setShowDialog(false);
+                onSave(attributes);
+              }}
+              onHideModal={() => setShowDialog(false)}
+            />
+          )}
         </AddressForm>
       </Modal>
     </div>

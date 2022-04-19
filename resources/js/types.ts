@@ -211,7 +211,6 @@ export type Shipping = CustomerAddress;
 
 export type Billing = CustomerAddress;
 
-
 export type FulfillmentVariant = VariantPivot;
 
 export type ButtonTheme = 'success' | 'error' | 'warning' | 'default' | 'clear';

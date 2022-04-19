@@ -12,7 +12,7 @@ import Border from '../components/Border';
 import Button from '../components/Button';
 import Card from '../components/Card';
 import DropdownButton from '../components/DropdownButton';
-import PageHeader from "../components/PageHeader";
+import PageHeader from '../components/PageHeader';
 import Subheader from '../components/Subheader';
 import {CustomerForm} from '../form_types';
 import Main from '../Main';
@@ -98,7 +98,8 @@ export default function OrderView(props: Props) {
     );
   };
 
-  const fulfill = () => Inertia.get(route('lshopify.orders.fulfillments.index', [order.id]));
+  const fulfill = () =>
+    Inertia.get(route('lshopify.orders.fulfillments.index', [order.id]));
 
   const cancelFulfillment = (fulfillment: Fulfillment) => {
     Inertia.post(

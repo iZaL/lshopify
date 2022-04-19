@@ -42,23 +42,23 @@ export default function EditQuantities({
       </div>
 
       {variants.map((variant, i) => (
-          <div
-            className="flex items-center space-x-4 border-b border-gray-200 py-3"
-            key={i}>
-            <div className="min-w-0 flex-1 text-sm text-gray-800">
-              {variant.title}
-            </div>
-
-            <div className="w-24">
-              <InputText
-                name="price"
-                onChange={e => onChange(variant, e.target.value)}
-                placeholder="0"
-                value={variant.quantity}
-              />
-            </div>
+        <div
+          className="flex items-center space-x-4 border-b border-gray-200 py-3"
+          key={i}>
+          <div className="min-w-0 flex-1 text-sm text-gray-800">
+            {variant.title}
           </div>
-        ))}
+
+          <div className="w-24">
+            <InputText
+              name="price"
+              onChange={e => onChange(variant, e.target.value)}
+              placeholder="0"
+              value={variant.quantity}
+            />
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

@@ -122,19 +122,19 @@ export default function ProductAddSection({
         <Border />
 
         {products.map((product, i) => (
-            <li
-              key={i}
-              className="flex flex-row items-center space-x-4 py-2 px-4 hover:bg-gray-100"
-              onClick={() => addRemoveProduct(product)}>
-              <Checkbox
-                checked={selectedProductIDs.includes(product.id)}
-                name="product"
-                onChange={() => {}}
-              />
-              <VariantImage image={product.image} onClick={() => {}} />
-              <div className="">{product.title}</div>
-            </li>
-          ))}
+          <li
+            key={i}
+            className="flex flex-row items-center space-x-4 py-2 px-4 hover:bg-gray-100"
+            onClick={() => addRemoveProduct(product)}>
+            <Checkbox
+              checked={selectedProductIDs.includes(product.id)}
+              name="product"
+              onChange={() => {}}
+            />
+            <VariantImage image={product.image} onClick={() => {}} />
+            <div className="">{product.title}</div>
+          </li>
+        ))}
       </Modal>
     </Card>
   );

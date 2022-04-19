@@ -69,10 +69,13 @@ export default function PopMessages() {
   const {flash, errors, env} = usePage<Props>().props;
 
   let flashMessage: {type: keyof FlashMessageType; message: string | null} =
-    useMemo(() => ({
+    useMemo(
+      () => ({
         type: 'success',
         message: null,
-      }), []);
+      }),
+      [],
+    );
 
   if (flash) {
     if (flash.success) {
@@ -110,7 +113,9 @@ export default function PopMessages() {
         </h3>
         <div className="mt-2 text-sm text-gray-50">
           <ul className="list-disc space-y-1 pl-5">
-            {errorMessages.map((msg, index) => <li key={index}>{msg}</li>)}
+            {errorMessages.map((msg, index) => (
+              <li key={index}>{msg}</li>
+            ))}
           </ul>
         </div>
       </>

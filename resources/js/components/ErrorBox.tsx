@@ -27,7 +27,9 @@ export default function ErrorBox({errors}: Props) {
           </h3>
           <div className="mt-2 text-sm text-red-700">
             <ul className="list-disc space-y-1 pl-5">
-              {errorMessages.map((message, index) => <li key={index}>{message}</li>)}
+              {errorMessages.map((message, index) => (
+                <li key={index}>{message}</li>
+              ))}
             </ul>
           </div>
         </div>

@@ -70,7 +70,9 @@ export default function VariantEditSection({
       if (v.id === variant.id) {
         return {
           ...v,
-          options: v.options?.map(o => o.id === option.id ? {...option, name: value} : o),
+          options: v.options?.map(o =>
+            o.id === option.id ? {...option, name: value} : o,
+          ),
         };
       }
       return v;
@@ -356,28 +358,30 @@ export default function VariantEditSection({
           </Button>
           <div className="z-20 bg-white">
             {variantOptions.map((option, idx) => (
-                <PopoverButton
-                  key={idx}
-                  title={option.id}
-                  buttonStyle="text-sm border-none py-0 hover:bg-white">
-                  {option.values?.map((value, idx) => {
-                    const checked = checkedVariantIDs.some(vID => {
-                      const variant = currentVariants.find(v => v.id === vID);
-                      return variant?.options?.some(({id, name}) => id === option.id && name === value.name);
-                    });
-
-                    return (
-                      <Checkbox
-                        key={idx}
-                        name={value.id}
-                        checked={checked}
-                        onChange={() => onOptionValueClick(option, value)}
-                        label={value.name}
-                      />
+              <PopoverButton
+                key={idx}
+                title={option.id}
+                buttonStyle="text-sm border-none py-0 hover:bg-white">
+                {option.values?.map((value, idx) => {
+                  const checked = checkedVariantIDs.some(vID => {
+                    const variant = currentVariants.find(v => v.id === vID);
+                    return variant?.options?.some(
+                      ({id, name}) => id === option.id && name === value.name,
                     );
-                  })}
-                </PopoverButton>
-              ))}
+                  });
+
+                  return (
+                    <Checkbox
+                      key={idx}
+                      name={value.id}
+                      checked={checked}
+                      onChange={() => onOptionValueClick(option, value)}
+                      label={value.name}
+                    />
+                  );
+                })}
+              </PopoverButton>
+            ))}
           </div>
         </div>
 
@@ -513,10 +517,10 @@ export default function VariantEditSection({
                 }
                 `}>
                   {variantOptions.map((option, i) => (
-                      <div className="text-sm font-semibold" key={i}>
-                        {option.id}
-                      </div>
-                    ))}
+                    <div className="text-sm font-semibold" key={i}>
+                      {option.id}
+                    </div>
+                  ))}
                   <div className="text-sm font-semibold">Price</div>
                   <div className="text-sm font-semibold">Quantity</div>
                   <div className="text-sm font-semibold">SKU</div>
@@ -528,37 +532,37 @@ export default function VariantEditSection({
 
           <ul className="max-w-full">
             {currentVariants.map((variant: Variant, i) => (
-                <li
-                  key={i}
-                  className={classNames(
-                    checkedVariantIDs.includes(variant.id) && 'bg-blue-50',
-                    'position-relative box-border inline-block min-w-full border-t border-gray-200 hover:bg-gray-100',
-                  )}>
+              <li
+                key={i}
+                className={classNames(
+                  checkedVariantIDs.includes(variant.id) && 'bg-blue-50',
+                  'position-relative box-border inline-block min-w-full border-t border-gray-200 hover:bg-gray-100',
+                )}>
+                <div className="flex items-center">
                   <div className="flex items-center">
-                    <div className="flex items-center">
-                      <div className="flex w-12 items-center justify-center">
-                        <Checkbox
-                          checked={checkedVariantIDs.includes(variant.id)}
-                          onChange={() => onCheckboxChange(variant.id)}
-                          name=""
-                        />
-                      </div>
-                      <div className="mr-2 w-14">
-                        <VariantImage
-                          imageStyle="w-12 h-10"
-                          image={variant.image}
-                          onClick={() => {
-                            setSelectedVariant(variant);
-                            setShowDialog('add_images');
-                          }}
-                        />
-                      </div>
+                    <div className="flex w-12 items-center justify-center">
+                      <Checkbox
+                        checked={checkedVariantIDs.includes(variant.id)}
+                        onChange={() => onCheckboxChange(variant.id)}
+                        name=""
+                      />
                     </div>
+                    <div className="mr-2 w-14">
+                      <VariantImage
+                        imageStyle="w-12 h-10"
+                        image={variant.image}
+                        onClick={() => {
+                          setSelectedVariant(variant);
+                          setShowDialog('add_images');
+                        }}
+                      />
+                    </div>
+                  </div>
 
-                    <div className="flex items-start">
-                      <div className="max-w-100 min-w-0 self-center ">
-                        <div
-                          className={`grid items-center gap-6
+                  <div className="flex items-start">
+                    <div className="max-w-100 min-w-0 self-center ">
+                      <div
+                        className={`grid items-center gap-6
                         ${
                           variantOptions.length === 3 &&
                           'grid-cols-[repeat(4,10rem),9rem,9rem,auto]'
@@ -572,94 +576,94 @@ export default function VariantEditSection({
                           'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
                         }
                        `}>
-                          {variantOptions.map((option: VariantOption, idx) => {
-                            const currentOption = variant.options?.find(
-                              v => v.id === option.id,
-                            ) as VariantOption;
-                            if (!currentOption) {
-                              return null;
-                            }
-                            return (
-                              <div key={idx}>
-                                <InputText
-                                  name={currentOption.name}
-                                  value={currentOption.name}
-                                  onChange={e =>
-                                    onVariantOptionsChange(
-                                      variant,
-                                      currentOption,
-                                      e.target.value,
-                                    )
-                                  }
-                                />
-                              </div>
-                            );
-                          })}
-
-                          <div className="">
-                            <InputText
-                              name="price"
-                              value={variant.price}
-                              onChange={e =>
-                                onVariantAttributeChange(
-                                  variant,
-                                  'price',
-                                  e.target.value,
-                                )
-                              }
-                            />
-                          </div>
-                          <div className="">
-                            <InputText
-                              name="quantity"
-                              value={variant.quantity}
-                              onChange={e =>
-                                onVariantAttributeChange(
-                                  variant,
-                                  'quantity',
-                                  e.target.value,
-                                )
-                              }
-                            />
-                          </div>
-                          <div className="">
-                            <InputText
-                              name="sku"
-                              value={variant.sku}
-                              onChange={e =>
-                                onVariantAttributeChange(
-                                  variant,
-                                  'sku',
-                                  e.target.value,
-                                )
-                              }
-                            />
-                          </div>
-                          <div className="sticky top-0 right-0 flex hidden h-full bg-gray-100 py-4 px-2 shadow shadow-md sm:block">
-                            <div className="box-border flex flex-row flex-nowrap  items-center space-x-4">
-                              <Button
-                                theme="default"
-                                buttonStyle="text-xs"
-                                onClick={() => onEditVariantClick(variant)}>
-                                Edit
-                              </Button>
-                              <Button
-                                theme="default"
-                                buttonStyle="text-xs"
-                                onClick={() => {
-                                  setSelectedVariant(variant);
-                                  setShowDialog('delete_variant');
-                                }}>
-                                Delete
-                              </Button>
+                        {variantOptions.map((option: VariantOption, idx) => {
+                          const currentOption = variant.options?.find(
+                            v => v.id === option.id,
+                          ) as VariantOption;
+                          if (!currentOption) {
+                            return null;
+                          }
+                          return (
+                            <div key={idx}>
+                              <InputText
+                                name={currentOption.name}
+                                value={currentOption.name}
+                                onChange={e =>
+                                  onVariantOptionsChange(
+                                    variant,
+                                    currentOption,
+                                    e.target.value,
+                                  )
+                                }
+                              />
                             </div>
+                          );
+                        })}
+
+                        <div className="">
+                          <InputText
+                            name="price"
+                            value={variant.price}
+                            onChange={e =>
+                              onVariantAttributeChange(
+                                variant,
+                                'price',
+                                e.target.value,
+                              )
+                            }
+                          />
+                        </div>
+                        <div className="">
+                          <InputText
+                            name="quantity"
+                            value={variant.quantity}
+                            onChange={e =>
+                              onVariantAttributeChange(
+                                variant,
+                                'quantity',
+                                e.target.value,
+                              )
+                            }
+                          />
+                        </div>
+                        <div className="">
+                          <InputText
+                            name="sku"
+                            value={variant.sku}
+                            onChange={e =>
+                              onVariantAttributeChange(
+                                variant,
+                                'sku',
+                                e.target.value,
+                              )
+                            }
+                          />
+                        </div>
+                        <div className="sticky top-0 right-0 flex hidden h-full bg-gray-100 py-4 px-2 shadow shadow-md sm:block">
+                          <div className="box-border flex flex-row flex-nowrap  items-center space-x-4">
+                            <Button
+                              theme="default"
+                              buttonStyle="text-xs"
+                              onClick={() => onEditVariantClick(variant)}>
+                              Edit
+                            </Button>
+                            <Button
+                              theme="default"
+                              buttonStyle="text-xs"
+                              onClick={() => {
+                                setSelectedVariant(variant);
+                                setShowDialog('delete_variant');
+                              }}>
+                              Delete
+                            </Button>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </li>
-              ))}
+                </div>
+              </li>
+            ))}
           </ul>
         </div>
 

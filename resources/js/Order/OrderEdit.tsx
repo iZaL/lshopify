@@ -2,7 +2,7 @@ import {Inertia} from '@inertiajs/inertia';
 import React from 'react';
 import route from 'ziggy-js';
 import BackButton from '../components/BackButton';
-import PageHeader from "../components/PageHeader";
+import PageHeader from '../components/PageHeader';
 import Main from '../Main';
 import {Order} from '../types';
 

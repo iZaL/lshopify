@@ -71,7 +71,9 @@ export default function VariantEditSectionNew({
       if (v.id === variant.id) {
         return {
           ...v,
-          options: v.options?.map(o => o.id === option.id ? {...option, name: value} : o),
+          options: v.options?.map(o =>
+            o.id === option.id ? {...option, name: value} : o,
+          ),
         };
       }
       return v;
@@ -419,28 +421,30 @@ export default function VariantEditSectionNew({
           </Button>
           <div className="z-30 bg-white">
             {variantOptions.map((option, idx) => (
-                <PopoverButton
-                  key={idx}
-                  title={option.name}
-                  buttonStyle="text-sm border-none py-0 hover:bg-white">
-                  {option.values?.map((value, idx) => {
-                    const checked = checkedVariantIDs.some(vID => {
-                      const variant = currentVariants.find(v => v.id === vID);
-                      return variant?.options?.some(({id, name}) => id === option.id && name === value.name);
-                    });
-
-                    return (
-                      <Checkbox
-                        key={idx}
-                        name={value.id}
-                        checked={checked}
-                        onChange={() => onOptionValueClick(option, value)}
-                        label={value.name}
-                      />
+              <PopoverButton
+                key={idx}
+                title={option.name}
+                buttonStyle="text-sm border-none py-0 hover:bg-white">
+                {option.values?.map((value, idx) => {
+                  const checked = checkedVariantIDs.some(vID => {
+                    const variant = currentVariants.find(v => v.id === vID);
+                    return variant?.options?.some(
+                      ({id, name}) => id === option.id && name === value.name,
                     );
-                  })}
-                </PopoverButton>
-              ))}
+                  });
+
+                  return (
+                    <Checkbox
+                      key={idx}
+                      name={value.id}
+                      checked={checked}
+                      onChange={() => onOptionValueClick(option, value)}
+                      label={value.name}
+                    />
+                  );
+                })}
+              </PopoverButton>
+            ))}
           </div>
         </div>
 
@@ -576,10 +580,10 @@ export default function VariantEditSectionNew({
                 }
                 `}>
                   {variantOptions.map((option, i) => (
-                      <div className="text-sm font-semibold" key={i}>
-                        {option.name}
-                      </div>
-                    ))}
+                    <div className="text-sm font-semibold" key={i}>
+                      {option.name}
+                    </div>
+                  ))}
                   <div className="text-sm font-semibold">Price</div>
                   <div className="text-sm font-semibold">Quantity</div>
                   <div className="text-sm font-semibold">SKU</div>

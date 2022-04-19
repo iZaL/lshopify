@@ -25,34 +25,34 @@ export default function MultiSelect<T extends Item>({
 }: Props<T>) {
   const onItemsChange = (tags: MultiValue<{label: string; value: string}>) => {
     const newTags: Item[] = tags.map(({value, label}) => ({
-        id: value,
-        name: label,
-      }));
+      id: value,
+      name: label,
+    }));
     onChange(newTags);
   };
 
   return (
     <CreatableSelect
-        isMulti
-        className="basic-multi-select text-sm"
-        classNamePrefix="select"
-        onChange={onItemsChange}
-        components={{
-          DropdownIndicator: () => null,
-          IndicatorSeparator: () => null,
-          LoadingIndicator: () => Loader(),
-        }}
-        isLoading={isLoading}
-        noOptionsMessage={() => null}
-        options={items.map(({id, name}) => ({
-          value: id,
-          label: name,
-        }))}
-        value={selectedItems.map(({id, name}) => ({
-          value: id,
-          label: name,
-        }))}
-        onCreateOption={value => onCreate(value)}
-      />
+      isMulti
+      className="basic-multi-select text-sm"
+      classNamePrefix="select"
+      onChange={onItemsChange}
+      components={{
+        DropdownIndicator: () => null,
+        IndicatorSeparator: () => null,
+        LoadingIndicator: () => Loader(),
+      }}
+      isLoading={isLoading}
+      noOptionsMessage={() => null}
+      options={items.map(({id, name}) => ({
+        value: id,
+        label: name,
+      }))}
+      value={selectedItems.map(({id, name}) => ({
+        value: id,
+        label: name,
+      }))}
+      onCreateOption={value => onCreate(value)}
+    />
   );
 }

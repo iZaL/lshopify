@@ -51,7 +51,7 @@ export default function MultiSelectDropdown<T extends Item>({
           <div className="relative">
             <div className="absolute top-0 left-0 z-30 h-[12rem] w-full overflow-y-scroll rounded-md bg-blue-50 bg-white shadow-md focus:border-none focus:outline-none">
               <ul role="button" className="font-weight-light ">
-                {items.map((item,idx ) => {
+                {items.map((item, idx) => {
                   const checked = selectedItems.some(
                     collect => collect.id === item.id,
                   );
@@ -81,20 +81,20 @@ export default function MultiSelectDropdown<T extends Item>({
       <div className="mt-4 ">
         <ul className="space-y-2">
           {selectedItems.map((item, index) => (
-              <li className="flex flex-row justify-between " key={index}>
-                <Button
-                  theme="clear"
-                  buttonStyle="text-sm text-blue-500 underline">
-                  {item.name}
-                </Button>
+            <li className="flex flex-row justify-between " key={index}>
+              <Button
+                theme="clear"
+                buttonStyle="text-sm text-blue-500 underline">
+                {item.name}
+              </Button>
 
-                <Button
-                  theme="clear"
-                  onClick={() => onCollectionChange(item, false)}>
-                  X
-                </Button>
-              </li>
-            ))}
+              <Button
+                theme="clear"
+                onClick={() => onCollectionChange(item, false)}>
+                X
+              </Button>
+            </li>
+          ))}
         </ul>
       </div>
 

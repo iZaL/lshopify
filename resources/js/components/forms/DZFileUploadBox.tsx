@@ -22,10 +22,12 @@ const DZFileUploadBox = React.memo(
     const {getRootProps, getInputProps} = useDropzone({
       accept: 'image/*',
       onDrop: acceptedFiles => {
-        const uploadedFiles: Image[] = acceptedFiles.map((file: File) => Object.assign(file, {
+        const uploadedFiles: Image[] = acceptedFiles.map((file: File) =>
+          Object.assign(file, {
             id: Math.floor(Math.random() * 100000),
             url: URL.createObjectURL(file),
-          }));
+          }),
+        );
         onImagesUpload(uploadedFiles);
       },
     });

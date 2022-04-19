@@ -28,21 +28,23 @@ export default function EditHSCodes({variants, onChange, onApplyAll}: Props) {
         </Button>
       </div>
 
-      {variants.map((variant,idx) => (
-          <div className="flex items-center space-x-4 border-b border-gray-200 py-3" key={idx}>
-            <div className="min-w-0 flex-1 text-sm text-gray-800">
-              {variant.title}
-            </div>
-
-            <div className="w-56">
-              <InputText
-                name="price"
-                value={variant.hs_code}
-                onChange={e => onChange(variant, e.target.value)}
-              />
-            </div>
+      {variants.map((variant, idx) => (
+        <div
+          className="flex items-center space-x-4 border-b border-gray-200 py-3"
+          key={idx}>
+          <div className="min-w-0 flex-1 text-sm text-gray-800">
+            {variant.title}
           </div>
-        ))}
+
+          <div className="w-56">
+            <InputText
+              name="price"
+              value={variant.hs_code}
+              onChange={e => onChange(variant, e.target.value)}
+            />
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

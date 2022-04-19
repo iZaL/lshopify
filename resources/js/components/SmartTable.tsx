@@ -135,29 +135,29 @@ function Body({children, onItemClick}: BodyProps<ItemWithID>) {
   return (
     <tbody>
       {items.map((item, id) => (
-          <Table.Row
-            key={id}
-            idx={id}
-            onClick={() => (onItemClick ? onItemClick(item) : {})}>
-            <Table.Cell>
-              <div
-                className="flex w-12 items-center justify-center py-2"
-                onClick={e => {
-                  e.stopPropagation();
-                  onCheckboxChange(item.id);
-                }}>
-                <Checkbox
-                  checked={selectedItemIDs.includes(item.id)}
-                  onChange={e => {}}
-                  name={`check-${item.id}`}
-                />
-              </div>
-            </Table.Cell>
-            {children({
-              item,
-            })}
-          </Table.Row>
-        ))}
+        <Table.Row
+          key={id}
+          idx={id}
+          onClick={() => (onItemClick ? onItemClick(item) : {})}>
+          <Table.Cell>
+            <div
+              className="flex w-12 items-center justify-center py-2"
+              onClick={e => {
+                e.stopPropagation();
+                onCheckboxChange(item.id);
+              }}>
+              <Checkbox
+                checked={selectedItemIDs.includes(item.id)}
+                onChange={e => {}}
+                name={`check-${item.id}`}
+              />
+            </div>
+          </Table.Cell>
+          {children({
+            item,
+          })}
+        </Table.Row>
+      ))}
     </tbody>
   );
 }

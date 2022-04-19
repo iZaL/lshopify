@@ -35,28 +35,28 @@ function NavItem({children, href, active, dropdown, name}: NavItemProps) {
     return (
       <Disclosure as="div" className="space-y-1" defaultOpen={active}>
         {({open}) => (
-            <>
-              <Disclosure.Button
-                as="a"
+          <>
+            <Disclosure.Button
+              as="a"
+              className={classNames(
+                'group flex w-full items-center rounded-md py-2 pl-2 text-sm font-semibold text-gray-800 hover:bg-gray-100',
+                active ? 'text-green-800' : '',
+              )}
+              href={href}>
+              {name}
+              <svg
                 className={classNames(
-                  'group flex w-full items-center rounded-md py-2 pl-2 text-sm font-semibold text-gray-800 hover:bg-gray-100',
-                  active ? 'text-green-800' : '',
+                  'ml-auto h-5 w-5 transform transition-colors duration-150 ease-in-out group-hover:text-gray-400',
+                  open ? 'rotate-90 text-gray-400' : 'text-gray-300',
                 )}
-                href={href}>
-                {name}
-                <svg
-                  className={classNames(
-                    'ml-auto h-5 w-5 transform transition-colors duration-150 ease-in-out group-hover:text-gray-400',
-                    open ? 'rotate-90 text-gray-400' : 'text-gray-300',
-                  )}
-                  viewBox="0 0 20 20"
-                  aria-hidden="true">
-                  <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
-                </svg>
-              </Disclosure.Button>
-              {open && children}
-            </>
-          )}
+                viewBox="0 0 20 20"
+                aria-hidden="true">
+                <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
+              </svg>
+            </Disclosure.Button>
+            {open && children}
+          </>
+        )}
       </Disclosure>
     );
   }

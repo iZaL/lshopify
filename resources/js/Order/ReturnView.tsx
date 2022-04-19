@@ -120,9 +120,7 @@ export default function Refund({order}: Props) {
                     <div className="flex-1">
                       <Select name="reason" onChange={() => {}}>
                         <option value="unknown">Unknown</option>
-                        <option value="wrong_item">
-                          Received wrong item
-                        </option>
+                        <option value="wrong_item">Received wrong item</option>
                         <option value="change_mind">
                           Customer changed their mind
                         </option>

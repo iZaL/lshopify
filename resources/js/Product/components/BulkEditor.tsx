@@ -20,7 +20,9 @@ export default function BulkEditor(props: Props) {
 
   return (
     <>
-      {selectedFields.map((field, idx) => <TabPill key={idx} title={field} onClose={() => {}} />)}
+      {selectedFields.map((field, idx) => (
+        <TabPill key={idx} title={field} onClose={() => {}} />
+      ))}
       <div className="col-span-12 sm:col-span-6">
         <div className="relative z-0 inline-flex rounded-md shadow-sm sm:space-x-3 sm:shadow-none">
           <Popover.Group className="flex items-center">

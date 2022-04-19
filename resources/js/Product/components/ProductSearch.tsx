@@ -87,64 +87,64 @@ export default function ProductSearch({
         <Border />
 
         {products.map((product, i) => (
-            <div key={i}>
-              <li
-                className="flex flex-row items-center space-x-4 border-b border-gray-200 py-2 px-4
+          <div key={i}>
+            <li
+              className="flex flex-row items-center space-x-4 border-b border-gray-200 py-2 px-4
               text-sm hover:bg-gray-100
               "
-                onClick={() =>
-                  !product.variants?.length &&
-                  addRemoveVariant(product.default_variant)
-                }>
-                <div>{i + 1}.</div>
+              onClick={() =>
+                !product.variants?.length &&
+                addRemoveVariant(product.default_variant)
+              }>
+              <div>{i + 1}.</div>
 
-                {!product.variants?.length && (
-                  <Checkbox
-                    checked={selectedVariantIDs.includes(
-                      product.default_variant?.id,
-                    )}
-                    name="product"
-                    onChange={() => {}}
-                  />
-                )}
+              {!product.variants?.length && (
+                <Checkbox
+                  checked={selectedVariantIDs.includes(
+                    product.default_variant?.id,
+                  )}
+                  name="product"
+                  onChange={() => {}}
+                />
+              )}
 
+              <VariantImage
+                image={product.image}
+                onClick={() => {}}
+                imageStyle="w-12 h-12"
+              />
+              <div className="flex-auto">{product.title}</div>
+              {!product.variants?.length && (
+                <>
+                  <div className="w-20">0 available</div>
+                  <div className="w-20">OMR 10</div>
+                </>
+              )}
+            </li>
+            {product.variants?.map((variant, idx) => (
+              <li
+                className="flex flex-row items-center space-x-4 border-b border-gray-200 py-2 px-4 pl-11
+              text-sm hover:bg-gray-100
+              "
+                key={idx}
+                onClick={() => addRemoveVariant(variant)}>
+                <Checkbox
+                  checked={selectedVariantIDs.includes(variant.id)}
+                  name="product"
+                  onChange={() => {}}
+                />
                 <VariantImage
-                  image={product.image}
+                  image={variant.image}
                   onClick={() => {}}
                   imageStyle="w-12 h-12"
                 />
-                <div className="flex-auto">{product.title}</div>
-                {!product.variants?.length && (
-                  <>
-                      <div className="w-20">0 available</div>
-                      <div className="w-20">OMR 10</div>
-                    </>
-                )}
+                <div className="flex-auto">{variant.title}</div>
+                <div className="w-20">{variant.quantity} available</div>
+                <div className="w-20">{variant.price}</div>
               </li>
-              {product.variants?.map((variant, idx) => (
-                  <li
-                    className="flex flex-row items-center space-x-4 border-b border-gray-200 py-2 px-4 pl-11
-              text-sm hover:bg-gray-100
-              "
-                    key={idx}
-                    onClick={() => addRemoveVariant(variant)}>
-                    <Checkbox
-                      checked={selectedVariantIDs.includes(variant.id)}
-                      name="product"
-                      onChange={() => {}}
-                    />
-                    <VariantImage
-                      image={variant.image}
-                      onClick={() => {}}
-                      imageStyle="w-12 h-12"
-                    />
-                    <div className="flex-auto">{variant.title}</div>
-                    <div className="w-20">{variant.quantity} available</div>
-                    <div className="w-20">{variant.price}</div>
-                  </li>
-                ))}
-            </div>
-          ))}
+            ))}
+          </div>
+        ))}
       </Modal>
     </div>
   );

@@ -33,26 +33,26 @@ export default function EditPrices({variants, onChange, onApplyAll}: Props) {
       </div>
 
       {variants.map((variant, i) => (
-          <div
-            className="flex items-center space-x-4 border-b border-gray-200 py-3"
-            key={i}>
-            <div className="min-w-0 flex-1 text-sm text-gray-800">
-              {variant.title}
-            </div>
-            <div className="w-40">
-              <InputText
-                name="price"
-                leftComponent={
-                  <div className="text-md text-sm text-gray-400">OMR</div>
-                }
-                inputStyle="pl-14"
-                placeholder="0"
-                value={variant.price}
-                onChange={e => onChange(variant, e.target.value)}
-              />
-            </div>
+        <div
+          className="flex items-center space-x-4 border-b border-gray-200 py-3"
+          key={i}>
+          <div className="min-w-0 flex-1 text-sm text-gray-800">
+            {variant.title}
           </div>
-        ))}
+          <div className="w-40">
+            <InputText
+              name="price"
+              leftComponent={
+                <div className="text-md text-sm text-gray-400">OMR</div>
+              }
+              inputStyle="pl-14"
+              placeholder="0"
+              value={variant.price}
+              onChange={e => onChange(variant, e.target.value)}
+            />
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

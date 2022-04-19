@@ -22,10 +22,10 @@ export default function EditVariantOptions({
   );
 
   const currentVariantOptions: VariantOption[] = variantOptions.map(v => ({
-      name: v.name,
-      id: v.id,
-      values: v.values,
-    }));
+    name: v.name,
+    id: v.id,
+    values: v.values,
+  }));
 
   const onVariantOptionsRemoveConfirm = () => {
     onDelete(deletingVariants);
@@ -38,11 +38,14 @@ export default function EditVariantOptions({
     value: VariantValue,
   ) => {
     let currentVariants: number[] = [];
-    variants.map(variant => (currentVariants = variant.options?.some(
-        ({id, name}) => id === option.id && name === value.name,
-      )
-        ? [...currentVariants, variant.id]
-        : [...currentVariants]));
+    variants.map(
+      variant =>
+        (currentVariants = variant.options?.some(
+          ({id, name}) => id === option.id && name === value.name,
+        )
+          ? [...currentVariants, variant.id]
+          : [...currentVariants]),
+    );
     setDeletingOption(value);
     setDeletingVariants(currentVariants);
     setShowDialog(true);
@@ -51,27 +54,27 @@ export default function EditVariantOptions({
   return (
     <div className="space-y-2 p-5">
       {currentVariantOptions.map((option, i) => (
-          <div className="flex flex-row items-center text-sm" key={i}>
-            <div className="w-40">
-              <InputText
-                name={`name${option.name}`}
-                value={option.id}
-                onChange={() => onVariantOptionsUpdate()}
-              />
-            </div>
-            <div className="m-auto flex-1 px-4 text-sm text-gray-700">
-              <div className="flex flex-row items-center space-x-2" key={i}>
-                {option.values?.map((value, idx) => (
-                    <TabPill
-                      key={idx}
-                      title={value.name}
-                      onClose={() => onVariantOptionValueRemove(option, value)}
-                    />
-                  ))}
-              </div>
+        <div className="flex flex-row items-center text-sm" key={i}>
+          <div className="w-40">
+            <InputText
+              name={`name${option.name}`}
+              value={option.id}
+              onChange={() => onVariantOptionsUpdate()}
+            />
+          </div>
+          <div className="m-auto flex-1 px-4 text-sm text-gray-700">
+            <div className="flex flex-row items-center space-x-2" key={i}>
+              {option.values?.map((value, idx) => (
+                <TabPill
+                  key={idx}
+                  title={value.name}
+                  onClose={() => onVariantOptionValueRemove(option, value)}
+                />
+              ))}
             </div>
           </div>
-        ))}
+        </div>
+      ))}
 
       <Modal
         heading="Removing options will also delete variants"

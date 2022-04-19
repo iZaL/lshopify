@@ -38,35 +38,33 @@ export default function InventoryList({
         </SmartTable.Header>
         <SmartTable.Body>
           {({item}) => (
-              <>
-                <Table.Cell>
-                  {item.product?.title && (
-                    <span className="font-bold">
-                      {item.product.title}
-                      <br />
-                    </span>
-                  )}
-                  {item.title}
-                </Table.Cell>
-                <Table.Cell>{item.sku}</Table.Cell>
-                <Table.Cell cellStyle="w-16">
-                  <InputText
-                    value={item.quantity}
-                    name="quantity"
-                    onChange={event =>
-                      onQuantityChange(item, event.target.value)
-                    }
-                  />
-                </Table.Cell>
-                <Table.Cell cellStyle="w-16">
-                  {item.isDirty ? (
-                    <Button onClick={() => onSave(item)} theme="success">
-                      Save
-                    </Button>
-                  ) : null}
-                </Table.Cell>
-              </>
-            )}
+            <>
+              <Table.Cell>
+                {item.product?.title && (
+                  <span className="font-bold">
+                    {item.product.title}
+                    <br />
+                  </span>
+                )}
+                {item.title}
+              </Table.Cell>
+              <Table.Cell>{item.sku}</Table.Cell>
+              <Table.Cell cellStyle="w-16">
+                <InputText
+                  value={item.quantity}
+                  name="quantity"
+                  onChange={event => onQuantityChange(item, event.target.value)}
+                />
+              </Table.Cell>
+              <Table.Cell cellStyle="w-16">
+                {item.isDirty ? (
+                  <Button onClick={() => onSave(item)} theme="success">
+                    Save
+                  </Button>
+                ) : null}
+              </Table.Cell>
+            </>
+          )}
         </SmartTable.Body>
       </Table>
     </SmartTable>

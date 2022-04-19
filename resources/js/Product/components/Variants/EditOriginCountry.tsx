@@ -37,28 +37,28 @@ export default function EditOriginCountry({
       </div>
 
       {variants.map((variant, i) => (
-          <div
-            className="flex items-center space-x-4 border-b border-gray-200 py-3"
-            key={i}>
-            <div className="min-w-0 flex-1 text-sm text-gray-800">
-              {variant.title}
-            </div>
-
-            <div className="w-24">
-              <select
-                id="country"
-                name="country"
-                autoComplete="country"
-                className="mt-1 block w-full rounded-md border-2 border-gray-300 p-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                value={variant.origin_country_id}
-                onChange={e => onChange(variant, e.target.value)}>
-                <option value="1">United States</option>
-                <option value="2">Canada</option>
-                <option value="3">Mexico</option>
-              </select>
-            </div>
+        <div
+          className="flex items-center space-x-4 border-b border-gray-200 py-3"
+          key={i}>
+          <div className="min-w-0 flex-1 text-sm text-gray-800">
+            {variant.title}
           </div>
-        ))}
+
+          <div className="w-24">
+            <select
+              id="country"
+              name="country"
+              autoComplete="country"
+              className="mt-1 block w-full rounded-md border-2 border-gray-300 p-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              value={variant.origin_country_id}
+              onChange={e => onChange(variant, e.target.value)}>
+              <option value="1">United States</option>
+              <option value="2">Canada</option>
+              <option value="3">Mexico</option>
+            </select>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

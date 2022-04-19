@@ -137,16 +137,16 @@ export default function ProductSearchBar({
             <DisclosurePanel title="Product Vendor">
               <div className="flex flex-col space-y-1">
                 {vendors.map(vendor => (
-                    <Checkbox
-                      key={vendor.id}
-                      checked={searchAttributes.selected_vendors.includes(
-                        vendor.id,
-                      )}
-                      name={`vendor${vendor.id}`}
-                      onChange={() => setVendor(vendor.id)}
-                      label={vendor.name}
-                    />
-                  ))}
+                  <Checkbox
+                    key={vendor.id}
+                    checked={searchAttributes.selected_vendors.includes(
+                      vendor.id,
+                    )}
+                    name={`vendor${vendor.id}`}
+                    onChange={() => setVendor(vendor.id)}
+                    label={vendor.name}
+                  />
+                ))}
               </div>
               <ClearButton
                 field="selected_vendors"
@@ -160,15 +160,15 @@ export default function ProductSearchBar({
                 {tabs
                   .filter(tab => tab !== 'all')
                   .map(tab => (
-                      <Checkbox
-                        key={tab}
-                        checked={searchAttributes.selected_status.includes(tab)}
-                        name={`tab${tab}`}
-                        onChange={() => setStatus(tab)}
-                        label={tab}
-                        labelStyle="capitalize"
-                      />
-                    ))}
+                    <Checkbox
+                      key={tab}
+                      checked={searchAttributes.selected_status.includes(tab)}
+                      name={`tab${tab}`}
+                      onChange={() => setStatus(tab)}
+                      label={tab}
+                      labelStyle="capitalize"
+                    />
+                  ))}
               </div>
               <ClearButton
                 field="selected_status"
@@ -196,16 +196,16 @@ export default function ProductSearchBar({
             <DisclosurePanel title="Category">
               <div className="flex flex-col space-y-1">
                 {categories.map(category => (
-                    <Checkbox
-                      key={category.id}
-                      checked={searchAttributes.selected_categories.includes(
-                        category.id,
-                      )}
-                      name={`category${category.id}`}
-                      onChange={() => setCategory(category.id)}
-                      label={category.name}
-                    />
-                  ))}
+                  <Checkbox
+                    key={category.id}
+                    checked={searchAttributes.selected_categories.includes(
+                      category.id,
+                    )}
+                    name={`category${category.id}`}
+                    onChange={() => setCategory(category.id)}
+                    label={category.name}
+                  />
+                ))}
               </div>
               <ClearButton
                 field="selected_categories"
@@ -234,16 +234,16 @@ export default function ProductSearchBar({
 
               <div className="flex flex-col space-y-1">
                 {collections.map(collection => (
-                    <Checkbox
-                      key={collection.id}
-                      checked={searchAttributes.selected_collections.includes(
-                        collection.id,
-                      )}
-                      name={`collection${collection.id}`}
-                      onChange={() => setCollection(collection.id)}
-                      label={collection.name}
-                    />
-                  ))}
+                  <Checkbox
+                    key={collection.id}
+                    checked={searchAttributes.selected_collections.includes(
+                      collection.id,
+                    )}
+                    name={`collection${collection.id}`}
+                    onChange={() => setCollection(collection.id)}
+                    label={collection.name}
+                  />
+                ))}
               </div>
               <ClearButton
                 field="selected_collections"
@@ -258,30 +258,30 @@ export default function ProductSearchBar({
       <div className="border-b border-gray-200">
         <nav className="-mb-px flex space-x-2">
           {tabs.map(tab => (
-              <Button
-                theme="clear"
-                key={tab}
-                buttonStyle={classNames(
-                  tab === searchAttributes.selected_view
-                    ? 'border-green-800 text-green-800'
-                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
-                  'mx-2 whitespace-nowrap border-b-2 py-3 px-6 text-sm font-medium',
-                )}
-                onClick={() => {
-                  onChange({
-                    tag_search: '',
-                    product_search: '',
-                    collection_search: '',
-                    selected_view: tab,
-                    selected_vendors: [],
-                    selected_status: [],
-                    selected_categories: [],
-                    selected_collections: [],
-                  });
-                }}>
-                <span className="capitalize">{tab}</span>
-              </Button>
-            ))}
+            <Button
+              theme="clear"
+              key={tab}
+              buttonStyle={classNames(
+                tab === searchAttributes.selected_view
+                  ? 'border-green-800 text-green-800'
+                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
+                'mx-2 whitespace-nowrap border-b-2 py-3 px-6 text-sm font-medium',
+              )}
+              onClick={() => {
+                onChange({
+                  tag_search: '',
+                  product_search: '',
+                  collection_search: '',
+                  selected_view: tab,
+                  selected_vendors: [],
+                  selected_status: [],
+                  selected_categories: [],
+                  selected_collections: [],
+                });
+              }}>
+              <span className="capitalize">{tab}</span>
+            </Button>
+          ))}
         </nav>
       </div>
 
@@ -312,16 +312,16 @@ export default function ProductSearchBar({
                 <div className="inline-flex sm:shadow-sm">
                   <PopoverButton title="Vendor" buttonStyle="rounded-l-md ">
                     {vendors.map(vendor => (
-                        <Checkbox
-                          key={vendor.id}
-                          checked={searchAttributes.selected_vendors.includes(
-                            vendor.id,
-                          )}
-                          name={`vendor${vendor.id}`}
-                          onChange={() => setVendor(vendor.id)}
-                          label={vendor.name}
-                        />
-                      ))}
+                      <Checkbox
+                        key={vendor.id}
+                        checked={searchAttributes.selected_vendors.includes(
+                          vendor.id,
+                        )}
+                        name={`vendor${vendor.id}`}
+                        onChange={() => setVendor(vendor.id)}
+                        label={vendor.name}
+                      />
+                    ))}
                   </PopoverButton>
 
                   <PopoverButton title="Tagged" buttonStyle="-ml-px">
@@ -341,17 +341,17 @@ export default function ProductSearchBar({
                     {tabs
                       .filter(tab => tab !== 'all')
                       .map(tab => (
-                          <Checkbox
-                            key={tab}
-                            checked={searchAttributes.selected_status.includes(
-                              tab,
-                            )}
-                            name={`tab${tab}`}
-                            onChange={() => setStatus(tab)}
-                            label={tab}
-                            labelStyle="capitalize"
-                          />
-                        ))}
+                        <Checkbox
+                          key={tab}
+                          checked={searchAttributes.selected_status.includes(
+                            tab,
+                          )}
+                          name={`tab${tab}`}
+                          onChange={() => setStatus(tab)}
+                          label={tab}
+                          labelStyle="capitalize"
+                        />
+                      ))}
                   </PopoverButton>
 
                   <button

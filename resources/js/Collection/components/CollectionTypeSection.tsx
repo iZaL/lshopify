@@ -79,26 +79,26 @@ export default function CollectionTypeSection({onChange, collection}: T) {
           </div>
 
           {collection.conditions.map((condition, i) => (
-              <CollectionConditionItem
-                key={i}
-                condition={condition}
-                onFieldChange={e =>
-                  onConditionChange(condition, 'field', e.target.value)
-                }
-                onCriteriaChange={e =>
-                  onConditionChange(condition, 'criteria', e.target.value)
-                }
-                onValueChange={e =>
-                  onConditionChange(condition, 'value', e.target.value)
-                }
-                onDelete={() => {
-                  const newConditions = collection.conditions.filter(
-                    c => c.id !== condition.id,
-                  );
-                  onChange('conditions', newConditions);
-                }}
-              />
-            ))}
+            <CollectionConditionItem
+              key={i}
+              condition={condition}
+              onFieldChange={e =>
+                onConditionChange(condition, 'field', e.target.value)
+              }
+              onCriteriaChange={e =>
+                onConditionChange(condition, 'criteria', e.target.value)
+              }
+              onValueChange={e =>
+                onConditionChange(condition, 'value', e.target.value)
+              }
+              onDelete={() => {
+                const newConditions = collection.conditions.filter(
+                  c => c.id !== condition.id,
+                );
+                onChange('conditions', newConditions);
+              }}
+            />
+          ))}
 
           <Button
             theme="default"

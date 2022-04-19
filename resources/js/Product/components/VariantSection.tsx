@@ -95,17 +95,17 @@ export default function VariantSection({
           <Border />
           <Subheader text="OPTIONS" headerStyle="text-sm" />
           {currentVariantOptions.map((variant: VariantOption, index) => (
-              <VariantOptionsItem
-                key={index}
-                iteration={index + 1}
-                variantOption={variant}
-                pendingVariantOptions={pendingVariants}
-                onVariantOptionChange={onVariantOptionChange}
-                onVariantValuesChange={onVariantValuesChange}
-                onVariantOptionRemove={onVariantRemove}
-                showRemoveOptionButton={currentVariantOptions.length > 1}
-              />
-            ))}
+            <VariantOptionsItem
+              key={index}
+              iteration={index + 1}
+              variantOption={variant}
+              pendingVariantOptions={pendingVariants}
+              onVariantOptionChange={onVariantOptionChange}
+              onVariantValuesChange={onVariantValuesChange}
+              onVariantOptionRemove={onVariantRemove}
+              showRemoveOptionButton={currentVariantOptions.length > 1}
+            />
+          ))}
 
           {currentVariantOptions.length <= 4 && (
             <Button onClick={onVariantAdd} theme="default">
