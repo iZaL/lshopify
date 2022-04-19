@@ -1,6 +1,6 @@
 import React from 'react';
-import {Payment} from '../../../types';
 import Border from '../../../components/Border';
+import {Payment} from '../../../types';
 
 interface Props {
   payment: Payment;

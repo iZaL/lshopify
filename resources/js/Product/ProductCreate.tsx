@@ -1,33 +1,33 @@
-import React, {useEffect, useState} from 'react';
-import Main from '../Main';
-import PageHeader from '../components/PageHeader';
-import TitleSection from './components/TitleSection';
-import MediaSection from './components/MediaSection';
-import PricingSection from './components/PricingSection';
-import InventorySection from './components/InventorySection';
-import ShippingSection from './components/ShippingSection';
-import VariantSection from './components/VariantSection';
-import FormSubmitBar from '../components/FormSubmitBar';
+import {Inertia} from '@inertiajs/inertia';
 import {useForm} from '@inertiajs/inertia-react';
+import React, {useEffect, useState} from 'react';
+import route from 'ziggy-js';
+import Border from '../components/Border';
+import Card from '../components/Card';
+import Label from '../components/forms/Label';
+import FormSubmitBar from '../components/FormSubmitBar';
+import MultiSelect from '../components/MultiSelect';
+import MultiSelectDropdown from '../components/MultiSelectDropdown';
+import PageHeader from '../components/PageHeader';
+import SingleSelect from '../components/SingleSelect';
+import Subheader from '../components/Subheader';
+import Main from '../Main';
 import {
+  Category,
   Collection,
   Image,
   Product,
-  Category,
   Tag,
   VariantOption,
   Vendor,
 } from '../types';
-import {Inertia} from '@inertiajs/inertia';
-import route from 'ziggy-js';
+import InventorySection from './components/InventorySection';
+import MediaSection from './components/MediaSection';
+import PricingSection from './components/PricingSection';
+import ShippingSection from './components/ShippingSection';
 import StatusSection from './components/StatusSection';
-import Card from '../components/Card';
-import Subheader from '../components/Subheader';
-import Label from '../components/forms/Label';
-import SingleSelect from '../components/SingleSelect';
-import Border from '../components/Border';
-import MultiSelectDropdown from '../components/MultiSelectDropdown';
-import MultiSelect from '../components/MultiSelect';
+import TitleSection from './components/TitleSection';
+import VariantSection from './components/VariantSection';
 
 interface Props {
   collection: Collection[];

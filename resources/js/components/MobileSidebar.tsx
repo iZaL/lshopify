@@ -1,8 +1,8 @@
-import React, {Fragment} from 'react';
-import SidebarNav from './SidebarNav';
 import {Dialog, Transition} from '@headlessui/react';
 import {XIcon} from '@heroicons/react/outline';
+import React, {Fragment} from 'react';
 import {useSidebarStore} from '../store';
+import SidebarNav from './SidebarNav';
 
 export default function MobileSidebar() {
   const {isOpen, toggle} = useSidebarStore();

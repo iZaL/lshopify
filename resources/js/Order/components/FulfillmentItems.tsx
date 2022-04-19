@@ -1,8 +1,8 @@
 import React from 'react';
-import {VariantPivot} from '../../types';
-import VariantImage from '../../Product/Variant/components/VariantImage';
-import ProductTitle from '../../Product/components/ProductTitle';
 import InputText from '../../components/forms/InputText';
+import ProductTitle from '../../Product/components/ProductTitle';
+import VariantImage from '../../Product/Variant/components/VariantImage';
+import {VariantPivot} from '../../types';
 
 interface Props {
   variants: VariantPivot[];

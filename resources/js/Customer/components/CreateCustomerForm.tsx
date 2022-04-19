@@ -1,11 +1,11 @@
 import React, {ReactElement, useState} from 'react';
-import {Customer, CustomerAddress} from '../../types';
-import {CustomerForm} from '../../form_types';
-import InputText from '../../components/forms/InputText';
-import Checkbox from '../../components/forms/Checkbox';
 import Border from '../../components/Border';
-import Subheader from '../../components/Subheader';
+import Checkbox from '../../components/forms/Checkbox';
+import InputText from '../../components/forms/InputText';
 import Label from '../../components/forms/Label';
+import Subheader from '../../components/Subheader';
+import {CustomerForm} from '../../form_types';
+import {Customer, CustomerAddress} from '../../types';
 import CreateAddressForm from './CreateAddressForm';
 
 interface Props {

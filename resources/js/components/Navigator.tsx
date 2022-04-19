@@ -1,7 +1,7 @@
-import React from 'react';
-import classNames from 'classnames';
-import {Link} from '@inertiajs/inertia-react';
 import {Disclosure} from '@headlessui/react';
+import {Link} from '@inertiajs/inertia-react';
+import classNames from 'classnames';
+import React from 'react';
 
 interface Props {
   children: React.ReactNode;

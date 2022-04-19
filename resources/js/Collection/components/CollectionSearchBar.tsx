@@ -1,8 +1,8 @@
-import React, {Fragment} from 'react';
+import {Popover, Transition} from '@headlessui/react';
 import {SearchIcon} from '@heroicons/react/outline';
 import {ChevronDownIcon, SortAscendingIcon} from '@heroicons/react/solid';
 import classNames from 'classnames';
-import {Popover, Transition} from '@headlessui/react';
+import React, {Fragment} from 'react';
 
 interface TabProps {
   name: string;

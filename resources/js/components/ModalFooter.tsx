@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react';
-import Button from './Button';
 import {ButtonTheme} from '../types';
+import Button from './Button';
 
 interface Props {
   onHideModal: () => void;

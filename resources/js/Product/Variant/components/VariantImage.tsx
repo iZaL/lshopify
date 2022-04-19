@@ -1,6 +1,6 @@
+import classNames from 'classnames';
 import React from 'react';
 import {Image} from '../../../types';
-import classNames from 'classnames';
 
 interface Props {
   image: Image | null | undefined;

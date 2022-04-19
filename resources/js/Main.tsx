@@ -1,10 +1,10 @@
+import classNames from 'classnames';
 import React from 'react';
-import Sidebar from './components/Sidebar';
+import {Helmet} from 'react-helmet';
 import MobileSidebar from './components/MobileSidebar';
 import Navbar from './components/Navbar';
-import {Helmet} from 'react-helmet';
 import PopMessages from './components/PopMessages';
-import classNames from 'classnames';
+import Sidebar from './components/Sidebar';
 import {useThemeStore} from './store';
 
 export default function Main({

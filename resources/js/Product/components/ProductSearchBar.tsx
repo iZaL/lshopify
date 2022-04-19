@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
+import {Popover} from '@headlessui/react';
 import {SearchIcon} from '@heroicons/react/outline';
 import {SortAscendingIcon, XIcon} from '@heroicons/react/solid';
 import classNames from 'classnames';
-import {Popover} from '@headlessui/react';
-import InputText from '../../components/forms/InputText';
-import {Category, Collection, Vendor} from '../../types';
+import React, {useState} from 'react';
 import Button from '../../components/Button';
-import Checkbox from '../../components/forms/Checkbox';
-import {SearchAttributes, TabAttributes} from '../types';
-import RightSidebar from '../../components/RightSidebar';
-import PopoverButton from '../../components/PopoverButton';
 import DisclosurePanel from '../../components/DisclosurePanel';
+import Checkbox from '../../components/forms/Checkbox';
+import InputText from '../../components/forms/InputText';
+import PopoverButton from '../../components/PopoverButton';
+import RightSidebar from '../../components/RightSidebar';
+import {Category, Collection, Vendor} from '../../types';
+import {SearchAttributes, TabAttributes} from '../types';
 
 interface Props {
   tabs: TabAttributes[];

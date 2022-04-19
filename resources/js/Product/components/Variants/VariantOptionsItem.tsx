@@ -1,7 +1,7 @@
 import React from 'react';
 import CreatableSelect from 'react-select/creatable';
-import {VariantOption} from '../../../types';
 import Button from '../../../components/Button';
+import {VariantOption} from '../../../types';
 
 interface Props {
   iteration: number;

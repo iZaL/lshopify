@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {Variant, VariantOption, VariantValue} from '../../../types';
 import InputText from '../../../components/forms/InputText';
 import Modal from '../../../components/Modal';
 import TabPill from '../../../components/TabPill';
+import {Variant, VariantOption, VariantValue} from '../../../types';
 
 interface Props {
   variants: Variant[];

@@ -1,6 +1,6 @@
-import React, {useContext, useState} from 'react';
-import {Link} from '@inertiajs/inertia-react';
 import {Transition} from '@headlessui/react';
+import {Link} from '@inertiajs/inertia-react';
+import React, {useContext, useState} from 'react';
 
 interface Props {
   children: React.ReactNode;

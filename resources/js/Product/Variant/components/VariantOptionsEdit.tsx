@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
-import Card from '../../../components/Card';
-import {Image, Variant, VariantOption} from '../../../types';
-import Subheader from '../../../components/Subheader';
-import Label from '../../../components/forms/Label';
-import InputText from '../../../components/forms/InputText';
-import VariantImage from './VariantImage';
-import DZFileUploadBox from '../../../components/forms/DZFileUploadBox';
-import Modal from '../../../components/Modal';
 import Button from '../../../components/Button';
+import Card from '../../../components/Card';
+import DZFileUploadBox from '../../../components/forms/DZFileUploadBox';
+import InputText from '../../../components/forms/InputText';
+import Label from '../../../components/forms/Label';
+import Modal from '../../../components/Modal';
+import Subheader from '../../../components/Subheader';
+import {Image, Variant, VariantOption} from '../../../types';
+import VariantImage from './VariantImage';
 
 interface Props {
   options: VariantOption[];

@@ -1,7 +1,7 @@
 import React from 'react';
-import {CustomerAddress} from '../../types';
 import InputText from '../../components/forms/InputText';
 import Label from '../../components/forms/Label';
+import {CustomerAddress} from '../../types';
 
 interface Props {
   customer: CustomerAddress;

@@ -1,7 +1,7 @@
+import {Inertia} from '@inertiajs/inertia';
 import React from 'react';
 import route from 'ziggy-js';
 import Button from '../../components/Button';
-import {Inertia} from '@inertiajs/inertia';
 
 export default function CustomerIndexActionButtons() {
   return (

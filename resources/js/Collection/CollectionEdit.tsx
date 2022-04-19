@@ -1,19 +1,19 @@
-import React, {useEffect} from 'react';
-import Main from '../Main';
-import PageHeader from '../components/PageHeader';
-import TitleSection from './components/TitleSection';
-import FormSubmitBar from '../components/FormSubmitBar';
-import {Collection, Image, Product} from '../types';
 import {Inertia} from '@inertiajs/inertia';
-import ProductSection from './components/ProductSection';
 import {useForm} from '@inertiajs/inertia-react';
-import ProductAddSection from './components/ProductAddSection';
+import React, {useEffect} from 'react';
 import route from 'ziggy-js';
-import BackButton from '../components/BackButton';
-import ImageSelect from '../components/ImageSelect';
-import CollectionTypeSection from './components/CollectionTypeSection';
-import Card from '../components/Card';
 import {deleteImages, uploadImages} from '../api';
+import BackButton from '../components/BackButton';
+import Card from '../components/Card';
+import FormSubmitBar from '../components/FormSubmitBar';
+import ImageSelect from '../components/ImageSelect';
+import PageHeader from '../components/PageHeader';
+import Main from '../Main';
+import {Collection, Image, Product} from '../types';
+import CollectionTypeSection from './components/CollectionTypeSection';
+import ProductAddSection from './components/ProductAddSection';
+import ProductSection from './components/ProductSection';
+import TitleSection from './components/TitleSection';
 
 interface Props {
   collection: Collection;

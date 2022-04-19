@@ -1,9 +1,8 @@
+import {Inertia} from '@inertiajs/inertia';
 import React from 'react';
-import {Product} from '../../types';
-import {Link} from '@inertiajs/inertia-react';
 import route from 'ziggy-js';
 import Button from '../../components/Button';
-import {Inertia} from '@inertiajs/inertia';
+import {Product} from '../../types';
 
 interface Props {
   product: Product;

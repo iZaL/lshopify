@@ -1,12 +1,12 @@
+import {Inertia} from '@inertiajs/inertia';
 import React, {useState} from 'react';
-import Main from '../Main';
+import route from 'ziggy-js';
 import PageHeader from '../components/PageHeader';
+import Main from '../Main';
 import {Category, Collection, Product, Vendor} from '../types';
 import ProductIndexActionButtons from './components/ProductIndexActionButtons';
 import ProductSearchBar from './components/ProductSearchBar';
 import ProductsList from './components/ProductsList';
-import {Inertia} from '@inertiajs/inertia';
-import route from 'ziggy-js';
 import {SearchAttributes, TabAttributes} from './types';
 
 interface Props {

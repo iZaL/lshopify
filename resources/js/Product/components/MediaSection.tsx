@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import Card from '../../components/Card';
-import Subheader from '../../components/Subheader';
-import DZFileUploadBox from '../../components/forms/DZFileUploadBox';
-import {Image} from '../../types';
-import Modal from '../../components/Modal';
 import Button from '../../components/Button';
+import Card from '../../components/Card';
+import DZFileUploadBox from '../../components/forms/DZFileUploadBox';
+import Modal from '../../components/Modal';
+import Subheader from '../../components/Subheader';
+import {Image} from '../../types';
 
 interface Props {
   onImagesUpload: (images: Image[]) => void;

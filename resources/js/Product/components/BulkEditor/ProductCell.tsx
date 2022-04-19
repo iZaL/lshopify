@@ -1,12 +1,12 @@
-import {Product, Tag} from '../../../types';
-import Select from '../../../components/forms/Select';
-import InputText from '../../../components/forms/InputText';
-import React, {useEffect} from 'react';
-import VariantImage from '../../Variant/components/VariantImage';
 import {Popover} from '@headlessui/react';
-import Button from '../../../components/Button';
 import {XIcon} from '@heroicons/react/solid';
 import classNames from 'classnames';
+import React, {useEffect} from 'react';
+import Button from '../../../components/Button';
+import InputText from '../../../components/forms/InputText';
+import Select from '../../../components/forms/Select';
+import {Product, Tag} from '../../../types';
+import VariantImage from '../../Variant/components/VariantImage';
 
 export default function ProductCell({
   product,

@@ -1,10 +1,10 @@
 import React from 'react';
 import Card from '../../components/Card';
-import {Product} from '../../types';
-import Subheader from '../../components/Subheader';
 import Select from '../../components/forms/Select';
-import VariantImage from '../../Product/Variant/components/VariantImage';
+import Subheader from '../../components/Subheader';
 import ProductTitle from '../../Product/components/ProductTitle';
+import VariantImage from '../../Product/Variant/components/VariantImage';
+import {Product} from '../../types';
 
 interface Props {
   collectionProducts: Product[];

@@ -1,11 +1,9 @@
 import React from 'react';
-import {Variant} from '../../types';
-import Checkbox from '../../components/forms/Checkbox';
 import Button from '../../components/Button';
-import VariantImage from '../../Product/Variant/components/VariantImage';
 import InputText from '../../components/forms/InputText';
-import Table from '../../components/Table';
 import SmartTable from '../../components/SmartTable';
+import Table from '../../components/Table';
+import {Variant} from '../../types';
 
 type ExtendedVariant = Variant & {
   isDirty: boolean;

@@ -1,6 +1,6 @@
 import React from 'react';
-import Navigator from './Navigator';
 import route from 'ziggy-js';
+import Navigator from './Navigator';
 
 export default function SidebarNav() {
   return (

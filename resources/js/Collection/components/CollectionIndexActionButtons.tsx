@@ -1,5 +1,5 @@
-import React from 'react';
 import {Link} from '@inertiajs/inertia-react';
+import React from 'react';
 import route from 'ziggy-js';
 
 export default function CollectionIndexActionButtons() {

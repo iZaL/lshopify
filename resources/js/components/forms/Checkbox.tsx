@@ -1,8 +1,8 @@
-import React from 'react';
 import classNames from 'classnames';
+import React from 'react';
 
 interface Props {
-  type?:'radio' | 'checkbox';
+  type?: 'radio' | 'checkbox';
   name?: string;
   label?: string;
   checked: boolean;
@@ -28,7 +28,10 @@ export default function Checkbox({
         type={type}
         checked={checked}
         className={classNames(
-          {'focus:shadow-outline h-4 w-4 rounded border-gray-500 text-indigo-500 focus:outline-none': type==='checkbox'},
+          {
+            'focus:shadow-outline h-4 w-4 rounded border-gray-500 text-indigo-500 focus:outline-none':
+              type === 'checkbox',
+          },
           inputStyle,
         )}
         onChange={onChange}

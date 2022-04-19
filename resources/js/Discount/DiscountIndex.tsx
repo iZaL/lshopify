@@ -1,13 +1,12 @@
-import React from 'react';
-import Main from '../Main';
-import PageHeader from '../components/PageHeader';
-import IndexActionButtons from './components/IndexActionButtons';
-import classNames from 'classnames';
-import Subheader from '../components/Subheader';
-import Button from '../components/Button';
 import {ShoppingCartIcon, SpeakerphoneIcon} from '@heroicons/react/outline';
-import route from 'ziggy-js';
 import {Inertia} from '@inertiajs/inertia';
+import classNames from 'classnames';
+import React from 'react';
+import route from 'ziggy-js';
+import Button from '../components/Button';
+import PageHeader from '../components/PageHeader';
+import Main from '../Main';
+import IndexActionButtons from './components/IndexActionButtons';
 
 interface TabProps {
   name: string;

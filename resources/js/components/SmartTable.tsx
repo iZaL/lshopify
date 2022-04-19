@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
-import Table from './Table';
-import Checkbox from './forms/Checkbox';
 import Button from './Button';
+import Checkbox from './forms/Checkbox';
+import Table from './Table';
 
 interface ItemWithID {
   id: number;

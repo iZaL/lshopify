@@ -1,18 +1,18 @@
-import React from 'react';
-import Main from '../Main';
-import PageHeader from '../components/PageHeader';
-import Border from '../components/Border';
-import {Fulfillment, Order, VariantPivot} from '../types';
-import {useForm} from '@inertiajs/inertia-react';
 import {Inertia} from '@inertiajs/inertia';
-import FulfillmentItems from './components/FulfillmentItems';
-import Card from '../components/Card';
-import Subheader from '../components/Subheader';
-import Button from '../components/Button';
-import InputText from '../components/forms/InputText';
-import BackButton from '../components/BackButton';
-import Select from '../components/forms/Select';
+import {useForm} from '@inertiajs/inertia-react';
+import React from 'react';
 import route from 'ziggy-js';
+import BackButton from '../components/BackButton';
+import Border from '../components/Border';
+import Button from '../components/Button';
+import Card from '../components/Card';
+import InputText from '../components/forms/InputText';
+import Select from '../components/forms/Select';
+import PageHeader from '../components/PageHeader';
+import Subheader from '../components/Subheader';
+import Main from '../Main';
+import {Fulfillment, Order, VariantPivot} from '../types';
+import FulfillmentItems from './components/FulfillmentItems';
 
 interface Props {
   order: Order;

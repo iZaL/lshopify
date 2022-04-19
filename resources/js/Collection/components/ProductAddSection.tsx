@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import Card from '../../components/Card';
-import InputText from '../../components/forms/InputText';
-import {Collection, Product} from '../../types';
-import Subheader from '../../components/Subheader';
 import {SearchIcon, XIcon} from '@heroicons/react/solid';
+import React, {useEffect, useState} from 'react';
+import Border from '../../components/Border';
+import Button from '../../components/Button';
+import Card from '../../components/Card';
+import Checkbox from '../../components/forms/Checkbox';
+import InputText from '../../components/forms/InputText';
 import Select from '../../components/forms/Select';
 import Modal from '../../components/Modal';
-import Border from '../../components/Border';
-import Checkbox from '../../components/forms/Checkbox';
-import VariantImage from '../../Product/Variant/components/VariantImage';
+import Subheader from '../../components/Subheader';
 import ProductTitle from '../../Product/components/ProductTitle';
-import Button from '../../components/Button';
+import VariantImage from '../../Product/Variant/components/VariantImage';
+import {Collection, Product} from '../../types';
 
 interface Props {
   onChange: (field: keyof Collection | any, value: any) => void;

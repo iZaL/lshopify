@@ -1,9 +1,7 @@
 import React, {useEffect} from 'react';
-import Card from '../../components/Card';
-import {Collection, CollectionCondition} from '../../types';
-import Subheader from '../../components/Subheader';
-import Border from '../../components/Border';
 import Button from '../../components/Button';
+import Subheader from '../../components/Subheader';
+import {Collection, CollectionCondition} from '../../types';
 import CollectionConditionItem from './CollectionConditionItem';
 
 interface Props {

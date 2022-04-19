@@ -1,9 +1,9 @@
 import React from 'react';
-import Main from '../Main';
 import PageHeader from '../components/PageHeader';
+import Main from '../Main';
+import {Customer} from '../types';
 import CustomerIndexActionButtons from './components/CustomerIndexActionButtons';
 import CustomersList from './components/CustomersList';
-import {Customer} from '../types';
 
 interface Props {
   customers: {

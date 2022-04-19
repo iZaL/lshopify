@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Main from './Main';
 import PageHeader from './components/PageHeader';
+import Main from './Main';
 
 export default function Dashboard() {
   return (

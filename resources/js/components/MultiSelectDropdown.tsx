@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
 import SearchIcon from '@heroicons/react/outline/SearchIcon';
-import OutsideClickHandler from './OutsideClickHandler';
+import React, {useState} from 'react';
 import Button from './Button';
-import InputText from './forms/InputText';
 import Checkbox from './forms/Checkbox';
+import InputText from './forms/InputText';
+import OutsideClickHandler from './OutsideClickHandler';
 
 type Item = {
   id: number | string;

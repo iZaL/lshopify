@@ -1,18 +1,18 @@
-import React, {useEffect} from 'react';
-import Main from '../../Main';
-import PageHeader from '../../components/PageHeader';
-import {Image, Product, Variant} from '../../types';
-import {useForm} from '@inertiajs/inertia-react';
-import VariantOptionsEdit from './components/VariantOptionsEdit';
 import {Inertia} from '@inertiajs/inertia';
-import FormSubmitBar from '../../components/FormSubmitBar';
-import VariantList from './components/VariantList';
-import PricingSection from '../components/PricingSection';
-import ProductInfo from './components/ProductInfo';
-import InventorySection from '../components/InventorySection';
-import ShippingSection from '../components/ShippingSection';
+import {useForm} from '@inertiajs/inertia-react';
+import React, {useEffect} from 'react';
 import route from 'ziggy-js';
 import BackButton from '../../components/BackButton';
+import FormSubmitBar from '../../components/FormSubmitBar';
+import PageHeader from '../../components/PageHeader';
+import Main from '../../Main';
+import {Image, Product, Variant} from '../../types';
+import InventorySection from '../components/InventorySection';
+import PricingSection from '../components/PricingSection';
+import ShippingSection from '../components/ShippingSection';
+import ProductInfo from './components/ProductInfo';
+import VariantList from './components/VariantList';
+import VariantOptionsEdit from './components/VariantOptionsEdit';
 
 interface Props {
   product: Product;

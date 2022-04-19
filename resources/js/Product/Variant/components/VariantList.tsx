@@ -1,9 +1,9 @@
+import classNames from 'classnames';
 import React from 'react';
 import Card from '../../../components/Card';
-import {Variant} from '../../../types';
 import Subheader from '../../../components/Subheader';
+import {Variant} from '../../../types';
 import VariantImage from './VariantImage';
-import classNames from 'classnames';
 
 interface Props {
   variants: Variant[];

@@ -1,16 +1,16 @@
 import React, {useState} from 'react';
-import Card from '../../../components/Card';
-import Subheader from '../../../components/Subheader';
-import InputText from '../../../components/forms/InputText';
 import Border from '../../../components/Border';
-import Modal from '../../../components/Modal';
-import {Cart, CartDiscount, CartItem, Product} from '../../../types';
-import Label from '../../../components/forms/Label';
-import DiscountAdd from './DiscountAdd';
-import ModalFooter from '../../../components/ModalFooter';
-import ProductSearch from '../../../Product/components/ProductSearch';
-import CartItems from './CartItems';
 import Button from '../../../components/Button';
+import Card from '../../../components/Card';
+import InputText from '../../../components/forms/InputText';
+import Label from '../../../components/forms/Label';
+import Modal from '../../../components/Modal';
+import ModalFooter from '../../../components/ModalFooter';
+import Subheader from '../../../components/Subheader';
+import ProductSearch from '../../../Product/components/ProductSearch';
+import {Cart, CartDiscount, CartItem, Product} from '../../../types';
+import CartItems from './CartItems';
+import DiscountAdd from './DiscountAdd';
 
 interface Props {
   searchTerm: string;

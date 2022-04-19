@@ -1,8 +1,8 @@
+import {ContentState, convertFromHTML, EditorState} from 'draft-js';
+import {stateToHTML} from 'draft-js-export-html';
 import React, {useState} from 'react';
 import {Editor} from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import {convertFromHTML, ContentState, EditorState} from 'draft-js';
-import {stateToHTML} from 'draft-js-export-html';
 
 interface TextAreaProps {
   richText?: boolean;

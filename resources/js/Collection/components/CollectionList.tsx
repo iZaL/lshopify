@@ -1,11 +1,11 @@
-import React from 'react';
-import {Collection, CollectionCondition} from '../../types';
 import {Inertia} from '@inertiajs/inertia';
+import React from 'react';
 import route from 'ziggy-js';
 import Button from '../../components/Button';
-import VariantImage from '../../Product/Variant/components/VariantImage';
-import Table from '../../components/Table';
 import SmartTable from '../../components/SmartTable';
+import Table from '../../components/Table';
+import VariantImage from '../../Product/Variant/components/VariantImage';
+import {Collection, CollectionCondition} from '../../types';
 
 interface Props {
   collections: Collection[];

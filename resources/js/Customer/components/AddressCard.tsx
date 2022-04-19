@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {Billing, CustomerAddress, Shipping} from '../../types';
 import Modal from '../../components/Modal';
-import Subheader from '../../components/Subheader';
-import AddressForm from './AddressForm';
 import ModalFooter from '../../components/ModalFooter';
+import Subheader from '../../components/Subheader';
+import {Billing, CustomerAddress, Shipping} from '../../types';
+import AddressForm from './AddressForm';
 
 interface Props {
   address: Shipping | Billing;

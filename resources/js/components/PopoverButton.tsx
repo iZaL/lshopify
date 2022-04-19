@@ -1,7 +1,7 @@
-import React, {Fragment} from 'react';
-import {ChevronDownIcon} from '@heroicons/react/solid';
 import {Popover, Transition} from '@headlessui/react';
+import {ChevronDownIcon} from '@heroicons/react/solid';
 import classNames from 'classnames';
+import React, {Fragment} from 'react';
 
 export default function PopoverButton({
   title,

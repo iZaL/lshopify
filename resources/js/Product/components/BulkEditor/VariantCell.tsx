@@ -1,8 +1,8 @@
-import {Product, Variant} from '../../../types';
-import InputText from '../../../components/forms/InputText';
 import React from 'react';
-import {AttributeLabel} from './types';
 import Checkbox from '../../../components/forms/Checkbox';
+import InputText from '../../../components/forms/InputText';
+import {Variant} from '../../../types';
+import {AttributeLabel} from './types';
 
 export default function VariantCell({
   value,

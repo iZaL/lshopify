@@ -1,13 +1,13 @@
-import React from 'react';
-import {ButtonTheme, Product} from '../../types';
 import {Inertia} from '@inertiajs/inertia';
-import Button from '../../components/Button';
-import Table from '../../components/Table';
-import DropdownButton from '../../components/DropdownButton';
-import SmartTable from '../../components/SmartTable';
-import VariantImage from '../Variant/components/VariantImage';
-import Modal from '../../components/Modal';
+import React from 'react';
 import route from 'ziggy-js';
+import Button from '../../components/Button';
+import DropdownButton from '../../components/DropdownButton';
+import Modal from '../../components/Modal';
+import SmartTable from '../../components/SmartTable';
+import Table from '../../components/Table';
+import {ButtonTheme, Product} from '../../types';
+import VariantImage from '../Variant/components/VariantImage';
 
 interface Props {
   products: Product[];

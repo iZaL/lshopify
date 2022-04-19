@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import Main from '../Main';
 import PageHeader from '../components/PageHeader';
+import RightSidebar from '../components/RightSidebar';
+import Main from '../Main';
 import {Collection} from '../types';
 import CollectionIndexActionButtons from './components/CollectionIndexActionButtons';
 import CollectionList from './components/CollectionList';
-import RightSidebar from '../components/RightSidebar';
 import CollectionSearchBar from './components/CollectionSearchBar';
 
 interface Props {

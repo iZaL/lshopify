@@ -1,11 +1,11 @@
+import classNames from 'classnames';
 import React, {useState} from 'react';
 import {Collection, Image} from '../types';
-import Card from './Card';
-import Subheader from './Subheader';
 import Button from './Button';
-import classNames from 'classnames';
-import Modal from './Modal';
+import Card from './Card';
 import DZFileUploadBox from './forms/DZFileUploadBox';
+import Modal from './Modal';
+import Subheader from './Subheader';
 
 interface Props {
   data: Collection & {searchTerm: string; sortTerm: string};

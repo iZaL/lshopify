@@ -1,6 +1,6 @@
-import React, {Fragment, useState} from 'react';
 import {Popover, Transition} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/solid';
+import React, {Fragment, useState} from 'react';
 import TabPill from '../../components/TabPill';
 
 type Field = string;

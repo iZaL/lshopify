@@ -1,8 +1,7 @@
 import React from 'react';
-import {Order} from '../../types';
-import Checkbox from '../../components/forms/Checkbox';
-import Table from '../../components/Table';
 import SmartTable from '../../components/SmartTable';
+import Table from '../../components/Table';
+import {Order} from '../../types';
 
 interface Props {
   orders: Order[];

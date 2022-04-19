@@ -1,7 +1,7 @@
 import React from 'react';
-import {Product} from '../../types';
-import VariantImage from '../../Product/Variant/components/VariantImage';
 import Checkbox from '../../components/forms/Checkbox';
+import VariantImage from '../../Product/Variant/components/VariantImage';
+import {Product} from '../../types';
 
 interface Props {
   product: Product;

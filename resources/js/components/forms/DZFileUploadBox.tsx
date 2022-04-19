@@ -1,7 +1,7 @@
+import classNames from 'classnames';
 import React from 'react';
 import {useDropzone} from 'react-dropzone';
 import {Image} from '../../types';
-import classNames from 'classnames';
 
 interface Props {
   isMulti?: boolean;

@@ -1,8 +1,8 @@
-import React, {Fragment, ReactNode, useEffect, useState} from 'react';
 import {Dialog, Transition} from '@headlessui/react';
-import ModalFooter from './ModalFooter';
-import Button from './Button';
+import React, {Fragment, ReactNode, useEffect, useState} from 'react';
 import {ButtonTheme} from '../types';
+import Button from './Button';
+import ModalFooter from './ModalFooter';
 
 interface Props {
   visible: boolean;

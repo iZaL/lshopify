@@ -1,6 +1,6 @@
-import {Image} from './types';
-import route from 'ziggy-js';
 import {Inertia, VisitOptions} from '@inertiajs/inertia';
+import route from 'ziggy-js';
+import {Image} from './types';
 
 export const deleteImages = (images: Image[], options?: VisitOptions) => {
   const url = route('lshopify.images.delete');

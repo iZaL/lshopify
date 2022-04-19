@@ -1,10 +1,10 @@
 import React from 'react';
-import Card from '../../components/Card';
-import Subheader from '../../components/Subheader';
-import Checkbox from '../../components/forms/Checkbox';
-import {Product, ProductStatus} from '../../types';
-import Select from '../../components/forms/Select';
 import Border from '../../components/Border';
+import Card from '../../components/Card';
+import Checkbox from '../../components/forms/Checkbox';
+import Select from '../../components/forms/Select';
+import Subheader from '../../components/Subheader';
+import {Product, ProductStatus} from '../../types';
 
 interface Props {
   onChange: (field: keyof Product, value: any) => void;

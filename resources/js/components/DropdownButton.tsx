@@ -1,8 +1,8 @@
+import {Menu} from '@headlessui/react';
+import {ChevronDownIcon} from '@heroicons/react/solid';
+import classNames from 'classnames';
 import React, {useState} from 'react';
 import Button from './Button';
-import {ChevronDownIcon, DotsVerticalIcon} from '@heroicons/react/solid';
-import {Menu} from '@headlessui/react';
-import classNames from 'classnames';
 import OutsideClickHandler from './OutsideClickHandler';
 
 interface Props {

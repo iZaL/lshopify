@@ -1,10 +1,10 @@
-import React from 'react';
 import {XIcon} from '@heroicons/react/solid';
-import {CartDiscount, CartItem} from '../../../types';
-import VariantImage from '../../../Product/Variant/components/VariantImage';
-import ProductTitle from '../../../Product/components/ProductTitle';
-import InputText from '../../../components/forms/InputText';
+import React from 'react';
 import Button from '../../../components/Button';
+import InputText from '../../../components/forms/InputText';
+import ProductTitle from '../../../Product/components/ProductTitle';
+import VariantImage from '../../../Product/Variant/components/VariantImage';
+import {CartDiscount, CartItem} from '../../../types';
 
 interface Props {
   items: CartItem[];

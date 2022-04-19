@@ -1,6 +1,20 @@
+import {
+  CheckCircleIcon,
+  DotsHorizontalIcon,
+  SupportIcon,
+} from '@heroicons/react/outline';
+import {Inertia} from '@inertiajs/inertia';
+import {useForm} from '@inertiajs/inertia-react';
 import React, {useEffect, useState} from 'react';
+import route from 'ziggy-js';
+import BackButton from '../components/BackButton';
+import Border from '../components/Border';
+import Button from '../components/Button';
+import Card from '../components/Card';
+import DropdownButton from '../components/DropdownButton';
+import Subheader from '../components/Subheader';
+import {CustomerForm} from '../form_types';
 import Main from '../Main';
-import PageHeader from './../components/PageHeader';
 import {
   Billing,
   Customer,
@@ -10,26 +24,12 @@ import {
   Shipping,
   VariantPivot,
 } from '../types';
+import PageHeader from './../components/PageHeader';
 import OrderItems from './components/OrderItems';
-import Card from '../components/Card';
-import Button from '../components/Button';
-import Border from '../components/Border';
-import Subheader from '../components/Subheader';
-import {Inertia} from '@inertiajs/inertia';
 import CustomerEdit from './Draft/components/CustomerEdit';
 import CustomerSelect from './Draft/components/CustomerSelect';
-import {useForm} from '@inertiajs/inertia-react';
 import PaymentPaid from './Payment/components/PaymentPaid';
 import PaymentPending from './Payment/components/PaymentPending';
-import route from 'ziggy-js';
-import {CustomerForm} from '../form_types';
-import BackButton from '../components/BackButton';
-import DropdownButton from '../components/DropdownButton';
-import {
-  CheckCircleIcon,
-  DotsHorizontalIcon,
-  SupportIcon,
-} from '@heroicons/react/outline';
 
 interface Props {
   order: Order;

@@ -1,6 +1,6 @@
-import React from 'react';
 import {Disclosure} from '@headlessui/react';
 import {ChevronDownIcon, ChevronUpIcon} from '@heroicons/react/solid';
+import React from 'react';
 
 const DisclosureButton = ({open, title}: {open: boolean; title: string}) => {
   return (

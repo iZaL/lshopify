@@ -1,6 +1,6 @@
-import React from 'react';
 import {XCircleIcon} from '@heroicons/react/solid';
 import {ErrorBag, Errors} from '@inertiajs/inertia';
+import React from 'react';
 
 interface Props {
   errors: Errors & ErrorBag;

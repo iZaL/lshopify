@@ -1,11 +1,11 @@
-import React from 'react';
-import {ButtonTheme, Customer, Product} from '../../types';
 import {Inertia} from '@inertiajs/inertia';
+import React from 'react';
+import route from 'ziggy-js';
 import Button from '../../components/Button';
-import Table from '../../components/Table';
 import DropdownButton from '../../components/DropdownButton';
 import SmartTable from '../../components/SmartTable';
-import route from 'ziggy-js';
+import Table from '../../components/Table';
+import {Customer} from '../../types';
 
 interface Props {
   customers: Customer[];

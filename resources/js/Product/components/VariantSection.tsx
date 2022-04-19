@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import Card from '../../components/Card';
-import Subheader from '../../components/Subheader';
-import Checkbox from '../../components/forms/Checkbox';
 import Border from '../../components/Border';
-import VariantOptionsItem from './Variants/VariantOptionsItem';
-import {Variant, VariantOption, VariantValue} from '../../types';
 import Button from '../../components/Button';
+import Card from '../../components/Card';
+import Checkbox from '../../components/forms/Checkbox';
+import Subheader from '../../components/Subheader';
+import {Variant, VariantOption, VariantValue} from '../../types';
+import VariantOptionsItem from './Variants/VariantOptionsItem';
 
 interface Props {
   currentVariantOptions: VariantOption[];

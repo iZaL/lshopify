@@ -1,8 +1,8 @@
 import React from 'react';
-import Subheader from '../../components/Subheader';
-import Label from '../../components/forms/Label';
 import InputText from '../../components/forms/InputText';
+import Label from '../../components/forms/Label';
 import Select from '../../components/forms/Select';
+import Subheader from '../../components/Subheader';
 
 export default function ShippingInfo() {
   return (

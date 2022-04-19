@@ -1,11 +1,11 @@
 import React from 'react';
-import Card from '../../components/Card';
-import Label from '../../components/forms/Label';
-import InputText from '../../components/forms/InputText';
-import Subheader from '../../components/Subheader';
-import Checkbox from '../../components/forms/Checkbox';
-import {Variant} from '../../types';
 import Border from '../../components/Border';
+import Card from '../../components/Card';
+import Checkbox from '../../components/forms/Checkbox';
+import InputText from '../../components/forms/InputText';
+import Label from '../../components/forms/Label';
+import Subheader from '../../components/Subheader';
+import {Variant} from '../../types';
 
 interface Props {
   onChange: <T extends keyof Variant>(field: T, value: Variant[T]) => void;

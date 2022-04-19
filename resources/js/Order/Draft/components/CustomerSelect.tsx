@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
-import Card from '../../../components/Card';
-import Subheader from '../../../components/Subheader';
 import {PlusCircleIcon, SearchIcon} from '@heroicons/react/solid';
-import InputText from '../../../components/forms/InputText';
-import Dropdown from '../../../components/Dropdown';
+import React, {useState} from 'react';
 import Border from '../../../components/Border';
+import Card from '../../../components/Card';
+import Dropdown from '../../../components/Dropdown';
+import InputText from '../../../components/forms/InputText';
 import Modal from '../../../components/Modal';
-import CreateCustomerForm from '../../../Customer/components/CreateCustomerForm';
-import {Customer, CustomerAddress} from '../../../types';
-import {CustomerForm} from '../../../form_types';
 import ModalFooter from '../../../components/ModalFooter';
+import Subheader from '../../../components/Subheader';
+import CreateCustomerForm from '../../../Customer/components/CreateCustomerForm';
+import {CustomerForm} from '../../../form_types';
+import {Customer, CustomerAddress} from '../../../types';
 
 interface Props {
   searchTerm: string;

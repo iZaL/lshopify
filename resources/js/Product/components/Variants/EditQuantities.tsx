@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {Variant} from '../../../types';
-import InputText from '../../../components/forms/InputText';
 import Button from '../../../components/Button';
+import InputText from '../../../components/forms/InputText';
+import {Variant} from '../../../types';
 
 interface Props {
   variants: Variant[];

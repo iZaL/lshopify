@@ -1,8 +1,7 @@
+import {Inertia} from '@inertiajs/inertia';
 import React from 'react';
-import {Link} from '@inertiajs/inertia-react';
 import route from 'ziggy-js';
 import Button from '../../components/Button';
-import {Inertia} from '@inertiajs/inertia';
 
 export default function ProductIndexActionButtons() {
   return (

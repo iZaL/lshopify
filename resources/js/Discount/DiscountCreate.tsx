@@ -1,37 +1,37 @@
-import React, {useState} from 'react';
-import Main from '../Main';
-import PageHeader from '../components/PageHeader';
-import FormSubmitBar from '../components/FormSubmitBar';
-import {useForm} from '@inertiajs/inertia-react';
 import {Inertia} from '@inertiajs/inertia';
-import route from 'ziggy-js';
-import Subheader from '../components/Subheader';
-import Card from '../components/Card';
-import Border from '../components/Border';
-import BackButton from '../components/BackButton';
-import Label from '../components/forms/Label';
-import InputText from '../components/forms/InputText';
+import {useForm} from '@inertiajs/inertia-react';
+import {format} from 'date-fns';
+import React, {useState} from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import {format} from 'date-fns';
+import route from 'ziggy-js';
+import BackButton from '../components/BackButton';
+import Border from '../components/Border';
 import Button from '../components/Button';
+import Card from '../components/Card';
 import Checkbox from '../components/forms/Checkbox';
+import InputText from '../components/forms/InputText';
+import Label from '../components/forms/Label';
+import FormSubmitBar from '../components/FormSubmitBar';
+import PageHeader from '../components/PageHeader';
+import Subheader from '../components/Subheader';
+import Main from '../Main';
 
 interface Discount {
   type: 'code' | 'automatic';
   value: string;
-  value_type:'fixed_amount' | 'percentage';
-  code:string,
+  value_type: 'fixed_amount' | 'percentage';
+  code: string;
 }
 
 interface Props {
-  discount: Discount
+  discount: Discount;
 }
 
 export default function DiscountCreate({discount}: Props) {
   const {data, setData, isDirty} = useForm<Discount>(discount);
 
-  const {code,type,value,value_type} = data;
+  const {code, type, value, value_type} = data;
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -43,7 +43,7 @@ export default function DiscountCreate({discount}: Props) {
     //     Inertia.reload();
     //   },
     // });
-  }
+  };
 
   const handleSubmit = () => {
     const url = route('lshopify.collections.store');
@@ -71,17 +71,18 @@ export default function DiscountCreate({discount}: Props) {
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
           <section className="space-y-6 space-y-6 lg:col-span-2 lg:col-start-1">
             <Card>
-              <div className='flex flex-row justify-between'>
+              <div className="flex flex-row justify-between">
                 <Subheader
                   headerStyle="first-letter:capitalize"
                   text={type === 'code' ? 'Discount code' : 'Automatic'}
                 />
 
                 <Button
-                  theme='clear'
-                  buttonStyle='text-blue-500 hover:underline'
-                  onClick={generateDiscountCode}
-                >Generate code</Button>
+                  theme="clear"
+                  buttonStyle="text-blue-500 hover:underline"
+                  onClick={generateDiscountCode}>
+                  Generate code
+                </Button>
               </div>
 
               <div>

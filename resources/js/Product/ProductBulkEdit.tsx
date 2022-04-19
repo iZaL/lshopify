@@ -1,23 +1,23 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import Main from '../Main';
-import FormSubmitBar from '../components/FormSubmitBar';
-import {useForm} from '@inertiajs/inertia-react';
-import {Product, Tag, Variant} from '../types';
-import Card from '../components/Card';
-import BackButton from '../components/BackButton';
 import {Inertia} from '@inertiajs/inertia';
+import {useForm} from '@inertiajs/inertia-react';
+import React, {Fragment, useEffect, useState} from 'react';
 import route from 'ziggy-js';
+import BackButton from '../components/BackButton';
+import Card from '../components/Card';
+import FormSubmitBar from '../components/FormSubmitBar';
 import PageHeader from '../components/PageHeader';
+import TabPill from '../components/TabPill';
+import Main from '../Main';
+import {Product, Tag, Variant} from '../types';
+import Cell from './components/BulkEditor/Cell';
 import ProductCell from './components/BulkEditor/ProductCell';
-import VariantCell from './components/BulkEditor/VariantCell';
+import TagsPopup from './components/BulkEditor/TagsPopup';
 import {
   AttributeLabel,
   ProductAttributes,
   VariantAttributes,
 } from './components/BulkEditor/types';
-import TagsPopup from './components/BulkEditor/TagsPopup';
-import Cell from './components/BulkEditor/Cell';
-import TabPill from '../components/TabPill';
+import VariantCell from './components/BulkEditor/VariantCell';
 
 interface Props {
   products: Product[];

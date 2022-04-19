@@ -1,9 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import Main from '../../Main';
-import PageHeader from '../../components/PageHeader';
-import FormSubmitBar from '../../components/FormSubmitBar';
 import {Inertia} from '@inertiajs/inertia';
 import {useForm} from '@inertiajs/inertia-react';
+import React, {useEffect, useState} from 'react';
+import route from 'ziggy-js';
+import BackButton from '../../components/BackButton';
+import FormSubmitBar from '../../components/FormSubmitBar';
+import PageHeader from '../../components/PageHeader';
+import {CustomerForm} from '../../form_types';
+import Main from '../../Main';
 import {
   Billing,
   Cart,
@@ -15,12 +18,9 @@ import {
   Product,
   Shipping,
 } from '../../types';
-import DraftOrderDetailsSection from './components/DraftOrderDetailsSection';
-import CustomerSelect from './components/CustomerSelect';
 import CustomerEdit from './components/CustomerEdit';
-import route from 'ziggy-js';
-import {CustomerForm} from '../../form_types';
-import BackButton from '../../components/BackButton';
+import CustomerSelect from './components/CustomerSelect';
+import DraftOrderDetailsSection from './components/DraftOrderDetailsSection';
 
 interface Props {
   products: Product[];

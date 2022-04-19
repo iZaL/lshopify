@@ -1,9 +1,9 @@
+import {InertiaLink} from '@inertiajs/inertia-react';
 import React from 'react';
+import route from 'ziggy-js';
 import Card from '../../../components/Card';
 import {Product, Variant} from '../../../types';
-import {InertiaLink} from '@inertiajs/inertia-react';
 import VariantImage from './VariantImage';
-import route from 'ziggy-js';
 
 interface Props {
   product: Product;

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {Variant} from '../../../types';
 import Button from '../../../components/Button';
+import {Variant} from '../../../types';
 
 interface Props {
   variants: Variant[];

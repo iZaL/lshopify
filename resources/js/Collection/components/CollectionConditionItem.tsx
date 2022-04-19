@@ -1,8 +1,8 @@
+import {TrashIcon} from '@heroicons/react/outline';
 import React from 'react';
-import {CollectionCondition} from '../../types';
 import InputText from '../../components/forms/InputText';
 import Select from '../../components/forms/Select';
-import {TrashIcon} from '@heroicons/react/outline';
+import {CollectionCondition} from '../../types';
 
 interface Props {
   condition: CollectionCondition;

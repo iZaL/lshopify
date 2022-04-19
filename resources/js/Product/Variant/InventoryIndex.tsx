@@ -1,13 +1,13 @@
+import {Inertia} from '@inertiajs/inertia';
+import {useForm} from '@inertiajs/inertia-react';
 import React from 'react';
+import route from 'ziggy-js';
+import PageHeader from '../../components/PageHeader';
 import Main from '../../Main';
 import {Variant} from '../../types';
-import PageHeader from '../../components/PageHeader';
 import InventoryIndexActionButtons from './components/InventoryIndexActionButtons';
-import InventoryList from './InventoryList';
 import InventorySearchBar from './components/InventorySearchBar';
-import {useForm} from '@inertiajs/inertia-react';
-import {Inertia} from '@inertiajs/inertia';
-import route from 'ziggy-js';
+import InventoryList from './InventoryList';
 
 interface Props {
   variants: Variant[];

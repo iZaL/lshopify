@@ -1,17 +1,19 @@
-import React, {useEffect} from 'react';
-import Main from '../Main';
-import PageHeader from '../components/PageHeader';
-import TitleSection from './components/TitleSection';
-import MediaSection from './components/MediaSection';
-import PricingSection from './components/PricingSection';
-import InventorySection from './components/InventorySection';
-import ShippingSection from './components/ShippingSection';
-import VariantSection from './components/VariantSection';
-import StatusSection from './components/StatusSection';
-import FormSubmitBar from '../components/FormSubmitBar';
-import VariantEditSection from './components/VariantEditSection';
-import {useForm} from '@inertiajs/inertia-react';
 import {Inertia} from '@inertiajs/inertia';
+import {useForm} from '@inertiajs/inertia-react';
+import React, {useEffect} from 'react';
+import route from 'ziggy-js';
+import {deleteImages, uploadImages} from '../api';
+import BackButton from '../components/BackButton';
+import Border from '../components/Border';
+import Card from '../components/Card';
+import Label from '../components/forms/Label';
+import FormSubmitBar from '../components/FormSubmitBar';
+import MultiSelect from '../components/MultiSelect';
+import MultiSelectDropdown from '../components/MultiSelectDropdown';
+import PageHeader from '../components/PageHeader';
+import SingleSelect from '../components/SingleSelect';
+import Subheader from '../components/Subheader';
+import Main from '../Main';
 import {
   Category,
   Collection,
@@ -20,20 +22,16 @@ import {
   Tag,
   Variant,
   VariantOption,
-  VariantValue,
   Vendor,
 } from '../types';
-import route from 'ziggy-js';
-import BackButton from '../components/BackButton';
-import Subheader from '../components/Subheader';
-import Card from '../components/Card';
-import Label from '../components/forms/Label';
-import Border from '../components/Border';
-import SingleSelect from '../components/SingleSelect';
-import MultiSelect from '../components/MultiSelect';
-import MultiSelectDropdown from '../components/MultiSelectDropdown';
+import InventorySection from './components/InventorySection';
+import MediaSection from './components/MediaSection';
+import PricingSection from './components/PricingSection';
+import ShippingSection from './components/ShippingSection';
+import StatusSection from './components/StatusSection';
+import TitleSection from './components/TitleSection';
+import VariantSection from './components/VariantSection';
 import VariantsListSection from './components/VariantsListSection';
-import {deleteImages, uploadImages} from '../api';
 
 interface Props {
   product: Product;

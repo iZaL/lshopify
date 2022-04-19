@@ -1,8 +1,8 @@
-import React, {ReactNode, useEffect, useMemo, useState} from 'react';
-import {usePage} from '@inertiajs/inertia-react';
+import {Transition} from '@headlessui/react';
 import {XIcon} from '@heroicons/react/solid';
 import {Page} from '@inertiajs/inertia';
-import {Transition} from '@headlessui/react';
+import {usePage} from '@inertiajs/inertia-react';
+import React, {ReactNode, useEffect, useMemo, useState} from 'react';
 import Button from './Button';
 
 type FlashMessageType = {

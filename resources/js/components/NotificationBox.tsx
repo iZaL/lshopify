@@ -1,5 +1,5 @@
+import {CheckCircleIcon, XIcon} from '@heroicons/react/solid';
 import React from 'react';
-import {XIcon, CheckCircleIcon} from '@heroicons/react/solid';
 
 interface Props {
   message?: string;

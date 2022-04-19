@@ -1,16 +1,16 @@
-import React from 'react';
-import Main from '../Main';
-import PageHeader from '../components/PageHeader';
-import TitleSection from './components/TitleSection';
-import FormSubmitBar from '../components/FormSubmitBar';
+import {Inertia} from '@inertiajs/inertia';
 import {useForm} from '@inertiajs/inertia-react';
+import React from 'react';
+import route from 'ziggy-js';
+import Border from '../components/Border';
+import Card from '../components/Card';
+import FormSubmitBar from '../components/FormSubmitBar';
+import PageHeader from '../components/PageHeader';
+import Subheader from '../components/Subheader';
+import Main from '../Main';
 import {Collection} from '../types';
 import CollectionTypeSection from './components/CollectionTypeSection';
-import {Inertia} from '@inertiajs/inertia';
-import route from 'ziggy-js';
-import Subheader from '../components/Subheader';
-import Card from '../components/Card';
-import Border from '../components/Border';
+import TitleSection from './components/TitleSection';
 
 export default function CollectionCreate() {
   const collection: Collection = {

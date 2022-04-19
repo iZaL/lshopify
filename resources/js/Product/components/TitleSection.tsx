@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from '../../components/Card';
-import Label from '../../components/forms/Label';
 import InputText from '../../components/forms/InputText';
+import Label from '../../components/forms/Label';
 import TextArea from '../../components/forms/TextArea';
 import {Product} from '../../types';
 

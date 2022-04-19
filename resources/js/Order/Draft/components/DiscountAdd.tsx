@@ -1,7 +1,7 @@
 import React, {ReactElement, useState} from 'react';
+import InputText from '../../../components/forms/InputText';
 import Label from '../../../components/forms/Label';
 import Select from '../../../components/forms/Select';
-import InputText from '../../../components/forms/InputText';
 import {CartDiscount} from '../../../types';
 
 type Props = CartDiscount & {
