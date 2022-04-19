@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 interface Props {
+  type?:'radio' | 'checkbox';
   name?: string;
   label?: string;
   checked: boolean;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function Checkbox({
+  type = 'checkbox',
   name,
   label,
   inputStyle,
@@ -23,10 +25,10 @@ export default function Checkbox({
       <input
         id={name}
         name={name}
-        type="checkbox"
+        type={type}
         checked={checked}
         className={classNames(
-          'focus:shadow-outline h-4 w-4 rounded border-gray-500 text-indigo-500 focus:outline-none',
+          {'focus:shadow-outline h-4 w-4 rounded border-gray-500 text-indigo-500 focus:outline-none': type==='checkbox'},
           inputStyle,
         )}
         onChange={onChange}

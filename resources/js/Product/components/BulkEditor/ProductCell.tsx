@@ -90,16 +90,6 @@ export default function ProductCell({
           </Popover.Panel>
         </Popover>
       </div>
-
-      // <div onClick={()=>{}} className='flex p-1 min-w-[250px] space-x-1 flex-shrink-0'>
-      //   {
-      //     product.collection?.map((tag, idx) => (
-      //       <div key={idx} className="rounded rounded-md bg-gray-200 p-1 px-2 text-sm text-gray-700 ">
-      //         {tag.name}
-      //       </div>
-      //     ))
-      //   }
-      // </div>
     );
   }
 

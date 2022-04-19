@@ -14,16 +14,36 @@ import InputText from '../components/forms/InputText';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import {format} from 'date-fns';
+import Button from '../components/Button';
+import Checkbox from '../components/forms/Checkbox';
 
-interface Props {
-  discount_type: 'code' | 'automatic';
+interface Discount {
+  type: 'code' | 'automatic';
+  value: string;
+  value_type:'fixed_amount' | 'percentage';
+  code:string,
 }
 
-export default function DiscountCreate({discount_type}: Props) {
-  const {data, setData, isDirty} = useForm({});
+interface Props {
+  discount: Discount
+}
+
+export default function DiscountCreate({discount}: Props) {
+  const {data, setData, isDirty} = useForm<Discount>(discount);
+
+  const {code,type,value,value_type} = data;
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+
+  const generateDiscountCode = () => {
+    // const url = route('lshopify.discounts.generate_disconut_code');
+    // Inertia.post(url, data, {
+    //   onSuccess: () => {
+    //     Inertia.reload();
+    //   },
+    // });
+  }
 
   const handleSubmit = () => {
     const url = route('lshopify.collections.store');
@@ -33,10 +53,6 @@ export default function DiscountCreate({discount_type}: Props) {
       },
     });
   };
-
-  // return (
-  //   <DatePicker selected={startDate} onChange={(date:Date) => setStartDate(date)} />
-  // )
 
   return (
     <Main>
@@ -49,24 +65,31 @@ export default function DiscountCreate({discount_type}: Props) {
               Inertia.get(route('lshopify.discounts.index'));
             }}
           />
-          <PageHeader text={`Create ${discount_type} discount`} />
+          <PageHeader text={`Create ${type} discount`} />
         </div>
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
           <section className="space-y-6 space-y-6 lg:col-span-2 lg:col-start-1">
             <Card>
-              <Subheader
-                headerStyle="first-letter:capitalize"
-                text={`${discount_type} discount`}
-              />
+              <div className='flex flex-row justify-between'>
+                <Subheader
+                  headerStyle="first-letter:capitalize"
+                  text={type === 'code' ? 'Discount code' : 'Automatic'}
+                />
+
+                <Button
+                  theme='clear'
+                  buttonStyle='text-blue-500 hover:underline'
+                  onClick={generateDiscountCode}
+                >Generate code</Button>
+              </div>
 
               <div>
-                <Label title="Title" />
                 <InputText
                   name="title"
                   placeholder={'e.g. Ramadan promotion'}
-                  onChange={e => {}}
-                  value={''}
+                  onChange={e => setData('code', e.target.value)}
+                  value={code}
                 />
                 <p className="block py-1 text-sm text-gray-500">
                   Customers will see this in cart and at checkout.
@@ -79,22 +102,18 @@ export default function DiscountCreate({discount_type}: Props) {
 
               <div className="flex flex-col space-y-2 text-sm">
                 <div className="inline-flex items-center">
-                  <input
-                    type="radio"
-                    value="manual"
-                    name="type"
-                    checked={false}
-                    onChange={() => {}}
+                  <Checkbox
+                    type={'radio'}
+                    checked={value_type === 'percentage'}
+                    onChange={() => setData('value_type', 'percentage')}
                   />
                   <div className="ml-3">Percentage</div>
                 </div>
                 <div className="inline-flex items-center">
-                  <input
-                    type="radio"
-                    value="smart"
-                    name="type"
-                    checked={true}
-                    onChange={() => {}}
+                  <Checkbox
+                    type={'radio'}
+                    checked={value_type === 'fixed_amount'}
+                    onChange={() => setData('value_type', 'fixed_amount')}
                   />
                   <div className="ml-3">Fixed amount</div>
                 </div>
@@ -108,11 +127,9 @@ export default function DiscountCreate({discount_type}: Props) {
                 <Label title="Discount value" />
                 <div className="w-48">
                   <InputText
-                    name="title"
-                    placeholder={''}
-                    onChange={e => {}}
-                    value={''}
-                    inputStyle=""
+                    name="value"
+                    onChange={e => setData('value', e.target.value)}
+                    value={value}
                     rightComponent={
                       <span className="text-sm text-gray-400">%</span>
                     }
