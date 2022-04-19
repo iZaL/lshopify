@@ -1,19 +1,19 @@
-import React, { useState } from 'react'
-import Main from '../Main'
-import PageHeader from '../components/PageHeader'
-import FormSubmitBar from '../components/FormSubmitBar'
-import { useForm } from '@inertiajs/inertia-react'
-import { Inertia } from '@inertiajs/inertia'
-import route from 'ziggy-js'
-import Subheader from '../components/Subheader'
-import Card from '../components/Card'
-import Border from '../components/Border'
-import BackButton from '../components/BackButton'
-import Label from '../components/forms/Label'
-import InputText from '../components/forms/InputText'
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
-import { format } from 'date-fns'
+import React, {useState} from 'react';
+import Main from '../Main';
+import PageHeader from '../components/PageHeader';
+import FormSubmitBar from '../components/FormSubmitBar';
+import {useForm} from '@inertiajs/inertia-react';
+import {Inertia} from '@inertiajs/inertia';
+import route from 'ziggy-js';
+import Subheader from '../components/Subheader';
+import Card from '../components/Card';
+import Border from '../components/Border';
+import BackButton from '../components/BackButton';
+import Label from '../components/forms/Label';
+import InputText from '../components/forms/InputText';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import {format} from 'date-fns';
 
 interface Props {
   discount_type: 'code' | 'automatic';
@@ -227,27 +227,38 @@ export default function DiscountCreate({discount_type}: Props) {
                     onChange={(date: Date) => setStartDate(date)}
                     startDate={startDate}
                     customInput={
-                      <div className='w-full'><InputText name='' onChange={()=>{}} value={format(startDate,'d/M/yyyy')}/></div>
+                      <div className="w-full">
+                        <InputText
+                          name=""
+                          onChange={() => {}}
+                          value={format(startDate, 'd/M/yyyy')}
+                        />
+                      </div>
                     }
                   />
                 </div>
 
-                <div className='flex-1'>
+                <div className="flex-1">
                   <Label title={'Start time'} />
                   <DatePicker
                     selected={startDate}
-                    onChange={(date:Date) => setStartDate(date)}
+                    onChange={(date: Date) => setStartDate(date)}
                     showTimeSelect
                     showTimeSelectOnly
                     timeIntervals={15}
                     timeCaption="Time"
                     dateFormat="h:mm aa"
                     customInput={
-                      <div className='w-full'><InputText name='' onChange={()=>{}} value={format(startDate,'h:mm aa')}/></div>
+                      <div className="w-full">
+                        <InputText
+                          name=""
+                          onChange={() => {}}
+                          value={format(startDate, 'h:mm aa')}
+                        />
+                      </div>
                     }
                   />
                 </div>
-
               </div>
 
               <div className="flex flex-row space-x-4">
@@ -258,29 +269,39 @@ export default function DiscountCreate({discount_type}: Props) {
                     onChange={(date: Date) => setEndDate(date)}
                     startDate={endDate}
                     customInput={
-                      <div className='w-full'><InputText name='' onChange={()=>{}} value={format(endDate,'d/M/yyyy')}/></div>
+                      <div className="w-full">
+                        <InputText
+                          name=""
+                          onChange={() => {}}
+                          value={format(endDate, 'd/M/yyyy')}
+                        />
+                      </div>
                     }
                   />
                 </div>
 
-                <div className='flex-1'>
+                <div className="flex-1">
                   <Label title={'End time'} />
                   <DatePicker
                     selected={endDate}
-                    onChange={(date:Date) => setEndDate(date)}
+                    onChange={(date: Date) => setEndDate(date)}
                     showTimeSelect
                     showTimeSelectOnly
                     timeIntervals={15}
                     timeCaption="Time"
                     dateFormat="h:mm aa"
                     customInput={
-                      <div className='w-full'><InputText name='' onChange={()=>{}} value={format(endDate,'h:mm aa')}/></div>
+                      <div className="w-full">
+                        <InputText
+                          name=""
+                          onChange={() => {}}
+                          value={format(endDate, 'h:mm aa')}
+                        />
+                      </div>
                     }
                   />
                 </div>
-
               </div>
-
             </Card>
           </section>
         </div>
