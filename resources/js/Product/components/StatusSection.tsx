@@ -14,7 +14,7 @@ interface Props {
 export default function StatusSection({onChange, activeStatus}: Props) {
   return (
     <Card>
-      <Subheader text={'Product Status'} />
+      <Subheader text="Product Status" />
 
       <div className="mt-1 sm:mt-0">
         <Select
@@ -32,7 +32,7 @@ export default function StatusSection({onChange, activeStatus}: Props) {
 
       <Border />
 
-      <Subheader text={'SALES CHANNELS AND APPS'} headerStyle={'text-xs'} />
+      <Subheader text="SALES CHANNELS AND APPS" headerStyle="text-xs" />
       <Checkbox
         label="Online Store"
         name="online_store"

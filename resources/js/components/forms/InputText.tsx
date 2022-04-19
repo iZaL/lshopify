@@ -16,7 +16,7 @@ interface Props {
   // [x: string]: any;
 }
 
-const Button = ({
+function Button({
   children,
   onClick,
   position = 'right',
@@ -24,7 +24,7 @@ const Button = ({
   children: ReactNode;
   onClick?: any;
   position?: 'left' | 'right';
-}) => {
+}) {
   return (
     <button
       className={`absolute inset-y-0 ${
@@ -36,7 +36,7 @@ const Button = ({
       {children}
     </button>
   );
-};
+}
 
 export default function InputText({
   name,
@@ -58,11 +58,11 @@ export default function InputText({
         </Button>
       )}
       <input
-        type={type ? type : 'text'}
+        type={type || 'text'}
         name={name}
         id={name}
-        autoComplete={autocomplete ? autocomplete : ''}
-        placeholder={placeholder ? placeholder : ''}
+        autoComplete={autocomplete || ''}
+        placeholder={placeholder || ''}
         className={classNames(
           'focus:blue-500 block w-full rounded-md border border-gray-300 sm:text-sm',
           leftComponent && 'pl-[3rem]',

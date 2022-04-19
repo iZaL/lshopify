@@ -20,8 +20,7 @@ export default function VariantList({
     <Card cardStyle="px-0">
       <Subheader text="Variants" headerStyle="px-4" />
       <ul className="">
-        {variants.map((v, i) => {
-          return (
+        {variants.map((v, i) => (
             <li
               key={i}
               className={classNames(
@@ -36,8 +35,7 @@ export default function VariantList({
               />
               <div className="">{v.title}</div>
             </li>
-          );
-        })}
+          ))}
       </ul>
     </Card>
   );

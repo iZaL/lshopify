@@ -23,13 +23,13 @@ export default function FulfillmentView({order, pending_fulfillments}: Props) {
   const {data, setData} = useForm<{
     pending_fulfillments: VariantPivot[];
   }>({
-    pending_fulfillments: pending_fulfillments,
+    pending_fulfillments,
   });
 
   useEffect(() => {
     setData({
       ...data,
-      pending_fulfillments: pending_fulfillments,
+      pending_fulfillments,
     });
   }, [order]);
 
@@ -80,7 +80,7 @@ export default function FulfillmentView({order, pending_fulfillments}: Props) {
                 Inertia.get(route('lshopify.orders.show', [order.id]));
               }}
             />
-            <PageHeader text={'Fulfillment Items'} />
+            <PageHeader text="Fulfillment Items" />
           </div>
         </div>
 

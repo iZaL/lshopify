@@ -22,20 +22,19 @@ interface NavSubItemProps {
   active?: boolean;
 }
 
-const Navigator = ({children}: Props) => {
+function Navigator({children}: Props) {
   return (
     <nav className="flex-1 space-y-1 px-2" aria-label="Sidebar">
       {children}
     </nav>
   );
-};
+}
 
-const NavItem = ({children, href, active, dropdown, name}: NavItemProps) => {
+function NavItem({children, href, active, dropdown, name}: NavItemProps) {
   if (dropdown) {
     return (
       <Disclosure as="div" className="space-y-1" defaultOpen={active}>
-        {({open}) => {
-          return (
+        {({open}) => (
             <>
               <Disclosure.Button
                 as="a"
@@ -57,8 +56,7 @@ const NavItem = ({children, href, active, dropdown, name}: NavItemProps) => {
               </Disclosure.Button>
               {open && children}
             </>
-          );
-        }}
+          )}
       </Disclosure>
     );
   }
@@ -77,9 +75,9 @@ const NavItem = ({children, href, active, dropdown, name}: NavItemProps) => {
       {name}
     </Link>
   );
-};
+}
 
-const NavSubItem = ({name, active, href}: NavSubItemProps) => {
+function NavSubItem({name, active, href}: NavSubItemProps) {
   return (
     <Disclosure.Panel className="space-y-1" static>
       <Link
@@ -92,7 +90,7 @@ const NavSubItem = ({name, active, href}: NavSubItemProps) => {
       </Link>
     </Disclosure.Panel>
   );
-};
+}
 
 Navigator.Item = NavItem;
 Navigator.SubItem = NavSubItem;

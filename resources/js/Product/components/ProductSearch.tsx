@@ -51,7 +51,7 @@ export default function ProductSearch({
         <div className="flex-auto">
           <InputText
             name="search"
-            placeholder={'Search products'}
+            placeholder="Search products"
             onChange={e => {
               setSearchTerm(e.target.value);
               setShowDialog(true);
@@ -77,7 +77,7 @@ export default function ProductSearch({
         <div className="p-5">
           <InputText
             name="product_search"
-            placeholder={'Search products'}
+            placeholder="Search products"
             onChange={e => setSearchTerm(e.target.value)}
             value={searchTerm}
             leftComponent={<SearchIcon className="h-5 w-5 text-gray-500" />}
@@ -86,8 +86,7 @@ export default function ProductSearch({
 
         <Border />
 
-        {products.map((product, i) => {
-          return (
+        {products.map((product, i) => (
             <div key={i}>
               <li
                 className="flex flex-row items-center space-x-4 border-b border-gray-200 py-2 px-4
@@ -117,15 +116,12 @@ export default function ProductSearch({
                 <div className="flex-auto">{product.title}</div>
                 {!product.variants?.length && (
                   <>
-                    <>
                       <div className="w-20">0 available</div>
                       <div className="w-20">OMR 10</div>
                     </>
-                  </>
                 )}
               </li>
-              {product.variants?.map((variant, idx) => {
-                return (
+              {product.variants?.map((variant, idx) => (
                   <li
                     className="flex flex-row items-center space-x-4 border-b border-gray-200 py-2 px-4 pl-11
               text-sm hover:bg-gray-100
@@ -146,11 +142,9 @@ export default function ProductSearch({
                     <div className="w-20">{variant.quantity} available</div>
                     <div className="w-20">{variant.price}</div>
                   </li>
-                );
-              })}
+                ))}
             </div>
-          );
-        })}
+          ))}
       </Modal>
     </div>
   );

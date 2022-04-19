@@ -36,11 +36,9 @@ export default function VariantOptionsEdit({
         o,
       ): VariantOption & {
         edited?: boolean;
-      } => {
-        return o.id === option.id
+      } => o.id === option.id
           ? {...option, name: e.target.value, edited: true}
-          : o;
-      },
+          : o,
     );
     onChange('options', currentOptions);
   };
@@ -50,8 +48,7 @@ export default function VariantOptionsEdit({
       <Subheader text="Options" />
       <div className="flex flex-row justify-center space-x-4">
         <ul className="flex-1 space-y-6">
-          {options.map((o, i) => {
-            return (
+          {options.map((o, i) => (
               <li key={i}>
                 <Label title={o.id} />
                 <InputText
@@ -62,8 +59,7 @@ export default function VariantOptionsEdit({
                   value={o.name}
                 />
               </li>
-            );
-          })}
+            ))}
         </ul>
 
         <div className="flex w-40 flex-col items-center justify-center">

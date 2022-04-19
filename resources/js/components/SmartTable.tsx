@@ -32,10 +32,10 @@ const SmartTableContext = React.createContext<
   items: [],
 });
 
-const SmartTable = <T extends ItemWithID>({
+function SmartTable<T extends ItemWithID>({
   items,
   children,
-}: SmartTableProps<T>) => {
+}: SmartTableProps<T>) {
   const [selectedItemIDs, setSelectedItemIDs] = useState<T['id'][]>([]);
 
   useEffect(() => {
@@ -61,9 +61,9 @@ const SmartTable = <T extends ItemWithID>({
       <div className="relative">{children}</div>
     </SmartTableContext.Provider>
   );
-};
+}
 
-const Header = ({children}: HeaderProps) => {
+function Header({children}: HeaderProps) {
   const {selectedItemIDs, onSelectedAllChange, items} =
     useContext(SmartTableContext);
 
@@ -87,13 +87,13 @@ const Header = ({children}: HeaderProps) => {
       </Table.Row>
     </thead>
   );
-};
+}
 
 interface SmartHeaderProps<Item extends ItemWithID> {
   children: (props: {selectedItemIDs: Item['id'][]}) => JSX.Element;
 }
 
-const SmartHeader = ({children}: SmartHeaderProps<ItemWithID>) => {
+function SmartHeader({children}: SmartHeaderProps<ItemWithID>) {
   const {selectedItemIDs} = useContext(SmartTableContext);
 
   if (!selectedItemIDs.length) {
@@ -114,14 +114,14 @@ const SmartHeader = ({children}: SmartHeaderProps<ItemWithID>) => {
       </div>
     </div>
   );
-};
+}
 
 interface BodyProps<T extends ItemWithID> {
   children: (props: {item: any}) => JSX.Element;
   onItemClick?: (item: any) => void;
 }
 
-const Body = ({children, onItemClick}: BodyProps<ItemWithID>) => {
+function Body({children, onItemClick}: BodyProps<ItemWithID>) {
   const {items, selectedItemIDs, setSelectedItemIDs} =
     useContext(SmartTableContext);
 
@@ -134,8 +134,7 @@ const Body = ({children, onItemClick}: BodyProps<ItemWithID>) => {
 
   return (
     <tbody>
-      {items.map((item, id) => {
-        return (
+      {items.map((item, id) => (
           <Table.Row
             key={id}
             idx={id}
@@ -158,11 +157,10 @@ const Body = ({children, onItemClick}: BodyProps<ItemWithID>) => {
               item,
             })}
           </Table.Row>
-        );
-      })}
+        ))}
     </tbody>
   );
-};
+}
 
 SmartTable.Header = Header;
 SmartTable.SmartHeader = SmartHeader;

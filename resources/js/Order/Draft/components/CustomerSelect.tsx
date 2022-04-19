@@ -42,7 +42,7 @@ export default function CustomerSelect({
       <div className="w-100 relative" onClick={() => setShowMenu(true)}>
         <InputText
           name="search"
-          placeholder={'Search customer'}
+          placeholder="Search customer"
           onChange={e => {
             setSearchTerm(e.target.value);
           }}
@@ -87,7 +87,7 @@ export default function CustomerSelect({
         heading="Create a new customer"
         onConfirm={() => {}}
         submitButtonTitle="Save customer"
-        hideFooter={true}>
+        hideFooter>
         <CreateCustomerForm>
           {(customerData: CustomerForm, addressData: CustomerAddress) => (
             <ModalFooter

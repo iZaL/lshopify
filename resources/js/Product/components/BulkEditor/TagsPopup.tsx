@@ -32,14 +32,12 @@ export default function TagsPopup({
             </Popover.Button>
 
             <Popover.Panel className="absolute left-0 mt-2 max-h-[20rem] w-[36rem] origin-top-right divide-y overflow-y-scroll rounded-md bg-white p-2 text-sm shadow shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none ">
-              {Object.keys(buttons).map((key, idx) => {
-                return (
+              {Object.keys(buttons).map((key, idx) => (
                   <dl key={idx} className="divide-y divide-black">
                     <div className="items-center py-2 sm:grid sm:grid-cols-4">
                       <dt>{key}</dt>
                       <dd className="mt-1 space-x-1 space-y-2 text-gray-900 sm:col-span-3 sm:mt-0">
-                        {buttons[key].map((button, idx) => {
-                          return (
+                        {buttons[key].map((button, idx) => (
                             <Button
                               key={idx}
                               theme="default"
@@ -50,13 +48,11 @@ export default function TagsPopup({
                               }}>
                               {attributeLabels[button]}
                             </Button>
-                          );
-                        })}
+                          ))}
                       </dd>
                     </div>
                   </dl>
-                );
-              })}
+                ))}
             </Popover.Panel>
           </Popover>
         </div>

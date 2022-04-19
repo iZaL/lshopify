@@ -98,7 +98,7 @@ export default function ProductCell({
       <Select
         name="status"
         onChange={e => onChange(e.target.value)}
-        value={product['status']}
+        value={product.status}
         inputStyle="rounded-none shadow-none border-none focus:rounded-none min-w-[150px]">
         <option value="draft">Draft</option>
         <option value="active">Active</option>
@@ -118,7 +118,7 @@ export default function ProductCell({
         />
         <InputText
           name={attribute}
-          value={product['title']}
+          value={product.title}
           onChange={e => onChange(e.target.value)}
           inputStyle="min-w-[280px] rounded-none shadow-none border-none focus:rounded-none "
         />

@@ -12,17 +12,12 @@ interface Props {
 }
 
 export default function CollectionList({collections}: Props) {
-  const onCollectionClick = (collection: Collection) => {
-    return Inertia.get(route('lshopify.collections.edit', [collection.id]));
-  };
+  const onCollectionClick = (collection: Collection) => Inertia.get(route('lshopify.collections.edit', [collection.id]));
 
   return (
-    <>
-      <SmartTable items={collections}>
+    <SmartTable items={collections}>
         <SmartTable.SmartHeader>
-          {({selectedItemIDs}) => {
-            return <></>;
-          }}
+          {({selectedItemIDs}) => <></>}
         </SmartTable.SmartHeader>
 
         <Table>
@@ -31,8 +26,7 @@ export default function CollectionList({collections}: Props) {
             <Table.Header title="Product conditions" />
           </SmartTable.Header>
           <SmartTable.Body onItemClick={onCollectionClick}>
-            {({item}) => {
-              return (
+            {({item}) => (
                 <>
                   <Table.Cell>
                     <Button
@@ -56,11 +50,9 @@ export default function CollectionList({collections}: Props) {
                     )}
                   </Table.Cell>
                 </>
-              );
-            }}
+              )}
           </SmartTable.Body>
         </Table>
       </SmartTable>
-    </>
   );
 }

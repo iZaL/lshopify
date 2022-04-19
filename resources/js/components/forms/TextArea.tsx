@@ -30,7 +30,7 @@ export default function TextArea({
         <textarea
           name={name}
           id={name}
-          autoComplete={autocomplete ? autocomplete : ''}
+          autoComplete={autocomplete || ''}
           placeholder={placeholder}
           onChange={onChange}
           className={`block w-full rounded-md border border-gray-300 py-2 px-4 shadow-sm sm:text-sm ${style}`}
@@ -40,7 +40,7 @@ export default function TextArea({
     );
   }
 
-  const html = convertFromHTML(value ? value : '');
+  const html = convertFromHTML(value || '');
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(
       ContentState.createFromBlockArray(html.contentBlocks, html.entityMap),

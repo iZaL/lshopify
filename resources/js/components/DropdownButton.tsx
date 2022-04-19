@@ -27,9 +27,9 @@ export default function DropdownButton({
   return (
     <OutsideClickHandler onOutsideClick={() => {}}>
       <Menu as="div" className="relative z-20">
-        <Menu.Button as={'div'} className="">
+        <Menu.Button as="div" className="">
           <Button onClick={() => setVisible(!visible)} {...buttonProps}>
-            {buttonIcon ? buttonIcon : buttonTitle}
+            {buttonIcon || buttonTitle}
             {arrowVisible && <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" />}
           </Button>
         </Menu.Button>

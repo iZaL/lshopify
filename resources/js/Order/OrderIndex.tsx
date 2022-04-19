@@ -1,9 +1,9 @@
 import {Inertia} from '@inertiajs/inertia';
 import React from 'react';
 import route from 'ziggy-js';
+import PageHeader from "../components/PageHeader";
 import Main from '../Main';
 import {Order} from '../types';
-import PageHeader from './../components/PageHeader';
 import OrderList from './components/OrderList';
 import DraftOrderIndexActionButtons from './Draft/components/DraftOrderIndexActionButtons';
 
@@ -22,7 +22,7 @@ export default function OrderIndex(props: Props) {
     <Main>
       <div className="p-6">
         <div className="mx-auto max-w-7xl xl:flex xl:items-center xl:justify-between">
-          <PageHeader text={`Orders`} />
+          <PageHeader text="Orders" />
           <DraftOrderIndexActionButtons />
         </div>
 

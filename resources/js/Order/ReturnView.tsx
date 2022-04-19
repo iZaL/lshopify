@@ -60,7 +60,7 @@ export default function Refund({order}: Props) {
       });
       setData({
         ...data,
-        fulfillments: fulfillments,
+        fulfillments,
       });
     }
   };
@@ -81,7 +81,7 @@ export default function Refund({order}: Props) {
                 Inertia.get(route('lshopify.orders.show', [order.id]));
               }}
             />
-            <PageHeader text={'Return items'} />
+            <PageHeader text="Return items" />
           </div>
         </div>
 
@@ -118,24 +118,24 @@ export default function Refund({order}: Props) {
                   </div>
                   <div className="flex flex-row space-x-2">
                     <div className="flex-1">
-                      <Select name={'reason'} onChange={() => {}}>
-                        <option value={'unknown'}>Unknown</option>
-                        <option value={'wrong_item'}>
+                      <Select name="reason" onChange={() => {}}>
+                        <option value="unknown">Unknown</option>
+                        <option value="wrong_item">
                           Received wrong item
                         </option>
-                        <option value={'change_mind'}>
+                        <option value="change_mind">
                           Customer changed their mind
                         </option>
-                        <option value={'not_as_described'}>
+                        <option value="not_as_described">
                           Item not as described
                         </option>
-                        <option value={'other'}>Other</option>
+                        <option value="other">Other</option>
                       </Select>
                     </div>
                     <div className="flex-1">
                       <InputText
                         inputStyle="flex-1"
-                        name={'other_reason'}
+                        name="other_reason"
                         onChange={() => {}}
                       />
                     </div>

@@ -12,9 +12,7 @@ export default function ErrorBox({errors}: Props) {
   }
 
   const totalErrors = Object.entries(errors).length;
-  const errorMessages = Object.keys(errors).map(key => {
-    return errors[key];
-  });
+  const errorMessages = Object.keys(errors).map(key => errors[key]);
 
   return (
     <div className="m-6 rounded-md bg-red-50 py-6 px-6">
@@ -29,9 +27,7 @@ export default function ErrorBox({errors}: Props) {
           </h3>
           <div className="mt-2 text-sm text-red-700">
             <ul className="list-disc space-y-1 pl-5">
-              {errorMessages.map((message, index) => {
-                return <li key={index}>{message}</li>;
-              })}
+              {errorMessages.map((message, index) => <li key={index}>{message}</li>)}
             </ul>
           </div>
         </div>

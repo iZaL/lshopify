@@ -71,9 +71,7 @@ export default function VariantEditSectionNew({
       if (v.id === variant.id) {
         return {
           ...v,
-          options: v.options?.map(o => {
-            return o.id === option.id ? {...option, name: value} : o;
-          }),
+          options: v.options?.map(o => o.id === option.id ? {...option, name: value} : o),
         };
       }
       return v;
@@ -212,7 +210,7 @@ export default function VariantEditSectionNew({
 
     onDataSet({
       variant_options: newVariantOptions,
-      variants: variants,
+      variants,
     });
   };
 
@@ -287,12 +285,12 @@ export default function VariantEditSectionNew({
                             <TabPill
                               key={idx}
                               title={value.name}
-                              hideCloseIcon={true}
+                              hideCloseIcon
                             />
                           ))}
                         </div>
                       </div>
-                      <Disclosure.Button as={'div'}>
+                      <Disclosure.Button as="div">
                         <Button
                           theme="default"
                           buttonStyle="py-1 px-3 text-sm"
@@ -335,7 +333,7 @@ export default function VariantEditSectionNew({
                           value={{label: option.name, value: option.id}}
                         />
 
-                        <div className={'flex-1'}>Option values</div>
+                        <div className="flex-1">Option values</div>
                         {option.values?.map((value, idx) => (
                           <InputText
                             name={value.name}
@@ -347,14 +345,14 @@ export default function VariantEditSectionNew({
                               )
                             }
                             value={value.name}
-                            placeholder={'Add another value'}
+                            placeholder="Add another value"
                             key={idx}
                           />
                         ))}
                       </div>
                     </div>
 
-                    <Disclosure.Button as={'div'}>
+                    <Disclosure.Button as="div">
                       <Button
                         theme="default"
                         buttonStyle="py-1 px-3 text-sm"
@@ -387,7 +385,7 @@ export default function VariantEditSectionNew({
           <div className="relative">
             <DropdownButton
               buttonTitle="More Options"
-              arrowVisible={true}
+              arrowVisible
               items={[
                 {
                   title: 'Edit Options',
@@ -420,8 +418,7 @@ export default function VariantEditSectionNew({
             None
           </Button>
           <div className="z-30 bg-white">
-            {variantOptions.map((option, idx) => {
-              return (
+            {variantOptions.map((option, idx) => (
                 <PopoverButton
                   key={idx}
                   title={option.name}
@@ -429,9 +426,7 @@ export default function VariantEditSectionNew({
                   {option.values?.map((value, idx) => {
                     const checked = checkedVariantIDs.some(vID => {
                       const variant = currentVariants.find(v => v.id === vID);
-                      return variant?.options?.some(({id, name}) => {
-                        return id === option.id && name === value.name;
-                      });
+                      return variant?.options?.some(({id, name}) => id === option.id && name === value.name);
                     });
 
                     return (
@@ -445,8 +440,7 @@ export default function VariantEditSectionNew({
                     );
                   })}
                 </PopoverButton>
-              );
-            })}
+              ))}
           </div>
         </div>
 
@@ -475,7 +469,7 @@ export default function VariantEditSectionNew({
 
               <DropdownButton
                 buttonTitle="More actions"
-                arrowVisible={true}
+                arrowVisible
                 width="w-[16rem]"
                 buttonProps={{
                   theme: 'clear',
@@ -581,13 +575,11 @@ export default function VariantEditSectionNew({
                   'grid-cols-[repeat(2,10rem),9rem,9rem,auto]'
                 }
                 `}>
-                  {variantOptions.map((option, i) => {
-                    return (
+                  {variantOptions.map((option, i) => (
                       <div className="text-sm font-semibold" key={i}>
                         {option.name}
                       </div>
-                    );
-                  })}
+                    ))}
                   <div className="text-sm font-semibold">Price</div>
                   <div className="text-sm font-semibold">Quantity</div>
                   <div className="text-sm font-semibold">SKU</div>
@@ -725,7 +717,7 @@ export default function VariantEditSectionNew({
           heading="Bulk Edit"
           visible={showDialog === 'bulk_editor'}
           width="max-w-7xl"
-          hideFooter={true}
+          hideFooter
           onClose={() => setShowDialog(null)}
           onConfirm={() => setShowDialog(null)}>
           <BulkEditor

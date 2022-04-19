@@ -98,15 +98,15 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
                         <form className="space-y-4">
                           <div className="flex items-center">
                             <input
-                              id={`filter-1-1`}
-                              name={`1[]`}
+                              id="filter-1-1"
+                              name="1[]"
                               defaultValue={1}
                               type="checkbox"
                               defaultChecked={false}
                               className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                             />
                             <label
-                              htmlFor={`filter-1-1`}
+                              htmlFor="filter-1-1"
                               className="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">
                               zalsstoredev
                             </label>
@@ -146,28 +146,28 @@ export default function ProductSearchBar({tabs, onMoreFiltersClick}: Props) {
                         <form className="space-y-4">
                           <div className="flex items-center">
                             <input
-                              id={`filter-1-1`}
-                              name={`1[]`}
+                              id="filter-1-1"
+                              name="1[]"
                               type="radio"
                               defaultChecked={false}
                               className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
                             />
                             <label
-                              htmlFor={`filter-1-1`}
+                              htmlFor="filter-1-1"
                               className="ml-3 whitespace-nowrap pr-6 text-sm text-gray-900">
                               Product title A-Z
                             </label>
                           </div>
                           <div className="flex items-center">
                             <input
-                              id={`filter-1-1`}
-                              name={`1[]`}
+                              id="filter-1-1"
+                              name="1[]"
                               type="radio"
                               defaultChecked={false}
                               className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
                             />
                             <label
-                              htmlFor={`filter-1-1`}
+                              htmlFor="filter-1-1"
                               className="ml-3 whitespace-nowrap pr-6 text-sm text-gray-900">
                               Product title Z-A
                             </label>

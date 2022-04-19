@@ -2,9 +2,9 @@ import {Inertia} from '@inertiajs/inertia';
 import React from 'react';
 import route from 'ziggy-js';
 import BackButton from '../components/BackButton';
+import PageHeader from "../components/PageHeader";
 import Main from '../Main';
 import {Order} from '../types';
-import PageHeader from './../components/PageHeader';
 
 interface Props {
   order: Order;
@@ -25,13 +25,13 @@ export default function OrderEdit(props: Props) {
           <PageHeader text={`Order ${order.id}`} />
         </div>
 
-        {/*<div className="mx-auto max-w-7xl xl:flex xl:items-center xl:justify-between">*/}
-        {/*  <PageHeader text={`Order ${order.id}`} />*/}
-        {/*  <DraftOrderIndexActionButtons />*/}
-        {/*</div>*/}
+        {/* <div className="mx-auto max-w-7xl xl:flex xl:items-center xl:justify-between"> */}
+        {/*  <PageHeader text={`Order ${order.id}`} /> */}
+        {/*  <DraftOrderIndexActionButtons /> */}
+        {/* </div> */}
 
         <div className="mx-auto max-w-7xl py-6 ">
-          <section className="overflow-hidden rounded-lg bg-white shadow"></section>
+          <section className="overflow-hidden rounded-lg bg-white shadow" />
         </div>
       </div>
     </Main>

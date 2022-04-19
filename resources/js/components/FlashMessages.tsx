@@ -20,7 +20,7 @@ interface Props extends Page {
   };
 }
 
-const Content = ({
+function Content({
   children,
   type,
   setVisible,
@@ -28,7 +28,7 @@ const Content = ({
   children: React.ReactNode;
   type: keyof FlashMessageType;
   setVisible: (visibility: boolean) => void;
-}) => {
+}) {
   let themeStyle = 'text-white bg-green-500 border-green-300';
 
   switch (type) {
@@ -62,19 +62,17 @@ const Content = ({
       </div>
     </div>
   );
-};
+}
 
 export default function FlashMessages() {
   const [visible, setVisible] = useState(false);
   const {flash, errors, env} = usePage<Props>().props;
   //
   let flashMessage: {type: keyof FlashMessageType; message: string | null} =
-    useMemo(() => {
-      return {
+    useMemo(() => ({
         type: 'success',
         message: null,
-      };
-    }, []);
+      }), []);
 
   if (flash) {
     if (flash.success) {
@@ -112,7 +110,7 @@ export default function FlashMessages() {
     }
   }, [flashMessage, errorMessages]);
 
-  let message: string | ReactNode = flashMessage.message;
+  let {message} = flashMessage;
   let flashMessageType: keyof FlashMessageType = flashMessage.type;
 
   if (errorMessages.length) {
@@ -120,14 +118,12 @@ export default function FlashMessages() {
 
     message = (
       <>
-        <h3 className={`text-sm font-medium text-gray-50`}>
+        <h3 className="text-sm font-medium text-gray-50">
           There were error with your submission
         </h3>
-        <div className={`mt-2 text-sm text-gray-50`}>
+        <div className="mt-2 text-sm text-gray-50">
           <ul className="list-disc space-y-1 pl-5">
-            {errorMessages.map((msg, index) => {
-              return <li key={index}>{msg}</li>;
-            })}
+            {errorMessages.map((msg, index) => <li key={index}>{msg}</li>)}
           </ul>
         </div>
       </>

@@ -53,14 +53,14 @@ export default function ProductBulkEdit(props: Props) {
   const {products} = props;
 
   const formProps: Form = {
-    products: products,
+    products,
   };
 
   const {data, setData, post, isDirty} = useForm<Form>(formProps);
 
   useEffect(() => {
     setData({
-      products: products,
+      products,
     });
   }, [products]);
 
@@ -243,8 +243,7 @@ export default function ProductBulkEdit(props: Props) {
             Currently editing these fields:
           </div>
           <div className="inline-flex flex-wrap space-x-2 ">
-            <>
-              <TagsPopup
+            <TagsPopup
                 buttons={buttons}
                 attributeLabels={attributeLabels}
                 onButtonClick={button => onButtonClick(button)}
@@ -270,7 +269,6 @@ export default function ProductBulkEdit(props: Props) {
                   onClose={() => onVariantButtonClick(attribute)}
                 />
               ))}
-            </>
           </div>
 
           <div className="-mx-4 flex flex-col">
@@ -297,13 +295,11 @@ export default function ProductBulkEdit(props: Props) {
                       </tr>
                     </thead>
                     <tbody>
-                      {data.products.map((product, idx) => {
-                        return (
+                      {data.products.map((product, idx) => (
                           <Fragment key={idx}>
                             <tr>
                               {selectedProductAttributes.map(
-                                (attribute, idx) => {
-                                  return (
+                                (attribute, idx) => (
                                     <Cell key={idx}>
                                       <ProductCell
                                         product={product}
@@ -323,8 +319,7 @@ export default function ProductBulkEdit(props: Props) {
                                         }
                                       />
                                     </Cell>
-                                  );
-                                },
+                                  ),
                               )}
 
                               {!product.variants?.length &&
@@ -359,8 +354,7 @@ export default function ProductBulkEdit(props: Props) {
                                     ),
                                   )}
                             </tr>
-                            {product.variants?.map((variant, idx) => {
-                              return (
+                            {product.variants?.map((variant, idx) => (
                                 <tr key={idx}>
                                   {selectedProductAttributes.map(
                                     (attribute, idx) => (
@@ -396,11 +390,9 @@ export default function ProductBulkEdit(props: Props) {
                                     ),
                                   )}
                                 </tr>
-                              );
-                            })}
+                              ))}
                           </Fragment>
-                        );
-                      })}
+                        ))}
                     </tbody>
                   </table>
                 </div>

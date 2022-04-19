@@ -12,9 +12,7 @@ export default function OrderList({orders, onItemClick}: Props) {
   return (
     <SmartTable items={orders}>
       <SmartTable.SmartHeader>
-        {({selectedItemIDs}) => {
-          return <></>;
-        }}
+        {({selectedItemIDs}) => <></>}
       </SmartTable.SmartHeader>
 
       <Table>
@@ -30,8 +28,7 @@ export default function OrderList({orders, onItemClick}: Props) {
           <Table.Header title="Tags" />
         </SmartTable.Header>
         <SmartTable.Body onItemClick={onItemClick}>
-          {({item}) => {
-            return (
+          {({item}) => (
               <>
                 <Table.Cell>#{item.id}</Table.Cell>
                 <Table.Cell>{item.date_time}</Table.Cell>
@@ -40,11 +37,10 @@ export default function OrderList({orders, onItemClick}: Props) {
                 <Table.Cell>{item.payment_status}</Table.Cell>
                 <Table.Cell>{item.fulfillment_status}</Table.Cell>
                 <Table.Cell>{item.items_count}</Table.Cell>
-                <Table.Cell></Table.Cell>
-                <Table.Cell></Table.Cell>
+                <Table.Cell />
+                <Table.Cell />
               </>
-            );
-          }}
+            )}
         </SmartTable.Body>
       </Table>
     </SmartTable>

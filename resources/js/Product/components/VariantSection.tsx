@@ -72,7 +72,7 @@ export default function VariantSection({
       if (variant.name === currentVariantOption.name) {
         return {
           ...currentVariantOption,
-          values: values,
+          values,
         };
       }
       return variant;
@@ -94,8 +94,7 @@ export default function VariantSection({
         <>
           <Border />
           <Subheader text="OPTIONS" headerStyle="text-sm" />
-          {currentVariantOptions.map((variant: VariantOption, index) => {
-            return (
+          {currentVariantOptions.map((variant: VariantOption, index) => (
               <VariantOptionsItem
                 key={index}
                 iteration={index + 1}
@@ -106,8 +105,7 @@ export default function VariantSection({
                 onVariantOptionRemove={onVariantRemove}
                 showRemoveOptionButton={currentVariantOptions.length > 1}
               />
-            );
-          })}
+            ))}
 
           {currentVariantOptions.length <= 4 && (
             <Button onClick={onVariantAdd} theme="default">

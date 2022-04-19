@@ -80,8 +80,7 @@ export default function MultiSelectDropdown<T extends Item>({
 
       <div className="mt-4 ">
         <ul className="space-y-2">
-          {selectedItems.map((item, index) => {
-            return (
+          {selectedItems.map((item, index) => (
               <li className="flex flex-row justify-between " key={index}>
                 <Button
                   theme="clear"
@@ -95,8 +94,7 @@ export default function MultiSelectDropdown<T extends Item>({
                   X
                 </Button>
               </li>
-            );
-          })}
+            ))}
         </ul>
       </div>
 

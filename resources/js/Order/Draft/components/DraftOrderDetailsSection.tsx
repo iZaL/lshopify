@@ -77,7 +77,7 @@ export default function DraftOrderDetailsSection({
 
   const onShowDiscountDialog = (discount: CartDiscount, item?: CartItem) => {
     setSelectedDiscount(discount);
-    setSelectedDiscountItem(item ? item : null);
+    setSelectedDiscountItem(item || null);
     setShowDialog('discount');
   };
 
@@ -197,7 +197,7 @@ export default function DraftOrderDetailsSection({
         onClose={() => setShowDialog(null)}
         onConfirm={() => {}}
         width="max-w-xl"
-        hideFooter={true}>
+        hideFooter>
         <DiscountAdd discount={selectedDiscount}>
           {discountAttributes => (
             <ModalFooter
@@ -207,7 +207,7 @@ export default function DraftOrderDetailsSection({
                 onDiscountConfirm(discountAttributes);
               }}
               submitButtonTitle={selectedDiscount?.name ? 'Update' : 'Done'}
-              hideCancelButton={true}>
+              hideCancelButton>
               {selectedDiscount?.name && (
                 <Button
                   theme="error"
@@ -226,7 +226,7 @@ export default function DraftOrderDetailsSection({
 
       <Modal
         visible={showDialog === 'payment_paid'}
-        heading={`Mark as paid`}
+        heading="Mark as paid"
         submitButtonTitle="Create order"
         onClose={() => {
           setShowDialog(null);
@@ -243,7 +243,7 @@ export default function DraftOrderDetailsSection({
 
       <Modal
         visible={showDialog === 'payment_pending'}
-        heading={`Mark as pending payment`}
+        heading="Mark as pending payment"
         submitButtonTitle="Create order"
         onClose={() => {
           setShowDialog(null);

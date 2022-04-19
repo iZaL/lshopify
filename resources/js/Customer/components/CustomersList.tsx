@@ -13,11 +13,9 @@ interface Props {
 
 export default function CustomersList({customers}: Props) {
   return (
-    <>
-      <SmartTable items={customers}>
+    <SmartTable items={customers}>
         <SmartTable.SmartHeader>
-          {({selectedItemIDs}) => {
-            return (
+          {({selectedItemIDs}) => (
               <>
                 <Button
                   theme="clear"
@@ -32,7 +30,7 @@ export default function CustomersList({customers}: Props) {
 
                 <DropdownButton
                   buttonTitle="More actions"
-                  arrowVisible={true}
+                  arrowVisible
                   buttonProps={{
                     theme: 'clear',
                     buttonStyle:
@@ -80,8 +78,7 @@ export default function CustomersList({customers}: Props) {
                   ]}
                 />
               </>
-            );
-          }}
+            )}
         </SmartTable.SmartHeader>
 
         <Table>
@@ -93,8 +90,7 @@ export default function CustomersList({customers}: Props) {
             <Table.Header title="Spent" />
           </SmartTable.Header>
           <SmartTable.Body onItemClick={() => {}}>
-            {({item}) => {
-              return (
+            {({item}) => (
                 <>
                   <Table.Cell>
                     <Button theme="clear" onClick={() => {}}>
@@ -103,16 +99,14 @@ export default function CustomersList({customers}: Props) {
                       </span>
                     </Button>
                   </Table.Cell>
-                  <Table.Cell cellStyle="capitalize"></Table.Cell>
+                  <Table.Cell cellStyle="capitalize" />
                   <Table.Cell>{item.location}</Table.Cell>
                   <Table.Cell>{item.orders_count} orders</Table.Cell>
-                  <Table.Cell></Table.Cell>
+                  <Table.Cell />
                 </>
-              );
-            }}
+              )}
           </SmartTable.Body>
         </Table>
       </SmartTable>
-    </>
   );
 }

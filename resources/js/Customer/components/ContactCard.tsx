@@ -38,7 +38,7 @@ export default function ContactCard({email, phone, onSave}: Props) {
         heading="Create a new customer"
         onConfirm={() => {}}
         submitButtonTitle="Done"
-        hideFooter={true}>
+        hideFooter>
         <CustomerContactForm email={email} phone={phone}>
           {attributes => (
             <ModalFooter

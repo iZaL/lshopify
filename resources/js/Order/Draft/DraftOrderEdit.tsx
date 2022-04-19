@@ -49,37 +49,37 @@ export default function DraftOrderEdit(props: Props) {
 
   const onCartItemAdd = (variantIDs: number[]) => {
     Inertia.post(route('lshopify.cart.add'), {
-      variantIDs: variantIDs,
+      variantIDs,
       orderID: order.id,
     });
   };
 
   const onCartItemRemove = (rowId: string) => {
     Inertia.post(route('lshopify.cart.remove'), {
-      rowId: rowId,
+      rowId,
       orderID: order.id,
     });
   };
 
   const onCartItemEdit = (rowId: string, item: CartItem) => {
     Inertia.post(route('lshopify.cart.update'), {
-      rowId: rowId,
-      item: item,
+      rowId,
+      item,
       orderID: order.id,
     });
   };
 
   const onApplyDiscount = (discount: CartDiscount, item?: CartItem) => {
     Inertia.post(route('lshopify.cart.discount.add'), {
-      discount: discount,
-      item: item,
+      discount,
+      item,
     });
   };
 
   const onRemoveDiscount = (discount: CartDiscount, item?: CartItem) => {
     Inertia.post(route('lshopify.cart.discount.remove'), {
-      discount: discount,
-      item: item,
+      discount,
+      item,
     });
   };
 
@@ -136,7 +136,7 @@ export default function DraftOrderEdit(props: Props) {
               Inertia.get(route('lshopify.draft.orders.index'));
             }}
           />
-          <PageHeader text={`Order Edit`} />
+          <PageHeader text="Order Edit" />
         </div>
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">

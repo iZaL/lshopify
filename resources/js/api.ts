@@ -5,7 +5,7 @@ import {Image} from './types';
 export const deleteImages = (images: Image[], options?: VisitOptions) => {
   const url = route('lshopify.images.delete');
   const payload = {
-    images: images,
+    images,
   };
   Inertia.post(url, payload, options);
 };
@@ -18,7 +18,7 @@ export const uploadImages = (
 ) => {
   const url = route('lshopify.images.store');
   const payload = {
-    images: images,
+    images,
     imageable_id: imageableID,
     imageable_type: imageableType,
   };

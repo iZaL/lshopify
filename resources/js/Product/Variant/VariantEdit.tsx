@@ -51,7 +51,7 @@ export default function VariantEdit(props: Props) {
   const onImagesUpload = (images: Image[]) => {
     const url = route('lshopify.products.images.store', [product.id]);
     const productData = {
-      images: images,
+      images,
       imageable_id: product.id,
       imageable_type: 'product',
     };

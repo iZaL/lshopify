@@ -26,9 +26,7 @@ export default function InventoryList({
   return (
     <SmartTable items={variants}>
       <SmartTable.SmartHeader>
-        {({selectedItemIDs}) => {
-          return <></>;
-        }}
+        {({selectedItemIDs}) => <></>}
       </SmartTable.SmartHeader>
 
       <Table>
@@ -39,8 +37,7 @@ export default function InventoryList({
           <Table.Header />
         </SmartTable.Header>
         <SmartTable.Body>
-          {({item}) => {
-            return (
+          {({item}) => (
               <>
                 <Table.Cell>
                   {item.product?.title && (
@@ -69,8 +66,7 @@ export default function InventoryList({
                   ) : null}
                 </Table.Cell>
               </>
-            );
-          }}
+            )}
         </SmartTable.Body>
       </Table>
     </SmartTable>

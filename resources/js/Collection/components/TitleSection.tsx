@@ -23,7 +23,7 @@ export default function TitleSection({onChange, name, description}: T) {
         <Label title="Name" />
         <InputText
           name="name"
-          placeholder={'e.g. Summer collection, Under 100$, Staff picks'}
+          placeholder="e.g. Summer collection, Under 100$, Staff picks"
           onChange={e => onChange('name', e.target.value)}
           value={name}
         />
@@ -32,7 +32,7 @@ export default function TitleSection({onChange, name, description}: T) {
       <div>
         <Label title="Description (optional)" />
         <TextArea
-          richText={true}
+          richText
           name="description"
           placeholder="Summer collection, Under 100$, Staff picks"
           onChange={value => onChange('description', value)}

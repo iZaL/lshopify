@@ -2,7 +2,7 @@ import {Disclosure} from '@headlessui/react';
 import {ChevronDownIcon, ChevronUpIcon} from '@heroicons/react/solid';
 import React from 'react';
 
-const DisclosureButton = ({open, title}: {open: boolean; title: string}) => {
+function DisclosureButton({open, title}: {open: boolean; title: string}) {
   return (
     <h3 className="-mx-2 -my-3 flow-root">
       <Disclosure.Button
@@ -26,7 +26,7 @@ const DisclosureButton = ({open, title}: {open: boolean; title: string}) => {
       </Disclosure.Button>
     </h3>
   );
-};
+}
 
 export default function DisclosurePanel({
   title,

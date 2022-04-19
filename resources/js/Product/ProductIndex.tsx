@@ -63,7 +63,7 @@ export default function ProductIndex(props: Props) {
     <Main>
       <div className="p-6">
         <div className="mx-auto max-w-7xl xl:flex xl:items-center xl:justify-between">
-          <PageHeader text={'Products'} />
+          <PageHeader text="Products" />
           <ProductIndexActionButtons />
         </div>
 

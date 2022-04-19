@@ -152,9 +152,7 @@ export default function VariantsListSection({
       if (v.id === variant.id) {
         return {
           ...v,
-          options: v.options?.map(o => {
-            return o.id === option.id ? {...option, name: value} : o;
-          }),
+          options: v.options?.map(o => o.id === option.id ? {...option, name: value} : o),
         };
       }
       return v;
@@ -178,7 +176,7 @@ export default function VariantsListSection({
           options: variant.options.map(option => {
             if (option.id === oldVariantOption.id) {
               return {
-                id: newVariantOption.id, //Size
+                id: newVariantOption.id, // Size
                 name:
                   newVariantOption.values?.find(
                     value => value.id === option.name,
@@ -194,7 +192,7 @@ export default function VariantsListSection({
 
     onDataSet({
       variant_options: newVariantOptions,
-      variants: variants,
+      variants,
     });
   };
 
@@ -226,12 +224,12 @@ export default function VariantsListSection({
                             <TabPill
                               key={idx}
                               title={value.name}
-                              hideCloseIcon={true}
+                              hideCloseIcon
                             />
                           ))}
                         </div>
                       </div>
-                      <Disclosure.Button as={'div'}>
+                      <Disclosure.Button as="div">
                         <Button theme="default" buttonStyle="py-1 px-3 text-sm">
                           Edit
                         </Button>
@@ -268,7 +266,7 @@ export default function VariantsListSection({
                           value={{label: option.id, value: option.name}}
                         />
 
-                        <div className={'flex-1'}>Option values</div>
+                        <div className="flex-1">Option values</div>
                         {option.values?.map((value, idx) => (
                           <InputText
                             name={value.name}
@@ -295,7 +293,7 @@ export default function VariantsListSection({
                       </div>
                     </div>
 
-                    <Disclosure.Button as={'div'}>
+                    <Disclosure.Button as="div">
                       <Button theme="default" buttonStyle="py-1 px-3 text-sm">
                         Done
                       </Button>
@@ -324,7 +322,7 @@ export default function VariantsListSection({
           <div className="relative">
             <DropdownButton
               buttonTitle="More Options"
-              arrowVisible={true}
+              arrowVisible
               items={[
                 {
                   title: 'Edit Options',
@@ -357,8 +355,7 @@ export default function VariantsListSection({
             None
           </Button>
           <div className="z-30 bg-white">
-            {variantOptions.map((option, idx) => {
-              return (
+            {variantOptions.map((option, idx) => (
                 <PopoverButton
                   key={idx}
                   title={option.id}
@@ -366,9 +363,7 @@ export default function VariantsListSection({
                   {option.values?.map((value, idx) => {
                     const checked = checkedVariantIDs.some(vID => {
                       const variant = currentVariants.find(v => v.id === vID);
-                      return variant?.options?.some(({id, name}) => {
-                        return id === option.id && name === value.name;
-                      });
+                      return variant?.options?.some(({id, name}) => id === option.id && name === value.name);
                     });
 
                     return (
@@ -382,8 +377,7 @@ export default function VariantsListSection({
                     );
                   })}
                 </PopoverButton>
-              );
-            })}
+              ))}
           </div>
         </div>
 
@@ -412,7 +406,7 @@ export default function VariantsListSection({
 
               <DropdownButton
                 buttonTitle="More actions"
-                arrowVisible={true}
+                arrowVisible
                 width="w-[16rem]"
                 buttonProps={{
                   theme: 'clear',
@@ -515,13 +509,11 @@ export default function VariantsListSection({
                     variantOptions.length === 1 &&
                       'grid-cols-[repeat(2,10rem),9rem,9rem,auto]',
                   )}>
-                  {variantOptions.map((option, i) => {
-                    return (
+                  {variantOptions.map((option, i) => (
                       <div className="text-sm font-semibold" key={i}>
                         {option.id}
                       </div>
-                    );
-                  })}
+                    ))}
                   <div className="text-sm font-semibold">Price</div>
                   <div className="text-sm font-semibold">Quantity</div>
                   <div className="text-sm font-semibold">SKU</div>
@@ -532,8 +524,7 @@ export default function VariantsListSection({
           )}
 
           <ul className="max-w-full">
-            {currentVariants.map((variant: Variant, i) => {
-              return (
+            {currentVariants.map((variant: Variant, i) => (
                 <li
                   key={i}
                   className={classNames(
@@ -661,8 +652,7 @@ export default function VariantsListSection({
                     </div>
                   </div>
                 </li>
-              );
-            })}
+              ))}
           </ul>
         </div>
 
@@ -793,7 +783,7 @@ export default function VariantsListSection({
           heading="Bulk Edit"
           visible={showDialog === 'bulk_editor'}
           width="max-w-7xl"
-          hideFooter={true}
+          hideFooter
           onClose={() => setShowDialog(null)}
           onConfirm={() => setShowDialog(null)}>
           <BulkEditor

@@ -19,7 +19,7 @@ export default function Main({
   return (
     <div className={classNames('', theme === 'dark' && 'dark')}>
       <Helmet>
-        <title>{title ? title : 'Laravel Shopify'}</title>
+        <title>{title || 'Laravel Shopify'}</title>
       </Helmet>
       <div className="flex h-screen overflow-hidden bg-gray-100">
         <MobileSidebar />
@@ -27,7 +27,7 @@ export default function Main({
         <div className="mb-50 flex w-0 flex-1 flex-col overflow-auto">
           <Navbar />
           <PopMessages />
-          {/*<FlashMessages />*/}
+          {/* <FlashMessages /> */}
           {children}
         </div>
       </div>

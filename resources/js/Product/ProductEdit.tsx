@@ -61,7 +61,7 @@ export default function ProductEdit(props: Props) {
 
   const formProps: Form = {
     ...product,
-    variant_options: variant_options,
+    variant_options,
     _method: 'PATCH',
   };
 
@@ -123,8 +123,8 @@ export default function ProductEdit(props: Props) {
     const url = route('lshopify.products.variants.attributes', [product.id]);
     const productData = {
       variants: variantIDs,
-      field: field,
-      value: value,
+      field,
+      value,
     };
     Inertia.post(url, productData, {
       preserveState: false,
@@ -293,7 +293,7 @@ export default function ProductEdit(props: Props) {
             />
 
             <Card>
-              <Subheader text={'Product Organization'} />
+              <Subheader text="Product Organization" />
 
               <div className="text-sm sm:col-span-2 sm:mt-0">
                 <Label title="Category" labelStyle="mb-1" />

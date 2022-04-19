@@ -25,18 +25,18 @@ export default function DraftOrderIndex(props: Props) {
     <Main>
       <div className="p-6">
         <div className="mx-auto max-w-7xl xl:flex xl:items-center xl:justify-between">
-          <PageHeader text={`Draft orders`} />
+          <PageHeader text="Draft orders" />
           <DraftOrderIndexActionButtons />
         </div>
 
         <div className="mx-auto max-w-7xl py-6 ">
           <section className="rounded-lg bg-white shadow">
-            {/*<RightSidebar*/}
-            {/*  isOpen={sidebarOpen}*/}
-            {/*  onClose={() => setSidebarOpen(false)}*/}
-            {/*  title={'More Filters'}>*/}
-            {/*  <DraftOrdersFiltersPanel />*/}
-            {/*</RightSidebar>*/}
+            {/* <RightSidebar */}
+            {/*  isOpen={sidebarOpen} */}
+            {/*  onClose={() => setSidebarOpen(false)} */}
+            {/*  title={'More Filters'}> */}
+            {/*  <DraftOrdersFiltersPanel /> */}
+            {/* </RightSidebar> */}
             <DraftOrdersSearchBar
               tabs={[]}
               onMoreFiltersClick={() => setSidebarOpen(!sidebarOpen)}

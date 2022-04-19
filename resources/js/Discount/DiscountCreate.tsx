@@ -88,7 +88,7 @@ export default function DiscountCreate({discount}: Props) {
               <div>
                 <InputText
                   name="title"
-                  placeholder={'e.g. Ramadan promotion'}
+                  placeholder="e.g. Ramadan promotion"
                   onChange={e => setData('code', e.target.value)}
                   value={code}
                 />
@@ -104,7 +104,7 @@ export default function DiscountCreate({discount}: Props) {
               <div className="flex flex-col space-y-2 text-sm">
                 <div className="inline-flex items-center">
                   <Checkbox
-                    type={'radio'}
+                    type="radio"
                     checked={value_type === 'percentage'}
                     onChange={() => setData('value_type', 'percentage')}
                   />
@@ -112,7 +112,7 @@ export default function DiscountCreate({discount}: Props) {
                 </div>
                 <div className="inline-flex items-center">
                   <Checkbox
-                    type={'radio'}
+                    type="radio"
                     checked={value_type === 'fixed_amount'}
                     onChange={() => setData('value_type', 'fixed_amount')}
                   />
@@ -140,7 +140,7 @@ export default function DiscountCreate({discount}: Props) {
 
               <Border />
 
-              <Subheader headerStyle={'text-xs'} text={'APPLIES TO'} />
+              <Subheader headerStyle="text-xs" text="APPLIES TO" />
               <div className="flex flex-col space-y-2 text-sm">
                 <div className="inline-flex items-center">
                   <input
@@ -157,7 +157,7 @@ export default function DiscountCreate({discount}: Props) {
                     type="radio"
                     value="smart"
                     name="type"
-                    checked={true}
+                    checked
                     onChange={() => {}}
                   />
                   <div className="ml-3">Specific collections</div>
@@ -167,7 +167,7 @@ export default function DiscountCreate({discount}: Props) {
                     type="radio"
                     value="smart"
                     name="type"
-                    checked={true}
+                    checked
                     onChange={() => {}}
                   />
                   <div className="ml-3">Specific products</div>
@@ -184,7 +184,7 @@ export default function DiscountCreate({discount}: Props) {
                     type="radio"
                     value="manual"
                     name="type"
-                    checked={true}
+                    checked
                     onChange={() => {}}
                   />
                 </div>
@@ -193,9 +193,9 @@ export default function DiscountCreate({discount}: Props) {
                   <div className="w-48">
                     <InputText
                       name="title"
-                      placeholder={''}
+                      placeholder=""
                       onChange={e => {}}
-                      value={''}
+                      value=""
                       inputStyle=""
                       rightComponent={
                         <span className="text-sm text-gray-400">%</span>
@@ -211,7 +211,7 @@ export default function DiscountCreate({discount}: Props) {
                     type="radio"
                     value="manual"
                     name="type"
-                    checked={true}
+                    checked
                     onChange={() => {}}
                   />
                 </div>
@@ -220,9 +220,9 @@ export default function DiscountCreate({discount}: Props) {
                   <div className="w-48">
                     <InputText
                       name="title"
-                      placeholder={''}
+                      placeholder=""
                       onChange={e => {}}
-                      value={''}
+                      value=""
                       inputStyle=""
                       rightComponent={
                         <span className="text-sm text-gray-400">%</span>
@@ -238,7 +238,7 @@ export default function DiscountCreate({discount}: Props) {
 
               <div className="flex flex-row space-x-4">
                 <div className="flex-1">
-                  <Label title={'Start date'} />
+                  <Label title="Start date" />
 
                   <DatePicker
                     selected={startDate}
@@ -257,7 +257,7 @@ export default function DiscountCreate({discount}: Props) {
                 </div>
 
                 <div className="flex-1">
-                  <Label title={'Start time'} />
+                  <Label title="Start time" />
                   <DatePicker
                     selected={startDate}
                     onChange={(date: Date) => setStartDate(date)}
@@ -281,7 +281,7 @@ export default function DiscountCreate({discount}: Props) {
 
               <div className="flex flex-row space-x-4">
                 <div className="flex-1">
-                  <Label title={'End date'} />
+                  <Label title="End date" />
                   <DatePicker
                     selected={endDate}
                     onChange={(date: Date) => setEndDate(date)}
@@ -299,7 +299,7 @@ export default function DiscountCreate({discount}: Props) {
                 </div>
 
                 <div className="flex-1">
-                  <Label title={'End time'} />
+                  <Label title="End time" />
                   <DatePicker
                     selected={endDate}
                     onChange={(date: Date) => setEndDate(date)}

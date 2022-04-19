@@ -8,7 +8,7 @@ interface Props {
 
 const DropDownContext: any = React.createContext(null);
 
-const DropdownAlt = ({children}: Props) => {
+function DropdownAlt({children}: Props) {
   const [open, setOpen] = useState(false);
 
   const toggleOpen = () => {
@@ -20,9 +20,9 @@ const DropdownAlt = ({children}: Props) => {
       <div className="relative">{children}</div>
     </DropDownContext.Provider>
   );
-};
+}
 
-const Trigger = ({children}: {children: React.ReactNode}) => {
+function Trigger({children}: {children: React.ReactNode}) {
   const {open, setOpen, toggleOpen}: any = useContext(DropDownContext);
 
   return (
@@ -32,11 +32,11 @@ const Trigger = ({children}: {children: React.ReactNode}) => {
       {open && (
         <div
           className="fixed inset-0 z-40"
-          onClick={() => setOpen(false)}></div>
+          onClick={() => setOpen(false)} />
       )}
     </>
   );
-};
+}
 
 interface ContentProps {
   align?: 'left' | 'right';
@@ -49,12 +49,12 @@ type DropDownContextProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
 };
-const Content = ({
+function Content({
   align = 'right',
   width = '48',
   contentClasses = 'py-1 bg-white',
   children,
-}: ContentProps) => {
+}: ContentProps) {
   const {open, setOpen}: DropDownContextProps = useContext(DropDownContext);
 
   let alignmentClasses = 'origin-top';
@@ -72,8 +72,7 @@ const Content = ({
   }
 
   return (
-    <>
-      <Transition
+    <Transition
         show={open}
         enter="transition ease-out duration-200"
         enterFrom="transform opacity-0 scale-95"
@@ -87,16 +86,15 @@ const Content = ({
             onClick={() => setOpen(false)}>
             <div
               className={
-                `rounded-md ring-1 ring-black ring-opacity-5 ` + contentClasses
+                `rounded-md ring-1 ring-black ring-opacity-5 ${  contentClasses}`
               }>
               {children}
             </div>
           </div>
         )}
       </Transition>
-    </>
   );
-};
+}
 
 interface DropdownLinkProps {
   href: string;
@@ -105,12 +103,12 @@ interface DropdownLinkProps {
   children: React.ReactNode;
 }
 
-const DropdownLink = ({
+function DropdownLink({
   href,
   method = 'post',
   as = 'a',
   children,
-}: DropdownLinkProps) => {
+}: DropdownLinkProps) {
   return (
     <Link
       href={href}
@@ -120,7 +118,7 @@ const DropdownLink = ({
       {children}
     </Link>
   );
-};
+}
 
 DropdownAlt.Trigger = Trigger;
 DropdownAlt.Content = Content;

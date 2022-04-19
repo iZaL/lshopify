@@ -70,8 +70,7 @@ export default function BulkEditor({variants, children}: Props) {
     <>
       <div className="p-5">
         <div className="flex flex-row  flex-wrap ">
-          {defaultAttributes.map((attr, i) => {
-            return (
+          {defaultAttributes.map((attr, i) => (
               <div className="mb-2 pr-2" key={i}>
                 <div className="flex h-6 flex-row items-center justify-end overflow-hidden rounded rounded-md bg-gray-200 ">
                   <div className="flex-1 px-2">{attr}</div>
@@ -92,8 +91,7 @@ export default function BulkEditor({variants, children}: Props) {
                   )}
                 </div>
               </div>
-            );
-          })}
+            ))}
         </div>
 
         <div className="overflow-x-scroll">
@@ -148,8 +146,7 @@ export default function BulkEditor({variants, children}: Props) {
           </div>
 
           <ul className="mt-4 mb-10 space-y-4">
-            {currentVariants.map((variant, i) => {
-              return (
+            {currentVariants.map((variant, i) => (
                 <li
                   className="flex flex-shrink-0 flex-row items-center space-x-4"
                   key={i}>
@@ -379,8 +376,7 @@ export default function BulkEditor({variants, children}: Props) {
                     </div>
                   )}
                 </li>
-              );
-            })}
+              ))}
           </ul>
         </div>
       </div>

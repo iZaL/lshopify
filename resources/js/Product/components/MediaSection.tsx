@@ -12,7 +12,7 @@ interface Props {
   images: Image[];
 }
 
-const MediaSection = ({onImagesUpload, images, onImagesDelete}: Props) => {
+function MediaSection({onImagesUpload, images, onImagesDelete}: Props) {
   const [selectedImages, setSelectedImages] = useState<Image[]>([]);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
@@ -50,7 +50,7 @@ const MediaSection = ({onImagesUpload, images, onImagesDelete}: Props) => {
       </div>
 
       <DZFileUploadBox
-        isMulti={true}
+        isMulti
         images={images}
         selectedImages={selectedImages}
         onImagesSelect={imgs => setSelectedImages(imgs)}
@@ -73,6 +73,6 @@ const MediaSection = ({onImagesUpload, images, onImagesDelete}: Props) => {
       </Modal>
     </Card>
   );
-};
+}
 
 export default MediaSection;

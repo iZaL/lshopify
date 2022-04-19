@@ -78,8 +78,7 @@ export default function CollectionTypeSection({onChange, collection}: T) {
             <div className="">any conditions</div>
           </div>
 
-          {collection.conditions.map((condition, i) => {
-            return (
+          {collection.conditions.map((condition, i) => (
               <CollectionConditionItem
                 key={i}
                 condition={condition}
@@ -99,8 +98,7 @@ export default function CollectionTypeSection({onChange, collection}: T) {
                   onChange('conditions', newConditions);
                 }}
               />
-            );
-          })}
+            ))}
 
           <Button
             theme="default"

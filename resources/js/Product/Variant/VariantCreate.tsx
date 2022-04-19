@@ -22,12 +22,10 @@ interface Props {
 export default function VariantCreate(props: Props) {
   const {product, variant_options} = props;
 
-  const options = variant_options.map((o): VariantOption => {
-    return {
+  const options = variant_options.map((o): VariantOption => ({
       name: '',
       id: o.id,
-    };
-  });
+    }));
 
   const {data, setData, post} = useForm<Variant & {images: Image[]}>({
     origin_country_id: '',
@@ -41,7 +39,7 @@ export default function VariantCreate(props: Props) {
     image: null,
     weight: '',
     hs_code: '',
-    options: options,
+    options,
     taxable: false,
     tracked: false,
     out_of_stock_sale: true,
@@ -54,16 +52,14 @@ export default function VariantCreate(props: Props) {
     setData('images', product.images || []);
   }, [product.images]);
 
-  const onVariantItemClick = (v: Variant) => {
-    return Inertia.get(
+  const onVariantItemClick = (v: Variant) => Inertia.get(
       route('lshopify.products.variants.edit', [product.id, v.id]),
     );
-  };
 
   const onImagesUpload = (images: Image[]) => {
     const url = route('lshopify.images.store');
     const productData = {
-      images: images,
+      images,
       imageable_id: product.id,
       imageable_type: 'product',
     };

@@ -34,7 +34,7 @@ export default function PaymentPending({order, onPaidClick}: Props) {
       <div className="flex justify-end">
         <DropdownButton
           buttonTitle="Collect payment"
-          arrowVisible={true}
+          arrowVisible
           items={[
             {
               title: 'Send invoice',

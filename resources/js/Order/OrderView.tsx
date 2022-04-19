@@ -12,6 +12,7 @@ import Border from '../components/Border';
 import Button from '../components/Button';
 import Card from '../components/Card';
 import DropdownButton from '../components/DropdownButton';
+import PageHeader from "../components/PageHeader";
 import Subheader from '../components/Subheader';
 import {CustomerForm} from '../form_types';
 import Main from '../Main';
@@ -24,7 +25,6 @@ import {
   Shipping,
   VariantPivot,
 } from '../types';
-import PageHeader from './../components/PageHeader';
 import OrderItems from './components/OrderItems';
 import CustomerEdit from './Draft/components/CustomerEdit';
 import CustomerSelect from './Draft/components/CustomerSelect';
@@ -98,9 +98,7 @@ export default function OrderView(props: Props) {
     );
   };
 
-  const fulfill = () => {
-    return Inertia.get(route('lshopify.orders.fulfillments.index', [order.id]));
-  };
+  const fulfill = () => Inertia.get(route('lshopify.orders.fulfillments.index', [order.id]));
 
   const cancelFulfillment = (fulfillment: Fulfillment) => {
     Inertia.post(
@@ -146,7 +144,7 @@ export default function OrderView(props: Props) {
                 Inertia.get(route('lshopify.orders.index'));
               }}
             />
-            <PageHeader text={`Order Edit`} />
+            <PageHeader text="Order Edit" />
           </div>
 
           <div className="mt-5 flex xl:mt-0 xl:ml-4">
@@ -154,14 +152,14 @@ export default function OrderView(props: Props) {
               <Button
                 theme="clear"
                 onClick={() => refund()}
-                buttonStyle={'hover:bg-gray-200 p-2 px-4'}>
+                buttonStyle="hover:bg-gray-200 p-2 px-4">
                 Refund
               </Button>
               {order.workflows.length > 0 && (
                 <Button
                   theme="clear"
                   onClick={() => returnItems()}
-                  buttonStyle={'hover:bg-gray-200 p-2 px-4'}>
+                  buttonStyle="hover:bg-gray-200 p-2 px-4">
                   Return
                 </Button>
               )}

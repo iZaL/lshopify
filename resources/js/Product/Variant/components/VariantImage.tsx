@@ -15,7 +15,7 @@ export default function VariantImage({
   onClick,
   border = true,
 }: Props) {
-  const style = imageStyle ? imageStyle : 'w-14 h-16';
+  const style = imageStyle || 'w-14 h-16';
   return (
     <div
       className={classNames('overflow-hidden', {

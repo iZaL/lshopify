@@ -27,7 +27,7 @@ export default function CollectionIndex(props: Props) {
     <Main>
       <div className="p-6">
         <div className="mx-auto max-w-7xl xl:flex xl:items-center xl:justify-between">
-          <PageHeader text={'Collections'} />
+          <PageHeader text="Collections" />
           <CollectionIndexActionButtons />
         </div>
 
@@ -36,8 +36,8 @@ export default function CollectionIndex(props: Props) {
             <RightSidebar
               isOpen={sidebarOpen}
               onClose={() => setSidebarOpen(false)}
-              title={'More Filters'}>
-              {/*<ProductFiltersPanel />*/}
+              title="More Filters">
+              {/* <ProductFiltersPanel /> */}
             </RightSidebar>
             <CollectionSearchBar
               tabs={tabs}

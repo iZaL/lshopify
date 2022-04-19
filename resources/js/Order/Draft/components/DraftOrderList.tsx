@@ -12,9 +12,7 @@ export default function DraftOrderList({orders, onItemClick}: Props) {
   return (
     <SmartTable items={orders}>
       <SmartTable.SmartHeader>
-        {({selectedItemIDs}) => {
-          return <></>;
-        }}
+        {({selectedItemIDs}) => <></>}
       </SmartTable.SmartHeader>
 
       <Table>
@@ -26,8 +24,7 @@ export default function DraftOrderList({orders, onItemClick}: Props) {
           <Table.Header title="Total" />
         </SmartTable.Header>
         <SmartTable.Body onItemClick={onItemClick}>
-          {({item}) => {
-            return (
+          {({item}) => (
               <>
                 <Table.Cell>#{item.id}</Table.Cell>
                 <Table.Cell>{item.date}</Table.Cell>
@@ -35,8 +32,7 @@ export default function DraftOrderList({orders, onItemClick}: Props) {
                 <Table.Cell>{item.status}</Table.Cell>
                 <Table.Cell>{item.total_formatted}</Table.Cell>
               </>
-            );
-          }}
+            )}
         </SmartTable.Body>
       </Table>
     </SmartTable>

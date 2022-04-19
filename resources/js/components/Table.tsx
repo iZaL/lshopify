@@ -24,7 +24,7 @@ interface RowProps {
   rowStyle?: string;
 }
 
-const Table = ({children}: Props) => {
+function Table({children}: Props) {
   return (
     <div className="flex flex-grow overflow-x-auto">
       <table className="relative min-w-full divide-y divide-gray-200">
@@ -32,18 +32,18 @@ const Table = ({children}: Props) => {
       </table>
     </div>
   );
-};
+}
 
-const Header = ({title, children = null, headerStyle}: HeaderProps) => {
+function Header({title, children = null, headerStyle}: HeaderProps) {
   return (
     <th
       className={`py-4 px-2 text-left text-sm font-medium text-gray-900 ${headerStyle}`}>
-      {title ? title : children}
+      {title || children}
     </th>
   );
-};
+}
 
-const Row = ({children, striped = true, idx, onClick, rowStyle}: RowProps) => {
+function Row({children, striped = true, idx, onClick, rowStyle}: RowProps) {
   return (
     <tr
       className={classNames(
@@ -58,15 +58,15 @@ const Row = ({children, striped = true, idx, onClick, rowStyle}: RowProps) => {
       {children}
     </tr>
   );
-};
+}
 
-const Cell = ({children, cellStyle}: CellProps) => {
+function Cell({children, cellStyle}: CellProps) {
   return (
     <td className={`py-4 px-2 text-left text-sm text-gray-800 ${cellStyle}`}>
       {children}
     </td>
   );
-};
+}
 
 Table.Row = Row;
 Table.Cell = Cell;

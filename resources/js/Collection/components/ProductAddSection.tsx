@@ -113,7 +113,7 @@ export default function ProductAddSection({
         <div className="p-5">
           <InputText
             name="product_search"
-            placeholder={'Search products'}
+            placeholder="Search products"
             onChange={e => onSearch(e.target.value)}
             value={searchTerm}
             leftComponent={<SearchIcon className="h-5 w-5 text-gray-500" />}
@@ -121,8 +121,7 @@ export default function ProductAddSection({
         </div>
         <Border />
 
-        {products.map((product, i) => {
-          return (
+        {products.map((product, i) => (
             <li
               key={i}
               className="flex flex-row items-center space-x-4 py-2 px-4 hover:bg-gray-100"
@@ -135,8 +134,7 @@ export default function ProductAddSection({
               <VariantImage image={product.image} onClick={() => {}} />
               <div className="">{product.title}</div>
             </li>
-          );
-        })}
+          ))}
       </Modal>
     </Card>
   );

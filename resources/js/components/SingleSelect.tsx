@@ -53,7 +53,7 @@ export default function SingleSelect({
       isLoading={isLoading}
       noOptionsMessage={() => null}
       placeholder={placeholder}
-      isClearable={true}
+      isClearable
       onCreateOption={value => onCreate(value)}
     />
   );

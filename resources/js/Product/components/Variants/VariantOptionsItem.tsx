@@ -71,7 +71,7 @@ export default function VariantOptionsItem({
             }}
             noOptionsMessage={() => null}
             isClearable={false}
-            placeholder={'select options'}
+            placeholder="select options"
             value={variantOption.values?.map(({name, id}) => ({
               value: id,
               label: name,

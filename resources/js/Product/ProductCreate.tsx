@@ -162,7 +162,7 @@ export default function ProductCreate(props: Props) {
       <div className="p-6">
         <FormSubmitBar onSubmit={handleSubmit} show={isDirty} />
 
-        <PageHeader text={'Add Product'} />
+        <PageHeader text="Add Product" />
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
           <section className="space-y-6 space-y-6 lg:col-span-2 lg:col-start-1">
@@ -210,7 +210,7 @@ export default function ProductCreate(props: Props) {
             />
 
             <Card>
-              <Subheader text={'Product Organization'} />
+              <Subheader text="Product Organization" />
 
               <div className="text-sm sm:col-span-2 sm:mt-0">
                 <Label title="Type" labelStyle="mb-1" />

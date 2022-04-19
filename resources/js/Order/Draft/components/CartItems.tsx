@@ -50,8 +50,7 @@ export default function CartItems({
         <div>Total</div>
       </div>
 
-      {items.map((item, i) => {
-        return (
+      {items.map((item, i) => (
           <div
             className="grid grid-cols-6 items-center space-x-4 text-sm "
             key={i}>
@@ -98,8 +97,7 @@ export default function CartItems({
               </div>
             </div>
           </div>
-        );
-      })}
+        ))}
     </>
   );
 }

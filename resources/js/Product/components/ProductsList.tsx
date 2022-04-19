@@ -41,9 +41,7 @@ export default function ProductsList({products, onUpdate, onDelete}: Props) {
     onSubmit: () => setShowDialog(false),
   });
 
-  const onProductClick = (product: Product) => {
-    return Inertia.get(route('lshopify.products.edit', [product.id]));
-  };
+  const onProductClick = (product: Product) => Inertia.get(route('lshopify.products.edit', [product.id]));
 
   const showDialogBox = (param: ModalProp) => {
     setShowDialog(true);
@@ -57,8 +55,7 @@ export default function ProductsList({products, onUpdate, onDelete}: Props) {
     <>
       <SmartTable items={products}>
         <SmartTable.SmartHeader>
-          {({selectedItemIDs}) => {
-            return (
+          {({selectedItemIDs}) => (
               <>
                 <Button
                   theme="clear"
@@ -73,7 +70,7 @@ export default function ProductsList({products, onUpdate, onDelete}: Props) {
 
                 <DropdownButton
                   buttonTitle="More actions"
-                  arrowVisible={true}
+                  arrowVisible
                   buttonProps={{
                     theme: 'clear',
                     buttonStyle:
@@ -152,8 +149,7 @@ export default function ProductsList({products, onUpdate, onDelete}: Props) {
                   ]}
                 />
               </>
-            );
-          }}
+            )}
         </SmartTable.SmartHeader>
 
         <Table>
@@ -165,8 +161,7 @@ export default function ProductsList({products, onUpdate, onDelete}: Props) {
             <Table.Header title="Vendor" />
           </SmartTable.Header>
           <SmartTable.Body onItemClick={onProductClick}>
-            {({item}) => {
-              return (
+            {({item}) => (
                 <>
                   <Table.Cell>
                     <Button theme="clear" onClick={() => onProductClick(item)}>
@@ -174,7 +169,7 @@ export default function ProductsList({products, onUpdate, onDelete}: Props) {
                         <VariantImage
                           onClick={() => onProductClick(item)}
                           image={item.image}
-                          imageStyle={'w-14 h-14'}
+                          imageStyle="w-14 h-14"
                         />
                       )}
                       <span className="text-left font-medium">
@@ -203,8 +198,7 @@ export default function ProductsList({products, onUpdate, onDelete}: Props) {
                   <Table.Cell>{item.category?.name}</Table.Cell>
                   <Table.Cell>{item.vendor?.name}</Table.Cell>
                 </>
-              );
-            }}
+              )}
           </SmartTable.Body>
         </Table>
       </SmartTable>

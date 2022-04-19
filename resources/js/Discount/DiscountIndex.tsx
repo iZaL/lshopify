@@ -23,7 +23,7 @@ const tabs: TabProps[] = [
 export default function DiscountIndex(props: Props) {
   const [activeTab, setActiveTab] = React.useState<TabProps>(tabs[0]);
 
-  const DiscountCodeTab = () => {
+  function DiscountCodeTab() {
     if (activeTab.name !== 'Discount codes') {
       return null;
     }
@@ -47,9 +47,9 @@ export default function DiscountIndex(props: Props) {
         </div>
       </div>
     );
-  };
+  }
 
-  const AutomaticDiscountTab = () => {
+  function AutomaticDiscountTab() {
     if (activeTab.name !== 'Automatic discounts') {
       return null;
     }
@@ -78,13 +78,13 @@ export default function DiscountIndex(props: Props) {
         </div>
       </div>
     );
-  };
+  }
 
   return (
     <Main>
       <div className="p-6">
         <div className="mx-auto max-w-7xl xl:flex xl:items-center xl:justify-between">
-          <PageHeader text={'Discounts'} />
+          <PageHeader text="Discounts" />
           <IndexActionButtons />
         </div>
 

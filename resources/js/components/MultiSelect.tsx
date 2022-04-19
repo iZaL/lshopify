@@ -24,18 +24,15 @@ export default function MultiSelect<T extends Item>({
   onCreate,
 }: Props<T>) {
   const onItemsChange = (tags: MultiValue<{label: string; value: string}>) => {
-    const newTags: Item[] = tags.map(({value, label}) => {
-      return {
+    const newTags: Item[] = tags.map(({value, label}) => ({
         id: value,
         name: label,
-      };
-    });
+      }));
     onChange(newTags);
   };
 
   return (
-    <>
-      <CreatableSelect
+    <CreatableSelect
         isMulti
         className="basic-multi-select text-sm"
         classNamePrefix="select"
@@ -57,6 +54,5 @@ export default function MultiSelect<T extends Item>({
         }))}
         onCreateOption={value => onCreate(value)}
       />
-    </>
   );
 }

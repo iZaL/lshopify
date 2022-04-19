@@ -41,12 +41,11 @@ export default function AddressCard({address, onSave, title}: Props) {
         width="max-w-2xl"
         heading={`EDIT ${title}`}
         submitButtonTitle="Done"
-        hideFooter={true}
+        hideFooter
         onClose={() => setShowDialog(false)}
         onConfirm={() => setShowDialog(false)}>
         <AddressForm address={address}>
-          {attributes => {
-            return (
+          {attributes => (
               <ModalFooter
                 onProceed={() => {
                   setShowDialog(false);
@@ -54,8 +53,7 @@ export default function AddressCard({address, onSave, title}: Props) {
                 }}
                 onHideModal={() => setShowDialog(false)}
               />
-            );
-          }}
+            )}
         </AddressForm>
       </Modal>
     </div>

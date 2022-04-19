@@ -28,34 +28,34 @@ export default function DraftOrderCreate(props: Props) {
 
   const onVariantsAdd = (variantIDs: number[]) => {
     Inertia.post(route('lshopify.cart.add'), {
-      variantIDs: variantIDs,
+      variantIDs,
     });
   };
 
   const onVariantRemove = (rowId: string) => {
     Inertia.post(route('lshopify.cart.remove'), {
-      rowId: rowId,
+      rowId,
     });
   };
 
   const onVariantEdit = (rowId: string, item: CartItem) => {
     Inertia.post(route('lshopify.cart.update'), {
-      rowId: rowId,
-      item: item,
+      rowId,
+      item,
     });
   };
 
   const onApplyDiscount = (discount: CartDiscount, item?: CartItem) => {
     Inertia.post(route('lshopify.cart.discount.add'), {
-      discount: discount,
-      item: item,
+      discount,
+      item,
     });
   };
 
   const onRemoveDiscount = (discount: CartDiscount, item?: CartItem) => {
     Inertia.post(route('lshopify.cart.discount.remove'), {
-      discount: discount,
-      item: item,
+      discount,
+      item,
     });
   };
 
@@ -70,7 +70,7 @@ export default function DraftOrderCreate(props: Props) {
       <div className="p-6">
         <FormSubmitBar onSubmit={handleSubmit} />
 
-        <PageHeader text={'Create Order'} />
+        <PageHeader text="Create Order" />
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
           <section className="space-y-6 lg:col-span-2 lg:col-start-1">

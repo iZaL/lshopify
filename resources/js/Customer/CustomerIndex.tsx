@@ -18,7 +18,7 @@ export default function CustomerIndex(props: Props) {
     <Main>
       <div className="p-6">
         <div className="mx-auto max-w-7xl xl:flex xl:items-center xl:justify-between">
-          <PageHeader text={'Customers'} />
+          <PageHeader text="Customers" />
           <CustomerIndexActionButtons />
         </div>
 

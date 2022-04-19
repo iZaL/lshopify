@@ -46,7 +46,7 @@ export default function Refunded() {
       <div className="flex justify-end">
         <DropdownButton
           buttonTitle="Collect payment"
-          arrowVisible={true}
+          arrowVisible
           items={[
             {
               title: 'View',

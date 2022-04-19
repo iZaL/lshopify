@@ -32,7 +32,7 @@ export default function ImageSelect(props: Props) {
   return (
     <Card cardStyle="w-full h-full">
       <div className="flex flex-row justify-between">
-        <Subheader text={'Collection image'} />
+        <Subheader text="Collection image" />
         {props.data.image && (
           <Button
             theme="clear"

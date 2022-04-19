@@ -39,7 +39,7 @@ export default function InventoryIndex(props: Props) {
 
   const onQuantityChange = (variant: Variant, quantity: string) => {
     const index = data.variants.findIndex(v => v.id === variant.id);
-    const newVariant = {...variant, quantity: quantity, isDirty: true};
+    const newVariant = {...variant, quantity, isDirty: true};
     setData({
       variants: [
         ...data.variants.slice(0, index),
@@ -77,7 +77,7 @@ export default function InventoryIndex(props: Props) {
     <Main>
       <div className="p-6">
         <div className="mx-auto max-w-7xl xl:flex xl:items-center xl:justify-between">
-          <PageHeader text={'Inventory'} />
+          <PageHeader text="Inventory" />
           <InventoryIndexActionButtons />
         </div>
 

@@ -36,8 +36,7 @@ export default function EditOriginCountry({
         </Button>
       </div>
 
-      {variants.map((variant, i) => {
-        return (
+      {variants.map((variant, i) => (
           <div
             className="flex items-center space-x-4 border-b border-gray-200 py-3"
             key={i}>
@@ -59,8 +58,7 @@ export default function EditOriginCountry({
               </select>
             </div>
           </div>
-        );
-      })}
+        ))}
     </div>
   );
 }

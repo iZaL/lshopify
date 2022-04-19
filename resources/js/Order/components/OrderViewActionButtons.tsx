@@ -16,13 +16,13 @@ export default function OrderViewActionButtons({
         <Button
           theme="clear"
           onClick={onRefundClick}
-          buttonStyle={'hover:bg-gray-200 p-2 px-4'}>
+          buttonStyle="hover:bg-gray-200 p-2 px-4">
           Refund
         </Button>
         <Button
           theme="clear"
           onClick={onReturnClick}
-          buttonStyle={'hover:bg-gray-200 p-2 px-4'}>
+          buttonStyle="hover:bg-gray-200 p-2 px-4">
           Return items
         </Button>
       </div>
