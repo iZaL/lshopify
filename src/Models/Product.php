@@ -3,7 +3,8 @@
 namespace IZal\Lshopify\Models;
 
 use IZal\Lshopify\Database\Factories\ProductFactory;
-use IZal\Lshopify\Models\TaggableTrait;
+use IZal\Lshopify\Models\Traits\ImageableTrait;
+use IZal\Lshopify\Models\Traits\TaggableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends BaseModel

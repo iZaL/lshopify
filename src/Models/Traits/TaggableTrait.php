@@ -1,6 +1,6 @@
 <?php
 
-namespace IZal\Lshopify\Models;
+namespace IZal\Lshopify\Models\Traits;
 
 use IZal\Lshopify\Models\Tag;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;

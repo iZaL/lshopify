@@ -4,6 +4,7 @@ namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use IZal\Lshopify\Database\Factories\CategoryFactory;
+use IZal\Lshopify\Models\Traits\ImageableTrait;
 
 class Category extends BaseModel
 {

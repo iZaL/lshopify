@@ -4,6 +4,7 @@ namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use IZal\Lshopify\Database\Factories\VariantFactory;
+use IZal\Lshopify\Models\Traits\ImageableTrait;
 
 class Variant extends BaseModel
 {

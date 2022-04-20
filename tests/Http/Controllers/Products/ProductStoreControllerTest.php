@@ -135,8 +135,8 @@ class ProductStoreControllerTest extends TestCase
         $product = Product::first();
 
         $this->assertDatabaseHas('collection_products', ['product_id' => $product->id, 'collection_id' => $collection->id]);
-        $this->assertDatabaseHas('taggables', ['taggable_id' => $product->id, 'taggable_type'=> get_class($product), 'tag_id' => $tag1->id]);
-        $this->assertDatabaseHas('taggables', ['taggable_id' => $product->id, 'taggable_type'=> get_class($product), 'tag_id' => $tag2->id]);
+        $this->assertDatabaseHas('taggables', ['taggable_id' => $product->id, 'taggable_type'=> 'product', 'tag_id' => $tag1->id]);
+        $this->assertDatabaseHas('taggables', ['taggable_id' => $product->id, 'taggable_type'=> 'product', 'tag_id' => $tag2->id]);
 
         $this->assertDatabaseHas('variants', ['default' => true]);
         $this->assertDatabaseHas('variants', ['default' => false]);
