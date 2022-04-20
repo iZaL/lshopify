@@ -2,6 +2,7 @@
 
 namespace IZal\Lshopify\Actions;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use IZal\Lshopify\Models\Tag;
 
 class TagCreateAction
@@ -16,21 +17,18 @@ class TagCreateAction
         $this->tag = $tag;
     }
 
-    public function create(array $attributes): Tag
+    public function create(array $attributes): Tag | null
     {
         $attributes = collect($attributes);
         $tag = $this->tag->create($attributes->only($this->tag->getFillable())->toArray());
-
-        if (in_array('taggable_id', $attributes->keys()->toArray())) {
-            $taggableType = $attributes->pull('taggable_type');
-            if (isset($tag->morphs[$taggableType])) {
-                $taggableType = $tag->morphs[$taggableType];
-                $taggableID = $attributes->pull('taggable_id');
-                $model = $taggableType::find($taggableID);
-                $model?->tags()->attach($tag->id);
-            }
+        $taggableType = $attributes->pull('taggable_type');
+        $taggableID = $attributes->pull('taggable_id');
+        $morphedModel = Relation::getMorphedModel($taggableType);
+        if($morphedModel) {
+            $relatedModel = $morphedModel::find($taggableID);
+            $relatedModel?->tags()->attach($tag->id);
+            return $tag;
         }
-
-        return $tag;
+        return null;
     }
 }

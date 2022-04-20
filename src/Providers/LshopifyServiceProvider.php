@@ -2,11 +2,14 @@
 
 namespace IZal\Lshopify\Providers;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
 use IZal\Lshopify\Cart\CartServiceProvider;
+use IZal\Lshopify\Models\Collection;
+use IZal\Lshopify\Models\Product;
 
 class LshopifyServiceProvider extends ServiceProvider
 {
@@ -18,6 +21,11 @@ class LshopifyServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        Relation::enforceMorphMap([
+            'product' => Product::class,
+            'collection' => Collection::class,
+        ]);
+
         if (!config('lshopify.enabled')) {
             return;
         }

@@ -48,7 +48,7 @@ class ImageUploadAction
         $imageableType = $data['imageable_type'];
 
         foreach ($this->uploadedImages as $image) {
-            $this->save($image, $imageableID, $this->image->morphs[$imageableType] ?? null);
+            $this->save($image, $imageableID, $imageableType);
         }
 
         return $this;
