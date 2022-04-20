@@ -4,12 +4,14 @@ namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use IZal\Lshopify\Database\Factories\CollectionFactory;
+use IZal\Lshopify\Models\TaggableTrait;
 use IZal\Lshopify\Managers\CollectionCriteriaManager;
 use IZal\Lshopify\Managers\ConditionFieldManager;
 
 class Collection extends BaseModel
 {
     use HasFactory;
+    use TaggableTrait;
     use ImageableTrait;
 
     protected $table = 'collections';

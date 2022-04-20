@@ -3,13 +3,13 @@
 namespace IZal\Lshopify\Models;
 
 use IZal\Lshopify\Database\Factories\ProductFactory;
-use IZal\Lshopify\Helpers\HasTags;
+use IZal\Lshopify\Models\TaggableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends BaseModel
 {
     use HasFactory;
-    use HasTags;
+    use TaggableTrait;
     use ImageableTrait;
 
     protected $table = 'products';

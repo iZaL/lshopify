@@ -1,11 +1,11 @@
 <?php
 
-namespace IZal\Lshopify\Helpers;
+namespace IZal\Lshopify\Models;
 
 use IZal\Lshopify\Models\Tag;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
-trait HasTags
+trait TaggableTrait
 {
     public function syncTags(array $tags)
     {
