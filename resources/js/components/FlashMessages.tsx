@@ -69,14 +69,16 @@ export default function FlashMessages() {
   const [visible, setVisible] = useState(false);
   const {flash, errors, env} = usePage<Props>().props;
   //
-  let flashMessage: {type: keyof FlashMessageType; message: string | null} =
-    useMemo(
-      () => ({
-        type: 'success',
-        message: null,
-      }),
-      [],
-    );
+  let flashMessage: {
+    type: keyof FlashMessageType;
+    message: string | null | React.ReactElement;
+  } = useMemo(
+    () => ({
+      type: 'success',
+      message: null,
+    }),
+    [],
+  );
 
   if (flash) {
     if (flash.success) {
@@ -89,19 +91,6 @@ export default function FlashMessages() {
       flashMessage = {type: 'info', message: flash.info};
     }
   }
-
-  // if(flash){
-  //     (Object.keys(flash) as Array<keyof typeof flash>).forEach((key) => {
-  //         let message = flash[key];
-  //         if (message) {
-  //             return (flashMessage = {
-  //                 type: key,
-  //                 message: message,
-  //             });
-  //         }
-  //         return;
-  //     });
-  // }
 
   const errorMessages: Array<string> = useMemo(
     () => (errors ? Object.keys(errors).map(key => errors[key]) : []),

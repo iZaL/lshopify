@@ -69,14 +69,16 @@ export default function PopMessages() {
   const [visible, setVisible] = useState(false);
   const {flash, errors, env} = usePage<Props>().props;
 
-  let flashMessage: {type: keyof FlashMessageType; message: string | null} =
-    useMemo(
-      () => ({
-        type: 'success',
-        message: null,
-      }),
-      [],
-    );
+  let flashMessage: {
+    type: keyof FlashMessageType;
+    message: string | null | React.ReactElement;
+  } = useMemo(
+    () => ({
+      type: 'success',
+      message: null,
+    }),
+    [],
+  );
 
   if (flash) {
     if (flash.success) {
