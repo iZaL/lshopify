@@ -30,7 +30,7 @@ function MediaSection({onImagesUpload, images, onImagesDelete}: Props) {
       <div className="flex h-8 flex-row items-center justify-between text-sm">
         {selectedImages.length ? (
           <>
-            <div className="flex flex-row  items-center space-x-2">
+            <div className="flex flex-row items-center space-x-2">
               <input
                 type="checkbox"
                 className="h-4 w-4"

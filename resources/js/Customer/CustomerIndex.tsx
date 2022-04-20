@@ -24,7 +24,7 @@ export default function CustomerIndex(props: Props) {
           <CustomerIndexActionButtons />
         </div>
 
-        <div className="mx-auto max-w-7xl py-6 ">
+        <div className="mx-auto max-w-7xl py-6">
           <section className="rounded-lg bg-white shadow">
             <CustomersList customers={customers.data} />
           </section>

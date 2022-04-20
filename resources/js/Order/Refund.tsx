@@ -96,9 +96,9 @@ export default function Refund({
         </div>
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
-          <section className="space-y-6 lg:col-span-2 lg:col-start-1 ">
+          <section className="space-y-6 lg:col-span-2 lg:col-start-1">
             <Card>
-              <div className="flex flex-row items-center space-x-4 px-5 pt-5 ">
+              <div className="flex flex-row items-center space-x-4 px-5 pt-5">
                 <div className="font-bold">Unfulfilled</div>
               </div>
 
@@ -135,7 +135,7 @@ export default function Refund({
             </Card>
 
             <Card>
-              <div className="flex flex-row items-center space-x-4 px-5 pt-5 ">
+              <div className="flex flex-row items-center space-x-4 px-5 pt-5">
                 <div className="font-bold">Fulfilled</div>
               </div>
 
@@ -186,7 +186,7 @@ export default function Refund({
             <Card cardStyle="text-sm">
               <Subheader text="Summary" />
 
-              <div className="flex flex-row items-center justify-between ">
+              <div className="flex flex-row items-center justify-between">
                 <div>Items subtotal</div>
                 <div>OMR 10.00</div>
               </div>
@@ -196,7 +196,7 @@ export default function Refund({
                 <div>OMR 0.00</div>
               </div>
 
-              <div className="flex flex-row items-center justify-between ">
+              <div className="flex flex-row items-center justify-between">
                 <div>Shipping</div>
                 <div>OMR 0.00</div>
               </div>

@@ -48,7 +48,7 @@ export default function PricingSection({onChange, variant}: Props) {
       </div>
 
       <div className="flex space-x-10">
-        <div className=" flex-1">
+        <div className="flex-1">
           <Label title="Cost per item" />
           <InputText
             name="cost_price"

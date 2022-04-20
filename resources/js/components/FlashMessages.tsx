@@ -49,7 +49,7 @@ function Content({
 
   return (
     <div className="relative">
-      <div className={`mx-6 mt-6 border-l-4 p-4  ${themeStyle}`}>
+      <div className={`mx-6 mt-6 border-l-4 p-4 ${themeStyle}`}>
         <div className="flex items-center">
           <div className="">{children}</div>
           <div className="ml-auto pl-3">

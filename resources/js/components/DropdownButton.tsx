@@ -36,7 +36,7 @@ export default function DropdownButton({
         </Menu.Button>
         <Menu.Items
           className={`origin-top-center absolute right-0 ${width} mt-2 max-h-[320px] min-w-[10rem] max-w-[22rem] overflow-y-scroll rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5`}>
-          <ul className="p-2 text-sm text-black ">
+          <ul className="p-2 text-sm text-black">
             {items.map((item, i) => (
               <Menu.Item key={i}>
                 {({active, disabled}) => (
@@ -45,7 +45,7 @@ export default function DropdownButton({
                     className={classNames(
                       active ? 'bg-gray-100' : '',
                       disabled ? 'bg-gray-50 text-gray-300' : '',
-                      'block p-2 ',
+                      'block p-2',
                       item.itemStyle,
                     )}>
                     {item.title}

@@ -33,7 +33,7 @@ export default function CollectionIndex(props: Props) {
           <CollectionIndexActionButtons />
         </div>
 
-        <div className="mx-auto max-w-7xl py-6 ">
+        <div className="mx-auto max-w-7xl py-6">
           <section className="rounded-lg bg-white shadow">
             <RightSidebar
               isOpen={sidebarOpen}

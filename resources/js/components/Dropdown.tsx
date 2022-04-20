@@ -26,7 +26,7 @@ export default function Dropdown({
       <div
         className={`absolute right-0 origin-center ${width} mt-2 max-h-[320px] min-w-[10rem] overflow-y-scroll rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5`}>
         {items?.length ? (
-          <ul className="p-2 text-sm text-black ">
+          <ul className="p-2 text-sm text-black">
             {items.map((item, i) => (
               <li
                 key={i}

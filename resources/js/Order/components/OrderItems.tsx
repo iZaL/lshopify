@@ -18,7 +18,7 @@ export default function OrderItems({variants}: Props) {
     <div className="divide-y">
       {variants.map((variant, i) => (
         <div
-          className="variants-center flex flex-row items-center space-x-2 py-2 text-sm "
+          className="variants-center flex flex-row items-center space-x-2 py-2 text-sm"
           key={i}>
           <VariantImage
             image={variant.image}

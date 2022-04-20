@@ -50,7 +50,7 @@ function Content({
 
   return (
     <div
-      className={`fixed right-0 mx-6 mt-6 min-w-[320px] rounded rounded-md border-l-4 p-4 shadow shadow-md  ${themeStyle}`}>
+      className={`fixed right-0 mx-6 mt-6 min-w-[320px] rounded rounded-md border-l-4 p-4 shadow shadow-md ${themeStyle}`}>
       <div className="flex items-center">
         <div className="">{children}</div>
         <div className="ml-auto pl-3">

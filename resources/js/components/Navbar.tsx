@@ -16,7 +16,7 @@ export default function Navbar() {
   const {toggle} = useSidebarStore();
 
   return (
-    <div className="relative flex h-16 flex-shrink-0 bg-white shadow ">
+    <div className="relative flex h-16 flex-shrink-0 bg-white shadow">
       <button
         className="border-r border-gray-200 px-4 text-gray-500 focus:outline-none md:hidden"
         onClick={() => toggle()}>

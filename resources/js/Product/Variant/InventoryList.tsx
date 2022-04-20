@@ -20,12 +20,9 @@ export default function InventoryList({
   onQuantityChange,
   onSave,
 }: Props) {
-
   return (
     <SmartTable items={variants}>
-      <SmartTable.SmartHeader>
-        {({selectedItemIDs}) => <></>}
-      </SmartTable.SmartHeader>
+      <SmartTable.SmartHeader>{() => <></>}</SmartTable.SmartHeader>
 
       <Table>
         <SmartTable.Header>

@@ -244,7 +244,7 @@ export default function ProductBulkEdit(props: Props) {
           <div className="text-sm text-gray-700">
             Currently editing these fields:
           </div>
-          <div className="inline-flex flex-wrap space-x-2 ">
+          <div className="inline-flex flex-wrap space-x-2">
             <TagsPopup
               buttons={buttons}
               attributeLabels={attributeLabels}
@@ -356,7 +356,7 @@ export default function ProductBulkEdit(props: Props) {
                                 (attribute, idx) => (
                                   <Cell key={attribute}>
                                     {attribute === 'title' ? (
-                                      <div className="bg-gray-100 p-2 pl-12 text-gray-500 ">
+                                      <div className="bg-gray-100 p-2 pl-12 text-gray-500">
                                         {variant.title}
                                       </div>
                                     ) : (

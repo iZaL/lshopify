@@ -11,7 +11,7 @@ export default function Refunded() {
           <div>Discount</div>
         </div>
 
-        <div className="col-span-3 col-start-2 space-y-2 ">Custom discount</div>
+        <div className="col-span-3 col-start-2 space-y-2">Custom discount</div>
 
         <div className="col-start-5 space-y-2 text-right">
           <div className="">OMR 10.00</div>
@@ -22,7 +22,7 @@ export default function Refunded() {
           <div>Total</div>
         </div>
 
-        <div className="col-span-3 col-start-2 space-y-2 ">counting</div>
+        <div className="col-span-3 col-start-2 space-y-2">counting</div>
 
         <div className="col-start-5 space-y-2 text-right">
           <div className="">OMR 10.00</div>

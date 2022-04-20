@@ -13,7 +13,7 @@ export default function BackButton({onClick}: Props) {
       theme="default"
       onClick={onClick}
       buttonStyle="hover:border-gray-400 hover:text-gray-500">
-      <ArrowLeftIcon className="h-4 w-4 " />
+      <ArrowLeftIcon className="h-4 w-4" />
     </Button>
   );
 }

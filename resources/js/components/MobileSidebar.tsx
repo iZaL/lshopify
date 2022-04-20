@@ -35,7 +35,7 @@ export default function MobileSidebar() {
           leave="transition ease-in-out duration-300 transform"
           leaveFrom="translate-x-0"
           leaveTo="-translate-x-full">
-          <div className="relative flex w-full max-w-xs flex-1 flex-col bg-white pt-5 pb-4 ">
+          <div className="relative flex w-full max-w-xs flex-1 flex-col bg-white pt-5 pb-4">
             <Transition.Child
               as={Fragment}
               enter="ease-in-out duration-300"
@@ -55,7 +55,7 @@ export default function MobileSidebar() {
             <div className="flex flex-shrink-0 justify-start px-4">
               <span className="text-center text-xl">LARAVEL SHOPIFY</span>
             </div>
-            <div className="mt-10 h-0 flex-1 flex-1 overflow-y-auto">
+            <div className="mt-10 h-0 flex-1 overflow-y-auto">
               <SidebarNav />
             </div>
           </div>

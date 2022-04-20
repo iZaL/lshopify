@@ -61,7 +61,7 @@ export default function ImageSelect(props: Props) {
           className="relative cursor-pointer"
           onClick={() => setShowDialog(true)}>
           <div className="flex h-36 w-full flex-col items-center justify-center rounded-lg border-4 border-dashed border-gray-200">
-            <div className="text-sm text-blue-500 underline ">Add media</div>
+            <div className="text-sm text-blue-500 underline">Add media</div>
             <div className="text-center text-xs">Drop files to upload</div>
           </div>
         </div>

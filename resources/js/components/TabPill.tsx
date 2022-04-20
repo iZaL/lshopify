@@ -11,7 +11,7 @@ export default function TabPill({
   hideCloseIcon?: boolean;
 }) {
   return (
-    <div className="flex flex-row items-center justify-end overflow-hidden rounded rounded-md bg-gray-200 ">
+    <div className="flex flex-row items-center justify-end overflow-hidden rounded rounded-md bg-gray-200">
       <div className="flex-1 px-2 text-sm text-gray-700">{title}</div>
       {!hideCloseIcon && (
         <XIcon

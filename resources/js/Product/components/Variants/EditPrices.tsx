@@ -16,7 +16,7 @@ export default function EditPrices({variants, onChange, onApplyAll}: Props) {
   return (
     <div className="p-5">
       <p className="text-sm text-gray-700">Apply a quantity to all variants</p>
-      <div className="flex space-x-4 border-b border-gray-200 py-3  ">
+      <div className="flex space-x-4 border-b border-gray-200 py-3">
         <div className="min-w-0 flex-1">
           <InputText
             name="item_cost"

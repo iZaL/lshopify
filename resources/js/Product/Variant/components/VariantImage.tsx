@@ -34,7 +34,7 @@ export default function VariantImage({
       ) : (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className={`${style} `}
+          className={`${style}`}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor">

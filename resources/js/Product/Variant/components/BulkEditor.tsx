@@ -70,10 +70,10 @@ export default function BulkEditor({variants, children}: Props) {
   return (
     <>
       <div className="p-5">
-        <div className="flex flex-row  flex-wrap ">
+        <div className="flex flex-row flex-wrap">
           {defaultAttributes.map((attr, i) => (
             <div className="mb-2 pr-2" key={i}>
-              <div className="flex h-6 flex-row items-center justify-end overflow-hidden rounded rounded-md bg-gray-200 ">
+              <div className="flex h-6 flex-row items-center justify-end overflow-hidden rounded rounded-md bg-gray-200">
                 <div className="flex-1 px-2">{attr}</div>
                 {selectedAttributes.includes(attr) ? (
                   <XIcon
@@ -250,7 +250,7 @@ export default function BulkEditor({variants, children}: Props) {
                   </div>
                 )}
                 {selectedAttributes.includes('out_of_stock_sale') && (
-                  <div className="w-40 flex-shrink-0 ">
+                  <div className="w-40 flex-shrink-0">
                     <Checkbox
                       name="out_of_stock_sale"
                       inputStyle="text-center"
@@ -277,7 +277,7 @@ export default function BulkEditor({variants, children}: Props) {
                   </div>
                 )}
                 {selectedAttributes.includes('physical_product') && (
-                  <div className="w-40 flex-shrink-0 ">
+                  <div className="w-40 flex-shrink-0">
                     <Checkbox
                       name="physical_product"
                       checked={variant.physical_product}
@@ -293,7 +293,7 @@ export default function BulkEditor({variants, children}: Props) {
                 )}
 
                 {selectedAttributes.includes('requires_shipping') && (
-                  <div className="w-40 flex-shrink-0 ">
+                  <div className="w-40 flex-shrink-0">
                     <Checkbox
                       name="requires_shipping"
                       checked={variant.requires_shipping}

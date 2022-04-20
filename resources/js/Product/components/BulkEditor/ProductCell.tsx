@@ -46,20 +46,20 @@ export default function ProductCell({
         <Popover className="relative text-left">
           <Popover.Button
             className={classNames(
-              'flex w-[18rem] flex-wrap p-1 ',
+              'flex w-[18rem] flex-wrap p-1',
               !selectedTags.length ? 'py-4' : null,
             )}>
             {selectedTags.map((tag, idx) => (
               <div
                 key={idx}
-                className="my-px mx-px rounded rounded-md bg-gray-200 p-1 px-2 text-sm text-gray-700 ">
+                className="my-px mx-px rounded rounded-md bg-gray-200 p-1 px-2 text-sm text-gray-700">
                 {tag.name}
               </div>
             ))}
           </Popover.Button>
 
           <Popover.Panel className="absolute right-0 left-0 mt-2 rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <div className="w[36rem] relative flex flex-col space-y-2 ">
+            <div className="w[36rem] relative flex flex-col space-y-2">
               <div>Tags</div>
               <InputText
                 onChange={value => setTagValue(value.target.value)}

@@ -33,7 +33,7 @@ export default function TagsPopup({
               />
             </Popover.Button>
 
-            <Popover.Panel className="absolute left-0 mt-2 max-h-[20rem] w-[36rem] origin-top-right divide-y overflow-y-scroll rounded-md bg-white p-2 text-sm shadow shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none ">
+            <Popover.Panel className="absolute left-0 mt-2 max-h-[20rem] w-[36rem] origin-top-right divide-y overflow-y-scroll rounded-md bg-white p-2 text-sm shadow shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
               {Object.keys(buttons).map((key, idx) => (
                 <dl key={idx} className="divide-y divide-black">
                   <div className="items-center py-2 sm:grid sm:grid-cols-4">

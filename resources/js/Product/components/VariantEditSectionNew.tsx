@@ -450,9 +450,9 @@ export default function VariantEditSectionNew({
           </div>
         </div>
 
-        <div className="overflow-x-auto  text-sm">
+        <div className="overflow-x-auto text-sm">
           {checkedVariantIDs.length ? (
-            <div className="flex h-12 w-full flex-row items-center py-2 ">
+            <div className="flex h-12 w-full flex-row items-center py-2">
               <Button
                 theme="clear"
                 buttonStyle="px-4 py-2 rounded-l-md border border-gray-300 font-medium">
@@ -562,7 +562,7 @@ export default function VariantEditSectionNew({
                     inputStyle="line-through indeterminate"
                   />
                 </div>
-                <div className="flex w-16 items-center justify-center " />
+                <div className="flex w-16 items-center justify-center" />
               </div>
 
               <div className="w-full">

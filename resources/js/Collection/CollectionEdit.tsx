@@ -129,7 +129,7 @@ export default function CollectionEdit(props: Props) {
         </div>
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
-          <section className="space-y-6 space-y-6 lg:col-span-2 lg:col-start-1">
+          <section className="space-y-6 lg:col-span-2 lg:col-start-1">
             <TitleSection
               name={data.name}
               description={data.description || ''}

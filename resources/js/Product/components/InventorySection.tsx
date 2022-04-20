@@ -60,7 +60,7 @@ export default function InventorySection({onChange, variant}: Props) {
             <Subheader text="QUANTITY" headerStyle="text-sm" />
           </div>
 
-          <div className="flex ">
+          <div className="flex">
             <div className="w-1/2 pr-5">
               <Label title="Available" />
               <InputText

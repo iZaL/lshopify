@@ -93,7 +93,7 @@ const DZFileUploadBox = React.memo(
 
     return (
       <div className="mt-1 sm:mt-0">
-        <ul className=" mt-4 grid grid-cols-2 gap-x-3 gap-y-6 sm:grid-cols-3 sm:gap-x-4 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-4">
+        <ul className="mt-4 grid grid-cols-2 gap-x-3 gap-y-6 sm:grid-cols-3 sm:gap-x-4 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-4">
           <li
             {...getRootProps({className: 'dropzone'})}
             className={classNames(
@@ -102,10 +102,8 @@ const DZFileUploadBox = React.memo(
             )}>
             <input {...getInputProps()} />
             <div className="relative">
-              <div className="flex w-full flex-col items-center justify-center ">
-                <div className="text-sm text-blue-500 underline ">
-                  Add media
-                </div>
+              <div className="flex w-full flex-col items-center justify-center">
+                <div className="text-sm text-blue-500 underline">Add media</div>
                 <div className="text-center text-xs">Drop files to upload</div>
               </div>
             </div>

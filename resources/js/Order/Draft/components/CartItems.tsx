@@ -53,7 +53,7 @@ export default function CartItems({
 
       {items.map((item, i) => (
         <div
-          className="grid grid-cols-6 items-center space-x-4 text-sm "
+          className="grid grid-cols-6 items-center space-x-4 text-sm"
           key={i}>
           <div className="col-span-4 inline-flex items-center space-x-2">
             <VariantImage
@@ -61,7 +61,7 @@ export default function CartItems({
               onClick={() => {}}
               imageStyle="w-12 h-12"
             />
-            <div className=" text-sm">
+            <div className="text-sm">
               {item.variant.product && (
                 <div className="underline">
                   <ProductTitle product={item.variant.product} />

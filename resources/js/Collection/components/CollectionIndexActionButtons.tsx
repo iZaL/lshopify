@@ -8,7 +8,7 @@ export default function CollectionIndexActionButtons() {
       <div className="">
         <Link
           href={route('lshopify.home')}
-          className="inline-flex items-center rounded-md px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 ">
+          className="inline-flex items-center rounded-md px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
           Export
         </Link>
       </div>

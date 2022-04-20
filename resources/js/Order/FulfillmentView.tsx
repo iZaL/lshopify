@@ -87,9 +87,9 @@ export default function FulfillmentView({order, pending_fulfillments}: Props) {
         </div>
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
-          <section className="space-y-6 lg:col-span-2 lg:col-start-1 ">
+          <section className="space-y-6 lg:col-span-2 lg:col-start-1">
             <Card>
-              <div className="flex flex-row items-center space-x-4 px-5 pt-5 ">
+              <div className="flex flex-row items-center space-x-4 px-5 pt-5">
                 <div className="font-bold">#1008</div>
                 <div className="rounded rounded-xl bg-yellow-400 px-3 text-sm opacity-90">
                   Partially fulfilled

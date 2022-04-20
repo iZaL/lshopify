@@ -70,7 +70,7 @@ export default function DiscountCreate({discount}: Props) {
         </div>
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
-          <section className="space-y-6 space-y-6 lg:col-span-2 lg:col-start-1">
+          <section className="space-y-6 lg:col-span-2 lg:col-start-1">
             <Card>
               <div className="flex flex-row justify-between">
                 <Subheader
@@ -180,7 +180,7 @@ export default function DiscountCreate({discount}: Props) {
               <Subheader text="Minimum requirements" />
 
               <div className="relative flex items-start text-sm">
-                <div className="flex items-center h-5">
+                <div className="flex h-5 items-center">
                   <input
                     type="radio"
                     value="manual"
@@ -207,7 +207,7 @@ export default function DiscountCreate({discount}: Props) {
               </div>
 
               <div className="relative flex items-start text-sm">
-                <div className="flex items-center h-5">
+                <div className="flex h-5 items-center">
                   <input
                     type="radio"
                     value="manual"

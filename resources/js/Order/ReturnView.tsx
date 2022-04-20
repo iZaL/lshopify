@@ -88,10 +88,10 @@ export default function Refund({order}: Props) {
         </div>
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
-          <section className="space-y-6 lg:col-span-2 lg:col-start-1 ">
+          <section className="space-y-6 lg:col-span-2 lg:col-start-1">
             {data.fulfillments?.map(fulfillment => (
               <Card key={fulfillment.id}>
-                <div className="flex flex-row items-center space-x-4 px-5 pt-5 ">
+                <div className="flex flex-row items-center space-x-4 px-5 pt-5">
                   <div className="font-bold">Fulfillments</div>
                 </div>
 
@@ -164,7 +164,7 @@ export default function Refund({order}: Props) {
             <Card cardStyle="text-sm">
               <Subheader text="Summary" />
 
-              <div className="flex flex-row items-center justify-between ">
+              <div className="flex flex-row items-center justify-between">
                 <div>Return 1 item</div>
                 <div>Reason: other</div>
               </div>

@@ -31,7 +31,7 @@ export default function OrderEdit(props: Props) {
         {/*  <DraftOrderIndexActionButtons /> */}
         {/* </div> */}
 
-        <div className="mx-auto max-w-7xl py-6 ">
+        <div className="mx-auto max-w-7xl py-6">
           <section className="overflow-hidden rounded-lg bg-white shadow" />
         </div>
       </div>

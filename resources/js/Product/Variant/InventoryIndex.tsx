@@ -83,7 +83,7 @@ export default function InventoryIndex(props: Props) {
           <InventoryIndexActionButtons />
         </div>
 
-        <div className="mx-auto max-w-7xl py-6 ">
+        <div className="mx-auto max-w-7xl py-6">
           <section className="overflow-hidden rounded-lg bg-white shadow">
             <InventorySearchBar tabs={tabs} onMoreFiltersClick={() => {}} />
             <InventoryList

@@ -69,7 +69,7 @@ export default function ProductIndex(props: Props) {
           <ProductIndexActionButtons />
         </div>
 
-        <div className="mx-auto max-w-7xl py-6 ">
+        <div className="mx-auto max-w-7xl py-6">
           <section className="rounded-lg bg-white shadow">
             <ProductSearchBar
               vendors={vendors || []}

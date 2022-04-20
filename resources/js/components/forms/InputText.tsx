@@ -31,7 +31,7 @@ function Button({
         position === 'right' ? 'right-0' : 'left-0'
       } focus:none px-3 focus:border-none focus:outline-none ${
         !onClick && 'pointer-events-none'
-      }  `}
+      }`}
       onClick={onClick}>
       {children}
     </button>

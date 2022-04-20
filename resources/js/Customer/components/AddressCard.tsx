@@ -27,7 +27,7 @@ export default function AddressCard({address, onSave, title}: Props) {
         </div>
       </div>
 
-      <div className="mt-2 text-sm ">
+      <div className="mt-2 text-sm">
         <div>{`${address.first_name} ${address.last_name}`}</div>
         <div>{address.company}</div>
         <div>{address.address1}</div>

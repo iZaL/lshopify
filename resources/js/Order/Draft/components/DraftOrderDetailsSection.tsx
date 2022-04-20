@@ -164,7 +164,7 @@ export default function DraftOrderDetailsSection({
           <>
             <Border />
 
-            <div className="flex flex-row items-center justify-between ">
+            <div className="flex flex-row items-center justify-between">
               <div className="text-xs font-semibold">INVOICE</div>
               <Button onClick={() => setShowDialog('send_invoice')}>
                 Send Invoice
@@ -173,7 +173,7 @@ export default function DraftOrderDetailsSection({
 
             <Border />
 
-            <div className="flex flex-row items-center justify-between ">
+            <div className="flex flex-row items-center justify-between">
               <div className="text-xs font-semibold">PAYMENT</div>
               <div className="flex flex-row space-x-5">
                 <Button

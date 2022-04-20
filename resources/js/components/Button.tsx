@@ -43,7 +43,7 @@ export default function Button({
       onClick={disabled ? undefined : onClick ?? undefined}
       className={classNames(
         theme === 'clear' ? `` : `rounded-md py-2 px-4`,
-        ` box-border block inline-flex items-center justify-center text-center text-sm focus:outline-none ${themeStyle} ${buttonStyle} `,
+        `box-border block inline-flex items-center justify-center text-center text-sm focus:outline-none ${themeStyle} ${buttonStyle}`,
       )}>
       {children}
     </button>

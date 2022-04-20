@@ -28,7 +28,7 @@ export default function OrderIndex(props: Props) {
           <DraftOrderIndexActionButtons />
         </div>
 
-        <div className="mx-auto max-w-7xl py-6 ">
+        <div className="mx-auto max-w-7xl py-6">
           <section className="rounded-lg bg-white shadow">
             <OrderList orders={orders} onItemClick={onOrderClick} />
           </section>

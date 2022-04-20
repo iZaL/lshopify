@@ -5,7 +5,7 @@ export default function Loader() {
 
   return (
     <svg
-      className={`-ml-1 mr-3 h-5 w-5 animate-spin ${textColor} `}
+      className={`-ml-1 mr-3 h-5 w-5 animate-spin ${textColor}`}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24">
