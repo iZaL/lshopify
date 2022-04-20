@@ -137,7 +137,6 @@ function Body({children, onItemClick}: BodyProps<ItemWithID>) {
       {items.map((item, id) => (
         <Table.Row
           key={id}
-          idx={id}
           onClick={() => (onItemClick ? onItemClick(item) : {})}>
           <Table.Cell>
             <div

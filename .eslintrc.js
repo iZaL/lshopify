@@ -6,7 +6,9 @@ module.exports = {
   extends: [
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
-    'airbnb',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+    // 'airbnb',
     'prettier'
   ],
   parser: '@typescript-eslint/parser',
@@ -38,7 +40,7 @@ module.exports = {
           "index",
           "object"
         ],
-        "newlines-between": "ignore",
+        "newlines-between": "always",
         "alphabetize": {
           "order": "asc",
           "caseInsensitive": true
