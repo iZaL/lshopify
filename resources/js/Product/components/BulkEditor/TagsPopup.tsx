@@ -1,7 +1,9 @@
 import {Popover} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/solid';
 import React from 'react';
+
 import Button from '../../../components/Button';
+
 import {AttributeLabel, ProductAttributes, VariantAttributes} from './types';
 
 export default function TagsPopup({

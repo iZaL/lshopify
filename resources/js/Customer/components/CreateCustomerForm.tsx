@@ -1,4 +1,5 @@
 import React, {ReactElement, useState} from 'react';
+
 import Border from '../../components/Border';
 import Checkbox from '../../components/forms/Checkbox';
 import InputText from '../../components/forms/InputText';
@@ -6,6 +7,7 @@ import Label from '../../components/forms/Label';
 import Subheader from '../../components/Subheader';
 import {CustomerForm} from '../../form_types';
 import {Customer, CustomerAddress} from '../../types';
+
 import CreateAddressForm from './CreateAddressForm';
 
 interface Props {

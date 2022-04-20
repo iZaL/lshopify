@@ -1,5 +1,6 @@
 import {CheckCircleIcon, SearchIcon, XIcon} from '@heroicons/react/solid';
 import React, {ReactElement, useState} from 'react';
+
 import Checkbox from '../../../components/forms/Checkbox';
 import InputText from '../../../components/forms/InputText';
 import {Variant} from '../../../types';

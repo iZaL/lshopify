@@ -1,5 +1,7 @@
 import React, {ReactNode} from 'react';
+
 import {ButtonTheme} from '../types';
+
 import Button from './Button';
 
 interface Props {

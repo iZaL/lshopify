@@ -2,6 +2,7 @@ import {Inertia} from '@inertiajs/inertia';
 import {useForm} from '@inertiajs/inertia-react';
 import React, {useEffect} from 'react';
 import route from 'ziggy-js';
+
 import {deleteImages, uploadImages} from '../api';
 import BackButton from '../components/BackButton';
 import Border from '../components/Border';
@@ -24,6 +25,7 @@ import {
   VariantOption,
   Vendor,
 } from '../types';
+
 import InventorySection from './components/InventorySection';
 import MediaSection from './components/MediaSection';
 import PricingSection from './components/PricingSection';

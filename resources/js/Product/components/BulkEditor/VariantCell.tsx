@@ -1,7 +1,9 @@
 import React from 'react';
+
 import Checkbox from '../../../components/forms/Checkbox';
 import InputText from '../../../components/forms/InputText';
 import {Variant} from '../../../types';
+
 import {AttributeLabel} from './types';
 
 export default function VariantCell({

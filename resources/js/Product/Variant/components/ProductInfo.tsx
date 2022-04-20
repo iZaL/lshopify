@@ -1,8 +1,10 @@
 import {InertiaLink} from '@inertiajs/inertia-react';
 import React from 'react';
 import route from 'ziggy-js';
+
 import Card from '../../../components/Card';
 import {Product, Variant} from '../../../types';
+
 import VariantImage from './VariantImage';
 
 interface Props {

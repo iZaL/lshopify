@@ -1,5 +1,6 @@
 import React from 'react';
 import CreatableSelect from 'react-select/creatable';
+
 import Button from '../../../components/Button';
 import {VariantOption} from '../../../types';
 

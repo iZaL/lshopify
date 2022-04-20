@@ -2,9 +2,11 @@ import {Inertia} from '@inertiajs/inertia';
 import {useForm} from '@inertiajs/inertia-react';
 import React from 'react';
 import route from 'ziggy-js';
+
 import PageHeader from '../../components/PageHeader';
 import Main from '../../Main';
 import {Variant} from '../../types';
+
 import InventoryIndexActionButtons from './components/InventoryIndexActionButtons';
 import InventorySearchBar from './components/InventorySearchBar';
 import InventoryList from './InventoryList';

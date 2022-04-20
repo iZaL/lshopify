@@ -3,6 +3,7 @@ import {MenuAlt2Icon} from '@heroicons/react/outline';
 import {SearchIcon} from '@heroicons/react/solid';
 import classNames from 'classnames';
 import React, {Fragment} from 'react';
+
 import {useSidebarStore} from '../store';
 
 const userNavigation = [

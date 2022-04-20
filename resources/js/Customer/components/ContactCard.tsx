@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
+
 import Modal from '../../components/Modal';
 import ModalFooter from '../../components/ModalFooter';
 import Subheader from '../../components/Subheader';
+
 import CustomerContactForm from './CustomerContactForm';
 
 interface Props {

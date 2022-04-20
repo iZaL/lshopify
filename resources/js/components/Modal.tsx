@@ -1,6 +1,8 @@
 import {Dialog, Transition} from '@headlessui/react';
 import React, {Fragment, ReactNode, useEffect, useState} from 'react';
+
 import {ButtonTheme} from '../types';
+
 import Button from './Button';
 import ModalFooter from './ModalFooter';
 

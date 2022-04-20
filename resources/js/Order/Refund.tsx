@@ -2,6 +2,7 @@ import {Inertia} from '@inertiajs/inertia';
 import {useForm} from '@inertiajs/inertia-react';
 import React from 'react';
 import route from 'ziggy-js';
+
 import BackButton from '../components/BackButton';
 import Border from '../components/Border';
 import Button from '../components/Button';
@@ -12,6 +13,7 @@ import PageHeader from '../components/PageHeader';
 import Subheader from '../components/Subheader';
 import Main from '../Main';
 import {Customer, Order, VariantPivot} from '../types';
+
 import FulfillmentItems from './components/FulfillmentItems';
 
 interface Props {

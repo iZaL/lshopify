@@ -1,5 +1,6 @@
 import {TrashIcon} from '@heroicons/react/outline';
 import React from 'react';
+
 import InputText from '../../components/forms/InputText';
 import Select from '../../components/forms/Select';
 import {CollectionCondition} from '../../types';

@@ -2,6 +2,7 @@ import {Inertia} from '@inertiajs/inertia';
 import {useForm} from '@inertiajs/inertia-react';
 import React, {Fragment, useEffect, useState} from 'react';
 import route from 'ziggy-js';
+
 import BackButton from '../components/BackButton';
 import Card from '../components/Card';
 import FormSubmitBar from '../components/FormSubmitBar';
@@ -9,6 +10,7 @@ import PageHeader from '../components/PageHeader';
 import TabPill from '../components/TabPill';
 import Main from '../Main';
 import {Product, Tag, Variant} from '../types';
+
 import Cell from './components/BulkEditor/Cell';
 import ProductCell from './components/BulkEditor/ProductCell';
 import TagsPopup from './components/BulkEditor/TagsPopup';

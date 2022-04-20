@@ -3,9 +3,11 @@ import {Inertia} from '@inertiajs/inertia';
 import classNames from 'classnames';
 import React from 'react';
 import route from 'ziggy-js';
+
 import Button from '../components/Button';
 import PageHeader from '../components/PageHeader';
 import Main from '../Main';
+
 import IndexActionButtons from './components/IndexActionButtons';
 
 interface TabProps {

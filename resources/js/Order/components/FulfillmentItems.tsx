@@ -1,4 +1,5 @@
 import React from 'react';
+
 import InputText from '../../components/forms/InputText';
 import ProductTitle from '../../Product/components/ProductTitle';
 import VariantImage from '../../Product/Variant/components/VariantImage';

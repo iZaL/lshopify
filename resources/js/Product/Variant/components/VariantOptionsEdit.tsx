@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+
 import Button from '../../../components/Button';
 import Card from '../../../components/Card';
 import DZFileUploadBox from '../../../components/forms/DZFileUploadBox';
@@ -7,6 +8,7 @@ import Label from '../../../components/forms/Label';
 import Modal from '../../../components/Modal';
 import Subheader from '../../../components/Subheader';
 import {Image, Variant, VariantOption} from '../../../types';
+
 import VariantImage from './VariantImage';
 
 interface Props {

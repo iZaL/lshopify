@@ -2,6 +2,7 @@ import {Inertia} from '@inertiajs/inertia';
 import {useForm} from '@inertiajs/inertia-react';
 import React, {useEffect} from 'react';
 import route from 'ziggy-js';
+
 import {deleteImages, uploadImages} from '../api';
 import BackButton from '../components/BackButton';
 import Card from '../components/Card';
@@ -10,6 +11,7 @@ import ImageSelect from '../components/ImageSelect';
 import PageHeader from '../components/PageHeader';
 import Main from '../Main';
 import {Collection, Image, Product} from '../types';
+
 import CollectionTypeSection from './components/CollectionTypeSection';
 import ProductAddSection from './components/ProductAddSection';
 import ProductSection from './components/ProductSection';

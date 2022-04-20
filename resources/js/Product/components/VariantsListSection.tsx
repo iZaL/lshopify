@@ -2,6 +2,7 @@ import {Disclosure} from '@headlessui/react';
 import classNames from 'classnames';
 import React, {useState} from 'react';
 import CreatableSelect from 'react-select/creatable';
+
 import Border from '../../components/Border';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
@@ -18,6 +19,7 @@ import {Image, Variant, VariantOption, VariantValue} from '../../types';
 import BulkEditor from '../Variant/components/BulkEditor';
 import EditVariantOptions from '../Variant/components/EditVariantOptions';
 import VariantImage from '../Variant/components/VariantImage';
+
 import EditHSCodes from './Variants/EditHSCodes';
 import EditOriginCountry from './Variants/EditOriginCountry';
 import EditPrices from './Variants/EditPrices';

@@ -2,10 +2,12 @@ import {Inertia} from '@inertiajs/inertia';
 import {useForm} from '@inertiajs/inertia-react';
 import React, {useEffect, useState} from 'react';
 import route from 'ziggy-js';
+
 import FormSubmitBar from '../../components/FormSubmitBar';
 import PageHeader from '../../components/PageHeader';
 import Main from '../../Main';
 import {Cart, CartDiscount, CartItem, Product} from '../../types';
+
 import DraftOrderDetailsSection from './components/DraftOrderDetailsSection';
 
 interface Props {

@@ -1,8 +1,10 @@
 import classNames from 'classnames';
 import React from 'react';
+
 import Card from '../../../components/Card';
 import Subheader from '../../../components/Subheader';
 import {Variant} from '../../../types';
+
 import VariantImage from './VariantImage';
 
 interface Props {

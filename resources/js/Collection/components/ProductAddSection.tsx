@@ -1,5 +1,6 @@
 import {SearchIcon, XIcon} from '@heroicons/react/solid';
 import React, {useEffect, useState} from 'react';
+
 import Border from '../../components/Border';
 import Button from '../../components/Button';
 import Card from '../../components/Card';

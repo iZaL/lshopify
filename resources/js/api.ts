@@ -1,5 +1,6 @@
 import {Inertia, VisitOptions} from '@inertiajs/inertia';
 import route from 'ziggy-js';
+
 import {Image} from './types';
 
 export const deleteImages = (images: Image[], options?: VisitOptions) => {

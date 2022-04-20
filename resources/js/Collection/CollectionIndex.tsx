@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
+
 import PageHeader from '../components/PageHeader';
 import RightSidebar from '../components/RightSidebar';
 import Main from '../Main';
 import {Collection} from '../types';
+
 import CollectionIndexActionButtons from './components/CollectionIndexActionButtons';
 import CollectionList from './components/CollectionList';
 import CollectionSearchBar from './components/CollectionSearchBar';

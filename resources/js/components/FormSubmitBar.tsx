@@ -1,5 +1,6 @@
 import {Inertia} from '@inertiajs/inertia';
 import React from 'react';
+
 import Button from './Button';
 
 interface Props {

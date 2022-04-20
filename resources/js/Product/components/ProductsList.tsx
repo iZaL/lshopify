@@ -1,6 +1,7 @@
 import {Inertia} from '@inertiajs/inertia';
 import React from 'react';
 import route from 'ziggy-js';
+
 import Button from '../../components/Button';
 import DropdownButton from '../../components/DropdownButton';
 import Modal from '../../components/Modal';

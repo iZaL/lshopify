@@ -3,6 +3,7 @@ import {SearchIcon} from '@heroicons/react/outline';
 import {SortAscendingIcon, XIcon} from '@heroicons/react/solid';
 import classNames from 'classnames';
 import React, {useState} from 'react';
+
 import Button from '../../components/Button';
 import DisclosurePanel from '../../components/DisclosurePanel';
 import Checkbox from '../../components/forms/Checkbox';

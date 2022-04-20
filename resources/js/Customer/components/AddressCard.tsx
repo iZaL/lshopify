@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
+
 import Modal from '../../components/Modal';
 import ModalFooter from '../../components/ModalFooter';
 import Subheader from '../../components/Subheader';
 import {Billing, CustomerAddress, Shipping} from '../../types';
+
 import AddressForm from './AddressForm';
 
 interface Props {

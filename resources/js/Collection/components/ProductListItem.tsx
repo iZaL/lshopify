@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Checkbox from '../../components/forms/Checkbox';
 import VariantImage from '../../Product/Variant/components/VariantImage';
 import {Product} from '../../types';

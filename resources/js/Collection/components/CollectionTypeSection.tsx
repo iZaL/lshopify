@@ -1,7 +1,9 @@
 import React, {useEffect} from 'react';
+
 import Button from '../../components/Button';
 import Subheader from '../../components/Subheader';
 import {Collection, CollectionCondition} from '../../types';
+
 import CollectionConditionItem from './CollectionConditionItem';
 
 interface Props {

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import ProductTitle from '../../Product/components/ProductTitle';
 import VariantImage from '../../Product/Variant/components/VariantImage';
 import {VariantPivot} from '../../types';

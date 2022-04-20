@@ -1,7 +1,9 @@
 import React from 'react';
+
 import PageHeader from '../components/PageHeader';
 import Main from '../Main';
 import {Customer} from '../types';
+
 import CustomerIndexActionButtons from './components/CustomerIndexActionButtons';
 import CustomersList from './components/CustomersList';
 

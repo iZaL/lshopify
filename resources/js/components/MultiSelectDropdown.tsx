@@ -1,5 +1,6 @@
 import SearchIcon from '@heroicons/react/outline/SearchIcon';
 import React, {useState} from 'react';
+
 import Button from './Button';
 import Checkbox from './forms/Checkbox';
 import InputText from './forms/InputText';

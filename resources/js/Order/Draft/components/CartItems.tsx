@@ -1,5 +1,6 @@
 import {XIcon} from '@heroicons/react/solid';
 import React from 'react';
+
 import Button from '../../../components/Button';
 import InputText from '../../../components/forms/InputText';
 import ProductTitle from '../../../Product/components/ProductTitle';

@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+
 import Border from '../../../components/Border';
 import Button from '../../../components/Button';
 import Card from '../../../components/Card';
@@ -9,6 +10,7 @@ import ModalFooter from '../../../components/ModalFooter';
 import Subheader from '../../../components/Subheader';
 import ProductSearch from '../../../Product/components/ProductSearch';
 import {Cart, CartDiscount, CartItem, Product} from '../../../types';
+
 import CartItems from './CartItems';
 import DiscountAdd from './DiscountAdd';
 

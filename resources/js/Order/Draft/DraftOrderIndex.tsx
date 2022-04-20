@@ -1,9 +1,11 @@
 import {Inertia} from '@inertiajs/inertia';
 import React, {useState} from 'react';
 import route from 'ziggy-js';
+
 import PageHeader from '../../components/PageHeader';
 import Main from '../../Main';
 import {Order} from '../../types';
+
 import DraftOrderIndexActionButtons from './components/DraftOrderIndexActionButtons';
 import DraftOrderList from './components/DraftOrderList';
 import DraftOrdersSearchBar from './components/DraftOrdersSearchBar';

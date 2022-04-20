@@ -2,6 +2,7 @@ import {Inertia} from '@inertiajs/inertia';
 import {useForm} from '@inertiajs/inertia-react';
 import React from 'react';
 import route from 'ziggy-js';
+
 import Border from '../components/Border';
 import Card from '../components/Card';
 import FormSubmitBar from '../components/FormSubmitBar';
@@ -9,6 +10,7 @@ import PageHeader from '../components/PageHeader';
 import Subheader from '../components/Subheader';
 import Main from '../Main';
 import {Collection} from '../types';
+
 import CollectionTypeSection from './components/CollectionTypeSection';
 import TitleSection from './components/TitleSection';
 

@@ -2,6 +2,7 @@ import {Inertia} from '@inertiajs/inertia';
 import {useForm} from '@inertiajs/inertia-react';
 import React, {useEffect, useState} from 'react';
 import route from 'ziggy-js';
+
 import BackButton from '../../components/BackButton';
 import FormSubmitBar from '../../components/FormSubmitBar';
 import PageHeader from '../../components/PageHeader';
@@ -18,6 +19,7 @@ import {
   Product,
   Shipping,
 } from '../../types';
+
 import CustomerEdit from './components/CustomerEdit';
 import CustomerSelect from './components/CustomerSelect';
 import DraftOrderDetailsSection from './components/DraftOrderDetailsSection';

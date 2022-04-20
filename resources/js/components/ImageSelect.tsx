@@ -1,6 +1,8 @@
 import classNames from 'classnames';
 import React, {useState} from 'react';
+
 import {Collection, Image} from '../types';
+
 import Button from './Button';
 import Card from './Card';
 import DZFileUploadBox from './forms/DZFileUploadBox';
