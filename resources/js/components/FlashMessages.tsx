@@ -2,7 +2,7 @@ import {Transition} from '@headlessui/react';
 import {XIcon} from '@heroicons/react/solid';
 import {ErrorBag, Errors, Page} from '@inertiajs/inertia';
 import {usePage} from '@inertiajs/inertia-react';
-import React, {ReactNode, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import Button from './Button';
 

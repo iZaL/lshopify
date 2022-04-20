@@ -20,9 +20,6 @@ export default function InventoryList({
   onQuantityChange,
   onSave,
 }: Props) {
-  const onCollectionClick = (item: Variant) => {
-    // return Inertia.get(route('lshopify.variants.edit', [collection.id]));
-  };
 
   return (
     <SmartTable items={variants}>
