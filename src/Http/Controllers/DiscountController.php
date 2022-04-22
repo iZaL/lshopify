@@ -27,10 +27,15 @@ class DiscountController extends Controller
         }
 
         $discount = [
-          'code' => Str::upper(Str::random(8)),
-          'type' => $discountType,
-          'value' => 300,
-          'value_type' => 'fixed_amount',
+            'code' => Str::upper(Str::random(8)),
+            'type' => $discountType,
+            'value' => 300,
+            'value_type' => 'fixed_amount',
+            'target_type' => 'all_products',
+            'min_requirement_type' => 'none',
+            'min_requirement_value' => 0,
+            'once_per_customer' => 0,
+            'usage_limit' => 1,
         ];
 
         return Inertia::render('Discount/DiscountCreate', [
