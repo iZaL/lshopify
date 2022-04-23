@@ -18,6 +18,7 @@ import PageHeader from '../components/PageHeader';
 import Subheader from '../components/Subheader';
 import Main from '../Main';
 import { Customer } from '../types'
+import CustomerSelection from '../Customer/components/CustomerSelection'
 
 interface Discount {
   title: string | null;
@@ -321,6 +322,22 @@ export default function DiscountCreate({discount}: Props) {
                     {/*<MinQuantityInput show={min_requirement_type === 'amount'} />*/}
                   </div>
                 </div>
+
+                {
+                  customer_selection === 'custom' && (
+                    <CustomerSelection
+                      searchTerm={''}
+                      sortTerm={''}
+                      customers={[]}
+                      selectedCustomers={[]}
+                      onChange={(field, value) => setData(field, value)}
+                      onAddProducts={() => {}}
+                      onSearch={() => {}}
+                    />
+                  )
+                }
+
+
               </div>
             </Card>
 
