@@ -17,8 +17,10 @@ import FormSubmitBar from '../components/FormSubmitBar';
 import PageHeader from '../components/PageHeader';
 import Subheader from '../components/Subheader';
 import Main from '../Main';
+import { Customer } from '../types'
 
 interface Discount {
+  title: string | null;
   code: string;
   type: 'code' | 'automatic';
   value: string;
@@ -28,6 +30,8 @@ interface Discount {
   min_requirement_value: string;
   once_per_customer: boolean;
   usage_limit: string | null;
+  customers: Customer[];
+  customer_selection: 'all' | 'custom' | 'none';
 }
 
 interface Props {
@@ -38,6 +42,7 @@ export default function DiscountCreate({discount}: Props) {
   const {data, setData, isDirty} = useForm<Discount>(discount);
 
   const {
+    title,
     code,
     type,
     value,
@@ -47,19 +52,80 @@ export default function DiscountCreate({discount}: Props) {
     min_requirement_value,
     once_per_customer,
     usage_limit,
+    customers,
+    customer_selection,
   } = data;
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
-  const generateDiscountCode = () => {
+  function generateDiscountCode() {
     // const url = route('lshopify.discounts.generate_disconut_code');
     // Inertia.post(url, data, {
     //   onSuccess: () => {
     //     Inertia.reload();
     //   },
     // });
-  };
+  }
+
+  function AutomaticDiscountTitle() {
+    if(type !== 'automatic') {
+      return null;
+    }
+    return (
+      <>
+        <Subheader
+          headerStyle="first-letter:capitalize"
+          text="Automatic discount"
+        />
+        <div>
+          <Label title='Title' />
+          <InputText
+            name="title"
+            placeholder="e.g. Ramadan promotion"
+            onChange={e => setData('code', e.target.value)}
+            value={code}
+          />
+          <p className="block py-1 text-sm text-gray-500">
+            Customers will see this in cart and at checkout.
+          </p>
+        </div>
+      </>
+    );
+  }
+
+  function CodeDiscountTitle() {
+    if(type !== 'code') {
+      return null;
+    }
+    return (
+      <>
+        <div className="flex flex-row justify-between">
+          <Subheader
+            headerStyle="first-letter:capitalize"
+            text="Discount code"
+          />
+
+          <Button
+            theme="clear"
+            buttonStyle="text-blue-500 hover:underline"
+            onClick={generateDiscountCode}>
+            Generate code
+          </Button>
+        </div>
+
+        <InputText
+          name="title"
+          placeholder="e.g. CODE2022"
+          onChange={e => setData('code', e.target.value)}
+          value={code}
+        />
+        <p className="block py-1 text-sm text-gray-500">
+          Customers will enter this discount code at checkout.
+        </p>
+      </>
+    );
+  }
 
   function MinQuantityInput({show}: {show: boolean}) {
     if (!show) return null;
@@ -110,38 +176,15 @@ export default function DiscountCreate({discount}: Props) {
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
           <section className="space-y-6 lg:col-span-2 lg:col-start-1">
+
             <Card>
-              <div className="flex flex-row justify-between">
-                <Subheader
-                  headerStyle="first-letter:capitalize"
-                  text={type === 'code' ? 'Discount code' : 'Automatic'}
-                />
-
-                <Button
-                  theme="clear"
-                  buttonStyle="text-blue-500 hover:underline"
-                  onClick={generateDiscountCode}>
-                  Generate code
-                </Button>
-              </div>
-
-              <div>
-                <InputText
-                  name="title"
-                  placeholder="e.g. Ramadan promotion"
-                  onChange={e => setData('code', e.target.value)}
-                  value={code}
-                />
-                <p className="block py-1 text-sm text-gray-500">
-                  Customers will see this in cart and at checkout.
-                </p>
-              </div>
+              <AutomaticDiscountTitle />
+              <CodeDiscountTitle />
             </Card>
 
             <Card>
               <Subheader text="Types" />
-
-              <div className="flex flex-col space-y-2 text-sm">
+              <div className="flex flex-col text-sm space-y-2">
                 <div className="inline-flex items-center">
                   <Checkbox
                     type="radio"
@@ -163,7 +206,6 @@ export default function DiscountCreate({discount}: Props) {
 
             <Card>
               <Subheader text="Value" />
-
               <div>
                 <Label title="Discount value" />
                 <div className="w-56">
@@ -172,7 +214,7 @@ export default function DiscountCreate({discount}: Props) {
                     onChange={e => setData('value', e.target.value)}
                     value={value}
                     rightComponent={
-                      <span className="text-sm text-gray-400">%</span>
+                      <span className="text-sm text-gray-400">{value_type === 'percentage' ? '%' : 'OMR'}</span>
                     }
                   />
                 </div>
@@ -181,73 +223,103 @@ export default function DiscountCreate({discount}: Props) {
               <Border />
 
               <Subheader headerStyle="text-xs" text="APPLIES TO" />
-              <div className="flex flex-col space-y-2 text-sm">
-                <div className="inline-flex items-center">
-                  <Checkbox
-                    type="radio"
-                    checked={target_type === 'all_products'}
-                    onChange={() => setData('target_type', 'all_products')}
-                  />
-                  <div className="ml-3">All products</div>
+                <div className="flex flex-col text-sm space-y-2">
+                  <div className="inline-flex items-center">
+                    <Checkbox
+                      type="radio"
+                      checked={target_type === 'all_products'}
+                      onChange={() => setData('target_type', 'all_products')}
+                    />
+                    <div className="ml-3">All products</div>
+                  </div>
+                  <div className="inline-flex items-center">
+                    <Checkbox
+                      type="radio"
+                      checked={target_type === 'products'}
+                      onChange={() => setData('target_type', 'products')}
+                    />
+                    <div className="ml-3">Specific products</div>
+                  </div>
+                  <div className="inline-flex items-center">
+                    <Checkbox
+                      type="radio"
+                      checked={target_type === 'collections'}
+                      onChange={() => setData('target_type', 'collections')}
+                    />
+                    <div className="ml-3">Specific collections</div>
+                  </div>
                 </div>
+            </Card>
+
+            <Card cardStyle="text-sm">
+              <Subheader text="Minimum requirements" />
+
+              <div className=''>
                 <div className="inline-flex items-center">
                   <Checkbox
                     type="radio"
-                    checked={target_type === 'products'}
-                    onChange={() => setData('target_type', 'products')}
+                    checked={min_requirement_type === null}
+                    onChange={() => setData('min_requirement_type', null)}
                   />
-                  <div className="ml-3">Specific products</div>
+                  <div className="ml-3">None</div>
                 </div>
-                <div className="inline-flex items-center">
-                  <Checkbox
-                    type="radio"
-                    checked={target_type === 'collections'}
-                    onChange={() => setData('target_type', 'collections')}
-                  />
-                  <div className="ml-3">Specific collections</div>
+
+                <div className="relative flex items-start pt-1">
+                  <div className="flex h-5 items-center">
+                    <Checkbox
+                      type="radio"
+                      checked={min_requirement_type === 'amount'}
+                      onChange={() => setData('min_requirement_type', 'amount')}
+                    />
+                  </div>
+                  <div className="ml-3">
+                    <div>Minimum purchase amount (OMR)</div>
+                    <MinQuantityInput show={min_requirement_type === 'amount'} />
+                  </div>
+                </div>
+
+                <div className="relative flex items-start pt-2">
+                  <div className="flex h-5 items-center">
+                    <Checkbox
+                      type="radio"
+                      checked={min_requirement_type === 'quantity'}
+                      onChange={() => setData('min_requirement_type', 'quantity')}
+                    />
+                  </div>
+                  <div className="ml-3">
+                    <div>Minimum quantity of items</div>
+                    <MinQuantityInput
+                      show={min_requirement_type === 'quantity'}
+                    />
+                  </div>
                 </div>
               </div>
             </Card>
 
-            <Card cardStyle={'text-sm'}>
-              <Subheader text="Minimum requirements" />
-
-              <div className="inline-flex items-center">
-                <Checkbox
-                  type="radio"
-                  checked={min_requirement_type === null}
-                  onChange={() => setData('min_requirement_type', null)}
-                />
-                <div className="ml-3">None</div>
-              </div>
-
-              <div className="relative flex items-start">
-                <div className="flex h-5 items-center">
+            <Card cardStyle="text-sm">
+              <Subheader text="Customer eligibility" />
+              <div className=''>
+                <div className="inline-flex items-center">
                   <Checkbox
                     type="radio"
-                    checked={min_requirement_type === 'amount'}
-                    onChange={() => setData('min_requirement_type', 'amount')}
+                    checked={customer_selection === 'all'}
+                    onChange={() => setData('customer_selection', 'all')}
                   />
+                  <div className="ml-3">Everyone</div>
                 </div>
-                <div className="ml-3">
-                  <div>Minimum purchase amount (OMR)</div>
-                  <MinQuantityInput show={min_requirement_type === 'amount'} />
-                </div>
-              </div>
 
-              <div className="relative flex items-start">
-                <div className="flex h-5 items-center">
-                  <Checkbox
-                    type="radio"
-                    checked={min_requirement_type === 'quantity'}
-                    onChange={() => setData('min_requirement_type', 'quantity')}
-                  />
-                </div>
-                <div className="ml-3">
-                  <div>Minimum quantity of items</div>
-                  <MinQuantityInput
-                    show={min_requirement_type === 'quantity'}
-                  />
+                <div className="relative flex items-start pt-1">
+                  <div className="flex h-5 items-center">
+                    <Checkbox
+                      type="radio"
+                      checked={customer_selection === 'custom'}
+                      onChange={() => setData('customer_selection','custom')}
+                    />
+                  </div>
+                  <div className="ml-3">
+                    <div>Specific customers</div>
+                    {/*<MinQuantityInput show={min_requirement_type === 'amount'} />*/}
+                  </div>
                 </div>
               </div>
             </Card>
@@ -264,7 +336,6 @@ export default function DiscountCreate({discount}: Props) {
                     }
                   />
                 </div>
-
                 <div className="ml-3">
                   <div>
                     Limit number of times this discount can be used in total
@@ -280,6 +351,7 @@ export default function DiscountCreate({discount}: Props) {
                   )}
                 </div>
               </div>
+
               <div className="inline-flex">
                 <Checkbox
                   checked={once_per_customer}
@@ -289,6 +361,7 @@ export default function DiscountCreate({discount}: Props) {
                   Limit to one use per customer
                 </span>
               </div>
+
             </Card>
 
             <Card>
@@ -377,6 +450,7 @@ export default function DiscountCreate({discount}: Props) {
                     }
                   />
                 </div>
+
               </div>
             </Card>
           </section>

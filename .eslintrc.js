@@ -8,7 +8,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:import/recommended',
     'plugin:import/typescript',
-    // 'airbnb',
+    'airbnb',
     'prettier'
   ],
   parser: '@typescript-eslint/parser',
