@@ -193,6 +193,7 @@ export interface CartDiscount {
 export interface Customer extends CustomerForm {
   id: number;
   readonly full_name: string;
+  readonly name: string;
   addresses?: CustomerAddress[];
 }
 

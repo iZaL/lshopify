@@ -2,17 +2,25 @@
 
 namespace IZal\Lshopify\Http\Requests;
 
-class DiscountStoreRequest extends BaseFormRequest
+use Illuminate\Validation\Rule;
+
+class DiscountStoreRequest extends VariantFieldRequest
 {
     public function rules()
     {
         return [
-            'discount' => 'required|array',
-            'discount.name' => 'required',
-            'discount.type' => 'required',
-            'discount.value' => 'required|integer|gt:0',
-            'discount.suffix' => 'required',
-            'item' => 'nullable',
+            'title' => 'nullable|required_if:type,automatic|string|max:255',
+            'code' => 'nullable|required_if:type,code|string|max:255',
+            'type' => ['required', 'string', Rule::in(['code', 'automatic'])],
+            'value_type' => ['required', 'string', Rule::in(['percentage', 'fixed_amount'])],
+            'value' => ['required','numeric'],
+            'target_type' => ['required', 'string', Rule::in(['all_products', 'products', 'collections'])],
+            'min_requirement_type' => ['nullable','string', Rule::in(['amount', 'quantity'])],
+            'min_requirement_value' => ['numeric'],
+            'once_per_customer' => ['boolean'],
+            'usage_limit' => ['nullable','numeric'],
+            'customer_selection' => ['required', 'string', Rule::in(['all', 'custom','none'])],
+            'customers' => ['nullable'],
         ];
     }
 }

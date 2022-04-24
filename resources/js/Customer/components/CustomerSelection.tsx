@@ -1,58 +1,59 @@
-import {SearchIcon, XIcon} from '@heroicons/react/solid';
-import React, {useEffect, useState} from 'react';
+import { SearchIcon, XIcon } from '@heroicons/react/solid'
+import React, { useEffect, useState } from 'react'
 
-import Border from '../../components/Border';
-import Button from '../../components/Button';
-import Card from '../../components/Card';
-import Checkbox from '../../components/forms/Checkbox';
-import InputText from '../../components/forms/InputText';
-import Select from '../../components/forms/Select';
-import Modal from '../../components/Modal';
-import Subheader from '../../components/Subheader';
-import ProductTitle from '../../Product/components/ProductTitle';
-import VariantImage from '../../Product/Variant/components/VariantImage';
+import Border from '../../components/Border'
+import Button from '../../components/Button'
+import Checkbox from '../../components/forms/Checkbox'
+import InputText from '../../components/forms/InputText'
+import Modal from '../../components/Modal'
 import { Collection, Customer, Product } from '../../types'
 
-interface Props {
-  onChange: (field: keyof Collection | any, value: any) => void;
-  selectedCustomers: Customer[];
-  customers: Customer[];
+type Item = {
+  id: number;
+  name: string;
+};
+
+interface Props<T> {
+  onChange: (field: keyof T | any, value: any) => void;
+  selectedItems: T[];
+  items: T[];
   searchTerm: string;
   sortTerm: string;
   onSearch: (searchTerm: string) => void;
-  onAddProducts: (customersIDs: Array<number>) => void;
+  onAddItem: (customersIDs: number[]) => void;
 }
 
-export default function CustomerSelection({
+export default function CustomerSelection<T extends Item>({
   onChange,
   searchTerm,
-  selectedCustomers,
-  customers,
-  onAddProducts,
+  selectedItems,
+  items,
+  onAddItem,
   onSearch,
-}: Props) {
-  const [showDialog, setShowDialog] = useState(false);
+}: Props<T>) {
 
-  const [selectedProductIDs, setSelectedProductIDs] = useState<number[]>([]);
+  const [showDialog, setShowDialog] = useState(false);
+  const [selectedItemIDs, setSelectedItemIDs] = useState<number[]>([]);
+  console.log('sele',selectedItemIDs);
 
   useEffect(() => {
-    setSelectedProductIDs(selectedCustomers.map(({id}) => id));
+    setSelectedItemIDs(selectedItems.map(({id}) => id));
   }, [showDialog]);
 
-  const addRemoveProduct = (product: Product) => {
-    const newProductIDs = selectedProductIDs.includes(product.id)
-      ? selectedProductIDs.filter(id => id !== product.id)
-      : [...selectedProductIDs, product.id];
-    setSelectedProductIDs(newProductIDs);
+  const addRemoveItem = (item: T) => {
+    const newItemIds = selectedItemIDs.includes(item.id)
+      ? selectedItemIDs.filter(id => id !== item.id)
+      : [...selectedItemIDs, item.id];
+    setSelectedItemIDs(newItemIds);
   };
 
-  const removeProductFromCollection = (product: Product) => {
-    const customerProductsIDs = selectedCustomers.map(({id}) => id);
-    onAddProducts(customerProductsIDs.filter(id => id !== product.id));
+  const removeItemFromCollection = (item: T) => {
+    const customerProductsIDs = selectedItems.map(({id}) => id);
+    onAddItem(customerProductsIDs.filter(id => id !== item.id));
   };
 
-  const onProductAddRemoveConfirm = () => {
-    onAddProducts(selectedProductIDs);
+  const adAddRemoveConfirm = () => {
+    onAddItem(selectedItemIDs);
   };
 
   return (
@@ -80,11 +81,10 @@ export default function CustomerSelection({
 
         </div>
 
-
       </div>
 
       <ul>
-        {selectedCustomers.map((product, i) => (
+        {selectedItems.map((item, i) => (
           <li
             key={i}
             className="flex cursor-default flex-row items-center space-x-2 space-y-2 px-4">
@@ -96,7 +96,7 @@ export default function CustomerSelection({
             <Button
               buttonStyle="p-2"
               theme="clear"
-              onClick={() => {}}>
+              onClick={() => removeItemFromCollection(item)}>
               <XIcon className="h-5 w-5 text-gray-500" />
             </Button>
           </li>
@@ -104,12 +104,12 @@ export default function CustomerSelection({
       </ul>
 
       <Modal
-        heading="Edit customers"
+        heading="Add customers"
         visible={showDialog}
         onClose={() => setShowDialog(false)}
         onConfirm={() => {
           setShowDialog(false);
-          onProductAddRemoveConfirm();
+          adAddRemoveConfirm();
         }}>
         <div className="p-5">
           <InputText
@@ -122,18 +122,18 @@ export default function CustomerSelection({
         </div>
         <Border />
 
-        {customers.map((product, i) => (
+        {items.map((item, i) => (
           <li
             key={i}
             className="flex flex-row items-center space-x-4 py-2 px-4 hover:bg-gray-100"
-            onClick={() => {}}>
+            onClick={() => addRemoveItem(item)}>
             <Checkbox
-              checked={selectedProductIDs.includes(product.id)}
+              checked={selectedItemIDs.includes(item.id)}
               name="product"
               onChange={() => {}}
             />
             {/*<VariantImage image={product.image} onClick={() => {}} />*/}
-            {/*<div className="">{product.title}</div>*/}
+            <div className="">{item.name}</div>
           </li>
         ))}
       </Modal>

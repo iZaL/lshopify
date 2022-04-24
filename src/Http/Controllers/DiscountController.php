@@ -5,11 +5,23 @@ namespace IZal\Lshopify\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
-use IZal\Lshopify\Cart\Condition;
 use IZal\Lshopify\Http\Requests\DiscountStoreRequest;
+use IZal\Lshopify\Models\Customer;
+use IZal\Lshopify\Models\Discount;
+use IZal\Lshopify\Resources\CustomerResource;
+use IZal\Lshopify\Resources\DiscountResource;
+
 
 class DiscountController extends Controller
 {
+
+    protected Discount $discount;
+
+    public function __construct(Discount $discount)
+    {
+        $this->discount = $discount;
+    }
+
     public function index(Request $request)
     {
         return Inertia::render('Discount/DiscountIndex', []);
@@ -43,6 +55,22 @@ class DiscountController extends Controller
 
         return Inertia::render('Discount/DiscountCreate', [
             'discount' => $discount,
+            'customers' => CustomerResource::collection(Customer::all())
+        ]);
+    }
+
+    public function store(DiscountStoreRequest $request)
+    {
+        $discountModel = $this->discount->create($request->only($this->discount->getFillable()));
+        return redirect()->route('lshopify.discounts.edit',$discountModel->id);
+    }
+
+    public function edit($id)
+    {
+        $discount = $this->discount->with(['customers'])->findOrFail($id);
+        return Inertia::render('Discount/DiscountCreate', [
+            'discount' => new DiscountResource($discount),
+            'customers' => CustomerResource::collection(Customer::all())
         ]);
     }
 }

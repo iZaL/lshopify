@@ -1,22 +1,22 @@
-import {Inertia} from '@inertiajs/inertia';
-import {useForm} from '@inertiajs/inertia-react';
-import {format} from 'date-fns';
-import React, {useState} from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import route from 'ziggy-js';
+import { Inertia } from '@inertiajs/inertia'
+import { useForm } from '@inertiajs/inertia-react'
+import { format } from 'date-fns'
+import React, { useEffect, useState } from 'react'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import route from 'ziggy-js'
 
-import BackButton from '../components/BackButton';
-import Border from '../components/Border';
-import Button from '../components/Button';
-import Card from '../components/Card';
-import Checkbox from '../components/forms/Checkbox';
-import InputText from '../components/forms/InputText';
-import Label from '../components/forms/Label';
-import FormSubmitBar from '../components/FormSubmitBar';
-import PageHeader from '../components/PageHeader';
-import Subheader from '../components/Subheader';
-import Main from '../Main';
+import BackButton from '../components/BackButton'
+import Border from '../components/Border'
+import Button from '../components/Button'
+import Card from '../components/Card'
+import Checkbox from '../components/forms/Checkbox'
+import InputText from '../components/forms/InputText'
+import Label from '../components/forms/Label'
+import FormSubmitBar from '../components/FormSubmitBar'
+import PageHeader from '../components/PageHeader'
+import Subheader from '../components/Subheader'
+import Main from '../Main'
 import { Customer } from '../types'
 import CustomerSelection from '../Customer/components/CustomerSelection'
 
@@ -37,11 +37,17 @@ interface Discount {
 
 interface Props {
   discount: Discount;
+  customers:Customer[];
 }
 
-export default function DiscountCreate({discount}: Props) {
-  const {data, setData, isDirty} = useForm<Discount>(discount);
-
+export default function DiscountCreate(props: Props) {
+  const {data, setData, isDirty} = useForm<
+    Discount & {searchTerm: string; sortTerm: string}
+    >({
+    ...props.discount,
+    searchTerm: '',
+    sortTerm: '',
+  });
   const {
     title,
     code,
@@ -55,77 +61,19 @@ export default function DiscountCreate({discount}: Props) {
     usage_limit,
     customers,
     customer_selection,
+    searchTerm,
+    sortTerm
   } = data;
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
+  useEffect(() => {
+    console.log('data changed', data);
+  }, [data]);
+
   function generateDiscountCode() {
-    // const url = route('lshopify.discounts.generate_disconut_code');
-    // Inertia.post(url, data, {
-    //   onSuccess: () => {
-    //     Inertia.reload();
-    //   },
-    // });
-  }
 
-  function AutomaticDiscountTitle() {
-    if(type !== 'automatic') {
-      return null;
-    }
-    return (
-      <>
-        <Subheader
-          headerStyle="first-letter:capitalize"
-          text="Automatic discount"
-        />
-        <div>
-          <Label title='Title' />
-          <InputText
-            name="title"
-            placeholder="e.g. Ramadan promotion"
-            onChange={e => setData('code', e.target.value)}
-            value={code}
-          />
-          <p className="block py-1 text-sm text-gray-500">
-            Customers will see this in cart and at checkout.
-          </p>
-        </div>
-      </>
-    );
-  }
-
-  function CodeDiscountTitle() {
-    if(type !== 'code') {
-      return null;
-    }
-    return (
-      <>
-        <div className="flex flex-row justify-between">
-          <Subheader
-            headerStyle="first-letter:capitalize"
-            text="Discount code"
-          />
-
-          <Button
-            theme="clear"
-            buttonStyle="text-blue-500 hover:underline"
-            onClick={generateDiscountCode}>
-            Generate code
-          </Button>
-        </div>
-
-        <InputText
-          name="title"
-          placeholder="e.g. CODE2022"
-          onChange={e => setData('code', e.target.value)}
-          value={code}
-        />
-        <p className="block py-1 text-sm text-gray-500">
-          Customers will enter this discount code at checkout.
-        </p>
-      </>
-    );
   }
 
   function MinQuantityInput({show}: {show: boolean}) {
@@ -153,12 +101,8 @@ export default function DiscountCreate({discount}: Props) {
   }
 
   const handleSubmit = () => {
-    const url = route('lshopify.collections.store');
-    Inertia.post(url, data, {
-      onSuccess: () => {
-        Inertia.reload();
-      },
-    });
+    const url = route('lshopify.discounts.store');
+    Inertia.post(url, data);
   };
 
   return (
@@ -179,8 +123,55 @@ export default function DiscountCreate({discount}: Props) {
           <section className="space-y-6 lg:col-span-2 lg:col-start-1">
 
             <Card>
-              <AutomaticDiscountTitle />
-              <CodeDiscountTitle />
+              {
+                type === 'automatic' &&
+                <>
+                  <Subheader
+                    headerStyle="first-letter:capitalize"
+                    text="Automatic discount"
+                  />
+                  <div>
+                    <Label title='Title' />
+                    <InputText
+                      name="title"
+                      placeholder="e.g. Ramadan promotion"
+                      onChange={e => setData('title', e.target.value)}
+                      value={title}
+                    />
+                    <p className="block py-1 text-sm text-gray-500">
+                      Customers will see this in cart and at checkout.
+                    </p>
+                  </div>
+                </>
+              }
+              {
+                type === 'code' &&
+                <>
+                  <div className="flex flex-row justify-between">
+                    <Subheader
+                      headerStyle="first-letter:capitalize"
+                      text="Discount code"
+                    />
+
+                    <Button
+                      theme="clear"
+                      buttonStyle="text-blue-500 hover:underline"
+                      onClick={generateDiscountCode}>
+                      Generate code
+                    </Button>
+                  </div>
+
+                  <InputText
+                    name="title"
+                    placeholder="e.g. CODE2022"
+                    onChange={e => setData('code', e.target.value)}
+                    value={code}
+                  />
+                  <p className="block py-1 text-sm text-gray-500">
+                    Customers will enter this discount code at checkout.
+                  </p>
+                </>
+              }
             </Card>
 
             <Card>
@@ -224,32 +215,32 @@ export default function DiscountCreate({discount}: Props) {
               <Border />
 
               <Subheader headerStyle="text-xs" text="APPLIES TO" />
-                <div className="flex flex-col text-sm space-y-2">
-                  <div className="inline-flex items-center">
-                    <Checkbox
-                      type="radio"
-                      checked={target_type === 'all_products'}
-                      onChange={() => setData('target_type', 'all_products')}
-                    />
-                    <div className="ml-3">All products</div>
-                  </div>
-                  <div className="inline-flex items-center">
-                    <Checkbox
-                      type="radio"
-                      checked={target_type === 'products'}
-                      onChange={() => setData('target_type', 'products')}
-                    />
-                    <div className="ml-3">Specific products</div>
-                  </div>
-                  <div className="inline-flex items-center">
-                    <Checkbox
-                      type="radio"
-                      checked={target_type === 'collections'}
-                      onChange={() => setData('target_type', 'collections')}
-                    />
-                    <div className="ml-3">Specific collections</div>
-                  </div>
+              <div className="flex flex-col text-sm space-y-2">
+                <div className="inline-flex items-center">
+                  <Checkbox
+                    type="radio"
+                    checked={target_type === 'all_products'}
+                    onChange={() => setData('target_type', 'all_products')}
+                  />
+                  <div className="ml-3">All products</div>
                 </div>
+                <div className="inline-flex items-center">
+                  <Checkbox
+                    type="radio"
+                    checked={target_type === 'products'}
+                    onChange={() => setData('target_type', 'products')}
+                  />
+                  <div className="ml-3">Specific products</div>
+                </div>
+                <div className="inline-flex items-center">
+                  <Checkbox
+                    type="radio"
+                    checked={target_type === 'collections'}
+                    onChange={() => setData('target_type', 'collections')}
+                  />
+                  <div className="ml-3">Specific collections</div>
+                </div>
+              </div>
             </Card>
 
             <Card cardStyle="text-sm">
@@ -326,17 +317,16 @@ export default function DiscountCreate({discount}: Props) {
                 {
                   customer_selection === 'custom' && (
                     <CustomerSelection
-                      searchTerm={''}
-                      sortTerm={''}
-                      customers={[]}
-                      selectedCustomers={[]}
+                      searchTerm={searchTerm}
+                      sortTerm={sortTerm}
+                      items={props.customers || []}
+                      selectedItems={customers || []}
                       onChange={(field, value) => setData(field, value)}
-                      onAddProducts={() => {}}
+                      onAddItem={() => {}}
                       onSearch={() => {}}
                     />
                   )
                 }
-
 
               </div>
             </Card>
