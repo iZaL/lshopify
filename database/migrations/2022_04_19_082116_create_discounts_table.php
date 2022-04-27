@@ -41,6 +41,7 @@ class CreateDiscountsTable extends Migration
             $table->integer('usage_limit')->nullable()->default(1);
             $table->dateTime('starts_at')->nullable();
             $table->dateTime('ends_at')->nullable();
+            $table->boolean('active')->default(1);
             $table->timestamps();
         });
     }

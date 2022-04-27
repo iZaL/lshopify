@@ -226,3 +226,22 @@ export interface ButtonProps {
   children?: ReactNode;
   disabled?: boolean;
 }
+
+export interface Discount {
+  id: number;
+  readonly name: string;
+  title: string | null;
+  code: string;
+  type: 'code' | 'automatic';
+  value: string;
+  value_type: 'fixed_amount' | 'percentage';
+  target_type: 'all_products' | 'products' | 'collections';
+  min_requirement_type: 'amount' | 'quantity' | null;
+  min_requirement_value: string;
+  once_per_customer: boolean;
+  usage_limit: string | null;
+  customers: Customer[];
+  customer_selection: 'all' | 'custom' | 'none';
+  starts_at: Date;
+  ends_at: Date;
+}

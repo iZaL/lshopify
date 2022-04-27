@@ -38,6 +38,7 @@ class DiscountControllerTest extends TestCase
             "usage_limit" => "5",
             "customer_selection" => "all",
             "customers" => [],
+
         ];
 
         $dbValues = collect($data)->except(['customers'])->toArray();

@@ -12,6 +12,7 @@ class DiscountResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'name' => $this->code ?: $this->title,
             'title' => $this->title,
             'code' => $this->code,
             'type' => $this->type,
@@ -23,6 +24,8 @@ class DiscountResource extends JsonResource
             'once_per_customer' => $this->once_per_customer,
             'usage_limit' => $this->usage_limit,
             'customer_selection' => $this->customer_selection,
+            'starts_at' => $this->starts_at,
+            'ends_at' => $this->ends_at,
             'customers' => CustomerResource::collection($this->whenLoaded('customers')),
         ];
     }

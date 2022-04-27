@@ -134,6 +134,7 @@ Route::group(['prefix' => 'discounts','as' => 'discounts.'], function () {
     Route::get('/create', [DiscountController::class, 'create'])->name('create');
     Route::get('/{id}/edit', [DiscountController::class, 'edit'])->name('edit');
     Route::post('/', [DiscountController::class, 'store'])->name('store');
+    Route::patch('/{id}', [DiscountController::class, 'update'])->name('update');
 });
 
 

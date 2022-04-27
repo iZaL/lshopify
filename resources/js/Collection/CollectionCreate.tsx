@@ -40,7 +40,6 @@ export default function CollectionCreate() {
   return (
     <Main>
       <div className="p-6">
-        
         <FormSubmitBar onSubmit={handleSubmit} show={isDirty} />
 
         <PageHeader text="Create collection" />

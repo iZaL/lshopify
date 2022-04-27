@@ -21,6 +21,9 @@ class DiscountStoreRequest extends VariantFieldRequest
             'usage_limit' => ['nullable','numeric'],
             'customer_selection' => ['required', 'string', Rule::in(['all', 'custom','none'])],
             'customers' => ['nullable'],
+            'starts_at' => 'required|date',
+            'ends_at' => 'required|date',
+//            'end_time' => 'nullable|date',
         ];
     }
 }

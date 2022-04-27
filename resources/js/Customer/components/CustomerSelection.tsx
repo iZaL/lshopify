@@ -1,12 +1,12 @@
-import { SearchIcon, XIcon } from '@heroicons/react/solid'
-import React, { useEffect, useState } from 'react'
+import {SearchIcon, XIcon} from '@heroicons/react/solid';
+import React, {useEffect, useState} from 'react';
 
-import Border from '../../components/Border'
-import Button from '../../components/Button'
-import Checkbox from '../../components/forms/Checkbox'
-import InputText from '../../components/forms/InputText'
-import Modal from '../../components/Modal'
-import { Collection, Customer, Product } from '../../types'
+import Border from '../../components/Border';
+import Button from '../../components/Button';
+import Checkbox from '../../components/forms/Checkbox';
+import InputText from '../../components/forms/InputText';
+import Modal from '../../components/Modal';
+import {Collection, Customer, Product} from '../../types';
 
 type Item = {
   id: number;
@@ -31,10 +31,9 @@ export default function CustomerSelection<T extends Item>({
   onAddItem,
   onSearch,
 }: Props<T>) {
-
   const [showDialog, setShowDialog] = useState(false);
   const [selectedItemIDs, setSelectedItemIDs] = useState<number[]>([]);
-  console.log('sele',selectedItemIDs);
+  console.log('sele', selectedItemIDs);
 
   useEffect(() => {
     setSelectedItemIDs(selectedItems.map(({id}) => id));
@@ -57,8 +56,8 @@ export default function CustomerSelection<T extends Item>({
   };
 
   return (
-    <div className='mt-6'>
-      {/*<Subheader text="Products" />*/}
+    <div className="mt-6">
+      {/* <Subheader text="Products" /> */}
 
       <div className="flex flex-row justify-around">
         <div className="flex-1">
@@ -74,13 +73,11 @@ export default function CustomerSelection<T extends Item>({
           />
         </div>
 
-        <div className=''>
+        <div className="">
           <Button theme="default" onClick={() => setShowDialog(true)}>
             <div className="block w-full">Browse</div>
           </Button>
-
         </div>
-
       </div>
 
       <ul>
@@ -89,9 +86,9 @@ export default function CustomerSelection<T extends Item>({
             key={i}
             className="flex cursor-default flex-row items-center space-x-2 space-y-2 px-4">
             <div className="w-5">{i + 1}.</div>
-            {/*<VariantImage image={product.image} onClick={() => {}} />*/}
+            {/* <VariantImage image={product.image} onClick={() => {}} /> */}
             <div className="flex-auto">
-              {/*<ProductTitle product={product} />*/}
+              {/* <ProductTitle product={product} /> */}
             </div>
             <Button
               buttonStyle="p-2"
@@ -132,7 +129,7 @@ export default function CustomerSelection<T extends Item>({
               name="product"
               onChange={() => {}}
             />
-            {/*<VariantImage image={product.image} onClick={() => {}} />*/}
+            {/* <VariantImage image={product.image} onClick={() => {}} /> */}
             <div className="">{item.name}</div>
           </li>
         ))}

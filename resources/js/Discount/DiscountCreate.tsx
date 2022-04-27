@@ -1,54 +1,41 @@
-import { Inertia } from '@inertiajs/inertia'
-import { useForm } from '@inertiajs/inertia-react'
-import { format } from 'date-fns'
-import React, { useEffect, useState } from 'react'
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
-import route from 'ziggy-js'
+import {Inertia} from '@inertiajs/inertia';
+import {useForm} from '@inertiajs/inertia-react';
+import {format} from 'date-fns';
+import React, {useEffect, useState} from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import route from 'ziggy-js';
 
-import BackButton from '../components/BackButton'
-import Border from '../components/Border'
-import Button from '../components/Button'
-import Card from '../components/Card'
-import Checkbox from '../components/forms/Checkbox'
-import InputText from '../components/forms/InputText'
-import Label from '../components/forms/Label'
-import FormSubmitBar from '../components/FormSubmitBar'
-import PageHeader from '../components/PageHeader'
-import Subheader from '../components/Subheader'
-import Main from '../Main'
-import { Customer } from '../types'
-import CustomerSelection from '../Customer/components/CustomerSelection'
-
-interface Discount {
-  title: string | null;
-  code: string;
-  type: 'code' | 'automatic';
-  value: string;
-  value_type: 'fixed_amount' | 'percentage';
-  target_type: 'all_products' | 'products' | 'collections';
-  min_requirement_type: 'amount' | 'quantity' | null;
-  min_requirement_value: string;
-  once_per_customer: boolean;
-  usage_limit: string | null;
-  customers: Customer[];
-  customer_selection: 'all' | 'custom' | 'none';
-}
+import BackButton from '../components/BackButton';
+import Border from '../components/Border';
+import Button from '../components/Button';
+import Card from '../components/Card';
+import Checkbox from '../components/forms/Checkbox';
+import InputText from '../components/forms/InputText';
+import Label from '../components/forms/Label';
+import FormSubmitBar from '../components/FormSubmitBar';
+import PageHeader from '../components/PageHeader';
+import Subheader from '../components/Subheader';
+import CustomerSelection from '../Customer/components/CustomerSelection';
+import Main from '../Main';
+import {Customer, Discount} from '../types';
 
 interface Props {
   discount: Discount;
-  customers:Customer[];
+  customers: Customer[];
 }
 
 export default function DiscountCreate(props: Props) {
   const {data, setData, isDirty} = useForm<
     Discount & {searchTerm: string; sortTerm: string}
-    >({
+  >({
     ...props.discount,
     searchTerm: '',
     sortTerm: '',
   });
   const {
+    id,
+    name,
     title,
     code,
     type,
@@ -61,19 +48,38 @@ export default function DiscountCreate(props: Props) {
     usage_limit,
     customers,
     customer_selection,
+    starts_at,
+    ends_at,
     searchTerm,
-    sortTerm
+    sortTerm,
   } = data;
 
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(
+    starts_at ? new Date(starts_at) : new Date(),
+  );
+  const [endDate, setEndDate] = useState(
+    ends_at ? new Date(ends_at) : new Date(),
+  );
+
+  const isEdit = !!id;
 
   useEffect(() => {
     console.log('data changed', data);
   }, [data]);
 
-  function generateDiscountCode() {
+  useEffect(() => {
+    setData({
+      ...data,
+      starts_at: startDate,
+      ends_at: endDate,
+    });
+  }, [startDate, endDate]);
 
+  function generateDiscountCode() {
+    setData({
+      ...data,
+      code: Math.random().toString(36).substring(2, 10).toUpperCase(),
+    });
   }
 
   function MinQuantityInput({show}: {show: boolean}) {
@@ -94,15 +100,20 @@ export default function DiscountCreate(props: Props) {
           Applies{' '}
           {target_type === 'all_products'
             ? 'to  all products'
-            : `only to selected ${target_type}`}{' '}
+            : `only to selected ${target_type}`}
         </span>
       </div>
     );
   }
 
   const handleSubmit = () => {
-    const url = route('lshopify.discounts.store');
-    Inertia.post(url, data);
+    const url = isEdit
+      ? route('lshopify.discounts.update', {id})
+      : route('lshopify.discounts.store');
+    Inertia.post(url, {
+      ...data,
+      _method: isEdit ? 'PATCH' : 'POST',
+    });
   };
 
   return (
@@ -116,22 +127,20 @@ export default function DiscountCreate(props: Props) {
               Inertia.get(route('lshopify.discounts.index'));
             }}
           />
-          <PageHeader text={`Create ${type} discount`} />
+          <PageHeader text={isEdit ? name : `Create ${type} discount`} />
         </div>
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
           <section className="space-y-6 lg:col-span-2 lg:col-start-1">
-
             <Card>
-              {
-                type === 'automatic' &&
+              {type === 'automatic' && (
                 <>
                   <Subheader
                     headerStyle="first-letter:capitalize"
                     text="Automatic discount"
                   />
                   <div>
-                    <Label title='Title' />
+                    <Label title="Title" />
                     <InputText
                       name="title"
                       placeholder="e.g. Ramadan promotion"
@@ -143,9 +152,8 @@ export default function DiscountCreate(props: Props) {
                     </p>
                   </div>
                 </>
-              }
-              {
-                type === 'code' &&
+              )}
+              {type === 'code' && (
                 <>
                   <div className="flex flex-row justify-between">
                     <Subheader
@@ -171,12 +179,12 @@ export default function DiscountCreate(props: Props) {
                     Customers will enter this discount code at checkout.
                   </p>
                 </>
-              }
+              )}
             </Card>
 
             <Card>
               <Subheader text="Types" />
-              <div className="flex flex-col text-sm space-y-2">
+              <div className="flex flex-col space-y-2 text-sm">
                 <div className="inline-flex items-center">
                   <Checkbox
                     type="radio"
@@ -206,7 +214,9 @@ export default function DiscountCreate(props: Props) {
                     onChange={e => setData('value', e.target.value)}
                     value={value}
                     rightComponent={
-                      <span className="text-sm text-gray-400">{value_type === 'percentage' ? '%' : 'OMR'}</span>
+                      <span className="text-sm text-gray-400">
+                        {value_type === 'percentage' ? '%' : 'OMR'}
+                      </span>
                     }
                   />
                 </div>
@@ -215,7 +225,7 @@ export default function DiscountCreate(props: Props) {
               <Border />
 
               <Subheader headerStyle="text-xs" text="APPLIES TO" />
-              <div className="flex flex-col text-sm space-y-2">
+              <div className="flex flex-col space-y-2 text-sm">
                 <div className="inline-flex items-center">
                   <Checkbox
                     type="radio"
@@ -246,7 +256,7 @@ export default function DiscountCreate(props: Props) {
             <Card cardStyle="text-sm">
               <Subheader text="Minimum requirements" />
 
-              <div className=''>
+              <div className="">
                 <div className="inline-flex items-center">
                   <Checkbox
                     type="radio"
@@ -266,7 +276,9 @@ export default function DiscountCreate(props: Props) {
                   </div>
                   <div className="ml-3">
                     <div>Minimum purchase amount (OMR)</div>
-                    <MinQuantityInput show={min_requirement_type === 'amount'} />
+                    <MinQuantityInput
+                      show={min_requirement_type === 'amount'}
+                    />
                   </div>
                 </div>
 
@@ -275,7 +287,9 @@ export default function DiscountCreate(props: Props) {
                     <Checkbox
                       type="radio"
                       checked={min_requirement_type === 'quantity'}
-                      onChange={() => setData('min_requirement_type', 'quantity')}
+                      onChange={() =>
+                        setData('min_requirement_type', 'quantity')
+                      }
                     />
                   </div>
                   <div className="ml-3">
@@ -290,7 +304,7 @@ export default function DiscountCreate(props: Props) {
 
             <Card cardStyle="text-sm">
               <Subheader text="Customer eligibility" />
-              <div className=''>
+              <div className="">
                 <div className="inline-flex items-center">
                   <Checkbox
                     type="radio"
@@ -305,29 +319,26 @@ export default function DiscountCreate(props: Props) {
                     <Checkbox
                       type="radio"
                       checked={customer_selection === 'custom'}
-                      onChange={() => setData('customer_selection','custom')}
+                      onChange={() => setData('customer_selection', 'custom')}
                     />
                   </div>
                   <div className="ml-3">
                     <div>Specific customers</div>
-                    {/*<MinQuantityInput show={min_requirement_type === 'amount'} />*/}
+                    {/* <MinQuantityInput show={min_requirement_type === 'amount'} /> */}
                   </div>
                 </div>
 
-                {
-                  customer_selection === 'custom' && (
-                    <CustomerSelection
-                      searchTerm={searchTerm}
-                      sortTerm={sortTerm}
-                      items={props.customers || []}
-                      selectedItems={customers || []}
-                      onChange={(field, value) => setData(field, value)}
-                      onAddItem={() => {}}
-                      onSearch={() => {}}
-                    />
-                  )
-                }
-
+                {customer_selection === 'custom' && (
+                  <CustomerSelection
+                    searchTerm={searchTerm}
+                    sortTerm={sortTerm}
+                    items={props.customers || []}
+                    selectedItems={customers || []}
+                    onChange={(field, value) => setData(field, value)}
+                    onAddItem={() => {}}
+                    onSearch={() => {}}
+                  />
+                )}
               </div>
             </Card>
 
@@ -368,7 +379,6 @@ export default function DiscountCreate(props: Props) {
                   Limit to one use per customer
                 </span>
               </div>
-
             </Card>
 
             <Card>
@@ -457,7 +467,6 @@ export default function DiscountCreate(props: Props) {
                     }
                   />
                 </div>
-
               </div>
             </Card>
           </section>

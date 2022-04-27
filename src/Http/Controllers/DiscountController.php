@@ -2,6 +2,7 @@
 
 namespace IZal\Lshopify\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -51,6 +52,8 @@ class DiscountController extends Controller
             'usage_limit' => null,
             'customer_selection' => 'all',
             'customers' => [],
+//            'starts_at' => Carbon::parse('-1 day')->format('Y-m-d h:i:s'),
+//            'ends_at' => Carbon::parse('-1 day')->format('Y-m-d h:i:s'),
         ];
 
         return Inertia::render('Discount/DiscountCreate', [
@@ -61,8 +64,13 @@ class DiscountController extends Controller
 
     public function store(DiscountStoreRequest $request)
     {
-        $discountModel = $this->discount->create($request->only($this->discount->getFillable()));
-        return redirect()->route('lshopify.discounts.edit',$discountModel->id);
+        try {
+            $discountModel = $this->discount->create($request->only($this->discount->getFillable()));
+            $this->updateStartEndDate($discountModel, $request);
+            return redirect()->route('lshopify.discounts.edit',$discountModel->id)->with('success', 'Discount updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('lshopify.discounts.edit',$discountModel->id)->with('error', $e->getMessage());
+        }
     }
 
     public function edit($id)
@@ -73,4 +81,43 @@ class DiscountController extends Controller
             'customers' => CustomerResource::collection(Customer::all())
         ]);
     }
+
+    public function update(DiscountStoreRequest $request, $id)
+    {
+        try {
+            $discountModel = $this->discount->findOrFail($id);
+            $discountModel->update($request->only($this->discount->getFillable()));
+            $this->updateStartEndDate($discountModel, $request);
+            return redirect()->route('lshopify.discounts.edit',$discountModel->id)->with('success', 'Discount updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('lshopify.discounts.edit',$discountModel->id)->with('error', $e->getMessage());
+        }
+    }
+
+    public function updateStartEndDate($discountModel, $request)
+    {
+        [$startsAt,$endsAt] = $this->parseDate([$request->starts_at,$request->ends_at]);
+        $discountModel->starts_at = $startsAt;
+        $discountModel->ends_at = $endsAt;
+        $discountModel->save();
+    }
+
+    public function parseDate($dates)
+    {
+        $startsAt = Carbon::parse($dates[0]);
+        $endsAt = Carbon::parse($dates[1]);
+
+        if($startsAt->isPast()) {
+            throw new \Exception('Start date must be in future');
+        }
+
+        if($startsAt->gt($endsAt)) {
+            throw new \Exception('End date must be greater than start date');
+        }
+        return [
+            $startsAt->format('Y-m-d h:i:s'),
+            $endsAt->format('Y-m-d h:i:s')
+        ];
+    }
+
 }
