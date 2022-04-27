@@ -12,7 +12,6 @@ use IZal\Lshopify\Resources\CustomerResource;
 
 class CustomerController extends Controller
 {
-
     public function index()
     {
         $customers = Customer::withCount('orders')->paginate(100);

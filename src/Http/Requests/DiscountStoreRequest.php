@@ -13,17 +13,17 @@ class DiscountStoreRequest extends VariantFieldRequest
             'code' => 'nullable|required_if:type,code|string|max:255',
             'type' => ['required', 'string', Rule::in(['code', 'automatic'])],
             'value_type' => ['required', 'string', Rule::in(['percentage', 'fixed_amount'])],
-            'value' => ['required','numeric'],
+            'value' => ['required', 'numeric'],
             'target_type' => ['required', 'string', Rule::in(['all_products', 'products', 'collections'])],
-            'min_requirement_type' => ['nullable','string', Rule::in(['amount', 'quantity'])],
+            'min_requirement_type' => ['nullable', 'string', Rule::in(['amount', 'quantity'])],
             'min_requirement_value' => ['numeric'],
             'once_per_customer' => ['boolean'],
-            'usage_limit' => ['nullable','numeric'],
-            'customer_selection' => ['required', 'string', Rule::in(['all', 'custom','none'])],
+            'usage_limit' => ['nullable', 'numeric'],
+            'customer_selection' => ['required', 'string', Rule::in(['all', 'custom', 'none'])],
             'customers' => ['nullable'],
             'starts_at' => 'required|date',
             'ends_at' => 'required|date',
-//            'end_time' => 'nullable|date',
+            //            'end_time' => 'nullable|date',
         ];
     }
 }

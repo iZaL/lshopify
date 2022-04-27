@@ -52,9 +52,8 @@ class Customer extends BaseModel
         return Str::title($address->city . ', ' . $address->country);
     }
 
-//    public function getOrdersCount()
-//    {
-//        return $this->orders()->count();
-//    }
-
+    //    public function getOrdersCount()
+    //    {
+    //        return $this->orders()->count();
+    //    }
 }

@@ -12,10 +12,8 @@ use IZal\Lshopify\Models\Discount;
 use IZal\Lshopify\Resources\CustomerResource;
 use IZal\Lshopify\Resources\DiscountResource;
 
-
 class DiscountController extends Controller
 {
-
     protected Discount $discount;
 
     public function __construct(Discount $discount)
@@ -35,7 +33,7 @@ class DiscountController extends Controller
             'automatic' => 'Automatic',
         ];
         $discountType = $request->type ?? 'code';
-        if(!in_array($discountType, array_keys($validDiscountTypes))) {
+        if (!in_array($discountType, array_keys($validDiscountTypes))) {
             $discountType = 'code';
         }
 
@@ -52,13 +50,13 @@ class DiscountController extends Controller
             'usage_limit' => null,
             'customer_selection' => 'all',
             'customers' => [],
-//            'starts_at' => Carbon::parse('-1 day')->format('Y-m-d h:i:s'),
-//            'ends_at' => Carbon::parse('-1 day')->format('Y-m-d h:i:s'),
+            //            'starts_at' => Carbon::parse('-1 day')->format('Y-m-d h:i:s'),
+            //            'ends_at' => Carbon::parse('-1 day')->format('Y-m-d h:i:s'),
         ];
 
         return Inertia::render('Discount/DiscountCreate', [
             'discount' => $discount,
-            'customers' => CustomerResource::collection(Customer::all())
+            'customers' => CustomerResource::collection(Customer::all()),
         ]);
     }
 
@@ -67,9 +65,13 @@ class DiscountController extends Controller
         try {
             $discountModel = $this->discount->create($request->only($this->discount->getFillable()));
             $this->updateStartEndDate($discountModel, $request);
-            return redirect()->route('lshopify.discounts.edit',$discountModel->id)->with('success', 'Discount updated successfully');
+            return redirect()
+                ->route('lshopify.discounts.edit', $discountModel->id)
+                ->with('success', 'Discount updated successfully');
         } catch (\Exception $e) {
-            return redirect()->route('lshopify.discounts.edit',$discountModel->id)->with('error', $e->getMessage());
+            return redirect()
+                ->route('lshopify.discounts.edit', $discountModel->id)
+                ->with('error', $e->getMessage());
         }
     }
 
@@ -78,7 +80,7 @@ class DiscountController extends Controller
         $discount = $this->discount->with(['customers'])->findOrFail($id);
         return Inertia::render('Discount/DiscountCreate', [
             'discount' => new DiscountResource($discount),
-            'customers' => CustomerResource::collection(Customer::all())
+            'customers' => CustomerResource::collection(Customer::all()),
         ]);
     }
 
@@ -88,15 +90,19 @@ class DiscountController extends Controller
             $discountModel = $this->discount->findOrFail($id);
             $discountModel->update($request->only($this->discount->getFillable()));
             $this->updateStartEndDate($discountModel, $request);
-            return redirect()->route('lshopify.discounts.edit',$discountModel->id)->with('success', 'Discount updated successfully');
+            return redirect()
+                ->route('lshopify.discounts.edit', $discountModel->id)
+                ->with('success', 'Discount updated successfully');
         } catch (\Exception $e) {
-            return redirect()->route('lshopify.discounts.edit',$discountModel->id)->with('error', $e->getMessage());
+            return redirect()
+                ->route('lshopify.discounts.edit', $discountModel->id)
+                ->with('error', $e->getMessage());
         }
     }
 
     public function updateStartEndDate($discountModel, $request)
     {
-        [$startsAt,$endsAt] = $this->parseDate([$request->starts_at,$request->ends_at]);
+        [$startsAt, $endsAt] = $this->parseDate([$request->starts_at, $request->ends_at]);
         $discountModel->starts_at = $startsAt;
         $discountModel->ends_at = $endsAt;
         $discountModel->save();
@@ -107,17 +113,13 @@ class DiscountController extends Controller
         $startsAt = Carbon::parse($dates[0]);
         $endsAt = Carbon::parse($dates[1]);
 
-        if($startsAt->isPast()) {
+        if ($startsAt->isPast()) {
             throw new \Exception('Start date must be in future');
         }
 
-        if($startsAt->gt($endsAt)) {
+        if ($startsAt->gt($endsAt)) {
             throw new \Exception('End date must be greater than start date');
         }
-        return [
-            $startsAt->format('Y-m-d h:i:s'),
-            $endsAt->format('Y-m-d h:i:s')
-        ];
+        return [$startsAt->format('Y-m-d h:i:s'), $endsAt->format('Y-m-d h:i:s')];
     }
-
 }

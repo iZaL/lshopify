@@ -10,7 +10,6 @@ class Discount extends BaseModel
 {
     use HasFactory;
 
-
     protected $table = 'discounts';
 
     protected $casts = [
@@ -20,8 +19,17 @@ class Discount extends BaseModel
     ];
 
     protected $fillable = [
-        'title','code','type','value','value_type','target_type','min_requirement_type','min_requirement_value',
-        'once_per_customer','usage_limit','customer_selection'
+        'title',
+        'code',
+        'type',
+        'value',
+        'value_type',
+        'target_type',
+        'min_requirement_type',
+        'min_requirement_value',
+        'once_per_customer',
+        'usage_limit',
+        'customer_selection',
     ];
 
     public static function newFactory()
@@ -31,7 +39,7 @@ class Discount extends BaseModel
 
     public function customers()
     {
-        return $this->belongsToMany(Customer::class,'customer_discounts');
+        return $this->belongsToMany(Customer::class, 'customer_discounts');
     }
 
     public function order()
