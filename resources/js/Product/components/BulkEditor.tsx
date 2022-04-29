@@ -16,8 +16,7 @@ export default function BulkEditor(props: Props) {
 
   const defaultAttributes = ['sku', 'price', 'compare_at_price'];
 
-  const [selectedFields] =
-    useState<Field[]>(defaultAttributes);
+  const [selectedFields] = useState<Field[]>(defaultAttributes);
 
   return (
     <>

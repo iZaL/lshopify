@@ -12,9 +12,7 @@ interface Props {
 export default function OrderList({orders, onItemClick}: Props) {
   return (
     <SmartTable items={orders}>
-      <SmartTable.SmartHeader>
-        {() => <></>}
-      </SmartTable.SmartHeader>
+      <SmartTable.SmartHeader>{() => <></>}</SmartTable.SmartHeader>
 
       <Table>
         <SmartTable.Header>

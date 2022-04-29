@@ -18,9 +18,7 @@ export default function CollectionList({collections}: Props) {
 
   return (
     <SmartTable items={collections}>
-      <SmartTable.SmartHeader>
-        {() => <></>}
-      </SmartTable.SmartHeader>
+      <SmartTable.SmartHeader>{() => <></>}</SmartTable.SmartHeader>
 
       <Table>
         <SmartTable.Header>

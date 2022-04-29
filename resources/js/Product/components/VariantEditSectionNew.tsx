@@ -200,7 +200,7 @@ export default function VariantEditSectionNew({
   ) => {
     const newOption = {
       ...option,
-      values: option.values?.map((v) => {
+      values: option.values?.map(v => {
         if (v.id === value.id) {
           return {
             id: fieldValue,

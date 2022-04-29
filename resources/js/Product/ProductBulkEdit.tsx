@@ -340,51 +340,45 @@ export default function ProductBulkEdit(props: Props) {
                                     </Cell>
                                   ),
                                 )
-                              : selectedVariantAttributes.map(
-                                  (attribute) => (
-                                    <Cell key={attribute}>
-                                      <div className="cursor-not-allowed px-4">
-                                        —
-                                      </div>
-                                    </Cell>
-                                  ),
-                                )}
+                              : selectedVariantAttributes.map(attribute => (
+                                  <Cell key={attribute}>
+                                    <div className="cursor-not-allowed px-4">
+                                      —
+                                    </div>
+                                  </Cell>
+                                ))}
                           </tr>
                           {product.variants?.map((variant, idx) => (
                             <tr key={idx}>
-                              {selectedProductAttributes.map(
-                                (attribute) => (
-                                  <Cell key={attribute}>
-                                    {attribute === 'title' ? (
-                                      <div className="bg-gray-100 p-2 pl-12 text-gray-500">
-                                        {variant.title}
-                                      </div>
-                                    ) : (
-                                      <div className="cursor-not-allowed px-4">
-                                        —
-                                      </div>
-                                    )}
-                                  </Cell>
-                                ),
-                              )}
-                              {selectedVariantAttributes.map(
-                                (attribute) => (
-                                  <Cell key={attribute}>
-                                    <VariantCell
-                                      value={variant[attribute]}
-                                      attribute={attribute}
-                                      onChange={value =>
-                                        onVariantAttributeChange(
-                                          product,
-                                          variant,
-                                          attribute,
-                                          value,
-                                        )
-                                      }
-                                    />
-                                  </Cell>
-                                ),
-                              )}
+                              {selectedProductAttributes.map(attribute => (
+                                <Cell key={attribute}>
+                                  {attribute === 'title' ? (
+                                    <div className="bg-gray-100 p-2 pl-12 text-gray-500">
+                                      {variant.title}
+                                    </div>
+                                  ) : (
+                                    <div className="cursor-not-allowed px-4">
+                                      —
+                                    </div>
+                                  )}
+                                </Cell>
+                              ))}
+                              {selectedVariantAttributes.map(attribute => (
+                                <Cell key={attribute}>
+                                  <VariantCell
+                                    value={variant[attribute]}
+                                    attribute={attribute}
+                                    onChange={value =>
+                                      onVariantAttributeChange(
+                                        product,
+                                        variant,
+                                        attribute,
+                                        value,
+                                      )
+                                    }
+                                  />
+                                </Cell>
+                              ))}
                             </tr>
                           ))}
                         </Fragment>
