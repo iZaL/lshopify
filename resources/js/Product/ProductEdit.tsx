@@ -87,10 +87,9 @@ export default function ProductEdit(props: Props) {
   ) => {
     setData({
       ...data,
-      [objectKey]: {
-        ...(data[objectKey] as {}),
+      [objectKey]: Object.assign({}, data[objectKey], {
         [fieldKey]: value,
-      },
+      }),
     });
   };
 

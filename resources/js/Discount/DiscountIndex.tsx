@@ -15,14 +15,12 @@ interface TabProps {
   href: string;
 }
 
-interface Props {}
-
 const tabs: TabProps[] = [
   {name: 'Discount codes', href: '#'},
   {name: 'Automatic discounts', href: '#'},
 ];
 
-export default function DiscountIndex(props: Props) {
+export default function DiscountIndex() {
   const [activeTab, setActiveTab] = React.useState<TabProps>(tabs[0]);
 
   function DiscountCodeTab() {

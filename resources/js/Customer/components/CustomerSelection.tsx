@@ -6,7 +6,6 @@ import Button from '../../components/Button';
 import Checkbox from '../../components/forms/Checkbox';
 import InputText from '../../components/forms/InputText';
 import Modal from '../../components/Modal';
-import {Collection, Customer, Product} from '../../types';
 
 type Item = {
   id: number;

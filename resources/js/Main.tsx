@@ -15,7 +15,7 @@ export default function Main({
   title?: string;
   children: React.ReactNode;
 }) {
-  const {theme, toggle} = useThemeStore();
+  const {theme} = useThemeStore();
 
   return (
     <div className={classNames('', theme === 'dark' && 'dark')}>

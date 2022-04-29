@@ -278,7 +278,7 @@ export default function VariantEditSection({
                               if (e.target.value) {
                                 onVariantOptionChange(option, {
                                   ...option,
-                                  values: option.values?.map((v, i) => {
+                                  values: option.values?.map((v) => {
                                     if (v.id === value.id) {
                                       return {
                                         id: value.name,

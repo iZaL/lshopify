@@ -13,7 +13,7 @@ export default function OrderList({orders, onItemClick}: Props) {
   return (
     <SmartTable items={orders}>
       <SmartTable.SmartHeader>
-        {({selectedItemIDs}) => <></>}
+        {() => <></>}
       </SmartTable.SmartHeader>
 
       <Table>

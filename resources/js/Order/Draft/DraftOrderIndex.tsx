@@ -16,7 +16,7 @@ interface Props {
 }
 
 export default function DraftOrderIndex(props: Props) {
-  const {orders, cartTotal} = props;
+  const {orders} = props;
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const onOrderClick = (order: Order) => {

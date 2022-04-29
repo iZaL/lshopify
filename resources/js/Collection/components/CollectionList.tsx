@@ -19,7 +19,7 @@ export default function CollectionList({collections}: Props) {
   return (
     <SmartTable items={collections}>
       <SmartTable.SmartHeader>
-        {({selectedItemIDs}) => <></>}
+        {() => <></>}
       </SmartTable.SmartHeader>
 
       <Table>

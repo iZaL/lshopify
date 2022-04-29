@@ -29,7 +29,7 @@ export default function CollectionConditionItem(props: Props) {
         <option value="compare_at_price">Compare at price</option>
         <option value="weight">Weight</option>
         <option value="stock">Inventory stock</option>
-        <option value="variant_title">Variant's title</option>
+        <option value="variant_title">{"Variant's title"}</option>
       </Select>
 
       <Select

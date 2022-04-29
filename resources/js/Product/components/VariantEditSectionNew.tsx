@@ -49,7 +49,6 @@ export default function VariantEditSectionNew({
   images,
   onChange,
   onAddVariantClick,
-  onEditVariantClick,
   onImagesUpload,
   onVariantsDelete,
   onBulkAttributesSet,
@@ -60,28 +59,7 @@ export default function VariantEditSectionNew({
   );
   const [showDialog, setShowDialog] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
-  const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
-
-  console.log('variantOptions', variantOptions);
-
-  const onVariantOptionsChange = (
-    variant: Variant,
-    option: VariantOption,
-    value: string,
-  ) => {
-    const variants = currentVariants.map(v => {
-      if (v.id === variant.id) {
-        return {
-          ...v,
-          options: v.options?.map(o =>
-            o.id === option.id ? {...option, name: value} : o,
-          ),
-        };
-      }
-      return v;
-    });
-    onChange(variants);
-  };
+  const [selectedVariant] = useState<Variant | null>(null);
 
   const onVariantAttributeChange = <T extends keyof Variant>(
     variant: Variant,
@@ -128,13 +106,6 @@ export default function VariantEditSectionNew({
     } else {
       setCheckedVariantIDs(currentVariants.map(v => v.id));
     }
-  };
-
-  const onCheckboxChange = (variantID: number) => {
-    const checkedBox = checkedVariantIDs.includes(variantID)
-      ? checkedVariantIDs.filter(vID => vID !== variantID)
-      : [...checkedVariantIDs, variantID];
-    setCheckedVariantIDs(checkedBox);
   };
 
   const onOptionValueClick = (
@@ -229,7 +200,7 @@ export default function VariantEditSectionNew({
   ) => {
     const newOption = {
       ...option,
-      values: option.values?.map((v, i) => {
+      values: option.values?.map((v) => {
         if (v.id === value.id) {
           return {
             id: fieldValue,

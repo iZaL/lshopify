@@ -8,7 +8,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:import/recommended',
     'plugin:import/typescript',
-    'airbnb',
+    // 'airbnb',
     'prettier'
   ],
   parser: '@typescript-eslint/parser',
@@ -25,12 +25,14 @@ module.exports = {
     'import'
   ],
   rules: {
-    // "@typescript-eslint/no-explicit-any": "error",
-    // "@typescript-eslint/no-unused-vars": "error",
-    // "@typescript-eslint/no-empty-function": "error",
+    "react/display-name": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-empty-function": "off",
     "import/order": [
       "warn",
       {
+        "warnOnUnassignedImports": true,
         "groups": [
           "builtin",
           "external",

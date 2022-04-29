@@ -2,6 +2,7 @@
 
 namespace IZal\Lshopify\Tests\Http\Controllers;
 
+use Carbon\Carbon;
 use Inertia\Testing\Assert;
 use Inertia\Testing\AssertableInertia;
 use IZal\Lshopify\Models\Discount;
@@ -24,6 +25,9 @@ class DiscountControllerTest extends TestCase
     public function test_store()
     {
 
+        $startsAt = "2022-04-27T09:30:00.434Z";
+        $endsAt = "2022-04-28T09:30:00.434Z";
+
         $data = [
             "title" => "XXXXX",
             "code" => "ZJ1GQMH1",
@@ -38,10 +42,17 @@ class DiscountControllerTest extends TestCase
             "usage_limit" => "5",
             "customer_selection" => "all",
             "customers" => [],
-
+            "starts_at" => $startsAt,
+            "ends_at" => $endsAt
         ];
 
-        $dbValues = collect($data)->except(['customers'])->toArray();
+        $startsAtParsed = Carbon::parse($startsAt)->subDay(1);
+
+        $this->travelTo($startsAtParsed);
+
+        $dbValues = collect($data)->except(['customers','starts_at','ends_at'])->toArray();
+        $dbValues['starts_at'] = Carbon::parse($startsAt)->toDateTimeString();
+        $dbValues['ends_at'] = Carbon::parse($endsAt)->toDateTimeString();
         $response = $this->post(route('lshopify.discounts.store'), $data);
 
         $this->assertDatabaseHas('discounts',$dbValues);

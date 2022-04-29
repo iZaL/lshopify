@@ -117,12 +117,12 @@ function SmartHeader({children}: SmartHeaderProps<ItemWithID>) {
   );
 }
 
-interface BodyProps<T extends ItemWithID> {
+interface BodyProps {
   children: (props: {item: any}) => JSX.Element;
   onItemClick?: (item: any) => void;
 }
 
-function Body({children, onItemClick}: BodyProps<ItemWithID>) {
+function Body({children, onItemClick}: BodyProps) {
   const {items, selectedItemIDs, setSelectedItemIDs} =
     useContext(SmartTableContext);
 
@@ -148,7 +148,7 @@ function Body({children, onItemClick}: BodyProps<ItemWithID>) {
               }}>
               <Checkbox
                 checked={selectedItemIDs.includes(item.id)}
-                onChange={e => {}}
+                onChange={() => {}}
                 name={`check-${item.id}`}
               />
             </div>

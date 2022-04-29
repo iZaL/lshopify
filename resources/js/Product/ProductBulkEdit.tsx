@@ -58,7 +58,7 @@ export default function ProductBulkEdit(props: Props) {
     products,
   };
 
-  const {data, setData, post, isDirty} = useForm<Form>(formProps);
+  const {data, setData, isDirty} = useForm<Form>(formProps);
 
   useEffect(() => {
     setData({
@@ -136,7 +136,7 @@ export default function ProductBulkEdit(props: Props) {
         taggable_type: 'product',
       },
       {
-        onSuccess: page => {
+        onSuccess: () => {
           Inertia.reload();
         },
       },
@@ -341,7 +341,7 @@ export default function ProductBulkEdit(props: Props) {
                                   ),
                                 )
                               : selectedVariantAttributes.map(
-                                  (attribute, idx) => (
+                                  (attribute) => (
                                     <Cell key={attribute}>
                                       <div className="cursor-not-allowed px-4">
                                         —
@@ -353,7 +353,7 @@ export default function ProductBulkEdit(props: Props) {
                           {product.variants?.map((variant, idx) => (
                             <tr key={idx}>
                               {selectedProductAttributes.map(
-                                (attribute, idx) => (
+                                (attribute) => (
                                   <Cell key={attribute}>
                                     {attribute === 'title' ? (
                                       <div className="bg-gray-100 p-2 pl-12 text-gray-500">
@@ -368,7 +368,7 @@ export default function ProductBulkEdit(props: Props) {
                                 ),
                               )}
                               {selectedVariantAttributes.map(
-                                (attribute, idx) => (
+                                (attribute) => (
                                   <Cell key={attribute}>
                                     <VariantCell
                                       value={variant[attribute]}

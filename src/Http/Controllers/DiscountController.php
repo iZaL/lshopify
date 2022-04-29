@@ -4,6 +4,7 @@ namespace IZal\Lshopify\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use IZal\Lshopify\Http\Requests\DiscountStoreRequest;
@@ -50,8 +51,6 @@ class DiscountController extends Controller
             'usage_limit' => null,
             'customer_selection' => 'all',
             'customers' => [],
-            //            'starts_at' => Carbon::parse('-1 day')->format('Y-m-d h:i:s'),
-            //            'ends_at' => Carbon::parse('-1 day')->format('Y-m-d h:i:s'),
         ];
 
         return Inertia::render('Discount/DiscountCreate', [
@@ -63,12 +62,15 @@ class DiscountController extends Controller
     public function store(DiscountStoreRequest $request)
     {
         try {
+            DB::beginTransaction();
             $discountModel = $this->discount->create($request->only($this->discount->getFillable()));
             $this->updateStartEndDate($discountModel, $request);
+            DB::commit();
             return redirect()
                 ->route('lshopify.discounts.edit', $discountModel->id)
                 ->with('success', 'Discount updated successfully');
         } catch (\Exception $e) {
+            DB::rollBack();
             return redirect()
                 ->route('lshopify.discounts.edit', $discountModel->id)
                 ->with('error', $e->getMessage());
@@ -95,12 +97,12 @@ class DiscountController extends Controller
                 ->with('success', 'Discount updated successfully');
         } catch (\Exception $e) {
             return redirect()
-                ->route('lshopify.discounts.edit', $discountModel->id)
+                ->back()
                 ->with('error', $e->getMessage());
         }
     }
 
-    public function updateStartEndDate($discountModel, $request)
+    private function updateStartEndDate($discountModel, $request)
     {
         [$startsAt, $endsAt] = $this->parseDate([$request->starts_at, $request->ends_at]);
         $discountModel->starts_at = $startsAt;
@@ -108,7 +110,7 @@ class DiscountController extends Controller
         $discountModel->save();
     }
 
-    public function parseDate($dates)
+    private function parseDate($dates)
     {
         $startsAt = Carbon::parse($dates[0]);
         $endsAt = Carbon::parse($dates[1]);
