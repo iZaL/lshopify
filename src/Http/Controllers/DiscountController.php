@@ -60,6 +60,7 @@ class DiscountController extends Controller
 
         $collections = Collection::query();
         $products = Product::query();
+        $customers = Customer::query();
 
         $collections = $collections->when($request->collection_search, function ($query, $term) {
             return $query->where('name', 'like', "%{$term}%");
@@ -69,11 +70,15 @@ class DiscountController extends Controller
             return $query->where('title', 'like', "%{$term}%");
         });
 
+        $customers = $customers->when($request->customer_search, function ($query, $term) {
+            return $query->where('first_name', 'like', "%{$term}%")->orWhere('last_time', 'like', "%{$term}%");
+        });
+
         return Inertia::render('Discount/DiscountCreate', [
             'discount' => $discount,
-            'customers' => CustomerResource::collection(Customer::all()),
-            'collections' => CollectionResource::collection($collections->get()),
-            'products' => ProductResource::collection($products->get()),
+            'customers' => CustomerResource::collection($customers->paginate(10)),
+            'collections' => CollectionResource::collection($collections->paginate(10)),
+            'products' => ProductResource::collection($products->paginate(10)),
         ]);
     }
 
@@ -83,6 +88,17 @@ class DiscountController extends Controller
             DB::beginTransaction();
             $discountModel = $this->discount->create($request->only($this->discount->getFillable()));
             $this->updateStartEndDate($discountModel, $request);
+
+            if ($discountModel->target_type == 'products') {
+                $discountModel->products()->sync($request->products);
+            } elseif ($discountModel->target_type == 'collections') {
+                $discountModel->collections()->sync($request->collections);
+            }
+
+            if ($request->customers) {
+                $discountModel->customers()->sync($request->customers);
+            }
+
             DB::commit();
             return redirect()
                 ->route('lshopify.discounts.edit', $discountModel->id)
@@ -90,17 +106,36 @@ class DiscountController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()
-                ->route('lshopify.discounts.edit', $discountModel->id)
+                ->back()
                 ->with('error', $e->getMessage());
         }
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        $discount = $this->discount->with(['customers'])->findOrFail($id);
+        $discount = $this->discount->with(['customers', 'collections', 'products'])->find($id);
+
+        $collections = Collection::query();
+        $products = Product::query();
+        $customers = Customer::query();
+
+        $collections = $collections->when($request->collection_search, function ($query, $term) {
+            return $query->where('name', 'like', "%{$term}%");
+        });
+
+        $products = $products->when($request->product_search, function ($query, $term) {
+            return $query->where('title', 'like', "%{$term}%");
+        });
+
+        $customers = $customers->when($request->customer_search, function ($query, $term) {
+            return $query->where('first_name', 'like', "%{$term}%")->orWhere('last_time', 'like', "%{$term}%");
+        });
+
         return Inertia::render('Discount/DiscountCreate', [
             'discount' => new DiscountResource($discount),
-            'customers' => CustomerResource::collection(Customer::all()),
+            'customers' => CustomerResource::collection($customers->paginate(10)),
+            'collections' => CollectionResource::collection($collections->paginate(10)),
+            'products' => ProductResource::collection($products->paginate(10)),
         ]);
     }
 
@@ -109,6 +144,17 @@ class DiscountController extends Controller
         try {
             $discountModel = $this->discount->findOrFail($id);
             $discountModel->update($request->only($this->discount->getFillable()));
+
+            if ($discountModel->target_type == 'products') {
+                $discountModel->products()->sync($request->products);
+            } elseif ($discountModel->target_type == 'collections') {
+                $discountModel->collections()->sync($request->collections);
+            }
+
+            if ($request->customers) {
+                $discountModel->customers()->sync($request->customers);
+            }
+
             $this->updateStartEndDate($discountModel, $request);
             return redirect()
                 ->route('lshopify.discounts.edit', $discountModel->id)

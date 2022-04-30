@@ -9,6 +9,9 @@ class DiscountStoreRequest extends VariantFieldRequest
     public function rules()
     {
         return [
+            //            'customers' => 'nullable|array',
+            //            'products' => 'nullable|array',
+            //            'collections' => 'nullable|array',
             'title' => 'nullable|required_if:type,automatic|string|max:255',
             'code' => 'nullable|required_if:type,code|string|max:255',
             'type' => ['required', 'string', Rule::in(['code', 'automatic'])],
@@ -20,10 +23,8 @@ class DiscountStoreRequest extends VariantFieldRequest
             'once_per_customer' => ['boolean'],
             'usage_limit' => ['nullable', 'numeric'],
             'customer_selection' => ['required', 'string', Rule::in(['all', 'custom', 'none'])],
-            'customers' => ['nullable'],
             'starts_at' => 'required|date',
             'ends_at' => 'required|date',
-            //            'end_time' => 'nullable|date',
         ];
     }
 }

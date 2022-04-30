@@ -22,9 +22,15 @@ import {Collection, Customer, Discount, Product} from '../types';
 
 interface Props {
   discount: Discount;
-  customers: Customer[];
-  collections: Collection[];
-  products: Product[];
+  customers: {
+    data: Customer[];
+  };
+  collections: {
+    data: Collection[];
+  };
+  products: {
+    data: Product[];
+  };
 }
 
 export default function DiscountCreate(props: Props) {
@@ -107,19 +113,21 @@ export default function DiscountCreate(props: Props) {
   }
 
   const handleSubmit = () => {
-    alert('wa');
     const url = isEdit
       ? route('lshopify.discounts.update', {id})
       : route('lshopify.discounts.store');
     Inertia.post(url, {
       ...data,
+      customers: customers.map(c => c.id),
+      collections: collections.map(c => c.id),
+      products: products.map(c => c.id),
       _method: isEdit ? 'PATCH' : 'POST',
     });
   };
 
   function onSearch(
     value: string,
-    type: 'collection' | 'product' = 'collection',
+    type: 'collections' | 'products' | 'customers' = 'collections',
   ) {
     setData({
       ...data,
@@ -129,12 +137,12 @@ export default function DiscountCreate(props: Props) {
     Inertia.get(
       route('lshopify.discounts.create'),
       {
-        collection_search: type === 'collection' ? value : '',
-        product_search: type === 'product' ? value : '',
+        collection_search: type === 'collections' ? value : '',
+        product_search: type === 'products' ? value : '',
       },
       {
         preserveState: true,
-        only: type === 'collection' ? ['collections', 'search'] : ['products'],
+        only: type === 'collections' ? ['collections'] : ['products'],
       },
     );
   }
@@ -155,6 +163,14 @@ export default function DiscountCreate(props: Props) {
     });
   }
 
+  function onCustomersConfirm(items: Customer[]) {
+    setData({
+      ...data,
+      customers: items,
+      searchTerm: '',
+    });
+  }
+
   return (
     <Main>
       <div className="p-6">
@@ -166,7 +182,9 @@ export default function DiscountCreate(props: Props) {
               Inertia.get(route('lshopify.discounts.index'));
             }}
           />
-          <PageHeader text={isEdit ? name : `Create ${type} discount`} />
+          <PageHeader
+            text={isEdit ? `Edit ${name}` : `Create ${type} discount`}
+          />
         </div>
 
         <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
@@ -294,7 +312,7 @@ export default function DiscountCreate(props: Props) {
               {target_type === 'collections' && (
                 <ModalListSelection
                   searchTerm={searchTerm}
-                  items={props.collections || []}
+                  items={props.collections.data || []}
                   selectedItems={collections || []}
                   onSearch={value => onSearch(value)}
                   onConfirm={items => onCollectionConfirm(items)}
@@ -315,9 +333,9 @@ export default function DiscountCreate(props: Props) {
               {target_type === 'products' && (
                 <ModalListSelection
                   searchTerm={searchTerm}
-                  items={props.products || []}
+                  items={props.products.data || []}
                   selectedItems={products || []}
-                  onSearch={value => onSearch(value, 'product')}
+                  onSearch={value => onSearch(value, 'products')}
                   onConfirm={items => onProductsConfirm(items)}
                   placeholder="Search products"
                   modalProps={{
@@ -409,17 +427,26 @@ export default function DiscountCreate(props: Props) {
                   </div>
                 </div>
 
-                {/*{customer_selection === 'custom' && (*/}
-                {/*  <ModalListSelection*/}
-                {/*    searchTerm={searchTerm}*/}
-                {/*    items={props.customers || []}*/}
-                {/*    selectedItems={customers || []}*/}
-                {/*    onChange={(field, value) => setData(field, value)}*/}
-                {/*    onAddItem={() => {}}*/}
-                {/*    onSearch={() => {}}*/}
-                {/*    placeholder='Search customers'*/}
-                {/*  />*/}
-                {/*)}*/}
+                {customer_selection === 'custom' && (
+                  <ModalListSelection
+                    searchTerm={searchTerm}
+                    items={props.customers.data || []}
+                    selectedItems={customers || []}
+                    onSearch={value => onSearch(value, 'customers')}
+                    onConfirm={items => onCustomersConfirm(items)}
+                    placeholder="Search customers"
+                    modalProps={{
+                      title: 'Add customers',
+                      onClose: () => {
+                        setData({
+                          ...data,
+                          searchTerm: '',
+                          customers: [],
+                        });
+                      },
+                    }}
+                  />
+                )}
               </div>
             </Card>
 

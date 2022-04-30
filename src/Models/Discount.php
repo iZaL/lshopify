@@ -3,6 +3,7 @@
 namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use IZal\Lshopify\Database\Factories\DiscountFactory;
 use phpDocumentor\Reflection\Types\Boolean;
 
@@ -37,9 +38,24 @@ class Discount extends BaseModel
         return DiscountFactory::new();
     }
 
+    public function discountable()
+    {
+        return $this->morphTo();
+    }
+
     public function customers()
     {
         return $this->belongsToMany(Customer::class, 'customer_discounts');
+    }
+
+    public function products(): MorphToMany
+    {
+        return $this->morphedByMany(Product::class, 'discountable');
+    }
+
+    public function collections(): MorphToMany
+    {
+        return $this->morphedByMany(Collection::class, 'discountable');
     }
 
     public function order()

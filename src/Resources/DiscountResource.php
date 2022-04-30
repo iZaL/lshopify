@@ -6,13 +6,13 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class DiscountResource extends JsonResource
 {
-    public static $wrap = false;
+    //    public static $wrap = false;
 
     public function toArray($request)
     {
         return [
             'id' => $this->id,
-            'name' => $this->code ?: $this->title,
+            'name' => $this->code ? $this->code : $this->title,
             'title' => $this->title,
             'code' => $this->code,
             'type' => $this->type,
@@ -27,6 +27,8 @@ class DiscountResource extends JsonResource
             'starts_at' => $this->starts_at,
             'ends_at' => $this->ends_at,
             'customers' => CustomerResource::collection($this->whenLoaded('customers')),
+            'collections' => CollectionResource::collection($this->whenLoaded('collections')),
+            'products' => ProductResource::collection($this->whenLoaded('products')),
         ];
     }
 }

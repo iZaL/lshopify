@@ -49,7 +49,7 @@ class Customer extends BaseModel
     public function getLocationAttribute()
     {
         $address = $this->default_address;
-        return Str::title($address->city . ', ' . $address->country);
+        return Str::title(optional($address)->city . ', ' . optional($address)->country);
     }
 
     //    public function getOrdersCount()
