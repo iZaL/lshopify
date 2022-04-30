@@ -8,10 +8,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use IZal\Lshopify\Http\Requests\DiscountStoreRequest;
+use IZal\Lshopify\Models\Collection;
 use IZal\Lshopify\Models\Customer;
 use IZal\Lshopify\Models\Discount;
+use IZal\Lshopify\Models\Product;
+use IZal\Lshopify\Resources\CollectionResource;
 use IZal\Lshopify\Resources\CustomerResource;
 use IZal\Lshopify\Resources\DiscountResource;
+use IZal\Lshopify\Resources\ProductResource;
 
 class DiscountController extends Controller
 {
@@ -51,11 +55,25 @@ class DiscountController extends Controller
             'usage_limit' => null,
             'customer_selection' => 'all',
             'customers' => [],
+            'collections' => [],
         ];
+
+        $collections = Collection::query();
+        $products = Product::query();
+
+        $collections = $collections->when($request->collection_search, function ($query, $term) {
+            return $query->where('name', 'like', "%{$term}%");
+        });
+
+        $products = $products->when($request->product_search, function ($query, $term) {
+            return $query->where('title', 'like', "%{$term}%");
+        });
 
         return Inertia::render('Discount/DiscountCreate', [
             'discount' => $discount,
             'customers' => CustomerResource::collection(Customer::all()),
+            'collections' => CollectionResource::collection($collections->get()),
+            'products' => ProductResource::collection($products->get()),
         ]);
     }
 

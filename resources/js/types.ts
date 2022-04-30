@@ -241,6 +241,8 @@ export interface Discount {
   once_per_customer: boolean;
   usage_limit: string | null;
   customers: Customer[];
+  collections: Collection[];
+  products: Product[];
   customer_selection: 'all' | 'custom' | 'none';
   starts_at: Date;
   ends_at: Date;
