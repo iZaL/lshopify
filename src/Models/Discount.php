@@ -66,5 +66,4 @@ class Discount extends BaseModel
     {
         return $this->belongsTo(Order::class, 'order_id');
     }
-
 }

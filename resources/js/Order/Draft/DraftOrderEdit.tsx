@@ -10,7 +10,8 @@ import {CustomerForm} from '../../form_types';
 import Main from '../../Main';
 import {
   Billing,
-  Cart, CartDiscount,
+  Cart,
+  CartDiscount,
   // CartDiscount,
   CartItem,
   Customer,
@@ -19,7 +20,7 @@ import {
   Order,
   Product,
   Shipping,
-} from '../../types'
+} from '../../types';
 
 import CustomerEdit from './components/CustomerEdit';
 import CustomerSelect from './components/CustomerSelect';

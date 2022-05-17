@@ -81,14 +81,14 @@ class Order extends BaseModel
         return $this->belongsTo(Customer::class);
     }
 
-//    public function discounts()
-//    {
-//        return $this->belongsToMany(Discount::class, 'order_discounts','order_id','discount_id');
-//    }
+    //    public function discounts()
+    //    {
+    //        return $this->belongsToMany(Discount::class, 'order_discounts','order_id','discount_id');
+    //    }
 
     public function discount()
     {
-        return $this->belongsTo(Discount::class,'discount_id');
+        return $this->belongsTo(Discount::class, 'discount_id');
     }
 
     public function variants()

@@ -60,7 +60,7 @@ class DiscountController extends Controller
         ];
 
         $collections = Collection::query();
-        $products = Product::with(['variants.product','default_variant.product']);
+        $products = Product::with(['variants.product', 'default_variant.product']);
         $customers = Customer::query();
 
         $collections = $collections->when($request->collection_search, function ($query, $term) {
@@ -102,8 +102,10 @@ class DiscountController extends Controller
 
             DB::commit();
 
-            if($request->has('back')) {
-                return redirect()->back()->with('success','Discount created successfully');
+            if ($request->has('back')) {
+                return redirect()
+                    ->back()
+                    ->with('success', 'Discount created successfully');
             }
 
             return redirect()
@@ -122,7 +124,7 @@ class DiscountController extends Controller
         $discount = $this->discount->with(['customers', 'collections', 'variants.product'])->find($id);
 
         $collections = Collection::query();
-        $products = Product::with(['variants.product','default_variant.product']);
+        $products = Product::with(['variants.product', 'default_variant.product']);
         $customers = Customer::query();
 
         $collections = $collections->when($request->collection_search, function ($query, $term) {

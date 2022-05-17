@@ -11,9 +11,9 @@ import VariantImage from '../Variant/components/VariantImage';
 
 type Item = {
   id: number;
-}
+};
 
-interface Props <T>{
+interface Props<T> {
   searchTerm: string;
   setSearchTerm: (text: string) => void;
   products: Product[];
@@ -31,11 +31,11 @@ export default function ProductSearch<T extends Item>({
   const [showDialog, setShowDialog] = useState(false);
 
   const [selectedVariantIDs, setSelectedVariantIDs] = useState<number[]>(
-    items.map(({ id }) => id),
+    items.map(({id}) => id),
   );
 
   useEffect(() => {
-    setSelectedVariantIDs(items.map(({ id }) => id));
+    setSelectedVariantIDs(items.map(({id}) => id));
   }, [showDialog]);
 
   const addRemoveVariant = (variant: Variant) => {

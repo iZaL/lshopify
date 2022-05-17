@@ -101,7 +101,7 @@ class DraftOrderCreateAction extends OrderCreateAction
         if ($cartCondition) {
             if ($cartCondition->type === 'discount') {
                 $discount = $order->discount()->create([
-                    'name' => 'Admin Discount '.Str::uuid(),
+                    'name' => 'Admin Discount ' . Str::uuid(),
                     'type' => 'automatic',
                     'value' => $cartCondition->value,
                     'value_type' => $cartCondition->suffix === 'percent' ? 'percent' : 'amount',
@@ -124,7 +124,7 @@ class DraftOrderCreateAction extends OrderCreateAction
         if ($itemCondition) {
             if ($itemCondition->type === 'discount') {
                 $discount = $order->discount()->create([
-                    'name' => 'Admin Discount '.Str::uuid(),
+                    'name' => 'Admin Discount ' . Str::uuid(),
                     'type' => 'automatic',
                     'value' => $itemCondition->value,
                     'value_type' => $itemCondition->suffix === 'percent' ? 'percent' : 'amount',
