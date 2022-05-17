@@ -99,7 +99,7 @@ class DraftOrderController extends Controller
                 $discount = new Condition(
                     Arr::only($order->cart_discount->toArray(), ['value', 'suffix', 'type', 'target', 'name', 'reason'])
                 );
-                $suffix = $discount->suffix === 'percentage' ? '%' : '';
+                $suffix = $discount->suffix === 'percent' ? '%' : '';
                 $discount->setActions([
                     [
                         'value' => '-' . $discount->value . $suffix,
@@ -127,7 +127,7 @@ class DraftOrderController extends Controller
                         $discount = new Condition(
                             Arr::only($discount->toArray(), ['value', 'suffix', 'type', 'target', 'name', 'reason'])
                         );
-                        $suffix = $discount->suffix === 'percentage' ? '%' : '';
+                        $suffix = $discount->suffix === 'percent' ? '%' : '';
                         $discount->setActions([
                             [
                                 'value' => '-' . $discount->value . $suffix,

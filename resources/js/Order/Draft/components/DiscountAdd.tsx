@@ -16,7 +16,7 @@ export default function DiscountAdd({discount, children}: Props) {
     useState<Discount>(discount);
   console.log('di', discountAttributes);
   // const [discountAttributes, setDiscountAttributes] = useState<Discount>({
-  // value_type: discount?.value_type || 'fixed_amount',
+  // value_type: discount?.value_type || 'amount',
   // value: discount?.value || '0',
   // reason: discount?.reason || '',
   // });
@@ -42,14 +42,14 @@ export default function DiscountAdd({discount, children}: Props) {
               onChange={e =>
                 setAttributes(
                   'value_type',
-                  e.target.value === 'percentage'
-                    ? 'percentage'
-                    : 'fixed_amount',
+                  e.target.value === 'percent'
+                    ? 'percent'
+                    : 'amount',
                 )
               }
               value={discountAttributes?.value_type}>
               <option value="amount">Amount</option>
-              <option value="percentage">Percentage</option>
+              <option value="percent">Percentage</option>
             </Select>
           </div>
           <div className="flex-1">
@@ -58,20 +58,20 @@ export default function DiscountAdd({discount, children}: Props) {
               name="value"
               onChange={e => setAttributes('value', e.target.value)}
               leftComponent={
-                discountAttributes?.value_type === 'fixed_amount' ? (
+                discountAttributes?.value_type === 'amount' ? (
                   <div className="text-md text-sm text-gray-400">OMR</div>
                 ) : null
               }
               rightComponent={
-                discountAttributes?.value_type === 'percentage' ? (
+                discountAttributes?.value_type === 'percent' ? (
                   <div className="text-md text-sm text-gray-400">%</div>
                 ) : null
               }
               inputStyle={
-                discountAttributes?.value_type === 'fixed_amount' ? 'pl-14' : ''
+                discountAttributes?.value_type === 'amount' ? 'pl-14' : ''
               }
               placeholder={
-                discountAttributes?.value_type === 'fixed_amount' ? '0.00' : '0'
+                discountAttributes?.value_type === 'amount' ? '0.00' : '0'
               }
               value={discountAttributes?.value}
             />

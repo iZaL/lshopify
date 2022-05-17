@@ -234,12 +234,12 @@ export interface ButtonProps {
 
 export interface Discount {
   id: number;
-  readonly name: string;
-  title: string | null;
-  code: string;
+  name: string;
+  // title: string | null;
+  // code: string;
   type: 'code' | 'automatic';
   value: string;
-  value_type: 'fixed_amount' | 'percentage';
+  value_type: 'amount' | 'percent';
   target_type: DiscountTargetType;
   min_requirement_type: 'amount' | 'quantity' | null;
   min_requirement_value: string;

@@ -13,22 +13,9 @@ class CreateDiscountsTable extends Migration
      */
     public function up()
     {
-//        title: string | null;
-//        code: string;
-//        type: 'code' | 'automatic';
-//        value: string;
-//        value_type: 'fixed_amount' | 'percentage';
-//        target_type: 'all_products' | 'products' | 'collections';
-//        min_requirement_type: 'amount' | 'quantity' | null;
-//        min_requirement_value: string;
-//        once_per_customer: boolean;
-//        usage_limit: string | null;
-//        customers: Customer[];
-//        customer_selection: 'all' | 'custom' | 'none';
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable();
-            $table->string('code')->nullable();
+            $table->string('name');
             $table->string('type')->default('code'); // code, automatic
             $table->float('value')->nullable();
             $table->string('value_type')->default('percentage');// fixed_amount, percentage

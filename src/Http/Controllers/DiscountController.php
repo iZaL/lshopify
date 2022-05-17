@@ -47,7 +47,7 @@ class DiscountController extends Controller
             'code' => Str::upper(Str::random(8)),
             'type' => $discountType,
             'value' => 300,
-            'value_type' => 'percentage',
+            'value_type' => 'percent',
             'target_type' => 'all_products',
             'min_requirement_type' => null,
             'min_requirement_value' => 0,
@@ -100,11 +100,12 @@ class DiscountController extends Controller
                 $discountModel->customers()->sync($request->customers);
             }
 
+            DB::commit();
+
             if($request->has('back')) {
                 return redirect()->back()->with('success','Discount created successfully');
             }
 
-            DB::commit();
             return redirect()
                 ->route('lshopify.discounts.edit', $discountModel->id)
                 ->with('success', 'Discount updated successfully');

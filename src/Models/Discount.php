@@ -20,8 +20,7 @@ class Discount extends BaseModel
     ];
 
     protected $fillable = [
-        'title',
-        'code',
+        'name',
         'type',
         'value',
         'value_type',
@@ -66,12 +65,6 @@ class Discount extends BaseModel
     public function order()
     {
         return $this->belongsTo(Order::class, 'order_id');
-    }
-
-    public function getSuffixAttribute()
-    {
-        return $this->value_type;
-//        return $this->value_type === 'percentage' ? '%' : '$';
     }
 
 }

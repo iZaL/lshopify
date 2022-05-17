@@ -53,17 +53,15 @@ export default function DraftOrderDetailsSection({
 
   const [selectedDiscount, setSelectedDiscount] = useState<Discount>({
     id: 0,
-    code: '',
+    name: 'ADMIN CODE',
     customer_selection: 'all',
     customers: [],
     min_requirement_type: null,
     min_requirement_value: '0',
-    name: '',
     once_per_customer: false,
     reason: '',
     value: '1',
-    value_type: 'percentage',
-    title: 'ADMIN CODE',
+    value_type: 'percent',
     collections: [],
     starts_at: addMinutes(new Date(), 5),
     ends_at: addYears(new Date(), 1), //use before 1 year
@@ -114,8 +112,7 @@ export default function DraftOrderDetailsSection({
     } else {
       setSelectedDiscount({
         ...selectedDiscount,
-
-        // products: item.variant?.product?[ item.variant.product] :[],
+        variants:[item.variant]
       });
     }
     setSelectedDiscountItem(item);

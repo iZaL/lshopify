@@ -44,8 +44,6 @@ export default function DiscountCreate(props: Props) {
   const {
     id,
     name,
-    title,
-    code,
     type,
     value,
     value_type,
@@ -87,7 +85,7 @@ export default function DiscountCreate(props: Props) {
   function generateDiscountCode() {
     setData({
       ...data,
-      code: Math.random().toString(36).substring(2, 10).toUpperCase(),
+      name: Math.random().toString(36).substring(2, 10).toUpperCase(),
     });
   }
 
@@ -211,8 +209,8 @@ export default function DiscountCreate(props: Props) {
                     <InputText
                       name="title"
                       placeholder="e.g. Ramadan promotion"
-                      onChange={e => setData('title', e.target.value)}
-                      value={title}
+                      onChange={e => setData('name', e.target.value)}
+                      value={name}
                     />
                     <p className="block py-1 text-sm text-gray-500">
                       Customers will see this in cart and at checkout.
@@ -237,10 +235,10 @@ export default function DiscountCreate(props: Props) {
                   </div>
 
                   <InputText
-                    name="title"
+                    name="name"
                     placeholder="e.g. CODE2022"
-                    onChange={e => setData('code', e.target.value)}
-                    value={code}
+                    onChange={e => setData('name', e.target.value)}
+                    value={name}
                   />
                   <p className="block py-1 text-sm text-gray-500">
                     Customers will enter this discount code at checkout.
@@ -255,16 +253,16 @@ export default function DiscountCreate(props: Props) {
                 <div className="inline-flex items-center">
                   <Checkbox
                     type="radio"
-                    checked={value_type === 'percentage'}
-                    onChange={() => setData('value_type', 'percentage')}
+                    checked={value_type === 'percent'}
+                    onChange={() => setData('value_type', 'percent')}
                   />
                   <div className="ml-3">Percentage</div>
                 </div>
                 <div className="inline-flex items-center">
                   <Checkbox
                     type="radio"
-                    checked={value_type === 'fixed_amount'}
-                    onChange={() => setData('value_type', 'fixed_amount')}
+                    checked={value_type === 'amount'}
+                    onChange={() => setData('value_type', 'amount')}
                   />
                   <div className="ml-3">Fixed amount</div>
                 </div>
@@ -282,7 +280,7 @@ export default function DiscountCreate(props: Props) {
                     value={value}
                     rightComponent={
                       <span className="text-sm text-gray-400">
-                        {value_type === 'percentage' ? '%' : 'OMR'}
+                        {value_type === 'percent' ? '%' : 'OMR'}
                       </span>
                     }
                   />

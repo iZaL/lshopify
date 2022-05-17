@@ -53,7 +53,8 @@ export default function DraftOrderCreate(props: Props) {
       : route('lshopify.discounts.store');
     Inertia.post(url, {
       ...discount,
-      variants: discount.variants.length > 0 ? [discount.variants[0].id] : null,
+      variants: discount.variants.length > 0 ? [discount.variants[0].id] : [],
+      back:true
     });
 
     // Inertia.post(route('lshopify.cart.discount.add'), {

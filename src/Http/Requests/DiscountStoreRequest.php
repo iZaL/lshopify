@@ -9,13 +9,9 @@ class DiscountStoreRequest extends VariantFieldRequest
     public function rules()
     {
         return [
-            //            'customers' => 'nullable|array',
-            //            'products' => 'nullable|array',
-            //            'collections' => 'nullable|array',
-            'title' => 'nullable|required_if:type,automatic|string|max:255',
-            'code' => 'nullable|required_if:type,code|string|max:255',
+            'name' => 'required|string|max:255',
             'type' => ['required', 'string', Rule::in(['code', 'automatic'])],
-            'value_type' => ['required', 'string', Rule::in(['percentage', 'fixed_amount'])],
+            'value_type' => ['required', 'string', Rule::in(['percent', 'amount'])],
             'value' => ['required', 'numeric'],
             'target_type' => ['required', 'string', Rule::in(['all_products', 'products', 'collections'])],
             'min_requirement_type' => ['nullable', 'string', Rule::in(['amount', 'quantity'])],
