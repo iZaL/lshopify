@@ -56,10 +56,11 @@ class DiscountController extends Controller
             'customer_selection' => 'all',
             'customers' => [],
             'collections' => [],
+            'variants' => [],
         ];
 
         $collections = Collection::query();
-        $products = Product::query();
+        $products = Product::with(['variants']);
         $customers = Customer::query();
 
         $collections = $collections->when($request->collection_search, function ($query, $term) {
@@ -99,6 +100,10 @@ class DiscountController extends Controller
                 $discountModel->customers()->sync($request->customers);
             }
 
+            if($request->has('back')) {
+                return redirect()->back()->with('success','Discount created successfully');
+            }
+
             DB::commit();
             return redirect()
                 ->route('lshopify.discounts.edit', $discountModel->id)
@@ -113,10 +118,10 @@ class DiscountController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $discount = $this->discount->with(['customers', 'collections', 'products'])->find($id);
+        $discount = $this->discount->with(['customers', 'collections', 'products.variants'])->find($id);
 
         $collections = Collection::query();
-        $products = Product::query();
+        $products = Product::with(['variants']);
         $customers = Customer::query();
 
         $collections = $collections->when($request->collection_search, function ($query, $term) {

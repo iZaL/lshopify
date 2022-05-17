@@ -14,11 +14,13 @@ import Checkbox from '../components/forms/Checkbox';
 import InputText from '../components/forms/InputText';
 import Label from '../components/forms/Label';
 import FormSubmitBar from '../components/FormSubmitBar';
+import ModalFooter from '../components/ModalFooter'
 import ModalListSelection from '../components/ModalListSelection';
 import PageHeader from '../components/PageHeader';
 import Subheader from '../components/Subheader';
 import Main from '../Main';
-import {Collection, Customer, Discount, Product} from '../types';
+import VariantImage from '../Product/Variant/components/VariantImage'
+import { Collection, Customer, Discount, Product, Variant } from '../types'
 
 interface Props {
   discount: Discount;
@@ -53,7 +55,7 @@ export default function DiscountCreate(props: Props) {
     usage_limit,
     customers,
     collections,
-    products,
+    variants,
     customer_selection,
     starts_at,
     ends_at,
@@ -118,9 +120,9 @@ export default function DiscountCreate(props: Props) {
       : route('lshopify.discounts.store');
     Inertia.post(url, {
       ...data,
-      customers: customers.map(c => c.id),
-      collections: collections.map(c => c.id),
-      products: products.map(c => c.id),
+      customers: customers?.map(c => c.id),
+      collections: collections?.map(c => c.id),
+      variants: variants?.map(c => c.id),
       _method: isEdit ? 'PATCH' : 'POST',
     });
   };
@@ -142,7 +144,6 @@ export default function DiscountCreate(props: Props) {
       },
       {
         preserveState: true,
-        only: type === 'collections' ? ['collections'] : ['products'],
       },
     );
   }
@@ -155,10 +156,14 @@ export default function DiscountCreate(props: Props) {
     });
   }
 
-  function onProductsConfirm(items: Product[]) {
+  function onVariantConfirm(items: number[]) {
+    console.log('selected variants',items);
+    const allVariants = props.products.data.map(p => p.variants).flat() as Variant[];
+    console.log('all variants',allVariants);
+    const vrnts = allVariants.filter(v => items.includes(v.id));
     setData({
       ...data,
-      products: items,
+      variants: vrnts,
       searchTerm: '',
     });
   }
@@ -309,34 +314,35 @@ export default function DiscountCreate(props: Props) {
                 </div>
               </div>
 
-              {target_type === 'collections' && (
-                <ModalListSelection
-                  searchTerm={searchTerm}
-                  items={props.collections.data || []}
-                  selectedItems={collections || []}
-                  onSearch={value => onSearch(value)}
-                  onConfirm={items => onCollectionConfirm(items)}
-                  placeholder="Search collections"
-                  modalProps={{
-                    title: 'Add collections',
-                    onClose: () => {
-                      setData({
-                        ...data,
-                        searchTerm: '',
-                        collections: [],
-                      });
-                    },
-                  }}
-                />
-              )}
+              {/*{target_type === 'collections' && (*/}
+              {/*  <ModalListSelection*/}
+              {/*    searchTerm={searchTerm}*/}
+              {/*    items={props.collections.data || []}*/}
+              {/*    selectedItems={collections || []}*/}
+              {/*    onSearch={value => onSearch(value)}*/}
+              {/*    onConfirm={items => onCollectionConfirm(items)}*/}
+              {/*    placeholder="Search collections"*/}
+              {/*    modalProps={{*/}
+              {/*      title: 'Add collections',*/}
+              {/*      onClose: () => {*/}
+              {/*        setData({*/}
+              {/*          ...data,*/}
+              {/*          searchTerm: '',*/}
+              {/*          collections: [],*/}
+              {/*        });*/}
+              {/*      },*/}
+              {/*    }}*/}
+              {/*  />*/}
+              {/*)}*/}
 
               {target_type === 'products' && (
                 <ModalListSelection
                   searchTerm={searchTerm}
                   items={props.products.data || []}
-                  selectedItems={products || []}
+                  selectedItems={variants.map(({id}) => id) || []}
                   onSearch={value => onSearch(value, 'products')}
-                  onConfirm={items => onProductsConfirm(items)}
+                  onConfirm={(items) => onVariantConfirm(items)}
+                  // onItemsConfirm={items => onVariantConfirm(items)}
                   placeholder="Search products"
                   modalProps={{
                     title: 'Add products',
@@ -344,11 +350,70 @@ export default function DiscountCreate(props: Props) {
                       setData({
                         ...data,
                         searchTerm: '',
-                        products: [],
+                        variants: [],
                       });
                     },
+                    // hideFooter: true,
                   }}
-                />
+                >
+                  {({item,selectedItemIDs,addRemoveItem}: {item:Product,selectedItemIDs:number[],addRemoveItem:(item:any) => void}) => {
+                    return (
+                      <div key={item.id}>
+                        <li
+                          className="flex flex-row items-center space-x-4 border-b border-gray-200 py-2 px-4
+              text-sm hover:bg-gray-100
+              "
+                          onClick={() =>
+                            !item.variants?.length &&
+                            addRemoveItem(item.default_variant)
+                          }>
+                          {!item.variants?.length && (
+                            <Checkbox
+                              checked={false}
+                              name="product"
+                              onChange={() => {}}
+                            />
+                          )}
+
+                          <VariantImage
+                            image={item.image}
+                            onClick={() => {}}
+                            imageStyle="w-12 h-12"
+                          />
+                          <div className="flex-auto">{item.title}</div>
+                          {!item.variants?.length && (
+                            <>
+                              <div className="w-20">0 available</div>
+                              <div className="w-20">OMR 10</div>
+                            </>
+                          )}
+                        </li>
+                        {item.variants?.map((variant, idx) => (
+                          <li
+                            className="flex flex-row items-center space-x-4 border-b border-gray-200 py-2 px-4 pl-11
+              text-sm hover:bg-gray-100
+              "
+                            key={idx}
+                            onClick={() => addRemoveItem(variant)}>
+                            <Checkbox
+                              checked={selectedItemIDs.includes(variant.id)}
+                              name="variant"
+                              onChange={() => {}}
+                            />
+                            <VariantImage
+                              image={variant.image}
+                              onClick={() => {}}
+                              imageStyle="w-12 h-12"
+                            />
+                            <div className="flex-auto">{variant.title}</div>
+                            <div className="w-20">{variant.quantity} available</div>
+                            <div className="w-20">{variant.price}</div>
+                          </li>
+                        ))}
+                      </div>
+                    );
+                  }}
+                </ModalListSelection>
               )}
             </Card>
 
@@ -427,26 +492,26 @@ export default function DiscountCreate(props: Props) {
                   </div>
                 </div>
 
-                {customer_selection === 'custom' && (
-                  <ModalListSelection
-                    searchTerm={searchTerm}
-                    items={props.customers.data || []}
-                    selectedItems={customers || []}
-                    onSearch={value => onSearch(value, 'customers')}
-                    onConfirm={items => onCustomersConfirm(items)}
-                    placeholder="Search customers"
-                    modalProps={{
-                      title: 'Add customers',
-                      onClose: () => {
-                        setData({
-                          ...data,
-                          searchTerm: '',
-                          customers: [],
-                        });
-                      },
-                    }}
-                  />
-                )}
+                {/*{customer_selection === 'custom' && (*/}
+                {/*  <ModalListSelection*/}
+                {/*    searchTerm={searchTerm}*/}
+                {/*    items={props.customers.data || []}*/}
+                {/*    selectedItems={customers || []}*/}
+                {/*    onSearch={value => onSearch(value, 'customers')}*/}
+                {/*    onConfirm={items => onCustomersConfirm(items)}*/}
+                {/*    placeholder="Search customers"*/}
+                {/*    modalProps={{*/}
+                {/*      title: 'Add customers',*/}
+                {/*      onClose: () => {*/}
+                {/*        setData({*/}
+                {/*          ...data,*/}
+                {/*          searchTerm: '',*/}
+                {/*          customers: [],*/}
+                {/*        });*/}
+                {/*      },*/}
+                {/*    }}*/}
+                {/*  />*/}
+                {/*)}*/}
               </div>
             </Card>
 

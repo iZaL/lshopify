@@ -5,13 +5,13 @@ import Button from '../../../components/Button';
 import InputText from '../../../components/forms/InputText';
 import ProductTitle from '../../../Product/components/ProductTitle';
 import VariantImage from '../../../Product/Variant/components/VariantImage';
-import {CartDiscount, CartItem} from '../../../types';
+import {Discount, CartItem} from '../../../types';
 
 interface Props {
   items: CartItem[];
   onVariantRemove: (rowId: string) => void;
   onVariantEdit: (rowId: string, item: CartItem) => void;
-  onShowDiscountDialog: (discount: CartDiscount, item?: CartItem) => void;
+  onShowDiscountDialog: (item: CartItem,discount?: Discount) => void;
 }
 
 export default function CartItems({
@@ -71,7 +71,7 @@ export default function CartItems({
               <div className="space-x-2">
                 <span
                   className="cursor-pointer text-blue-500 hover:underline"
-                  onClick={() => onShowDiscountDialog(item.discount, item)}>
+                  onClick={() => onShowDiscountDialog(item,item.discount??null)}>
                   OMR {item.unit_price}
                 </span>
                 <span className="strike text-gray-500 line-through">

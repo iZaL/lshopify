@@ -1,3 +1,4 @@
+import { format, formatDistance, formatRelative, subDays, addMinutes, addYears } from 'date-fns'
 import React, {useState} from 'react';
 
 import Border from '../../../components/Border';
@@ -9,7 +10,7 @@ import Modal from '../../../components/Modal';
 import ModalFooter from '../../../components/ModalFooter';
 import Subheader from '../../../components/Subheader';
 import ProductSearch from '../../../Product/components/ProductSearch';
-import {Cart, CartDiscount, CartItem, Product} from '../../../types';
+import { Cart, Discount, CartItem, Product } from '../../../types';
 
 import CartItems from './CartItems';
 import DiscountAdd from './DiscountAdd';
@@ -22,8 +23,8 @@ interface Props {
   onVariantsAdd: (variants: number[]) => void;
   onVariantRemove: (rowId: string) => void;
   onVariantEdit: (rowId: string, item: CartItem) => void;
-  onApplyDiscount: (discount: CartDiscount, item?: CartItem) => void;
-  onRemoveDiscount: (discount: CartDiscount, item?: CartItem) => void;
+  onApplyDiscount: (discount: Discount, item?: CartItem) => void;
+  onRemoveDiscount: (discount: Discount, item?: CartItem) => void;
   onCreateOrder: () => void;
 }
 
@@ -41,45 +42,76 @@ export default function DraftOrderDetailsSection({
 }: Props) {
   const [showDialog, setShowDialog] = useState<
     'discount' | 'payment_paid' | 'payment_pending' | 'send_invoice' | null
-  >(null);
+    >(null);
 
-  const [selectedDiscount, setSelectedDiscount] = useState<CartDiscount | null>(
-    null,
-  );
+  const [selectedDiscount, setSelectedDiscount] = useState<Discount>({
+    id: 0,
+    code: '',
+    customer_selection: 'all',
+    customers: [],
+    min_requirement_type: null,
+    min_requirement_value: '0',
+    name: '',
+    once_per_customer: false,
+    reason: '',
+    value: '1',
+    value_type: 'percentage',
+    title:'ADMIN CODE',
+    collections: [],
+    starts_at: addMinutes(new Date(), 5),
+    ends_at: addYears(new Date(), 1), //use before 1 year
+    target_type: 'products',
+    variants: [],
+    type: 'automatic',
+    usage_limit: '1'
+  });
+
+  console.log('s',selectedDiscount);
+
   const [selectedDiscountItem, setSelectedDiscountItem] =
     useState<CartItem | null>(null);
 
   const items: CartItem[] = Object.keys(cart.items).map(k => cart.items[k]);
 
-  const onRemoveDiscountConfirm = (discount: CartDiscount) => {
+  const onRemoveDiscountConfirm = (discount: Discount) => {
+    // const onRemoveDiscountConfirm = (discount: Discount) => {
     onRemoveDiscount(discount);
   };
 
-  const onDiscountConfirm = (discount: CartDiscount) => {
+  const onDiscountConfirm = (discount: Discount) => {
+    // const onDiscountConfirm = (discount: Discount) => {
     if (selectedDiscountItem) {
       onApplyDiscount(
         {
           ...discount,
           name: `${selectedDiscountItem.id}`,
-          type: 'discount',
-          target: 'subtotal',
+          // type: 'discount',
+          // target: 'subtotal',
         },
-        selectedDiscountItem,
+        // selectedDiscountItem,
       );
     } else {
       onApplyDiscount({
         ...discount,
         name: 'cart',
-        type: 'discount',
-        target: 'subtotal',
+        // type: 'discount',
+        // target: 'subtotal',
       });
     }
     setShowDialog(null);
   };
 
-  const onShowDiscountDialog = (discount: CartDiscount, item?: CartItem) => {
-    setSelectedDiscount(discount);
-    setSelectedDiscountItem(item || null);
+  const onShowDiscountDialog = (item: CartItem,discount?: Discount) => {
+    if(discount) {
+      setSelectedDiscount(discount);
+    } else {
+      setSelectedDiscount({
+        ...selectedDiscount,
+
+        // products: item.variant?.product?[ item.variant.product] :[],
+      });
+    }
+    setSelectedDiscountItem(item);
     setShowDialog('discount');
   };
 
@@ -123,7 +155,9 @@ export default function DraftOrderDetailsSection({
                     <Button
                       theme="clear"
                       buttonStyle="text-blue-500 hover:underline"
-                      onClick={() => onShowDiscountDialog(cart.discount)}>
+                      onClick={() => {}}
+                      // onClick={() => onShowDiscountDialog(cart.discount)}
+                    >
                       Edit discount
                     </Button>
                   </div>
@@ -136,8 +170,10 @@ export default function DraftOrderDetailsSection({
                 <div className="flex flex-row justify-between">
                   <Button
                     theme="clear"
-                    onClick={() => onShowDiscountDialog(cart.discount)}
-                    buttonStyle="text-blue-500 hover:underline">
+                    // onClick={() => onShowDiscountDialog(cart.discount)}
+                    onClick={() => {}}
+                    buttonStyle="text-blue-500 hover:underline"
+                  >
                     Add discount
                   </Button>
                   <div className="">——</div>
@@ -200,30 +236,32 @@ export default function DraftOrderDetailsSection({
         onConfirm={() => {}}
         width="max-w-xl"
         hideFooter>
-        <DiscountAdd discount={selectedDiscount}>
-          {discountAttributes => (
-            <ModalFooter
-              onHideModal={() => setShowDialog(null)}
-              onProceed={() => {
-                setShowDialog(null);
-                onDiscountConfirm(discountAttributes);
-              }}
-              submitButtonTitle={selectedDiscount?.name ? 'Update' : 'Done'}
-              hideCancelButton>
-              {selectedDiscount?.name && (
-                <Button
-                  theme="error"
-                  onClick={() => {
-                    setShowDialog(null);
-                    onRemoveDiscountConfirm(selectedDiscount);
-                  }}
-                  buttonStyle="mr-5">
-                  Remove discount
-                </Button>
-              )}
-            </ModalFooter>
-          )}
-        </DiscountAdd>
+        {
+          <DiscountAdd discount={selectedDiscount}>
+            {discountAttributes => (
+              <ModalFooter
+                onHideModal={() => setShowDialog(null)}
+                onProceed={() => {
+                  setShowDialog(null);
+                  onDiscountConfirm(discountAttributes);
+                }}
+                submitButtonTitle={selectedDiscount?.name ? 'Update' : 'Done'}
+                hideCancelButton>
+                {selectedDiscount?.name && (
+                  <Button
+                    theme="error"
+                    onClick={() => {
+                      setShowDialog(null);
+                      onRemoveDiscountConfirm(selectedDiscount);
+                    }}
+                    buttonStyle="mr-5">
+                    Remove discount
+                  </Button>
+                )}
+              </ModalFooter>
+            )}
+          </DiscountAdd>
+        }
       </Modal>
 
       <Modal

@@ -62,4 +62,11 @@ class Discount extends BaseModel
     {
         return $this->belongsTo(Order::class, 'order_id');
     }
+
+    public function getSuffixAttribute()
+    {
+        return $this->value_type;
+//        return $this->value_type === 'percentage' ? '%' : '$';
+    }
+
 }

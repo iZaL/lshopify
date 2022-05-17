@@ -1,5 +1,7 @@
 import {ReactNode} from 'react';
 
+// import { CartDiscount } from '../../../vendor/izal/lshopify/resources/js/types'
+
 import {CustomerForm, OrderForm} from './form_types';
 
 export interface Tag {
@@ -89,6 +91,7 @@ export interface Variant {
 }
 
 export type ProductStatus = 'active' | 'draft' | 'archived';
+export type DiscountTargetType = 'all_products' | 'products' | 'collections';
 
 export interface Product {
   id: number;
@@ -168,27 +171,29 @@ export interface CartItem {
   total: string;
   subtotal: string;
   variant: Variant;
-  discount: CartDiscount;
+  discount: Discount;
+  // discount: CartDiscount;
 }
 
 export interface Cart {
   total: string;
   subtotal: string;
   discount_value: string;
-  discount: CartDiscount;
+  // discount: CartDiscount;
+  discount: Discount;
   items: {
     [x: string]: CartItem;
   };
 }
 
-export interface CartDiscount {
-  name?: string;
-  type?: string;
-  target?: string;
-  suffix?: string;
-  value?: string;
-  reason?: string;
-}
+// export interface CartDiscount {
+//   name?: string;
+//   type?: string;
+//   target?: string;
+//   suffix?: string;
+//   value?: string;
+//   reason?: string;
+// }
 
 export interface Customer extends CustomerForm {
   id: number;
@@ -235,15 +240,17 @@ export interface Discount {
   type: 'code' | 'automatic';
   value: string;
   value_type: 'fixed_amount' | 'percentage';
-  target_type: 'all_products' | 'products' | 'collections';
+  target_type: DiscountTargetType;
   min_requirement_type: 'amount' | 'quantity' | null;
   min_requirement_value: string;
   once_per_customer: boolean;
   usage_limit: string | null;
   customers: Customer[];
   collections: Collection[];
-  products: Product[];
+
+  variants: Variant[];
   customer_selection: 'all' | 'custom' | 'none';
   starts_at: Date;
   ends_at: Date;
+  reason:string;
 }

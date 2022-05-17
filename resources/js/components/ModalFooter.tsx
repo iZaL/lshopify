@@ -22,18 +22,21 @@ export default function ModalFooter({
   theme = 'success',
 }: Props) {
   return (
-    <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-      <Button onClick={() => onProceed()} theme={theme}>
-        {submitButtonTitle}
-      </Button>
-
-      {!hideCancelButton && (
-        <Button theme="default" onClick={onHideModal} buttonStyle="mr-5">
-          Cancel
+    <div className='sticky bottom-0 bg-transparent'>
+      <div className="flex bg-gray-50 px-4 py-3 space-x-4 justify-end">
+        <Button onClick={() => onProceed()} theme={theme}>
+          {submitButtonTitle}
         </Button>
-      )}
 
-      {children && children}
+        {!hideCancelButton && (
+          <Button theme="default" onClick={onHideModal} buttonStyle="mr-5">
+            Cancel
+          </Button>
+        )}
+
+        {children && children}
+      </div>
     </div>
+
   );
 }
