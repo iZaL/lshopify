@@ -3,28 +3,21 @@ import React, {ReactElement, useState} from 'react';
 import InputText from '../../../components/forms/InputText';
 import Label from '../../../components/forms/Label';
 import Select from '../../../components/forms/Select';
-import {Discount} from '../../../types';
-// import {CartDiscount} from '../../../types';
+import {CartDiscount} from '../../../types';
 
-type Props = {
-  discount: Discount;
-  children: (discount: Discount) => ReactElement;
+type Props = CartDiscount & {
+  discount: CartDiscount | null;
+  children: ({suffix, value, reason}: CartDiscount) => ReactElement;
 };
 
 export default function DiscountAdd({discount, children}: Props) {
-  const [discountAttributes, setDiscountAttributes] =
-    useState<Discount>(discount);
-  console.log('di', discountAttributes);
-  // const [discountAttributes, setDiscountAttributes] = useState<Discount>({
-  // value_type: discount?.value_type || 'amount',
-  // value: discount?.value || '0',
-  // reason: discount?.reason || '',
-  // });
+  const [discountAttributes, setDiscountAttributes] = useState<CartDiscount>({
+    suffix: discount?.suffix || 'amount',
+    value: discount?.value || '0',
+    reason: discount?.reason || '',
+  });
 
-  const setAttributes = <T extends keyof Discount>(
-    field: T,
-    value: Discount[T],
-  ) => {
+  const setAttributes = (field: string, value: string) => {
     setDiscountAttributes({
       ...discountAttributes,
       [field]: value,
@@ -38,18 +31,11 @@ export default function DiscountAdd({discount, children}: Props) {
           <div className="flex-1">
             <Label title="Discount type" />
             <Select
-              name="value_type"
-              onChange={e =>
-                setAttributes(
-                  'value_type',
-                  e.target.value === 'percent'
-                    ? 'percent'
-                    : 'amount',
-                )
-              }
-              value={discountAttributes?.value_type}>
+              name="suffix"
+              onChange={e => setAttributes('suffix', e.target.value)}
+              value={discountAttributes.suffix}>
               <option value="amount">Amount</option>
-              <option value="percent">Percentage</option>
+              <option value="percentage">Percentage</option>
             </Select>
           </div>
           <div className="flex-1">
@@ -58,22 +44,20 @@ export default function DiscountAdd({discount, children}: Props) {
               name="value"
               onChange={e => setAttributes('value', e.target.value)}
               leftComponent={
-                discountAttributes?.value_type === 'amount' ? (
+                discountAttributes.suffix === 'amount' ? (
                   <div className="text-md text-sm text-gray-400">OMR</div>
                 ) : null
               }
               rightComponent={
-                discountAttributes?.value_type === 'percent' ? (
+                discountAttributes.suffix === 'percentage' ? (
                   <div className="text-md text-sm text-gray-400">%</div>
                 ) : null
               }
-              inputStyle={
-                discountAttributes?.value_type === 'amount' ? 'pl-14' : ''
-              }
+              inputStyle={discountAttributes.suffix === 'amount' ? 'pl-14' : ''}
               placeholder={
-                discountAttributes?.value_type === 'amount' ? '0.00' : '0'
+                discountAttributes.suffix === 'amount' ? '0.00' : '0'
               }
-              value={discountAttributes?.value}
+              value={discountAttributes.value}
             />
           </div>
         </div>
@@ -84,7 +68,7 @@ export default function DiscountAdd({discount, children}: Props) {
             name="reason"
             placeholder="Reason"
             onChange={e => setAttributes('reason', e.target.value)}
-            value={discountAttributes?.reason}
+            value={discountAttributes.reason}
           />
         </div>
       </div>

@@ -10,7 +10,7 @@ import {CustomerForm} from '../../form_types';
 import Main from '../../Main';
 import {
   Billing,
-  Cart,
+  Cart, CartDiscount,
   // CartDiscount,
   CartItem,
   Customer,
@@ -19,7 +19,7 @@ import {
   Order,
   Product,
   Shipping,
-} from '../../types';
+} from '../../types'
 
 import CustomerEdit from './components/CustomerEdit';
 import CustomerSelect from './components/CustomerSelect';
@@ -72,7 +72,7 @@ export default function DraftOrderEdit(props: Props) {
     });
   };
 
-  const onApplyDiscount = (discount: Discount, item?: CartItem) => {
+  const onApplyDiscount = (discount: CartDiscount, item?: CartItem) => {
     // const onApplyDiscount = (discount: CartDiscount, item?: CartItem) => {
     Inertia.post(route('lshopify.cart.discount.add'), {
       discount,
@@ -80,8 +80,7 @@ export default function DraftOrderEdit(props: Props) {
     });
   };
 
-  const onRemoveDiscount = (discount: Discount, item?: CartItem) => {
-    // const onRemoveDiscount = (discount: CartDiscount, item?: CartItem) => {
+  const onRemoveDiscount = (discount: CartDiscount, item?: CartItem) => {
     Inertia.post(route('lshopify.cart.discount.remove'), {
       discount,
       item,

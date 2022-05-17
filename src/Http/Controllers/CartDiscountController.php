@@ -4,6 +4,7 @@ namespace IZal\Lshopify\Http\Controllers;
 
 use Illuminate\Http\Request;
 use IZal\Lshopify\Cart\Condition;
+use IZal\Lshopify\Http\Requests\CartDiscountStoreRequest;
 use IZal\Lshopify\Http\Requests\DiscountStoreRequest;
 
 class CartDiscountController extends Controller
@@ -13,13 +14,13 @@ class CartDiscountController extends Controller
      * @param DiscountStoreRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function add(DiscountStoreRequest $request): \Illuminate\Http\RedirectResponse
+    public function add(CartDiscountStoreRequest $request): \Illuminate\Http\RedirectResponse
     {
         $cart = app('cart');
 
         $discount = new Condition($request->discount);
 
-        $suffix = $request->discount['suffix'] === 'percent' ? '%' : '';
+        $suffix = $request->discount['suffix'] === 'percentage' ? '%' : '';
 
         $discount->setActions([
             [

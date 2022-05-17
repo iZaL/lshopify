@@ -171,29 +171,27 @@ export interface CartItem {
   total: string;
   subtotal: string;
   variant: Variant;
-  discount: Discount;
-  // discount: CartDiscount;
+  discount: CartDiscount;
 }
 
 export interface Cart {
   total: string;
   subtotal: string;
   discount_value: string;
-  // discount: CartDiscount;
-  discount: Discount;
+  discount: CartDiscount;
   items: {
     [x: string]: CartItem;
   };
 }
 
-// export interface CartDiscount {
-//   name?: string;
-//   type?: string;
-//   target?: string;
-//   suffix?: string;
-//   value?: string;
-//   reason?: string;
-// }
+export interface CartDiscount {
+  name?: string;
+  type?: string;
+  target?: string;
+  suffix?: string;
+  value?: string;
+  reason?: string;
+}
 
 export interface Customer extends CustomerForm {
   id: number;

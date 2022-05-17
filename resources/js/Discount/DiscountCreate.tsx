@@ -345,7 +345,7 @@ export default function DiscountCreate(props: Props) {
                     setSearchTerm={value => onSearch(value, 'products')}
                     products={props.products.data || []}
                     onVariantsAdd={onVariantsAdd}
-                    items={variants.map(({id}) => id) || []}
+                    items={variants.map(({id}) => ({id})) || []}
                   />
                   <>
                     {variants.map(variant => (

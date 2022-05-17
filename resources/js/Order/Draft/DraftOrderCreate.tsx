@@ -6,7 +6,7 @@ import route from 'ziggy-js';
 import FormSubmitBar from '../../components/FormSubmitBar';
 import PageHeader from '../../components/PageHeader';
 import Main from '../../Main';
-import {Cart, Discount, CartItem, Product} from '../../types';
+import {Cart, CartDiscount, CartItem, Product} from '../../types';
 
 import DraftOrderDetailsSection from './components/DraftOrderDetailsSection';
 
@@ -47,23 +47,14 @@ export default function DraftOrderCreate(props: Props) {
     });
   };
 
-  const onApplyDiscount = (discount: Discount, item?: CartItem) => {
-    const url = item
-      ? route('lshopify.discounts.update', {id: item.id})
-      : route('lshopify.discounts.store');
-    Inertia.post(url, {
-      ...discount,
-      variants: discount.variants.length > 0 ? [discount.variants[0].id] : [],
-      back:true
+  const onApplyDiscount = (discount: CartDiscount, item?: CartItem) => {
+    Inertia.post(route('lshopify.cart.discount.add'), {
+      discount,
+      item,
     });
-
-    // Inertia.post(route('lshopify.cart.discount.add'), {
-    //   discount,
-    //   item,
-    // });
   };
 
-  const onRemoveDiscount = (discount: Discount, item?: CartItem) => {
+  const onRemoveDiscount = (discount: CartDiscount, item?: CartItem) => {
     Inertia.post(route('lshopify.cart.discount.remove'), {
       discount,
       item,

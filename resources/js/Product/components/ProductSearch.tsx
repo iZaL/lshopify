@@ -9,29 +9,33 @@ import Modal from '../../components/Modal';
 import {Product, Variant} from '../../types';
 import VariantImage from '../Variant/components/VariantImage';
 
-interface Props {
+type Item = {
+  id: number;
+}
+
+interface Props <T>{
   searchTerm: string;
   setSearchTerm: (text: string) => void;
   products: Product[];
   onVariantsAdd: (variants: number[]) => void;
-  items: number[];
+  items: T[];
 }
 
-export default function ProductSearch({
+export default function ProductSearch<T extends Item>({
   setSearchTerm,
   searchTerm,
   products,
   onVariantsAdd,
   items,
-}: Props) {
+}: Props<T>) {
   const [showDialog, setShowDialog] = useState(false);
 
   const [selectedVariantIDs, setSelectedVariantIDs] = useState<number[]>(
-    items.map(id => id),
+    items.map(({ id }) => id),
   );
 
   useEffect(() => {
-    setSelectedVariantIDs(items.map(id => id));
+    setSelectedVariantIDs(items.map(({ id }) => id));
   }, [showDialog]);
 
   const addRemoveVariant = (variant: Variant) => {
