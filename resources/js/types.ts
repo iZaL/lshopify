@@ -247,7 +247,6 @@ export interface Discount {
   usage_limit: string | null;
   customers: Customer[];
   collections: Collection[];
-
   variants: Variant[];
   customer_selection: 'all' | 'custom' | 'none';
   starts_at: Date;

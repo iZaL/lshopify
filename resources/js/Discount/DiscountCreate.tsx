@@ -1,3 +1,4 @@
+import {XIcon} from '@heroicons/react/solid';
 import {Inertia} from '@inertiajs/inertia';
 import {useForm} from '@inertiajs/inertia-react';
 import {format} from 'date-fns';
@@ -14,17 +15,12 @@ import Checkbox from '../components/forms/Checkbox';
 import InputText from '../components/forms/InputText';
 import Label from '../components/forms/Label';
 import FormSubmitBar from '../components/FormSubmitBar';
-import ModalFooter from '../components/ModalFooter';
-import ModalListSelection from '../components/ModalListSelection';
 import PageHeader from '../components/PageHeader';
 import Subheader from '../components/Subheader';
 import Main from '../Main';
 import ProductSearch from '../Product/components/ProductSearch';
-import ProductTitle from '../Product/components/ProductTitle';
-import VariantImage from '../Product/Variant/components/VariantImage';
+import VariantInfo from '../Product/Variant/components/VariantInfo';
 import {Collection, Customer, Discount, Product, Variant} from '../types';
-
-import {XIcon} from '@heroicons/react/solid';
 
 interface Props {
   discount: Discount;
@@ -44,8 +40,6 @@ export default function DiscountCreate(props: Props) {
     ...props.discount,
     searchTerm: '',
   });
-
-  const [variantIDs, setVariantIDs] = useState<number[]>([]);
 
   const {
     id,
@@ -127,9 +121,9 @@ export default function DiscountCreate(props: Props) {
       : route('lshopify.discounts.store');
     Inertia.post(url, {
       ...data,
-      customers: customers?.map(c => c.id),
-      collections: collections?.map(c => c.id),
-      variants: variants?.map(c => c.id),
+      customers: customers?.map(c => c.id) || [],
+      collections: collections?.map(c => c.id) || [],
+      variants: variants?.map(c => c.id) || [],
       _method: isEdit ? 'PATCH' : 'POST',
     });
   };
@@ -360,23 +354,7 @@ export default function DiscountCreate(props: Props) {
                       <div
                         className="flex items-center space-x-4 text-sm"
                         key={variant.id}>
-                        <div className="flex-1 space-x-2">
-                          <div className="flex flex-row items-center">
-                            <VariantImage
-                              image={variant.image || variant.product?.image}
-                              onClick={() => {}}
-                              imageStyle="w-12 h-12"
-                            />
-                            <div className="text-sm">
-                              {variant.product && (
-                                <div className="underline">
-                                  <ProductTitle product={variant.product} />
-                                </div>
-                              )}
-                              <div className="">{variant.title}</div>
-                            </div>
-                          </div>
-                        </div>
+                        <VariantInfo variant={variant} />
                         <Button
                           theme="clear"
                           onClick={() =>

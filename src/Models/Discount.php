@@ -53,6 +53,11 @@ class Discount extends BaseModel
         return $this->morphedByMany(Product::class, 'discountable');
     }
 
+    public function variants(): MorphToMany
+    {
+        return $this->morphedByMany(Variant::class, 'discountable');
+    }
+
     public function collections(): MorphToMany
     {
         return $this->morphedByMany(Collection::class, 'discountable');

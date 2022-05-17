@@ -28,7 +28,7 @@ class DiscountResource extends JsonResource
             'ends_at' => $this->ends_at,
             'customers' => CustomerResource::collection($this->whenLoaded('customers')),
             'collections' => CollectionResource::collection($this->whenLoaded('collections')),
-            'products' => ProductResource::collection($this->whenLoaded('products')),
+            'variants' => VariantResource::collection($this->whenLoaded('variants')),
         ];
     }
 }

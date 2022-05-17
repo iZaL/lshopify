@@ -91,7 +91,7 @@ class DiscountController extends Controller
             $this->updateStartEndDate($discountModel, $request);
 
             if ($discountModel->target_type == 'products') {
-                $discountModel->products()->sync($request->products);
+                $discountModel->variants()->sync($request->variants);
             } elseif ($discountModel->target_type == 'collections') {
                 $discountModel->collections()->sync($request->collections);
             }
@@ -118,10 +118,10 @@ class DiscountController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $discount = $this->discount->with(['customers', 'collections', 'products.variants'])->find($id);
+        $discount = $this->discount->with(['customers', 'collections', 'variants.product'])->find($id);
 
         $collections = Collection::query();
-        $products = Product::with(['variants']);
+        $products = Product::with(['variants.product','default_variant.product']);
         $customers = Customer::query();
 
         $collections = $collections->when($request->collection_search, function ($query, $term) {
