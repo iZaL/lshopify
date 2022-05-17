@@ -1,12 +1,12 @@
 import {SearchIcon, XIcon} from '@heroicons/react/solid';
-import React, { ReactElement, useEffect, useState } from 'react'
+import React, {ReactElement, useEffect, useState} from 'react';
 
 import Border from './Border';
 import Button from './Button';
 import Checkbox from './forms/Checkbox';
 import InputText from './forms/InputText';
 import Modal from './Modal';
-import ModalFooter from './ModalFooter'
+import ModalFooter from './ModalFooter';
 
 type Item = {
   id: number;
@@ -27,8 +27,12 @@ interface Props<T> {
     onClose: () => void;
     hideFooter?: boolean;
   };
-  children?: (props: {item: T,selectedItemIDs:number[],addRemoveItem:(item:T)=>void}) => JSX.Element;
-  onItemsConfirm?:(items:number[]) => void;
+  children?: (props: {
+    item: T;
+    selectedItemIDs: number[];
+    addRemoveItem: (item: T) => void;
+  }) => JSX.Element;
+  onItemsConfirm?: (items: number[]) => void;
   // footer?: (props: {selectedItems: T[], onConfirm: () => void}) => JSX.Element;
 }
 
@@ -41,7 +45,7 @@ export default function ModalListSelection<T extends Item>({
   placeholder = 'Search',
   modalProps,
   children,
-  onItemsConfirm
+  onItemsConfirm,
 }: Props<T>) {
   const [showDialog, setShowDialog] = useState(false);
   const [selectedItemIDs, setSelectedItemIDs] = useState<number[]>([]);
@@ -59,7 +63,7 @@ export default function ModalListSelection<T extends Item>({
   };
 
   const removeItemFromCollection = (item: T) => {
-    onConfirm(selectedItems.filter((id) => id !== item.id));
+    onConfirm(selectedItems.filter(id => id !== item.id));
   };
 
   const adAddRemoveConfirm = () => {
@@ -103,22 +107,23 @@ export default function ModalListSelection<T extends Item>({
 
       <ul>
         {selectedItems.map((item, i) => {
-            const model = items.find(model => model.id === item) as T;
-            return (
-              <li
-                key={i}
-                className="flex cursor-default flex-row items-center space-x-2 space-y-2 px-4">
-                <div className="flex-1">{model.name ? model.name : model.title}</div>
-                <Button
-                  buttonStyle="p-2"
-                  theme="clear"
-                  onClick={() => removeItemFromCollection(model)}>
-                  <XIcon className="h-5 w-5 text-gray-500" />
-                </Button>
-              </li>
-            )
-          }
-        )}
+          const model = items.find(model => model.id === item) as T;
+          return (
+            <li
+              key={i}
+              className="flex cursor-default flex-row items-center space-x-2 space-y-2 px-4">
+              <div className="flex-1">
+                {model.name ? model.name : model.title}
+              </div>
+              <Button
+                buttonStyle="p-2"
+                theme="clear"
+                onClick={() => removeItemFromCollection(model)}>
+                <XIcon className="h-5 w-5 text-gray-500" />
+              </Button>
+            </li>
+          );
+        })}
       </ul>
 
       <Modal
@@ -129,9 +134,8 @@ export default function ModalListSelection<T extends Item>({
           setShowDialog(false);
           adAddRemoveConfirm();
         }}
-        {...modalProps}
-      >
-        <div className='relative'>
+        {...modalProps}>
+        <div className="relative">
           <div className="p-5">
             <InputText
               name="product_search"
@@ -144,19 +148,21 @@ export default function ModalListSelection<T extends Item>({
           <Border />
 
           {children
-            ? items.map((item, i) => children({item,selectedItemIDs,addRemoveItem}))
+            ? items.map((item, i) =>
+                children({item, selectedItemIDs, addRemoveItem}),
+              )
             : items.map(item => (
-              <li
-                key={item.id}
-                className="flex flex-row items-center space-x-4 py-2 px-4 hover:bg-gray-100"
-                onClick={() => addRemoveItem(item)}>
-                <Checkbox
-                  checked={selectedItemIDs.includes(item.id)}
-                  onChange={() => {}}
-                />
-                <div className="">{item.name ? item.name : item.title}</div>
-              </li>
-            ))}
+                <li
+                  key={item.id}
+                  className="flex flex-row items-center space-x-4 py-2 px-4 hover:bg-gray-100"
+                  onClick={() => addRemoveItem(item)}>
+                  <Checkbox
+                    checked={selectedItemIDs.includes(item.id)}
+                    onChange={() => {}}
+                  />
+                  <div className="">{item.name ? item.name : item.title}</div>
+                </li>
+              ))}
           {/*{*/}
           {/*  modalProps?.hideFooter && (*/}
           {/*    <ModalFooter*/}

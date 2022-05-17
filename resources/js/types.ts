@@ -252,5 +252,5 @@ export interface Discount {
   customer_selection: 'all' | 'custom' | 'none';
   starts_at: Date;
   ends_at: Date;
-  reason:string;
+  reason: string;
 }

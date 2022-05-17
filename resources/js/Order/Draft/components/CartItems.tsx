@@ -11,7 +11,7 @@ interface Props {
   items: CartItem[];
   onVariantRemove: (rowId: string) => void;
   onVariantEdit: (rowId: string, item: CartItem) => void;
-  onShowDiscountDialog: (item: CartItem,discount?: Discount) => void;
+  onShowDiscountDialog: (item: CartItem, discount?: Discount) => void;
 }
 
 export default function CartItems({
@@ -71,7 +71,9 @@ export default function CartItems({
               <div className="space-x-2">
                 <span
                   className="cursor-pointer text-blue-500 hover:underline"
-                  onClick={() => onShowDiscountDialog(item,item.discount??null)}>
+                  onClick={() =>
+                    onShowDiscountDialog(item, item.discount ?? null)
+                  }>
                   OMR {item.unit_price}
                 </span>
                 <span className="strike text-gray-500 line-through">

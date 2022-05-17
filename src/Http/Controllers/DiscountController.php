@@ -60,7 +60,7 @@ class DiscountController extends Controller
         ];
 
         $collections = Collection::query();
-        $products = Product::with(['variants']);
+        $products = Product::with(['variants.product','default_variant.product']);
         $customers = Customer::query();
 
         $collections = $collections->when($request->collection_search, function ($query, $term) {

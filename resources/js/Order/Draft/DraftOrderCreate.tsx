@@ -49,7 +49,7 @@ export default function DraftOrderCreate(props: Props) {
 
   const onApplyDiscount = (discount: Discount, item?: CartItem) => {
     const url = item
-      ? route('lshopify.discounts.update', {id:item.id})
+      ? route('lshopify.discounts.update', {id: item.id})
       : route('lshopify.discounts.store');
     Inertia.post(url, {
       ...discount,

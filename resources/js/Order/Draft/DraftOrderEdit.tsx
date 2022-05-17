@@ -14,11 +14,12 @@ import {
   // CartDiscount,
   CartItem,
   Customer,
-  CustomerAddress, Discount,
+  CustomerAddress,
+  Discount,
   Order,
   Product,
   Shipping,
-} from '../../types'
+} from '../../types';
 
 import CustomerEdit from './components/CustomerEdit';
 import CustomerSelect from './components/CustomerSelect';
@@ -72,7 +73,7 @@ export default function DraftOrderEdit(props: Props) {
   };
 
   const onApplyDiscount = (discount: Discount, item?: CartItem) => {
-  // const onApplyDiscount = (discount: CartDiscount, item?: CartItem) => {
+    // const onApplyDiscount = (discount: CartDiscount, item?: CartItem) => {
     Inertia.post(route('lshopify.cart.discount.add'), {
       discount,
       item,
@@ -80,7 +81,7 @@ export default function DraftOrderEdit(props: Props) {
   };
 
   const onRemoveDiscount = (discount: Discount, item?: CartItem) => {
-  // const onRemoveDiscount = (discount: CartDiscount, item?: CartItem) => {
+    // const onRemoveDiscount = (discount: CartDiscount, item?: CartItem) => {
     Inertia.post(route('lshopify.cart.discount.remove'), {
       discount,
       item,

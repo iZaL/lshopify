@@ -12,15 +12,19 @@ type Props = {
 };
 
 export default function DiscountAdd({discount, children}: Props) {
-  const [discountAttributes, setDiscountAttributes] = useState<Discount>(discount);
-  console.log('di',discountAttributes);
+  const [discountAttributes, setDiscountAttributes] =
+    useState<Discount>(discount);
+  console.log('di', discountAttributes);
   // const [discountAttributes, setDiscountAttributes] = useState<Discount>({
-    // value_type: discount?.value_type || 'fixed_amount',
-    // value: discount?.value || '0',
-    // reason: discount?.reason || '',
+  // value_type: discount?.value_type || 'fixed_amount',
+  // value: discount?.value || '0',
+  // reason: discount?.reason || '',
   // });
 
-  const setAttributes = <T extends keyof Discount>(field: T, value: Discount[T]) => {
+  const setAttributes = <T extends keyof Discount>(
+    field: T,
+    value: Discount[T],
+  ) => {
     setDiscountAttributes({
       ...discountAttributes,
       [field]: value,
@@ -35,7 +39,14 @@ export default function DiscountAdd({discount, children}: Props) {
             <Label title="Discount type" />
             <Select
               name="value_type"
-              onChange={e => setAttributes('value_type', e.target.value === 'percentage' ? 'percentage' : 'fixed_amount')}
+              onChange={e =>
+                setAttributes(
+                  'value_type',
+                  e.target.value === 'percentage'
+                    ? 'percentage'
+                    : 'fixed_amount',
+                )
+              }
               value={discountAttributes?.value_type}>
               <option value="amount">Amount</option>
               <option value="percentage">Percentage</option>
@@ -56,7 +67,9 @@ export default function DiscountAdd({discount, children}: Props) {
                   <div className="text-md text-sm text-gray-400">%</div>
                 ) : null
               }
-              inputStyle={discountAttributes?.value_type === 'fixed_amount' ? 'pl-14' : ''}
+              inputStyle={
+                discountAttributes?.value_type === 'fixed_amount' ? 'pl-14' : ''
+              }
               placeholder={
                 discountAttributes?.value_type === 'fixed_amount' ? '0.00' : '0'
               }
@@ -77,7 +90,6 @@ export default function DiscountAdd({discount, children}: Props) {
       </div>
 
       {children(discountAttributes)}
-
     </div>
   );
 }

@@ -1,4 +1,11 @@
-import { format, formatDistance, formatRelative, subDays, addMinutes, addYears } from 'date-fns'
+import {
+  format,
+  formatDistance,
+  formatRelative,
+  subDays,
+  addMinutes,
+  addYears,
+} from 'date-fns';
 import React, {useState} from 'react';
 
 import Border from '../../../components/Border';
@@ -10,7 +17,7 @@ import Modal from '../../../components/Modal';
 import ModalFooter from '../../../components/ModalFooter';
 import Subheader from '../../../components/Subheader';
 import ProductSearch from '../../../Product/components/ProductSearch';
-import { Cart, Discount, CartItem, Product } from '../../../types';
+import {Cart, Discount, CartItem, Product} from '../../../types';
 
 import CartItems from './CartItems';
 import DiscountAdd from './DiscountAdd';
@@ -42,7 +49,7 @@ export default function DraftOrderDetailsSection({
 }: Props) {
   const [showDialog, setShowDialog] = useState<
     'discount' | 'payment_paid' | 'payment_pending' | 'send_invoice' | null
-    >(null);
+  >(null);
 
   const [selectedDiscount, setSelectedDiscount] = useState<Discount>({
     id: 0,
@@ -56,17 +63,17 @@ export default function DraftOrderDetailsSection({
     reason: '',
     value: '1',
     value_type: 'percentage',
-    title:'ADMIN CODE',
+    title: 'ADMIN CODE',
     collections: [],
     starts_at: addMinutes(new Date(), 5),
     ends_at: addYears(new Date(), 1), //use before 1 year
     target_type: 'products',
     variants: [],
     type: 'automatic',
-    usage_limit: '1'
+    usage_limit: '1',
   });
 
-  console.log('s',selectedDiscount);
+  console.log('s', selectedDiscount);
 
   const [selectedDiscountItem, setSelectedDiscountItem] =
     useState<CartItem | null>(null);
@@ -101,8 +108,8 @@ export default function DraftOrderDetailsSection({
     setShowDialog(null);
   };
 
-  const onShowDiscountDialog = (item: CartItem,discount?: Discount) => {
-    if(discount) {
+  const onShowDiscountDialog = (item: CartItem, discount?: Discount) => {
+    if (discount) {
       setSelectedDiscount(discount);
     } else {
       setSelectedDiscount({
@@ -124,7 +131,7 @@ export default function DraftOrderDetailsSection({
         setSearchTerm={setSearchTerm}
         products={products}
         onVariantsAdd={onVariantsAdd}
-        items={items}
+        items={items.map(({id}) => id)}
       />
 
       <CartItems
@@ -172,8 +179,7 @@ export default function DraftOrderDetailsSection({
                     theme="clear"
                     // onClick={() => onShowDiscountDialog(cart.discount)}
                     onClick={() => {}}
-                    buttonStyle="text-blue-500 hover:underline"
-                  >
+                    buttonStyle="text-blue-500 hover:underline">
                     Add discount
                   </Button>
                   <div className="">——</div>

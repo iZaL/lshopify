@@ -1,12 +1,12 @@
 import {SearchIcon} from '@heroicons/react/outline';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import Border from '../../components/Border';
 import Button from '../../components/Button';
 import Checkbox from '../../components/forms/Checkbox';
 import InputText from '../../components/forms/InputText';
 import Modal from '../../components/Modal';
-import {CartItem, Product, Variant} from '../../types';
+import {Product, Variant} from '../../types';
 import VariantImage from '../Variant/components/VariantImage';
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
   setSearchTerm: (text: string) => void;
   products: Product[];
   onVariantsAdd: (variants: number[]) => void;
-  items: CartItem[];
+  items: number[];
 }
 
 export default function ProductSearch({
@@ -27,12 +27,12 @@ export default function ProductSearch({
   const [showDialog, setShowDialog] = useState(false);
 
   const [selectedVariantIDs, setSelectedVariantIDs] = useState<number[]>(
-    items.map(({id}) => id),
+    items.map(id => id),
   );
 
-  // useEffect(() => {
-  //   setSelectedVariantIDs(items.map(({id}) => id));
-  // }, [showDialog === 'product_list']);
+  useEffect(() => {
+    setSelectedVariantIDs(items.map(id => id));
+  }, [showDialog]);
 
   const addRemoveVariant = (variant: Variant) => {
     const newVariantIDs = selectedVariantIDs.includes(variant.id)
@@ -106,6 +106,7 @@ export default function ProductSearch({
                   )}
                   name="product"
                   onChange={() => {}}
+                  // onChange={() => addRemoveVariant(product.default_variant)}
                 />
               )}
 

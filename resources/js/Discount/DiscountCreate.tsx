@@ -14,13 +14,17 @@ import Checkbox from '../components/forms/Checkbox';
 import InputText from '../components/forms/InputText';
 import Label from '../components/forms/Label';
 import FormSubmitBar from '../components/FormSubmitBar';
-import ModalFooter from '../components/ModalFooter'
+import ModalFooter from '../components/ModalFooter';
 import ModalListSelection from '../components/ModalListSelection';
 import PageHeader from '../components/PageHeader';
 import Subheader from '../components/Subheader';
 import Main from '../Main';
-import VariantImage from '../Product/Variant/components/VariantImage'
-import { Collection, Customer, Discount, Product, Variant } from '../types'
+import ProductSearch from '../Product/components/ProductSearch';
+import ProductTitle from '../Product/components/ProductTitle';
+import VariantImage from '../Product/Variant/components/VariantImage';
+import {Collection, Customer, Discount, Product, Variant} from '../types';
+
+import {XIcon} from '@heroicons/react/solid';
 
 interface Props {
   discount: Discount;
@@ -40,6 +44,9 @@ export default function DiscountCreate(props: Props) {
     ...props.discount,
     searchTerm: '',
   });
+
+  const [variantIDs, setVariantIDs] = useState<number[]>([]);
+
   const {
     id,
     name,
@@ -156,11 +163,15 @@ export default function DiscountCreate(props: Props) {
     });
   }
 
-  function onVariantConfirm(items: number[]) {
-    console.log('selected variants',items);
-    const allVariants = props.products.data.map(p => p.variants).flat() as Variant[];
-    console.log('all variants',allVariants);
-    const vrnts = allVariants.filter(v => items.includes(v.id));
+  function onVariantsAdd(items: number[]) {
+    const allVariants = props.products.data
+      .map(p => p.variants)
+      .flat() as Variant[];
+    const defaultVariants = props.products.data
+      .map(p => p.default_variant)
+      .flat() as Variant[];
+    const mergedVariants = [...allVariants, ...defaultVariants];
+    const vrnts = mergedVariants.filter(v => items.includes(v.id));
     setData({
       ...data,
       variants: vrnts,
@@ -336,84 +347,51 @@ export default function DiscountCreate(props: Props) {
               {/*)}*/}
 
               {target_type === 'products' && (
-                <ModalListSelection
-                  searchTerm={searchTerm}
-                  items={props.products.data || []}
-                  selectedItems={variants.map(({id}) => id) || []}
-                  onSearch={value => onSearch(value, 'products')}
-                  onConfirm={(items) => onVariantConfirm(items)}
-                  // onItemsConfirm={items => onVariantConfirm(items)}
-                  placeholder="Search products"
-                  modalProps={{
-                    title: 'Add products',
-                    onClose: () => {
-                      setData({
-                        ...data,
-                        searchTerm: '',
-                        variants: [],
-                      });
-                    },
-                    // hideFooter: true,
-                  }}
-                >
-                  {({item,selectedItemIDs,addRemoveItem}: {item:Product,selectedItemIDs:number[],addRemoveItem:(item:any) => void}) => {
-                    return (
-                      <div key={item.id}>
-                        <li
-                          className="flex flex-row items-center space-x-4 border-b border-gray-200 py-2 px-4
-              text-sm hover:bg-gray-100
-              "
-                          onClick={() =>
-                            !item.variants?.length &&
-                            addRemoveItem(item.default_variant)
-                          }>
-                          {!item.variants?.length && (
-                            <Checkbox
-                              checked={false}
-                              name="product"
-                              onChange={() => {}}
-                            />
-                          )}
-
-                          <VariantImage
-                            image={item.image}
-                            onClick={() => {}}
-                            imageStyle="w-12 h-12"
-                          />
-                          <div className="flex-auto">{item.title}</div>
-                          {!item.variants?.length && (
-                            <>
-                              <div className="w-20">0 available</div>
-                              <div className="w-20">OMR 10</div>
-                            </>
-                          )}
-                        </li>
-                        {item.variants?.map((variant, idx) => (
-                          <li
-                            className="flex flex-row items-center space-x-4 border-b border-gray-200 py-2 px-4 pl-11
-              text-sm hover:bg-gray-100
-              "
-                            key={idx}
-                            onClick={() => addRemoveItem(variant)}>
-                            <Checkbox
-                              checked={selectedItemIDs.includes(variant.id)}
-                              name="variant"
-                              onChange={() => {}}
-                            />
+                <>
+                  <ProductSearch
+                    searchTerm={searchTerm}
+                    setSearchTerm={value => onSearch(value, 'products')}
+                    products={props.products.data || []}
+                    onVariantsAdd={onVariantsAdd}
+                    items={variants.map(({id}) => id) || []}
+                  />
+                  <>
+                    {variants.map(variant => (
+                      <div
+                        className="flex items-center space-x-4 text-sm"
+                        key={variant.id}>
+                        <div className="flex-1 space-x-2">
+                          <div className="flex flex-row items-center">
                             <VariantImage
-                              image={variant.image}
+                              image={variant.image || variant.product?.image}
                               onClick={() => {}}
                               imageStyle="w-12 h-12"
                             />
-                            <div className="flex-auto">{variant.title}</div>
-                            <div className="w-20">{variant.quantity} available</div>
-                            <div className="w-20">{variant.price}</div>
-                          </li>
-                        ))}
+                            <div className="text-sm">
+                              {variant.product && (
+                                <div className="underline">
+                                  <ProductTitle product={variant.product} />
+                                </div>
+                              )}
+                              <div className="">{variant.title}</div>
+                            </div>
+                          </div>
+                        </div>
+                        <Button
+                          theme="clear"
+                          onClick={() =>
+                            onVariantsAdd(
+                              variants
+                                .filter(v => v.id !== variant.id)
+                                .map(({id}) => id),
+                            )
+                          }>
+                          <XIcon className="text-md h-5 w-5 cursor-pointer hover:text-gray-500" />
+                        </Button>
                       </div>
-                    );
-                  }}
-                </ModalListSelection>
+                    ))}
+                  </>
+                </>
               )}
             </Card>
 
