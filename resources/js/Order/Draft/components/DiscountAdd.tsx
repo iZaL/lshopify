@@ -35,7 +35,7 @@ export default function DiscountAdd({discount, children}: Props) {
               onChange={e => setAttributes('suffix', e.target.value)}
               value={discountAttributes.suffix}>
               <option value="amount">Amount</option>
-              <option value="percentage">Percentage</option>
+              <option value="percent">Percent</option>
             </Select>
           </div>
           <div className="flex-1">
@@ -49,7 +49,7 @@ export default function DiscountAdd({discount, children}: Props) {
                 ) : null
               }
               rightComponent={
-                discountAttributes.suffix === 'percentage' ? (
+                discountAttributes.suffix === 'percent' ? (
                   <div className="text-md text-sm text-gray-400">%</div>
                 ) : null
               }

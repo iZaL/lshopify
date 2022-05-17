@@ -35,6 +35,7 @@ class OrderResource extends JsonResource
                 'fulfillment_status' => 'Pending',
                 'items_count' => 5,
             ],
+
             ['shipping' => $this->getShippingAddress()],
             ['billing' => $this->getBillingAddress()]
         );

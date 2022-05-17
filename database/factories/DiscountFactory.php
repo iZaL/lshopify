@@ -15,11 +15,10 @@ class DiscountFactory extends Factory
     public function definition()
     {
         return [
-            'title' => Str::upper(Str::random(8)),
-            'code' => Str::upper(Str::random(8)),
+            'name' => Str::upper(Str::random(8)),
             'type' => 'code',
             'value' => 300,
-            'value_type' => 'percentage',
+            'value_type' => 'percent',
             'target_type' => 'all_products',
             'min_requirement_type' => null,
             'min_requirement_value' => 0,

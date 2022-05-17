@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
 
             $table->unsignedInteger('customer_id')->nullable();
             $table->unsignedInteger('draft_id')->nullable();
+            $table->unsignedInteger('discount_id')->nullable();
 
             $table->decimal('total', 8, 2)->nullable();
             $table->decimal('subtotal', 8, 2)->nullable();

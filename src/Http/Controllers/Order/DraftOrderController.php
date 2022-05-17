@@ -74,6 +74,38 @@ class DraftOrderController extends Controller
         return Inertia::render('Order/Draft/DraftOrderCreate', $data);
     }
 
+    public function store(
+        DraftOrderStoreRequest $request,
+        DraftOrderCreateAction $action
+    ): \Illuminate\Http\RedirectResponse {
+        $cart = app('cart');
+
+        if (!$cart->items()->count()) {
+            return redirect()
+                ->back()
+                ->with('error', 'Products cannot be empty.');
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $order = $action->create($cart);
+            DB::commit();
+        } catch (\Exception $e) {
+
+            dd($e->getMessage());
+            DB::rollBack();
+
+            return redirect()
+                ->back()
+                ->with('error', $e->getMessage());
+        }
+
+        return redirect()
+            ->route('lshopify.draft.orders.edit', $order->id)
+            ->with('success', 'Saved');
+    }
+
     public function edit($id): \Inertia\Response
     {
         $cart = app('cart');
@@ -84,22 +116,30 @@ class DraftOrderController extends Controller
 
         $productsResource = ProductResource::collection($products);
 
-        $order = DraftOrder::with(['variants', 'discounts', 'cart_discount', 'customer'])->find($id);
+        $order = DraftOrder::with(['variants.discounts', 'discount', 'customer'])->find($id);
         $orderResource = new OrderResource($order);
 
         $customers = Customer::all();
         $customersResource = CustomerResource::collection($customers);
 
-        if (!session()->has('cartOrder') || session('cartOrder') !== $order->id) {
+//        if (!session()->has('cartOrder') || session('cartOrder') !== $order->id) {
             $cart->clear();
-            session()->put('cartOrder', $order->id);
+//            session()->put('cartOrder', $order->id);
             // sync DB orders with the cart, only on first request and ignore on subsequent requests.
 
-            if ($order->cart_discount) {
+            if ($discount = $order->discount) {
+                $cartCondition = [
+                    'value' => $discount->value,
+                    'suffix' => $discount->value_type,
+                    'reason' => $discount->reason,
+                    'target' => 'subtotal',
+                    'name' => 'cart',
+                    'type' => 'discount',
+                ];
                 $discount = new Condition(
-                    Arr::only($order->cart_discount->toArray(), ['value', 'suffix', 'type', 'target', 'name', 'reason'])
+                    $cartCondition
                 );
-                $suffix = $discount->suffix === 'percent' ? '%' : '';
+                $suffix = $cartCondition['suffix'] === 'percent' ? '%' : '';
                 $discount->setActions([
                     [
                         'value' => '-' . $discount->value . $suffix,
@@ -119,25 +159,32 @@ class DraftOrderController extends Controller
                         'quantity' => $variant->pivot->quantity,
                         'variant' => new VariantResource($variant),
                     ]);
-                    $variantDiscounts = $order
-                        ->discounts()
-                        ->where('variant_id', $variant->id)
-                        ->get();
-                    foreach ($variantDiscounts as $discount) {
-                        $discount = new Condition(
-                            Arr::only($discount->toArray(), ['value', 'suffix', 'type', 'target', 'name', 'reason'])
+
+                    $variantDiscounts = $variant->discounts;
+
+                    foreach ($variantDiscounts as $variantDiscount) {
+                        $cartItemCondition = [
+                            'value' => $variantDiscount->value,
+                            'suffix' => $variantDiscount->value_type,
+                            'reason' => $variantDiscount->reason,
+                            'target' => 'subtotal',
+                            'name' => 'cart',
+                            'type' => 'discount',
+                        ];
+                        $variantDiscount = new Condition(
+                            $cartItemCondition
                         );
-                        $suffix = $discount->suffix === 'percent' ? '%' : '';
-                        $discount->setActions([
+                        $suffix = $variantDiscount->suffix === 'percent' ? '%' : '';
+                        $variantDiscount->setActions([
                             [
-                                'value' => '-' . $discount->value . $suffix,
+                                'value' => '-' . $variantDiscount->value . $suffix,
                             ],
                         ]);
-                        $cart->update($cartItem->rowId, ['conditions' => $discount]);
+                        $cart->update($cartItem->rowId, ['conditions' => $variantDiscount]);
                     }
                 }
             }
-        }
+//        }
 
         $items = [];
 
@@ -171,35 +218,6 @@ class DraftOrderController extends Controller
         return Inertia::render('Order/Draft/DraftOrderEdit', $data);
     }
 
-    public function store(
-        DraftOrderStoreRequest $request,
-        DraftOrderCreateAction $action
-    ): \Illuminate\Http\RedirectResponse {
-        $cart = app('cart');
-
-        if (!$cart->items()->count()) {
-            return redirect()
-                ->back()
-                ->with('error', 'Products cannot be empty.');
-        }
-
-        DB::beginTransaction();
-
-        try {
-            $order = $action->create($cart);
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            return redirect()
-                ->back()
-                ->with('error', $e->getMessage());
-        }
-
-        return redirect()
-            ->route('lshopify.draft.orders.edit', $order->id)
-            ->with('success', 'Saved');
-    }
 
     public function update(
         $id,

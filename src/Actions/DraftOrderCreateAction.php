@@ -2,6 +2,7 @@
 
 namespace IZal\Lshopify\Actions;
 
+use Illuminate\Support\Str;
 use IZal\Lshopify\Cart\Cart;
 use IZal\Lshopify\Cart\Collections\ItemCollection;
 use IZal\Lshopify\Models\Customer;
@@ -71,6 +72,7 @@ class DraftOrderCreateAction extends OrderCreateAction
 
         if ($variant) {
             $order->variants()->attach($variant->id, $this->getCartItemData($cartItem));
+            $variant->discounts()->sync([]);
             $this->createCartItemCondition($order, $cartItem, $variant->id);
         }
     }
@@ -83,7 +85,6 @@ class DraftOrderCreateAction extends OrderCreateAction
     {
         // delete order variants
         $order->variants()->sync([]);
-        $order->discounts()->delete();
 
         foreach ($cart->items() as $cartItem) {
             $this->createVariant($order, $cart, $cartItem);
@@ -99,8 +100,15 @@ class DraftOrderCreateAction extends OrderCreateAction
         $cartCondition = $cart->getConditionByName('cart');
         if ($cartCondition) {
             if ($cartCondition->type === 'discount') {
-                $order->cart_discount()->delete();
-                $order->cart_discount()->create(Arr::except($cartCondition->all(), ['actions']));
+                $discount = $order->discount()->create([
+                    'name' => 'Admin Discount '.Str::uuid(),
+                    'type' => 'automatic',
+                    'value' => $cartCondition->value,
+                    'value_type' => $cartCondition->suffix === 'percent' ? 'percent' : 'amount',
+                    'reason' => $cartCondition->reason,
+                ]);
+                $order->discount_id = $discount->id;
+                $order->save();
             }
         }
     }
@@ -113,19 +121,16 @@ class DraftOrderCreateAction extends OrderCreateAction
     private function createCartItemCondition(DraftOrder $order, ItemCollection $cartItem, int $variantID): void
     {
         $itemCondition = $cartItem->getConditionByName($variantID);
-
         if ($itemCondition) {
             if ($itemCondition->type === 'discount') {
-                $order
-                    ->discounts()
-                    ->where('variant_id', $variantID)
-                    ->delete();
-
-                $order
-                    ->discounts()
-                    ->create(
-                        array_merge(Arr::except($itemCondition->all(), ['actions']), ['variant_id' => $variantID])
-                    );
+                $discount = $order->discount()->create([
+                    'name' => 'Admin Discount '.Str::uuid(),
+                    'type' => 'automatic',
+                    'value' => $itemCondition->value,
+                    'value_type' => $itemCondition->suffix === 'percent' ? 'percent' : 'amount',
+                    'reason' => $itemCondition->reason,
+                ]);
+                $discount->variants()->sync([$variantID]);
             }
         }
     }

@@ -81,28 +81,14 @@ class Order extends BaseModel
         return $this->belongsTo(Customer::class);
     }
 
-    public function discounts()
-    {
-        //@todo: convert to belongsToMany Variant
-        return $this->hasMany(Discount::class, 'order_id')->where('name', '!=', 'cart');
-    }
+//    public function discounts()
+//    {
+//        return $this->belongsToMany(Discount::class, 'order_discounts','order_id','discount_id');
+//    }
 
-    //    public function returns()
-    //    {
-    //        return $this->belongsToMany(Variant::class, 'order_returns', 'order_id', 'variant_id')->withPivot([
-    //            'id',
-    //            'quantity',
-    //            'price',
-    //            'unit_price',
-    //            'subtotal',
-    //            'total',
-    //            'restock',
-    //        ]);
-    //    }
-
-    public function cart_discount()
+    public function discount()
     {
-        return $this->hasOne(Discount::class, 'order_id')->where('name', 'cart');
+        return $this->belongsTo(Discount::class,'discount_id');
     }
 
     public function variants()

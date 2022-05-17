@@ -29,11 +29,10 @@ class DiscountControllerTest extends TestCase
         $endsAt = "2022-04-28T09:30:00.434Z";
 
         $data = [
-            "title" => "XXXXX",
-            "code" => "ZJ1GQMH1",
+            "name" => "XXXXX",
             "type" => "automatic",
             "value" => 300,
-            "value_type" => "percentage",
+            "value_type" => "percent",
             "target_type" => "all_products",
             "min_requirement_type" => "amount",
             "min_requirement_value" => "5",
@@ -67,9 +66,8 @@ class DiscountControllerTest extends TestCase
             fn (AssertableInertia $assert) =>
             $assert
             ->has('discount', fn (AssertableInertia $page) => $page
-                ->where('title',$discount->title)
                 ->where('id',$discount->id)
-                ->where('code',$discount->code)
+                ->where('name',$discount->name)
                 ->where('type',$discount->type)
                 ->where('value',$discount->value)
                 ->where('value_type',$discount->value_type)
