@@ -15,6 +15,7 @@ class CreateDiscountablesTable extends Migration
     {
         Schema::create('discountables', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('order_id');
             $table->unsignedInteger('discount_id');
             $table->unsignedInteger('discountable_id');
             $table->string('discountable_type');

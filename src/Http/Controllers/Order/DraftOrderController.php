@@ -120,66 +120,67 @@ class DraftOrderController extends Controller
 
         $customers = Customer::all();
         $customersResource = CustomerResource::collection($customers);
+//        $cart->clear();
 
-        //        if (!session()->has('cartOrder') || session('cartOrder') !== $order->id) {
-        $cart->clear();
-        //            session()->put('cartOrder', $order->id);
-        // sync DB orders with the cart, only on first request and ignore on subsequent requests.
+        if (!session()->has('cartOrder') || session('cartOrder') !== $order->id) {
+            $cart->clear();
+            session()->put('cartOrder', $order->id);
+            // sync DB orders with the cart, only on first request and ignore on subsequent requests.
 
-        if ($discount = $order->discount) {
-            $cartCondition = [
-                'value' => $discount->value,
-                'suffix' => $discount->value_type,
-                'reason' => $discount->reason,
-                'target' => 'subtotal',
-                'name' => 'cart',
-                'type' => 'discount',
-            ];
-            $discount = new Condition($cartCondition);
-            $suffix = $cartCondition['suffix'] === 'percent' ? '%' : '';
-            $discount->setActions([
-                [
-                    'value' => '-' . $discount->value . $suffix,
-                ],
-            ]);
-            $cart->removeConditionByName('cart');
-            $cart->condition($discount);
-        }
-
-        foreach ($order->variants as $variant) {
-            $cartItem = $cart->findByID($variant->id);
-            if (!$cartItem) {
-                $cartItem = $cart->add([
-                    'id' => $variant->id,
-                    'name' => $variant->id,
-                    'price' => $variant->pivot->price,
-                    'quantity' => $variant->pivot->quantity,
-                    'variant' => new VariantResource($variant),
+            if ($discount = $order->discount) {
+                $cartCondition = [
+                    'value' => $discount->value,
+                    'suffix' => $discount->value_type,
+                    'reason' => $discount->reason,
+                    'target' => 'subtotal',
+                    'name' => 'cart',
+                    'type' => 'discount',
+                ];
+                $discount = new Condition($cartCondition);
+                $suffix = $cartCondition['suffix'] === 'percent' ? '%' : '';
+                $discount->setActions([
+                    [
+                        'value' => '-' . $discount->value . $suffix,
+                    ],
                 ]);
+                $cart->removeConditionByName('cart');
+                $cart->condition($discount);
+            }
 
-                $variantDiscounts = $variant->discounts;
-
-                foreach ($variantDiscounts as $variantDiscount) {
-                    $cartItemCondition = [
-                        'value' => $variantDiscount->value,
-                        'suffix' => $variantDiscount->value_type,
-                        'reason' => $variantDiscount->reason,
-                        'target' => 'subtotal',
-                        'name' => 'cart',
-                        'type' => 'discount',
-                    ];
-                    $variantDiscount = new Condition($cartItemCondition);
-                    $suffix = $variantDiscount->suffix === 'percent' ? '%' : '';
-                    $variantDiscount->setActions([
-                        [
-                            'value' => '-' . $variantDiscount->value . $suffix,
-                        ],
+            foreach ($order->variants as $variant) {
+                $cartItem = $cart->findByID($variant->id);
+                if (!$cartItem) {
+                    $cartItem = $cart->add([
+                        'id' => $variant->id,
+                        'name' => $variant->id,
+                        'price' => $variant->pivot->price,
+                        'quantity' => $variant->pivot->quantity,
+                        'variant' => new VariantResource($variant),
                     ]);
-                    $cart->update($cartItem->rowId, ['conditions' => $variantDiscount]);
+
+                    $variantDiscounts = $variant->discounts;
+
+                    foreach ($variantDiscounts as $variantDiscount) {
+                        $cartItemCondition = [
+                            'value' => $variantDiscount->value,
+                            'suffix' => $variantDiscount->value_type,
+                            'reason' => $variantDiscount->reason,
+                            'target' => 'subtotal',
+                            'name' => 'cart',
+                            'type' => 'discount',
+                        ];
+                        $variantDiscount = new Condition($cartItemCondition);
+                        $suffix = $variantDiscount->suffix === 'percent' ? '%' : '';
+                        $variantDiscount->setActions([
+                            [
+                                'value' => '-' . $variantDiscount->value . $suffix,
+                            ],
+                        ]);
+                        $cart->update($cartItem->rowId, ['conditions' => $variantDiscount]);
+                    }
                 }
             }
         }
-        //        }
 
         $items = [];
 
