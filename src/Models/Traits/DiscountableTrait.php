@@ -10,9 +10,4 @@ trait DiscountableTrait
     {
         return $this->morphToMany(Discount::class, 'discountable');
     }
-
-    public function discount()
-    {
-        return $this->morphOne(Discount::class, 'discountable');
-    }
 }

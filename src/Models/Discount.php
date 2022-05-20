@@ -5,7 +5,6 @@ namespace IZal\Lshopify\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use IZal\Lshopify\Database\Factories\DiscountFactory;
-use phpDocumentor\Reflection\Types\Boolean;
 
 class Discount extends BaseModel
 {
@@ -30,19 +29,20 @@ class Discount extends BaseModel
         'once_per_customer',
         'usage_limit',
         'customer_selection',
+        'reason',
     ];
 
-    public static function newFactory()
+    public static function newFactory(): DiscountFactory
     {
         return DiscountFactory::new();
     }
 
-    public function discountable()
-    {
-        return $this->morphTo();
-    }
+//    public function discountable(): \Illuminate\Database\Eloquent\Relations\MorphTo
+//    {
+//        return $this->morphTo();
+//    }
 
-    public function customers()
+    public function customers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Customer::class, 'customer_discounts');
     }
@@ -62,8 +62,8 @@ class Discount extends BaseModel
         return $this->morphedByMany(Collection::class, 'discountable');
     }
 
-    public function order()
+    public function orders()
     {
-        return $this->belongsTo(Order::class, 'order_id');
+        return $this->hasMany(Order::class, 'order_id');
     }
 }

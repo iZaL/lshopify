@@ -83,8 +83,7 @@ class Order extends BaseModel
 
     public function discounts()
     {
-        //@todo
-        return $this->hasMany(Discount::class, 'discountables','order_id','discount_id');
+        return $this->belongsToMany(Discount::class, 'order_discounts','order_id','discount_id');
     }
 
     public function discount()

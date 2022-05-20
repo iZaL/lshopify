@@ -3,6 +3,7 @@
 namespace IZal\Lshopify\Tests\Http\Controllers\Orders\Draft;
 
 use IZal\Lshopify\Cart\Condition;
+use IZal\Lshopify\Models\Discount;
 use IZal\Lshopify\Models\DraftOrder;
 use IZal\Lshopify\Models\Product;
 use IZal\Lshopify\Models\Variant;
@@ -39,13 +40,30 @@ class DraftOrderStoreControllerTest extends CartTestCase
             'target' => 'subtotal',
         ];
 
+        $cartDiscountDBData = [
+            'value_type' => 'amount',
+            'value' => '10',
+            'reason' => 'VVIP customer',
+            'type' => 'automatic',
+            'target_type' => 'all_products',
+        ];
+
         $itemDiscount = [
-            'suffix' => 'percentage',
+            'suffix' => 'percent',
             'value' => '10',
             'reason' => 'VIP customer',
             'name' => $variant->id,
             'type' => 'discount',
             'target' => 'subtotal',
+        ];
+
+        $itemDiscountDBDate = [
+            'value_type' => 'percent',
+            'value' => '10',
+            'reason' => 'VIP customer',
+            'name' => $variant->id,
+            'type' => 'automatic',
+            'target_type' => 'all_products',
         ];
 
         $cartItem = $this->cart->add($item);
@@ -61,10 +79,12 @@ class DraftOrderStoreControllerTest extends CartTestCase
         $req = $this->post(route('lshopify.draft.orders.store'));
 
         $order = DraftOrder::with(['variants'])->get()->last();
-
-        $this->assertDatabaseHas('orders', ['id' => $order->id, 'draft'=> 1, 'total' => 350, 'subtotal' => 360, 'quantity' => 2]);
-        $this->assertDatabaseHas('order_variants', ['variant_id' => $variant->id, 'order_id' => $order->id, 'price' => $item['price'], 'quantity' => $item['quantity'], 'total' => $item['total'], 'subtotal' => $item['subtotal'], 'unit_price' => $item['unit_price']]);
-        $this->assertDatabaseHas('discounts', array_merge($itemDiscount, ['order_id' => $order->id, 'variant_id' => $item['id'], 'name' => $item['id']]));
-        $this->assertDatabaseHas('discounts', ['order_id' => $order->id, 'name' => 'cart', 'variant_id' => null]);
+        $cartDiscount = Discount::all()->first();
+        $itemDiscount = Discount::all()->last();
+//        $this->assertDatabaseHas('orders', ['id' => $order->id, 'draft'=> 1, 'total' => 350, 'subtotal' => 360, 'quantity' => 2, 'discount_id' => $cartDiscount->id]);
+//        $this->assertDatabaseHas('order_variants', ['variant_id' => $variant->id, 'order_id' => $order->id, 'price' => $item['price'], 'quantity' => $item['quantity'], 'total' => $item['total'], 'subtotal' => $item['subtotal'], 'unit_price' => $item['unit_price']]);
+        $this->assertDatabaseHas('discounts', array_merge($cartDiscountDBData, ['name' => 'Admin cart discount']));
+        $this->assertDatabaseHas('order_discounts',['order_id' => $order->id, 'discount_id' => $itemDiscount->id]);
+        //        $this->assertDatabaseHas('discounts', ['variant_id' => null]);
     }
 }

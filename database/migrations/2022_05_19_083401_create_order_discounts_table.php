@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDiscountablesTable extends Migration
+class CreateOrderDiscountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateDiscountablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('discountables', function (Blueprint $table) {
+        Schema::create('order_discounts', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('order_id');
             $table->unsignedInteger('discount_id');
-            $table->unsignedInteger('discountable_id');
-            $table->string('discountable_type');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateDiscountablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('discountables');
+        Schema::dropIfExists('order_discounts');
     }
 };
