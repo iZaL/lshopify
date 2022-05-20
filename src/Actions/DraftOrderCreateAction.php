@@ -67,7 +67,7 @@ class DraftOrderCreateAction extends OrderCreateAction
         if ($cartCondition) {
             if ($cartCondition->type === 'discount') {
                 $discount = $order->discount;
-                if($discount) {
+                if ($discount) {
                     $discount->update([
                         'value' => $cartCondition->value,
                         'value_type' => $cartCondition->suffix === 'percent' ? 'percent' : 'amount',
@@ -110,7 +110,7 @@ class DraftOrderCreateAction extends OrderCreateAction
      * @param ItemCollection $cartItem
      * @return Variant
      */
-    public function createVariantWithCondition(DraftOrder $order, Cart $cart, ItemCollection $cartItem):Variant
+    public function createVariantWithCondition(DraftOrder $order, Cart $cart, ItemCollection $cartItem): Variant
     {
         $variant = $this->createVariantFromCartItem($order, $cart, $cartItem);
         if ($variant) {
@@ -119,14 +119,13 @@ class DraftOrderCreateAction extends OrderCreateAction
         return $variant;
     }
 
-
     /**
      * @param DraftOrder $order
      * @param Cart $cart
      * @param ItemCollection $cartItem
      * @return Variant
      */
-    public function createVariantFromCartItem(DraftOrder $order, Cart $cart, ItemCollection $cartItem):Variant
+    public function createVariantFromCartItem(DraftOrder $order, Cart $cart, ItemCollection $cartItem): Variant
     {
         $variant = $this->variant->find($cartItem->id);
         if ($variant) {

@@ -11,11 +11,14 @@ class Category extends BaseModel
     use HasFactory;
     use ImageableTrait;
 
-    protected $table = 'categories';
+    /**
+     * @var string
+     */
+    protected string $table = 'categories';
 
     protected $fillable = ['name'];
 
-    public static function newFactory()
+    public static function newFactory(): CategoryFactory
     {
         return CategoryFactory::new();
     }

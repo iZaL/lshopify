@@ -15,8 +15,9 @@ class Collection extends BaseModel
     use TaggableTrait;
     use ImageableTrait;
 
-    protected $table = 'collections';
     public $timestamps = false;
+
+    protected string $table = 'collections';
 
     protected $fillable = ['name', 'slug', 'type', 'determiner', 'description'];
 

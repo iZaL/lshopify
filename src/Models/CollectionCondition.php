@@ -10,8 +10,9 @@ class CollectionCondition extends BaseModel
 {
     use HasFactory;
 
-    protected $table = 'collection_conditions';
     public $timestamps = false;
+
+    protected string $table = 'collection_conditions';
 
     protected $fillable = ['collection_id', 'field', 'criteria', 'value'];
 

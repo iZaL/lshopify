@@ -5,6 +5,7 @@ namespace IZal\Lshopify\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use IZal\Lshopify\Actions\AddCartItem;
 use IZal\Lshopify\Actions\DraftOrderCreateAction;
 use IZal\Lshopify\Models\Variant;
 use IZal\Lshopify\Resources\VariantResource;
@@ -14,37 +15,14 @@ class CartController extends Controller
     /**
      * @throws ValidationException
      */
-    public function add(Request $request, DraftOrderCreateAction $orderCreateAction): RedirectResponse
+    public function add(Request $request, AddCartItem $addCartItem): RedirectResponse
     {
         $this->validate($request, [
             'variantIDs' => 'nullable|array',
             'orderID' => 'nullable|exists:orders,id',
         ]);
 
-        $variants = Variant::with(['product'])->find($request->variantIDs);
-
-        $cart = app('cart');
-
-        foreach ($cart->items() as $item) {
-            if (!in_array($item->id, $request->variantIDs)) {
-                $cart->remove($item->rowId);
-            }
-        }
-
-        if ($variants->count()) {
-            foreach ($variants as $variant) {
-                $cartItem = $cart->find(['id' => $variant->id]);
-                if (!$cartItem) {
-                    $cart->add([
-                        'id' => $variant->id,
-                        'name' => $variant->id,
-                        'price' => $variant->price,
-                        'quantity' => 1,
-                        'variant' => new VariantResource($variant),
-                    ]);
-                }
-            }
-        }
+        $addCartItem->run($request);
 
         return redirect()->back();
     }

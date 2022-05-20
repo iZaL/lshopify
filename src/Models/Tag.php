@@ -10,8 +10,9 @@ class Tag extends BaseModel
 {
     use HasFactory;
 
-    protected $table = 'tags';
     public $timestamps = false;
+
+    protected string $table = 'tags';
 
     protected $fillable = ['name', 'slug'];
 

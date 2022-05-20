@@ -32,7 +32,7 @@ class DraftOrderController extends Controller
                 ->get()
         );
         $cart = app('cart');
-//        $cart->clear();
+        //        $cart->clear();
         return Inertia::render('Order/Draft/DraftOrderIndex', ['orders' => $orders, 'cartTotal' => $cart->total()]);
     }
 
@@ -121,7 +121,7 @@ class DraftOrderController extends Controller
 
         $customers = Customer::all();
         $customersResource = CustomerResource::collection($customers);
-//        $cart->clear();
+        //        $cart->clear();
 
         if (!session()->has('cartOrder') || session('cartOrder') !== $order->id) {
             $cart->clear();
@@ -148,9 +148,12 @@ class DraftOrderController extends Controller
                 $cart->condition($discount);
             }
 
-            $discountVariants = $order->discounts->flatMap(function($d) {
-                return $d->variants;
-            })->pluck('id')->toArray();
+            $discountVariants = $order->discounts
+                ->flatMap(function ($d) {
+                    return $d->variants;
+                })
+                ->pluck('id')
+                ->toArray();
 
             foreach ($order->variants as $variant) {
                 $cartItem = $cart->findByID($variant->id);
@@ -164,7 +167,7 @@ class DraftOrderController extends Controller
                     ]);
 
                     foreach ($variant->discounts as $discount) {
-                        if(in_array($discount->id,$discountVariants)) {
+                        if (in_array($discount->id, $discountVariants)) {
                             $cartItemCondition = [
                                 'value' => $discount->value,
                                 'suffix' => $discount->value_type,
@@ -182,7 +185,6 @@ class DraftOrderController extends Controller
                             ]);
                             $cart->update($cartItem->rowId, ['conditions' => $discount]);
                         }
-
                     }
                 }
             }

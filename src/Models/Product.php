@@ -2,6 +2,10 @@
 
 namespace IZal\Lshopify\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use IZal\Lshopify\Database\Factories\ProductFactory;
 use IZal\Lshopify\Models\Traits\ImageableTrait;
 use IZal\Lshopify\Models\Traits\TaggableTrait;
@@ -13,7 +17,7 @@ class Product extends BaseModel
     use TaggableTrait;
     use ImageableTrait;
 
-    protected $table = 'products';
+    protected string $table = 'products';
 
     protected $fillable = [
         'title',
@@ -26,41 +30,41 @@ class Product extends BaseModel
         'seo_url',
     ];
 
-    protected $with = ['image'];
+    protected array $with = ['image'];
 
-    public static function newFactory()
+    public static function newFactory(): ProductFactory
     {
         return ProductFactory::new();
     }
 
-    public function all_variants()
+    public function all_variants(): HasMany
     {
         return $this->hasMany(Variant::class, 'product_id');
     }
 
-    public function variants()
+    public function variants(): HasMany
     {
         return $this->hasMany(Variant::class, 'product_id')
             ->whereNotNull('options')
             ->where('default', 0);
     }
 
-    public function collections()
+    public function collections(): BelongsToMany
     {
         return $this->belongsToMany(Collection::class, 'collection_products');
     }
 
-    public function default_variant()
+    public function default_variant(): HasOne
     {
         return $this->hasOne(Variant::class, 'product_id')->where('default', 1);
     }
 
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-    public function vendor()
+    public function vendor(): BelongsTo
     {
         return $this->belongsTo(Vendor::class, 'vendor_id');
     }
@@ -92,7 +96,7 @@ class Product extends BaseModel
 
     public function getVariantOptionsNewAttribute(): array
     {
-        $variants = $this->variants
+        return $this->variants
             ->pluck('options')
             ->collapse()
             ->groupBy('id')
@@ -115,8 +119,6 @@ class Product extends BaseModel
             })
             ->values()
             ->toArray();
-
-        return $variants;
     }
 
     public function getIsInventoryTrackedAttribute(): bool

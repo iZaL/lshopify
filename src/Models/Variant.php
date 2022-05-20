@@ -13,7 +13,7 @@ class Variant extends BaseModel
     use ImageableTrait;
     use DiscountableTrait;
 
-    protected $table = 'variants';
+    protected string $table = 'variants';
 
     protected $casts = [
         'taxable' => 'boolean',

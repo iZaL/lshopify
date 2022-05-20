@@ -3,14 +3,16 @@
 namespace IZal\Lshopify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Arr;
 use IZal\Lshopify\Database\Factories\CustomerAddressFactory;
+use JetBrains\PhpStorm\Pure;
 
 class CustomerAddress extends BaseModel
 {
     use HasFactory;
 
-    protected $table = 'customer_addresses';
+    protected string $table = 'customer_addresses';
 
     protected $casts = [];
 
@@ -30,12 +32,12 @@ class CustomerAddress extends BaseModel
         'default',
     ];
 
-    public static function newFactory()
+    public static function newFactory(): CustomerAddressFactory
     {
         return CustomerAddressFactory::new();
     }
 
-    public function customer()
+    public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
     }
@@ -45,7 +47,7 @@ class CustomerAddress extends BaseModel
      * @param array $fillables
      * @return array
      */
-    public static function parseShippingAddress(array $attributes, array $fillables): array
+    #[Pure] public static function parseShippingAddress(array $attributes, array $fillables): array
     {
         $shippingAttributes = [];
         foreach ($attributes as $key => $value) {

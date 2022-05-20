@@ -14,7 +14,7 @@ class Order extends BaseModel
     use HasFactory;
     use MoneyFormatter;
 
-    protected $table = 'orders';
+    protected string $table = 'orders';
 
     protected $casts = [
         'total' => 'decimal:2',
@@ -83,7 +83,7 @@ class Order extends BaseModel
 
     public function discounts()
     {
-        return $this->belongsToMany(Discount::class, 'order_discounts','order_id','discount_id');
+        return $this->belongsToMany(Discount::class, 'order_discounts', 'order_id', 'discount_id');
     }
 
     public function discount()

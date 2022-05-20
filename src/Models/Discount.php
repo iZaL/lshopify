@@ -10,7 +10,7 @@ class Discount extends BaseModel
 {
     use HasFactory;
 
-    protected $table = 'discounts';
+    protected string $table = 'discounts';
 
     protected $casts = [
         'once_per_customer' => 'boolean',
@@ -37,10 +37,10 @@ class Discount extends BaseModel
         return DiscountFactory::new();
     }
 
-//    public function discountable(): \Illuminate\Database\Eloquent\Relations\MorphTo
-//    {
-//        return $this->morphTo();
-//    }
+    //    public function discountable(): \Illuminate\Database\Eloquent\Relations\MorphTo
+    //    {
+    //        return $this->morphTo();
+    //    }
 
     public function customers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {

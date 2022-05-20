@@ -9,7 +9,7 @@ class Image extends BaseModel
 {
     use HasFactory;
 
-    protected $table = 'images';
+    protected string $table = 'images';
 
     protected $fillable = ['name', 'imageable_id', 'imageable_type'];
 
