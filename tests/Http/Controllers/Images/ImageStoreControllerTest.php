@@ -7,10 +7,10 @@ use IZal\Lshopify\Tests\TestCase;
 
 class ImageStoreControllerTest extends TestCase
 {
-    public function test_throws_error_when_images_array_missing()
-    {
-        $response = $this->post(route('lshopify.images.store', []), []);
-        $response->assertSessionHasErrors(['images']);
-    }
+//    public function test_throws_error_when_images_array_missing()
+//    {
+//        $response = $this->post(route('lshopify.images.store', []), []);
+//        $response->assertSessionHasErrors(['images']);
+//    }
 
 }

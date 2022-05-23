@@ -5,7 +5,7 @@ namespace IZal\Lshopify\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use IZal\Lshopify\Actions\AddCartItem;
+use IZal\Lshopify\Actions\Cart\AddCartItem;
 use IZal\Lshopify\Actions\DraftOrderCreateAction;
 use IZal\Lshopify\Models\Variant;
 use IZal\Lshopify\Resources\VariantResource;

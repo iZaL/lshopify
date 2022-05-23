@@ -1,6 +1,6 @@
 <?php
 
-namespace IZal\Lshopify\Actions;
+namespace IZal\Lshopify\Actions\Cart;
 
 use Illuminate\Http\Request;
 use IZal\Lshopify\Cart\Cart;
