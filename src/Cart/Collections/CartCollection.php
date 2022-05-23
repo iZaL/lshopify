@@ -32,40 +32,40 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @var array
      */
-    protected array $conditionsOrder = ['discount', 'other', 'tax'];
+    protected $conditionsOrder = ['discount', 'other', 'tax'];
 
     /**
      * Holds the order in which items conditions apply.
      *
      * @var array
      */
-    protected array $itemsConditionsOrder = ['discount', 'other', 'tax'];
+    protected $itemsConditionsOrder = ['discount', 'other', 'tax'];
 
     /**
      * Holds all the required indexes.
      *
      * @var array
      */
-    protected array $requiredIndexes = ['id', 'name'];
+    protected $requiredIndexes = ['id', 'name'];
 
     /**
      * Holds all the reserved indexes.
      *
      * @var array
      */
-    protected array $reservedIndexes = ['price', 'quantity'];
+    protected $reservedIndexes = ['price', 'quantity'];
 
     /**
      * Holds the meta data.
      *
      * @var array
      */
-    protected array $metaData = [];
+    protected $metaData = [];
 
     /**
      * The cart instance.
      *
-     * @var  Cart
+     * @var  \IZal\Lshopify\Cart\Cart
      */
     protected $cart;
 
@@ -74,12 +74,12 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @param array $item
      *
-     * @return mixed
-     * @throws  CartInvalidQuantityException
-     * @throws  CartInvalidPriceException
-     * @throws  CartInvalidAttributesException
+     * @throws  \IZal\Lshopify\Cart\Exceptions\CartMissingRequiredIndexException
+     * @throws  \IZal\Lshopify\Cart\Exceptions\CartInvalidQuantityException
+     * @throws  \IZal\Lshopify\Cart\Exceptions\CartInvalidPriceException
+     * @throws  \IZal\Lshopify\Cart\Exceptions\CartInvalidAttributesException
      *
-     * @throws  CartMissingRequiredIndexException|CartItemNotFoundException
+     * @return mixed
      */
     public function add($item)
     {
@@ -169,11 +169,11 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @param mixed $items
      *
-     * @return bool
-     * @throws  CartItemNotFoundException
+     * @throws  \IZal\Lshopify\Cart\Exceptions\CartItemNotFoundException
      *
+     * @return bool
      */
-    public function remove($items): bool
+    public function remove($items)
     {
         foreach ((array) $items as $rowId) {
             // Check if the item exists
@@ -200,11 +200,11 @@ class CartCollection extends BaseCollection implements Serializable
      * @param string $rowId
      * @param array  $data
      *
-     * @return mixed
-     * @throws  CartItemNotFoundException|CartMissingRequiredIndexException
+     * @throws  \IZal\Lshopify\Cart\Exceptions\CartItemNotFoundException
      *
+     * @return mixed
      */
-    public function update($rowId, $data = null): mixed
+    public function update($rowId, $data = null)
     {
         // Do we have an array of items to be updated?
         if (is_array($rowId)) {
@@ -276,7 +276,7 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @return bool
      */
-    public function exists($rowId): bool
+    public function exists($rowId)
     {
         return $this->has($rowId);
     }
@@ -286,11 +286,11 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @param string $rowId
      *
-     * @return  ItemCollection
-     * @throws  CartItemNotFoundException
+     * @throws  \IZal\Lshopify\Cart\Exceptions\CartItemNotFoundException
      *
+     * @return  \IZal\Lshopify\Cart\Collections\ItemCollection
      */
-    public function item($rowId): ItemCollection
+    public function item($rowId)
     {
         // Check if the item exists
         if (!$this->exists($rowId)) {
@@ -309,7 +309,7 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @return mixed
      */
-    public function getMetaData($key = null, $default = null): mixed
+    public function getMetaData($key = null, $default = null)
     {
         return Arr::get($this->metaData, $key, $default);
     }
@@ -330,11 +330,11 @@ class CartCollection extends BaseCollection implements Serializable
     /**
      * Removes the meta data.
      *
-     * @param string|null $key
+     * @param string $key
      *
      * @return void
      */
-    public function removeMetaData(string $key = null)
+    public function removeMetaData($key = null)
     {
         if (!$key) {
             $this->metaData = [];
@@ -348,7 +348,7 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @return float
      */
-    public function subtotal(): float
+    public function subtotal()
     {
         return $this->sum('total');
     }
@@ -358,7 +358,7 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @return float
      */
-    public function itemsSubtotal(): float
+    public function itemsSubtotal()
     {
         return $this->sum('subtotal');
     }
@@ -368,12 +368,12 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @return int
      */
-    public function quantity(): int
+    public function quantity()
     {
         return $this->sum('quantity');
     }
 
-    public function discountedValue(): float
+    public function discountedValue()
     {
         return round($this->subtotal() - $this->total(), 2);
     }
@@ -383,7 +383,7 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @return float
      */
-    public function weight(): float
+    public function weight()
     {
         return $this->sum('weight');
     }
@@ -396,7 +396,7 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @return array
      */
-    public function conditions($type = null, $includeItems = true): array
+    public function conditions($type = null, $includeItems = true)
     {
         $conditions = [];
 
@@ -424,7 +424,7 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @return array
      */
-    public function itemsConditions(): array
+    public function itemsConditions()
     {
         $conditions = [];
 
@@ -442,7 +442,7 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @return float
      */
-    public function itemsConditionsTotal($type = null): float|array
+    public function itemsConditionsTotal($type = null)
     {
         $this->conditionResults = [];
 
@@ -476,7 +476,7 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @return float
      */
-    public function itemsConditionsTotalSum($type = null): float
+    public function itemsConditionsTotalSum($type = null)
     {
         if (!$type) {
             return array_sum(
@@ -494,7 +494,7 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @return array
      */
-    public function getItemsConditionsOrder(): array
+    public function getItemsConditionsOrder()
     {
         return $this->itemsConditionsOrder;
     }
@@ -511,10 +511,6 @@ class CartCollection extends BaseCollection implements Serializable
         $this->itemsConditionsOrder = $order;
     }
 
-    /**
-     * @param $name
-     * @return mixed|null
-     */
     public function getConditionByName($name)
     {
         return $this->conditions[$name] ?? null;
@@ -524,11 +520,11 @@ class CartCollection extends BaseCollection implements Serializable
      * Removes a condition by its name.
      *
      * @param string $name
-     * @param bool $includeItems
+     * @param bool   $includeItems
      *
      * @return void
      */
-    public function removeConditionByName(string $name, bool $includeItems = true)
+    public function removeConditionByName($name, $includeItems = true)
     {
         $this->removeConditions($name, $includeItems, 'name');
     }
@@ -537,11 +533,11 @@ class CartCollection extends BaseCollection implements Serializable
      * Removes a condition by its type.
      *
      * @param string $type
-     * @param bool $includeItems
+     * @param bool   $includeItems
      *
      * @return void
      */
-    public function removeConditionByType(string $type, bool $includeItems = true)
+    public function removeConditionByType($type, $includeItems = true)
     {
         $this->removeConditions($type, $includeItems, 'type');
     }
@@ -585,7 +581,7 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @return array
      */
-    public function find(array $data): array
+    public function find($data)
     {
         $rows = [];
 
@@ -598,10 +594,6 @@ class CartCollection extends BaseCollection implements Serializable
         return $rows;
     }
 
-    /**
-     * @param $id
-     * @return mixed|null
-     */
     public function findByID($id)
     {
         $cartItem = null;
@@ -620,7 +612,7 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @return array
      */
-    public function getRequiredIndexes(): array
+    public function getRequiredIndexes()
     {
         return array_unique(array_merge($this->reservedIndexes, $this->requiredIndexes));
     }
@@ -629,11 +621,11 @@ class CartCollection extends BaseCollection implements Serializable
      * Sets the required indexes.
      *
      * @param array $indexes
-     * @param bool $merge
+     * @param bool  $merge
      *
      * @return void
      */
-    public function setRequiredIndexes(array $indexes = [], bool $merge = true)
+    public function setRequiredIndexes($indexes = [], $merge = true)
     {
         $currentIndexes = $merge ? $this->requiredIndexes : [];
 
@@ -643,9 +635,9 @@ class CartCollection extends BaseCollection implements Serializable
     /**
      * Returns the cart instance.
      *
-     * @return  Cart
+     * @return  \IZal\Lshopify\Cart\Cart
      */
-    public function getCart(): Cart
+    public function getCart()
     {
         return $this->cart;
     }
@@ -653,7 +645,7 @@ class CartCollection extends BaseCollection implements Serializable
     /**
      * Sets the cart instance.
      *
-     * @param Cart $cart
+     * @param  \IZal\Lshopify\Cart\Cart $cart
      *
      * @return $this
      */
@@ -669,7 +661,7 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @return string
      */
-    public function serialize(): string
+    public function serialize()
     {
         $data = [];
 
@@ -701,7 +693,7 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @return array
      */
-    public function getSerializable(): array
+    public function getSerializable()
     {
         return $this->serializable;
     }
@@ -713,7 +705,7 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @return $this
      */
-    public function setSerializable(array $properties): static
+    public function setSerializable(array $properties)
     {
         $this->serializable = $properties;
 
@@ -725,11 +717,11 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @param array $attributes
      *
-     * @return  ItemAttributesCollection
-     * @throws  CartMissingRequiredIndexException
+     * @throws  \IZal\Lshopify\Cart\Exceptions\CartMissingRequiredIndexException
      *
+     * @return  \IZal\Lshopify\Cart\Collections\ItemAttributesCollection
      */
-    protected function prepareItemAttributes(array $attributes): ItemAttributesCollection
+    protected function prepareItemAttributes(array $attributes)
     {
         $data = [];
 
@@ -752,7 +744,7 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @return string
      */
-    protected function generateRowId($id, $item): string
+    protected function generateRowId($id, $item)
     {
         return md5($id . serialize($item));
     }
@@ -764,7 +756,7 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @return bool
      */
-    protected function isMulti($array): bool
+    protected function isMulti($array)
     {
         return is_array(array_shift($array));
     }
