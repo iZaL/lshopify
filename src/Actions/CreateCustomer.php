@@ -6,7 +6,6 @@ use IZal\Lshopify\Models\Customer;
 
 class CreateCustomer
 {
-
     /**
      * @param array $attributes
      * @return Customer
@@ -19,5 +18,4 @@ class CreateCustomer
                 ->toArray()
         );
     }
-
 }

@@ -9,7 +9,6 @@ use Illuminate\Support\Arr;
 
 class CreateCustomerAddress
 {
-
     /**
      * @param Customer $customer
      * @param array $attributes
@@ -22,5 +21,4 @@ class CreateCustomerAddress
         }
         return $customer->addresses()->create(Arr::only($attributes, (new CustomerAddress())->getFillable()));
     }
-
 }

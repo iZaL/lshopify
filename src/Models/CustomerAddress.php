@@ -47,8 +47,8 @@ class CustomerAddress extends BaseModel
      * @param array $fillables
      * @return array
      */
-    #[Pure] public static function parseShippingAddress(array $attributes, array $fillables): array
-    {
+    #[Pure]
+    public static function parseShippingAddress(array $attributes, array $fillables): array {
         $shippingAttributes = [];
         foreach ($attributes as $key => $value) {
             $shippingAttributes['shipping_' . $key] = $value;

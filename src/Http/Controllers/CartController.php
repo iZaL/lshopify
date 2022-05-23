@@ -21,9 +21,7 @@ class CartController extends Controller
             'variantIDs' => 'nullable|array',
             'orderID' => 'nullable|exists:orders,id',
         ]);
-
-        $addCartItem->run($request);
-
+        $addCartItem->run($request->variantIDs);
         return redirect()->back();
     }
 
@@ -38,9 +36,7 @@ class CartController extends Controller
             'orderID' => 'nullable|exists:orders,id',
             'item.quantity' => 'required|integer|gt:0',
         ]);
-
         $cart = app('cart');
-        $cart->item($request->rowId);
         $cart->update($request->rowId, $request->item);
         return redirect()->back();
     }
@@ -54,7 +50,6 @@ class CartController extends Controller
         ]);
         $cart = app('cart');
         $cart->remove($request->rowId);
-
         return redirect()->back();
     }
 

@@ -18,8 +18,11 @@ class CustomerController extends Controller
         return Inertia::render('Customer/CustomerIndex', ['customers' => $customers]);
     }
 
-    public function store(CustomerStoreRequest $request, CreateCustomer $createCustomer, CreateCustomerAddress $createCustomerAddress): \Illuminate\Http\RedirectResponse
-    {
+    public function store(
+        CustomerStoreRequest $request,
+        CreateCustomer $createCustomer,
+        CreateCustomerAddress $createCustomerAddress
+    ): \Illuminate\Http\RedirectResponse {
         $customer = $createCustomer->run($request->customer);
         $createCustomerAddress->run($customer, $request->address);
         return redirect()
