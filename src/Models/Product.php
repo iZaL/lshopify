@@ -17,7 +17,7 @@ class Product extends BaseModel
     use TaggableTrait;
     use ImageableTrait;
 
-    protected string $table = 'products';
+    protected $table = 'products';
 
     protected $fillable = [
         'title',
@@ -30,7 +30,7 @@ class Product extends BaseModel
         'seo_url',
     ];
 
-    protected array $with = ['image'];
+    protected $with = ['image'];
 
     public static function newFactory(): ProductFactory
     {

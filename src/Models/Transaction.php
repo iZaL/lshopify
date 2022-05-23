@@ -19,7 +19,7 @@ class Transaction extends BaseModel
 
     public const GATEWAY_MANUAL = 'manual';
 
-    protected string $table = 'transactions';
+    protected $table = 'transactions';
 
     protected $fillable = [
         'amount',

@@ -12,7 +12,7 @@ class CollectionCondition extends BaseModel
 
     public $timestamps = false;
 
-    protected string $table = 'collection_conditions';
+    protected $table = 'collection_conditions';
 
     protected $fillable = ['collection_id', 'field', 'criteria', 'value'];
 

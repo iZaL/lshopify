@@ -4,7 +4,7 @@ namespace IZal\Lshopify\Models;
 
 class VariantOption extends BaseModel
 {
-    protected string $table = 'variant_options';
+    protected $table = 'variant_options';
 
     protected $fillable = ['variant_id', 'name', 'position', 'values'];
 

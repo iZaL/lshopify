@@ -43,8 +43,7 @@ class DiscountController extends Controller
         }
 
         $discount = [
-            'title' => '',
-            'code' => Str::upper(Str::random(8)),
+            'name' => Str::upper(Str::random(8)),
             'type' => $discountType,
             'value' => 300,
             'value_type' => 'percent',

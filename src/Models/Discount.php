@@ -10,7 +10,7 @@ class Discount extends BaseModel
 {
     use HasFactory;
 
-    protected string $table = 'discounts';
+    protected $table = 'discounts';
 
     protected $casts = [
         'once_per_customer' => 'boolean',

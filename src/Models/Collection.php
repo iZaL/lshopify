@@ -17,7 +17,7 @@ class Collection extends BaseModel
 
     public $timestamps = false;
 
-    protected string $table = 'collections';
+    protected $table = 'collections';
 
     protected $fillable = ['name', 'slug', 'type', 'determiner', 'description'];
 

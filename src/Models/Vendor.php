@@ -9,7 +9,7 @@ class Vendor extends BaseModel
 {
     use HasFactory;
 
-    protected string $table = 'vendors';
+    protected $table = 'vendors';
 
     protected $casts = [];
 

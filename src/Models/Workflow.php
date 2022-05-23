@@ -19,7 +19,7 @@ class Workflow extends BaseModel
     public const STATUS_SUCCESS = 'success';
     public const STATUS_CANCELLED = 'cancelled';
 
-    protected string $table = 'workflows';
+    protected $table = 'workflows';
 
     protected $guarded = ['id'];
 

@@ -10,7 +10,7 @@ class OrderReturn extends BaseModel
 
     public $timestamps = false;
 
-    protected string $table = 'order_returns';
+    protected $table = 'order_returns';
 
     protected $fillable = ['order_id', 'variant_id', 'restock', 'price', 'unit_price', 'total', 'subtotal', 'quantity'];
 

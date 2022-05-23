@@ -14,7 +14,7 @@ class Category extends BaseModel
     /**
      * @var string
      */
-    protected string $table = 'categories';
+    protected $table = 'categories';
 
     protected $fillable = ['name'];
 

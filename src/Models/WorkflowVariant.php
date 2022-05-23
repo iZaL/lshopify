@@ -10,7 +10,7 @@ class WorkflowVariant extends BaseModel
 {
     use HasFactory;
 
-    protected string $table = 'workflow_variants';
+    protected $table = 'workflow_variants';
 
     protected $guarded = ['id'];
 

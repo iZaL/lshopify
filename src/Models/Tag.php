@@ -12,7 +12,7 @@ class Tag extends BaseModel
 
     public $timestamps = false;
 
-    protected string $table = 'tags';
+    protected $table = 'tags';
 
     protected $fillable = ['name', 'slug'];
 

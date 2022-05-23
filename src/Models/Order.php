@@ -14,7 +14,7 @@ class Order extends BaseModel
     use HasFactory;
     use MoneyFormatter;
 
-    protected string $table = 'orders';
+    protected $table = 'orders';
 
     protected $casts = [
         'total' => 'decimal:2',

@@ -12,7 +12,7 @@ class CustomerAddress extends BaseModel
 {
     use HasFactory;
 
-    protected string $table = 'customer_addresses';
+    protected $table = 'customer_addresses';
 
     protected $casts = [];
 

@@ -10,7 +10,7 @@ class DraftOrder extends Order
 {
     use HasFactory;
 
-    protected string $table = 'orders';
+    protected $table = 'orders';
 
     protected static function boot()
     {

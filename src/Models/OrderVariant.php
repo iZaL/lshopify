@@ -9,7 +9,7 @@ class OrderVariant extends BaseModel
 {
     use HasFactory;
 
-    protected string $table = 'order_variants';
+    protected $table = 'order_variants';
 
     protected $casts = [];
 
