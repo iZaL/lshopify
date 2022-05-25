@@ -1,7 +1,9 @@
 <?php
 
-namespace IZal\Lshopify\Actions;
+namespace IZal\Lshopify\Actions\Product;
 
+use IZal\Lshopify\Actions\ImageUploadAction;
+use IZal\Lshopify\Actions\VariantCreateAction;
 use IZal\Lshopify\Models\Product;
 use Illuminate\Support\Collection;
 

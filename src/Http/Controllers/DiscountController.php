@@ -33,7 +33,6 @@ class DiscountController extends Controller
 
     public function create(Request $request)
     {
-
         $discount = [
             'name' => Str::upper(Str::random(8)),
             'auto' => $request->auto ?: 0,

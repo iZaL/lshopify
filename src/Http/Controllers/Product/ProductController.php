@@ -2,11 +2,14 @@
 
 namespace IZal\Lshopify\Http\Controllers\Product;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
-use IZal\Lshopify\Actions\CreateProduct;
-use IZal\Lshopify\Actions\ProductUpdateAction;
+use Inertia\Response;
+use IZal\Lshopify\Actions\Product\CreateProduct;
+use IZal\Lshopify\Actions\Product\DeleteProduct;
+use IZal\Lshopify\Actions\Product\UpdateProduct;
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\ProductStoreRequest;
 use IZal\Lshopify\Models\Category;
@@ -23,7 +26,7 @@ use IZal\Lshopify\Resources\VendorResource;
 
 class ProductController extends Controller
 {
-    public function index(Request $request): \Inertia\Response
+    public function index(Request $request): Response
     {
         $products = Product::query()
             ->with(['category', 'vendor', 'tags'])
@@ -101,7 +104,7 @@ class ProductController extends Controller
         ]);
     }
 
-    public function create(): \Inertia\Response
+    public function create(): Response
     {
         $data = [
             'collection' => CollectionResource::collection(Collection::all()),
@@ -117,7 +120,7 @@ class ProductController extends Controller
     public function store(
         ProductStoreRequest $request,
         CreateProduct $productCreateAction
-    ): \Illuminate\Http\RedirectResponse {
+    ): RedirectResponse {
         $product = Product::getModel();
         DB::beginTransaction();
 
@@ -136,7 +139,7 @@ class ProductController extends Controller
             ->with('success', 'Saved');
     }
 
-    public function edit($id): \Inertia\Response
+    public function edit($id): Response
     {
         $product = Product::with([
             'images',
@@ -163,14 +166,11 @@ class ProductController extends Controller
         return Inertia::render('Product/ProductEdit', $data);
     }
 
-    public function update(
-        ProductStoreRequest $request,
-        ProductUpdateAction $action,
-        $id
-    ): \Illuminate\Http\RedirectResponse {
+    public function update(ProductStoreRequest $request, UpdateProduct $action, $id): RedirectResponse
+    {
         $product = Product::find($id);
         try {
-            $action->update($product, collect($request->all()));
+            $action->run($product, collect($request->all()));
         } catch (\Exception $e) {
             return redirect()
                 ->back()
@@ -182,7 +182,7 @@ class ProductController extends Controller
             ->with('success', 'Saved');
     }
 
-    public function delete(Request $request): \Illuminate\Http\RedirectResponse
+    public function delete(Request $request, DeleteProduct $deleteProduct): RedirectResponse
     {
         $this->validate($request, [
             'product_ids' => 'required|array',
@@ -190,7 +190,7 @@ class ProductController extends Controller
 
         $products = Product::whereIn('id', $request->product_ids);
 
-        $products->delete();
+        $deleteProduct->execute($products);
 
         return redirect()
             ->back()

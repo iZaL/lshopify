@@ -1,12 +1,14 @@
 <?php
 
-namespace IZal\Lshopify\Actions;
+namespace IZal\Lshopify\Actions\Product;
 
+use IZal\Lshopify\Actions\VariantCreateAction;
+use IZal\Lshopify\Actions\VariantUpdateAction;
 use IZal\Lshopify\Models\Product;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 
-class ProductUpdateAction
+class UpdateProduct
 {
     /**
      * @var VariantCreateAction
@@ -23,7 +25,7 @@ class ProductUpdateAction
         $this->variantUpdateAction = $variantUpdateAction;
     }
 
-    public function update(Product $product, Collection $requestData)
+    public function run(Product $product, Collection $requestData)
     {
         $productData = $requestData->only($product->getFillable());
         tap($product)->update($productData->toArray());

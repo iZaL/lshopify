@@ -16,7 +16,7 @@ class Discount extends BaseModel
         'once_per_customer' => 'boolean',
         'starts_at' => 'datetime',
         'ends_at' => 'datetime',
-        'auto' => 'boolean'
+        'auto' => 'boolean',
     ];
 
     protected $fillable = [

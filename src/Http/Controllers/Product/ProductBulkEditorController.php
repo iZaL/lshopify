@@ -2,11 +2,10 @@
 
 namespace IZal\Lshopify\Http\Controllers\Product;
 
-use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use IZal\Lshopify\Actions\ProductUpdateAction;
+use IZal\Lshopify\Actions\UpdateProduct;
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\ProductBulkEditorUpdateRequest;
 use IZal\Lshopify\Models\Product;
@@ -32,18 +31,18 @@ class ProductBulkEditorController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param ProductUpdateAction $action
+     * @param ProductBulkEditorUpdateRequest $request
+     * @param UpdateProduct $action
      * @return RedirectResponse
      */
-    public function update(ProductBulkEditorUpdateRequest $request, ProductUpdateAction $action): RedirectResponse
+    public function update(ProductBulkEditorUpdateRequest $request, UpdateProduct $action): RedirectResponse
     {
         $products = $request->get('products');
 
         foreach ($products as $product) {
             $productModel = Product::find($product['id']);
             if ($productModel) {
-                $action->update($productModel, collect($product));
+                $action->run($productModel, collect($product));
             }
         }
         return redirect()
