@@ -33,18 +33,10 @@ class DiscountController extends Controller
 
     public function create(Request $request)
     {
-        $validDiscountTypes = [
-            'code' => 'Code',
-            'automatic' => 'Automatic',
-        ];
-        $discountType = $request->type ?? 'code';
-        if (!in_array($discountType, array_keys($validDiscountTypes))) {
-            $discountType = 'code';
-        }
 
         $discount = [
             'name' => Str::upper(Str::random(8)),
-            'type' => $discountType,
+            'auto' => $request->auto ?: 0,
             'value' => 300,
             'value_type' => 'percent',
             'target_type' => 'all_products',

@@ -69,9 +69,7 @@ export default function DiscountIndex() {
         <div className="mt-4">
           <Button
             onClick={() =>
-              Inertia.get(
-                route('lshopify.discounts.create', {type: 'automatic'}),
-              )
+              Inertia.get(route('lshopify.discounts.create', {auto: true}))
             }>
             Create automatic discount
           </Button>

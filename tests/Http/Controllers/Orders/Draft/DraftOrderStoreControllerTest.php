@@ -44,7 +44,7 @@ class DraftOrderStoreControllerTest extends CartTestCase
             'value_type' => 'amount',
             'value' => '10',
             'reason' => 'VVIP customer',
-            'type' => 'automatic',
+            'auto' => 1,
             'target_type' => 'all_products',
         ];
 
@@ -62,7 +62,7 @@ class DraftOrderStoreControllerTest extends CartTestCase
             'value' => '10',
             'reason' => 'VIP customer',
             'name' => $variant->id,
-            'type' => 'automatic',
+            'auto' => '1',
             'target_type' => 'all_products',
         ];
 

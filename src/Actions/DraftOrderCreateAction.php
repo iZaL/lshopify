@@ -40,7 +40,7 @@ class DraftOrderCreateAction extends OrderCreateAction
     public function create(Cart $cart): DraftOrder
     {
         $order = $this->order->create($this->getCartData($cart));
-        $this->createOrderCondition($order, $cart);
+        $this->createOrderDiscount($order, $cart);
         $this->createVariantsFromCartItems($order, $cart);
         return $order;
     }
@@ -53,7 +53,7 @@ class DraftOrderCreateAction extends OrderCreateAction
     public function update(DraftOrder $order, Cart $cart, array $attributes)
     {
         $order->update(array_merge($this->getCartData($cart), Arr::only($attributes, $order->getFillable())));
-        $this->createOrderCondition($order, $cart);
+        $this->createOrderDiscount($order, $cart);
         $this->createVariantsFromCartItems($order, $cart);
     }
 
@@ -61,29 +61,27 @@ class DraftOrderCreateAction extends OrderCreateAction
      * @param  DraftOrder  $order
      * @param  Cart  $cart
      */
-    private function createOrderCondition(DraftOrder $order, Cart $cart): void
+    private function createOrderDiscount(DraftOrder $order, Cart $cart): void
     {
-        $cartCondition = $cart->getConditionByName('cart');
-        if ($cartCondition) {
-            if ($cartCondition->type === 'discount') {
-                $discount = $order->discount;
-                if ($discount) {
-                    $discount->update([
-                        'value' => $cartCondition->value,
-                        'value_type' => $cartCondition->suffix === 'percent' ? 'percent' : 'amount',
-                        'reason' => $cartCondition->reason,
-                    ]);
-                } else {
-                    $discount = $order->discount()->create([
-                        'name' => 'Admin cart discount',
-                        'type' => 'automatic',
-                        'value' => $cartCondition->value,
-                        'value_type' => $cartCondition->suffix === 'percent' ? 'percent' : 'amount',
-                        'reason' => $cartCondition->reason,
-                    ]);
-                    $order->discount_id = $discount->id;
-                    $order->save();
-                }
+        $cartDiscount = $cart->getConditionByName('cart');
+        if ($cartDiscount && $cartDiscount->type === 'discount') {
+            $discount = $order->discount;
+            if ($discount) {
+                $discount->update([
+                    'value' => $cartDiscount->value,
+                    'value_type' => $cartDiscount->suffix === 'percent' ? 'percent' : 'amount',
+                    'reason' => $cartDiscount->reason,
+                ]);
+            } else {
+                $discount = $order->discount()->create([
+                    'name' => 'Admin cart discount',
+                    'auto' => 1,
+                    'value' => $cartDiscount->value,
+                    'value_type' => $cartDiscount->suffix === 'percent' ? 'percent' : 'amount',
+                    'reason' => $cartDiscount->reason,
+                ]);
+                $order->discount_id = $discount->id;
+                $order->save();
             }
         }
     }
@@ -147,7 +145,7 @@ class DraftOrderCreateAction extends OrderCreateAction
                 $order->discounts()->sync([]);
                 $discount = $order->discounts()->create([
                     'name' => 'Admin discount',
-                    'type' => 'automatic',
+                    'auto' => 1,
                     'value' => $itemCondition->value,
                     'value_type' => $itemCondition->suffix === 'percent' ? 'percent' : 'amount',
                     'reason' => $itemCondition->reason,

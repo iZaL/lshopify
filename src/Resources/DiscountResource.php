@@ -6,14 +6,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class DiscountResource extends JsonResource
 {
-    //    public static $wrap = false;
-
     public function toArray($request)
     {
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'type' => $this->type,
+            'auto' => $this->auto,
             'value' => $this->value,
             'value_type' => $this->value_type,
             'target_type' => $this->target_type,

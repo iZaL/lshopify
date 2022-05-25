@@ -10,7 +10,7 @@ class DiscountStoreRequest extends VariantFieldRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'type' => ['required', 'string', Rule::in(['code', 'automatic'])],
+            'auto' => ['required', 'boolean'],
             'value_type' => ['required', 'string', Rule::in(['percent', 'amount'])],
             'value' => ['required', 'numeric'],
             'target_type' => ['required', 'string', Rule::in(['all_products', 'products', 'collections'])],

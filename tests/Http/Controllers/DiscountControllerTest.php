@@ -30,7 +30,7 @@ class DiscountControllerTest extends TestCase
 
         $data = [
             "name" => "XXXXX",
-            "type" => "automatic",
+            "auto" => 1,
             "value" => 300,
             "value_type" => "percent",
             "target_type" => "all_products",

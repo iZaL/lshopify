@@ -233,9 +233,7 @@ export interface ButtonProps {
 export interface Discount {
   id: number;
   name: string;
-  // title: string | null;
-  // code: string;
-  type: 'code' | 'automatic';
+  auto: boolean;
   value: string;
   value_type: 'amount' | 'percent';
   target_type: DiscountTargetType;

@@ -5,7 +5,7 @@ namespace IZal\Lshopify\Actions;
 use IZal\Lshopify\Models\Product;
 use Illuminate\Support\Collection;
 
-class ProductCreateAction
+class CreateProduct
 {
     /**
      * @var ImageUploadAction
@@ -22,7 +22,7 @@ class ProductCreateAction
         $this->variantCreateAction = $variantCreateAction;
     }
 
-    public function create(Product $product, Collection $requestData): Product
+    public function run(Product $product, Collection $requestData): Product
     {
         $product = $product->create($requestData->only($product->getFillable())->toArray());
 

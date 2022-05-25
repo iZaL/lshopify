@@ -45,6 +45,10 @@ export default function DraftOrderEdit(props: Props) {
   });
 
   useEffect(() => {
+    console.log('data changed', data);
+  }, [data]);
+
+  useEffect(() => {
     setData({
       ...data,
       ...order,

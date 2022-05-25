@@ -5,7 +5,7 @@ namespace IZal\Lshopify\Http\Controllers\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
-use IZal\Lshopify\Actions\ProductCreateAction;
+use IZal\Lshopify\Actions\CreateProduct;
 use IZal\Lshopify\Actions\ProductUpdateAction;
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\ProductStoreRequest;
@@ -116,13 +116,13 @@ class ProductController extends Controller
 
     public function store(
         ProductStoreRequest $request,
-        ProductCreateAction $productCreateAction
+        CreateProduct $productCreateAction
     ): \Illuminate\Http\RedirectResponse {
         $product = Product::getModel();
         DB::beginTransaction();
 
         try {
-            $action = $productCreateAction->create($product, collect($request->all()));
+            $action = $productCreateAction->run($product, collect($request->all()));
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
