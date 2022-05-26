@@ -14,6 +14,7 @@ use IZal\Lshopify\Http\Requests\DraftOrderCustomerUpdateRequest;
 use IZal\Lshopify\Http\Requests\DraftOrderStoreRequest;
 use IZal\Lshopify\Http\Requests\DraftOrderUpdateRequest;
 use IZal\Lshopify\Models\Customer;
+use IZal\Lshopify\Models\Discount;
 use IZal\Lshopify\Models\DraftOrder;
 use IZal\Lshopify\Models\Order;
 use IZal\Lshopify\Models\Product;
@@ -112,7 +113,7 @@ class DraftOrderController extends Controller
 
         $productsResource = ProductResource::collection($products);
 
-        $order = DraftOrder::with(['variants.discounts', 'discount', 'discounts.variants', 'customer'])->find($id);
+        $order = DraftOrder::with(['variants.discounts', 'discount', 'customer'])->find($id);
         $orderResource = new OrderResource($order);
 
         $customers = Customer::all();
@@ -143,13 +144,6 @@ class DraftOrderController extends Controller
                 $cart->condition($discount);
             }
 
-            $discountVariants = $order->discounts
-                ->flatMap(function ($d) {
-                    return $d->variants;
-                })
-                ->pluck('id')
-                ->toArray();
-
             foreach ($order->variants as $variant) {
                 $cartItem = $cart->findByID($variant->id);
                 if (!$cartItem) {
@@ -161,26 +155,27 @@ class DraftOrderController extends Controller
                         'variant' => new VariantResource($variant),
                     ]);
 
-                    foreach ($variant->discounts as $discount) {
-                        if (in_array($discount->id, $discountVariants)) {
-                            $cartItemCondition = [
-                                'value' => $discount->value,
-                                'suffix' => $discount->value_type,
-                                'reason' => $discount->reason,
-                                'target' => 'subtotal',
-                                'name' => 'cart',
-                                'type' => 'discount',
-                            ];
-                            $discount = new Condition($cartItemCondition);
-                            $suffix = $discount->suffix === 'percent' ? '%' : '';
-                            $discount->setActions([
-                                [
-                                    'value' => '-' . $discount->value . $suffix,
-                                ],
-                            ]);
-                            $cart->update($cartItem->rowId, ['conditions' => $discount]);
-                        }
+                    $discountID = $variant->pivot->discount_id;
+                    if($discountID) {
+                        $discount = Discount::find($discountID);
+                        $cartItemCondition = [
+                            'value' => $discount->value,
+                            'suffix' => $discount->value_type,
+                            'reason' => $discount->reason,
+                            'target' => 'subtotal',
+                            'name' => 'cart',
+                            'type' => 'discount',
+                        ];
+                        $discount = new Condition($cartItemCondition);
+                        $suffix = $discount->suffix === 'percent' ? '%' : '';
+                        $discount->setActions([
+                            [
+                                'value' => '-' . $discount->value . $suffix,
+                            ],
+                        ]);
+                        $cart->update($cartItem->rowId, ['conditions' => $discount]);
                     }
+
                 }
             }
         }

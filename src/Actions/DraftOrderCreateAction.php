@@ -8,7 +8,6 @@ use IZal\Lshopify\Cart\Cart;
 use IZal\Lshopify\Cart\Collections\ItemCollection;
 use IZal\Lshopify\Models\Customer;
 use IZal\Lshopify\Models\CustomerAddress;
-use IZal\Lshopify\Models\Discount;
 use IZal\Lshopify\Models\DraftOrder;
 use IZal\Lshopify\Models\Order;
 use IZal\Lshopify\Models\Variant;
@@ -130,6 +129,8 @@ class DraftOrderCreateAction extends OrderCreateAction
     /**
      * @param DraftOrder $order
      * @param Variant $variant
+     * @param $itemCondition
+     * @return Model|BelongsTo
      */
     private function createVariantCondition(DraftOrder $order, Variant $variant, $itemCondition): Model|BelongsTo
     {
