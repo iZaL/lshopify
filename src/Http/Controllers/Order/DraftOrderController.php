@@ -2,6 +2,7 @@
 
 namespace IZal\Lshopify\Http\Controllers\Order;
 
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -88,19 +89,21 @@ class DraftOrderController extends Controller
                 ->with('error', 'Products cannot be empty.');
         }
 
+        DB::beginTransaction();
         try {
-            DB::transaction(function () use ($action, $cart) {
-                $order = $action->create($cart);
-                return redirect()
-                    ->route('lshopify.draft.orders.edit', $order->id)
-                    ->with('success', 'Saved');
-            });
+            $order = $action->create($cart);
+            DB::commit();
+
         } catch (Throwable $e) {
+            DB::rollBack();
             return redirect()
                 ->back()
                 ->with('error', $e->getMessage());
         }
 
+        return redirect()
+            ->route('lshopify.draft.orders.edit', $order->id)
+            ->with('success', 'Saved');
     }
 
     public function edit($id): \Inertia\Response
@@ -119,9 +122,9 @@ class DraftOrderController extends Controller
         $customers = Customer::all();
         $customersResource = CustomerResource::collection($customers);
 
-        if (!session()->has('cartOrder') || session('cartOrder') !== $order->id) {
-            $cart->clear();
-            session()->put('cartOrder', $order->id);
+//        if (!session()->has('cartOrder') || session('cartOrder') !== $order->id) {
+//            $cart->clear();
+//            session()->put('cartOrder', $order->id);
             // sync DB orders with the cart, only on first request and ignore on subsequent requests.
 
             if ($discount = $order->discount) {
@@ -178,7 +181,7 @@ class DraftOrderController extends Controller
 
                 }
             }
-        }
+//        }
 
         $items = [];
 
@@ -216,9 +219,11 @@ class DraftOrderController extends Controller
     {
         $order = DraftOrder::find($id);
 
-        $cart = app('cart');
-
-        $action->update($order, $cart, $request->except('shipping', 'billing', 'customer_id', 'total', 'subtotal'));
+        try {
+            $action->update($order, $request->except('shipping', 'billing', 'customer_id', 'total', 'subtotal'));
+        } catch (Exception $e) {
+            dd($e->getMessage());
+        }
 
         if ($request->shipping) {
             $action->updateShippingAddress($order, $request->shipping);

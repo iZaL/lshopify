@@ -8,6 +8,7 @@ use IZal\Lshopify\Cart\Cart;
 use IZal\Lshopify\Cart\Collections\ItemCollection;
 use IZal\Lshopify\Models\Customer;
 use IZal\Lshopify\Models\CustomerAddress;
+use IZal\Lshopify\Models\Discount;
 use IZal\Lshopify\Models\DraftOrder;
 use IZal\Lshopify\Models\Order;
 use IZal\Lshopify\Models\Variant;
@@ -23,93 +24,92 @@ class DraftOrderCreateAction extends OrderCreateAction
      * @var Variant
      */
     private $variant;
+    private Cart $cart;
 
     /**
      * DraftOrderCreateAction constructor.
-     * @param  DraftOrder  $order
-     * @param  Variant  $variant
+     * @param DraftOrder $order
+     * @param Variant $variant
+     * @param Cart $cart
      */
-    public function __construct(DraftOrder $order, Variant $variant)
+    public function __construct(DraftOrder $order, Variant $variant, Cart $cart)
     {
         $this->order = $order;
         $this->variant = $variant;
+        $this->cart = $cart;
     }
 
     /**
-     * @param  Cart  $cart
      * @return DraftOrder
      */
-    public function create(Cart $cart): DraftOrder
+    public function create(): DraftOrder
     {
-        $order = $this->order->create($this->getCartData($cart));
-        $this->createOrderDiscount($order, $cart);
-        $this->createVariantsFromCartItems($order, $cart);
+        $order = $this->order->create($this->getCartData());
+        $this->createOrderDiscount($order);
+        $this->createVariantsFromCartItems($order);
         return $order;
     }
 
     /**
      * @param  DraftOrder  $order
-     * @param  Cart  $cart
      * @param  array  $attributes
      */
-    public function update(DraftOrder $order, Cart $cart, array $attributes)
+    public function update(DraftOrder $order, array $attributes)
     {
-        $order->update(array_merge($this->getCartData($cart), Arr::only($attributes, $order->getFillable())));
-        $this->createOrderDiscount($order, $cart);
-        $this->createVariantsFromCartItems($order, $cart);
+        $order->update(array_merge($this->getCartData(), Arr::only($attributes, $order->getFillable())));
+        if($order->discount) {
+            $this->updateOrderDiscount($order->discount);
+        } else {
+            $this->createOrderDiscount($order);
+        }
+        $this->createVariantsFromCartItems($order);
     }
 
-    /**
-     * @param  DraftOrder  $order
-     * @param  Cart  $cart
-     */
-    private function createOrderDiscount(DraftOrder $order, Cart $cart): void
+    private function updateOrderDiscount(Discount $discount) {
+        $cartDiscount = $this->cart->getConditionByName('cart');
+        if($cartDiscount) {
+            $discount->update([
+                'value' => $cartDiscount->value,
+                'value_type' => $cartDiscount->suffix === 'percent' ? 'percent' : 'amount',
+                'reason' => $cartDiscount->reason,
+            ]);
+        }
+    }
+
+    private function createOrderDiscount(Order $order)
     {
+        $cart = $this->cart;
         $cartDiscount = $cart->getConditionByName('cart');
-        if ($cartDiscount && $cartDiscount->type === 'discount') {
-            $discount = $order->discount;
-            if ($discount) {
-                $discount->update([
-                    'value' => $cartDiscount->value,
-                    'value_type' => $cartDiscount->suffix === 'percent' ? 'percent' : 'amount',
-                    'reason' => $cartDiscount->reason,
-                ]);
-            } else {
-                $discount = $order->discount()->create([
-                    'name' => 'Admin cart discount',
-                    'auto' => 1,
-                    'value' => $cartDiscount->value,
-                    'value_type' => $cartDiscount->suffix === 'percent' ? 'percent' : 'amount',
-                    'reason' => $cartDiscount->reason,
-                ]);
-                $order->discount_id = $discount->id;
-                $order->save();
-            }
+        if($cartDiscount) {
+            $discount = $order->discount()->create([
+                'name' => 'Admin cart discount',
+                'auto' => 1,
+                'value' => $cartDiscount->value,
+                'value_type' => $cartDiscount->suffix === 'percent' ? 'percent' : 'amount',
+                'reason' => $cartDiscount->reason,
+            ]);
+            $order->discount_id = $discount->id;
+            $order->save();
         }
     }
 
     /**
      * @param DraftOrder $order
-     * @param Cart $cart
-     * @return array
+     * @return void
      */
-    private function createVariantsFromCartItems(DraftOrder $order, Cart $cart): array
+    private function createVariantsFromCartItems(DraftOrder $order): void
     {
-        // delete order variants
         $order->variants()->sync([]);
-        $variants = [];
-        foreach ($cart->items() as $cartItem) {
-            $variants[] = $this->createVariantFromCartItem($order, $cartItem);
+        foreach ($this->cart->items() as $cartItem) {
+            $this->createVariantFromCartItem($order, $cartItem);
         }
-        return $variants;
     }
 
     /**
      * @param DraftOrder $order
      * @param ItemCollection $cartItem
-     * @return Variant
      */
-    public function createVariantFromCartItem(DraftOrder $order, ItemCollection $cartItem): Variant
+    public function createVariantFromCartItem(DraftOrder $order, ItemCollection $cartItem): void
     {
         $variant = $this->variant->find($cartItem->id);
         $variantDiscount = null;
@@ -123,7 +123,6 @@ class DraftOrderCreateAction extends OrderCreateAction
                 $this->getCartItemData($cartItem)
             ));
         }
-        return $variant;
     }
 
     /**
@@ -187,11 +186,11 @@ class DraftOrderCreateAction extends OrderCreateAction
     }
 
     /**
-     * @param  Cart  $cart
      * @return array
      */
-    private function getCartData(Cart $cart): array
+    private function getCartData(): array
     {
+        $cart = $this->cart;
         return [
             'total' => $cart->total(),
             'subtotal' => $cart->subtotal(),
