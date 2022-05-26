@@ -31,6 +31,8 @@ class Discount extends BaseModel
         'usage_limit',
         'customer_selection',
         'reason',
+        'starts_at',
+        'ends_at'
     ];
 
     public static function newFactory(): DiscountFactory

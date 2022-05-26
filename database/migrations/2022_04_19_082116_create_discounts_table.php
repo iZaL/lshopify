@@ -20,14 +20,14 @@ class CreateDiscountsTable extends Migration
             $table->string('value_type')->default('percent');// amount, percentage
             $table->string('target_type')->default('all_products'); // all_products, products, collections;
             $table->string('min_requirement_type')->nullable()->default('amount'); // amount, quantity, null
-            $table->float('min_requirement_value')->nullable(); // all_products, products, collections;
+            $table->float('min_requirement_value')->nullable();
             $table->string('allocation_method',)->default('each'); // each products, across;
             $table->string('customer_selection',)->default('all'); // all, custom, none;
             $table->integer('usage_limit')->nullable()->default(1);
             $table->text('reason')->nullable();
             $table->boolean('once_per_customer',)->default(1);
+            $table->boolean('auto')->default(0); // is automatic
             $table->boolean('active')->default(1);
-            $table->boolean('auto')->default(0);
             $table->dateTime('starts_at')->nullable();
             $table->dateTime('ends_at')->nullable();
             $table->timestamps();

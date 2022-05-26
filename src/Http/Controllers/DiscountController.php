@@ -2,11 +2,12 @@
 
 namespace IZal\Lshopify\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+use IZal\Lshopify\Actions\Discount\CreateDiscount;
+use IZal\Lshopify\Actions\Discount\UpdateDiscount;
 use IZal\Lshopify\Http\Requests\DiscountStoreRequest;
 use IZal\Lshopify\Models\Collection;
 use IZal\Lshopify\Models\Customer;
@@ -73,23 +74,11 @@ class DiscountController extends Controller
         ]);
     }
 
-    public function store(DiscountStoreRequest $request)
+    public function store(DiscountStoreRequest $request, CreateDiscount $createDiscount)
     {
         try {
             DB::beginTransaction();
-            $discountModel = $this->discount->create($request->only($this->discount->getFillable()));
-            $this->updateStartEndDate($discountModel, $request);
-
-            if ($discountModel->target_type == 'products') {
-                $discountModel->variants()->sync($request->variants);
-            } elseif ($discountModel->target_type == 'collections') {
-                $discountModel->collections()->sync($request->collections);
-            }
-
-            if ($request->customers) {
-                $discountModel->customers()->sync($request->customers);
-            }
-
+            $discount = $createDiscount->run($request->except(['back']));
             DB::commit();
 
             if ($request->has('back')) {
@@ -99,9 +88,12 @@ class DiscountController extends Controller
             }
 
             return redirect()
-                ->route('lshopify.discounts.edit', $discountModel->id)
+                ->route('lshopify.discounts.edit', $discount->id)
                 ->with('success', 'Discount updated successfully');
+
         } catch (\Exception $e) {
+
+            dd($e->getMessage());
             DB::rollBack();
             return redirect()
                 ->back()
@@ -114,8 +106,8 @@ class DiscountController extends Controller
         $discount = $this->discount->with(['customers', 'collections', 'variants.product'])->find($id);
 
         $collections = Collection::query();
-        $products = Product::with(['variants.product', 'default_variant.product']);
         $customers = Customer::query();
+        $products = Product::with(['variants.product', 'default_variant.product']);
 
         $collections = $collections->when($request->collection_search, function ($query, $term) {
             return $query->where('name', 'like', "%{$term}%");
@@ -137,23 +129,11 @@ class DiscountController extends Controller
         ]);
     }
 
-    public function update(DiscountStoreRequest $request, $id)
+    public function update(DiscountStoreRequest $request, UpdateDiscount $updateDiscount, $id)
     {
         try {
             $discountModel = $this->discount->findOrFail($id);
-            $discountModel->update($request->only($this->discount->getFillable()));
-
-            if ($discountModel->target_type == 'products') {
-                $discountModel->products()->sync($request->products);
-            } elseif ($discountModel->target_type == 'collections') {
-                $discountModel->collections()->sync($request->collections);
-            }
-
-            if ($request->customers) {
-                $discountModel->customers()->sync($request->customers);
-            }
-
-            $this->updateStartEndDate($discountModel, $request);
+            $updateDiscount->run($discountModel, $request->only($this->discount->getFillable()));
             return redirect()
                 ->route('lshopify.discounts.edit', $discountModel->id)
                 ->with('success', 'Discount updated successfully');
@@ -164,26 +144,5 @@ class DiscountController extends Controller
         }
     }
 
-    private function updateStartEndDate($discountModel, $request)
-    {
-        [$startsAt, $endsAt] = $this->parseDate([$request->starts_at, $request->ends_at]);
-        $discountModel->starts_at = $startsAt;
-        $discountModel->ends_at = $endsAt;
-        $discountModel->save();
-    }
 
-    private function parseDate($dates)
-    {
-        $startsAt = Carbon::parse($dates[0]);
-        $endsAt = Carbon::parse($dates[1]);
-
-        if ($startsAt->isPast()) {
-            throw new \Exception('Start date must be in future');
-        }
-
-        if ($startsAt->gt($endsAt)) {
-            throw new \Exception('End date must be greater than start date');
-        }
-        return [$startsAt->format('Y-m-d h:i:s'), $endsAt->format('Y-m-d h:i:s')];
-    }
 }

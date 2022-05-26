@@ -2,6 +2,7 @@
 
 namespace IZal\Lshopify\Http\Controllers\Order;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -78,7 +79,7 @@ class DraftOrderController extends Controller
     public function store(
         DraftOrderStoreRequest $request,
         DraftOrderCreateAction $action
-    ): \Illuminate\Http\RedirectResponse {
+    ): RedirectResponse {
         $cart = app('cart');
 
         if (!$cart->items()->count()) {
@@ -90,20 +91,36 @@ class DraftOrderController extends Controller
         DB::beginTransaction();
 
         try {
-            $order = $action->create($cart);
-            DB::commit();
-        } catch (\Exception $e) {
+            DB::transaction(function ($q) use ($action, $cart, ) {
+                $order = $action->create($cart);
+                return redirect()
+                    ->route('lshopify.draft.orders.edit', $order->id)
+                    ->with('success', 'Saved');
+            });
+        } catch (\Throwable $e) {
             dd($e->getMessage());
-            DB::rollBack();
-
             return redirect()
                 ->back()
                 ->with('error', $e->getMessage());
         }
 
-        return redirect()
-            ->route('lshopify.draft.orders.edit', $order->id)
-            ->with('success', 'Saved');
+
+//
+////        try {
+////            $order = $action->create($cart);
+////            DB::commit();
+////        } catch (\Exception $e) {
+////            dd($e->getMessage());
+////            DB::rollBack();
+////
+////            return redirect()
+////                ->back()
+////                ->with('error', $e->getMessage());
+////        }
+//
+//        return redirect()
+//            ->route('lshopify.draft.orders.edit', $order->id)
+//            ->with('success', 'Saved');
     }
 
     public function edit($id): \Inertia\Response
@@ -225,7 +242,7 @@ class DraftOrderController extends Controller
         $id,
         DraftOrderUpdateRequest $request,
         DraftOrderCreateAction $action
-    ): \Illuminate\Http\RedirectResponse {
+    ): RedirectResponse {
         $order = DraftOrder::find($id);
 
         $cart = app('cart');
@@ -245,7 +262,7 @@ class DraftOrderController extends Controller
             ->with('success', 'Updated');
     }
 
-    public function confirm($id, OrderCreateAction $action): \Illuminate\Http\RedirectResponse
+    public function confirm($id, OrderCreateAction $action): RedirectResponse
     {
         $draftOrder = DraftOrder::find($id);
 
@@ -260,7 +277,7 @@ class DraftOrderController extends Controller
         $id,
         DraftOrderCustomerUpdateRequest $request,
         DraftOrderCreateAction $action
-    ): \Illuminate\Http\RedirectResponse {
+    ): RedirectResponse {
         $order = DraftOrder::find($id);
 
         if (!$order) {

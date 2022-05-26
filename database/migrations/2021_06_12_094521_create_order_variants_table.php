@@ -17,6 +17,7 @@ class CreateOrderVariantsTable extends Migration
             $table->id();
             $table->unsignedInteger('order_id');
             $table->unsignedInteger('variant_id');
+            $table->unsignedInteger('discount_id')->nullable();
             $table->integer('quantity')->default(1);
             $table->decimal('price')->default(0.00);
             $table->decimal('unit_price')->default(0.00);

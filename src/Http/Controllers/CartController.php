@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use IZal\Lshopify\Actions\Cart\AddCartItem;
 use IZal\Lshopify\Actions\DraftOrderCreateAction;
-use IZal\Lshopify\Models\Variant;
-use IZal\Lshopify\Resources\VariantResource;
 
 class CartController extends Controller
 {
@@ -44,7 +42,8 @@ class CartController extends Controller
     public function remove(
         Request $request,
         DraftOrderCreateAction $orderCreateAction
-    ): \Illuminate\Http\RedirectResponse {
+    ): RedirectResponse
+    {
         $this->validate($request, [
             'rowId' => 'required',
         ]);

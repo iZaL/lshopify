@@ -2,6 +2,7 @@
 
 namespace IZal\Lshopify\Database\Factories;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use IZal\Lshopify\Models\Customer;
 use IZal\Lshopify\Models\Discount;
@@ -16,7 +17,6 @@ class DiscountFactory extends Factory
     {
         return [
             'name' => Str::upper(Str::random(8)),
-            'type' => 'code',
             'value' => 300,
             'value_type' => 'percent',
             'target_type' => 'all_products',
@@ -25,6 +25,9 @@ class DiscountFactory extends Factory
             'once_per_customer' => false,
             'usage_limit' => null,
             'customer_selection' => 'all',
+            'auto' => 1,
+            'starts_at' => Carbon::now()->toDateTimeString(),
+            'ends_at' => Carbon::now()->toDateTimeString(),
         ];
     }
 }
