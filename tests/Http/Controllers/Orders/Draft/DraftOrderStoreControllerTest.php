@@ -46,7 +46,9 @@ class DraftOrderStoreControllerTest extends CartTestCase
             'reason' => 'VVIP customer',
             'auto' => 1,
             'target_type' => 'all_products',
+            'name' => 'Admin cart discount',
         ];
+
         $cartItem = $this->cart->add($item);
         $cartCondition = new Condition($cartDiscount);
         $cartCondition->setActions([['value' => '-10']]);
@@ -60,11 +62,12 @@ class DraftOrderStoreControllerTest extends CartTestCase
             'type' => 'discount',
             'target' => 'subtotal',
         ];
-        $itemDiscountDBDate = [
+
+        $itemDiscountDBData = [
             'value_type' => 'percent',
             'value' => '10',
             'reason' => 'VIP customer',
-            'name' => $variant->id,
+            'name' => 'Admin discount',
             'auto' => '1',
             'target_type' => 'all_products',
         ];
@@ -77,10 +80,11 @@ class DraftOrderStoreControllerTest extends CartTestCase
         $order = DraftOrder::with(['variants'])->get()->last();
         $cartDiscount = Discount::all()->first();
         $itemDiscount = Discount::all()->last();
-//        $this->assertDatabaseHas('orders', ['id' => $order->id, 'draft'=> 1, 'total' => 350, 'subtotal' => 360, 'quantity' => 2, 'discount_id' => $cartDiscount->id]);
-//        $this->assertDatabaseHas('order_variants', ['variant_id' => $variant->id, 'order_id' => $order->id, 'price' => $item['price'], 'quantity' => $item['quantity'], 'total' => $item['total'], 'subtotal' => $item['subtotal'], 'unit_price' => $item['unit_price']]);
+
+        $variant = Variant::all()->last();
+        $this->assertDatabaseHas('orders', ['id' => $order->id, 'draft'=> 1, 'total' => 350, 'subtotal' => 360, 'quantity' => 2, 'discount_id' => $cartDiscount->id]);
         $this->assertDatabaseHas('discounts', array_merge($cartDiscountDBData, ['name' => 'Admin cart discount']));
-//        $this->assertDatabaseHas('order_discounts',['order_id' => $order->id, 'discount_id' => $itemDiscount->id]);
-        //        $this->assertDatabaseHas('discounts', ['variant_id' => null]);
+        $this->assertDatabaseHas('discounts', array_merge($itemDiscountDBData, ['name' => 'Admin discount']));
+        $this->assertDatabaseHas('discountables',['discount_id' => $itemDiscount->id, 'discountable_id' => $variant->id, 'discountable_type' => 'variant']);
     }
 }

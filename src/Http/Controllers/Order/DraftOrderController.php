@@ -77,7 +77,7 @@ class DraftOrderController extends Controller
         return Inertia::render('Order/Draft/DraftOrderCreate', $data);
     }
 
-    public function store(DraftOrderStoreRequest $request, DraftOrderCreateAction $action): RedirectResponse
+    public function store(DraftOrderStoreRequest $request, DraftOrderCreateAction $action)
     {
         $cart = app('cart');
 
@@ -100,22 +100,6 @@ class DraftOrderController extends Controller
                 ->with('error', $e->getMessage());
         }
 
-        //
-        ////        try {
-        ////            $order = $action->create($cart);
-        ////            DB::commit();
-        ////        } catch (\Exception $e) {
-        ////            dd($e->getMessage());
-        ////            DB::rollBack();
-        ////
-        ////            return redirect()
-        ////                ->back()
-        ////                ->with('error', $e->getMessage());
-        ////        }
-        //
-        //        return redirect()
-        //            ->route('lshopify.draft.orders.edit', $order->id)
-        //            ->with('success', 'Saved');
     }
 
     public function edit($id): \Inertia\Response

@@ -2,10 +2,13 @@
 
 namespace IZal\Lshopify\Actions;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use IZal\Lshopify\Cart\Cart;
 use IZal\Lshopify\Cart\Collections\ItemCollection;
 use IZal\Lshopify\Models\Customer;
 use IZal\Lshopify\Models\CustomerAddress;
+use IZal\Lshopify\Models\Discount;
 use IZal\Lshopify\Models\DraftOrder;
 use IZal\Lshopify\Models\Order;
 use IZal\Lshopify\Models\Variant;
@@ -97,37 +100,29 @@ class DraftOrderCreateAction extends OrderCreateAction
         $order->variants()->sync([]);
         $variants = [];
         foreach ($cart->items() as $cartItem) {
-            $variants[] = $this->createVariantWithCondition($order, $cart, $cartItem);
+            $variants[] = $this->createVariantFromCartItem($order, $cartItem);
         }
         return $variants;
     }
 
     /**
      * @param DraftOrder $order
-     * @param Cart $cart
      * @param ItemCollection $cartItem
      * @return Variant
      */
-    public function createVariantWithCondition(DraftOrder $order, Cart $cart, ItemCollection $cartItem): Variant
-    {
-        $variant = $this->createVariantFromCartItem($order, $cart, $cartItem);
-        if ($variant) {
-            $this->createVariantCondition($order, $variant, $cartItem);
-        }
-        return $variant;
-    }
-
-    /**
-     * @param DraftOrder $order
-     * @param Cart $cart
-     * @param ItemCollection $cartItem
-     * @return Variant
-     */
-    public function createVariantFromCartItem(DraftOrder $order, Cart $cart, ItemCollection $cartItem): Variant
+    public function createVariantFromCartItem(DraftOrder $order, ItemCollection $cartItem): Variant
     {
         $variant = $this->variant->find($cartItem->id);
+        $variantDiscount = null;
         if ($variant) {
-            $order->variants()->attach($variant->id, $this->getCartItemData($cartItem));
+            if ($cartCondition = $cartItem->getConditionByName($variant->id)) {
+                $variantDiscount = $this->createVariantCondition($order, $variant, $cartCondition);
+            }
+            $order->variants()->attach($variant->id,
+            array_merge(
+                ['discount_id' => $variantDiscount?->id],
+                $this->getCartItemData($cartItem)
+            ));
         }
         return $variant;
     }
@@ -135,24 +130,18 @@ class DraftOrderCreateAction extends OrderCreateAction
     /**
      * @param DraftOrder $order
      * @param Variant $variant
-     * @param ItemCollection $cartItem
      */
-    private function createVariantCondition(DraftOrder $order, Variant $variant, ItemCollection $cartItem): void
+    private function createVariantCondition(DraftOrder $order, Variant $variant, $itemCondition): Model|BelongsTo
     {
-        $itemCondition = $cartItem->getConditionByName($variant->id);
-        if ($itemCondition) {
-            if ($itemCondition->type === 'discount') {
-                $order->discounts()->sync([]);
-                $discount = $order->discounts()->create([
-                    'name' => 'Admin discount',
-                    'auto' => 1,
-                    'value' => $itemCondition->value,
-                    'value_type' => $itemCondition->suffix === 'percent' ? 'percent' : 'amount',
-                    'reason' => $itemCondition->reason,
-                ]);
-                $order->discounts()->sync([$discount->id]);
-            }
-        }
+        $discount = $order->discount()->create([
+            'name' => 'Admin discount',
+            'auto' => 1,
+            'value' => $itemCondition->value,
+            'value_type' => $itemCondition->suffix === 'percent' ? 'percent' : 'amount',
+            'reason' => $itemCondition->reason,
+        ]);
+        $variant->discounts()->attach($discount->id);
+        return $discount;
     }
 
     /**

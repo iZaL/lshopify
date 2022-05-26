@@ -81,11 +81,6 @@ class Order extends BaseModel
         return $this->belongsTo(Customer::class);
     }
 
-    public function discounts()
-    {
-        return $this->belongsToMany(Discount::class, 'order_discounts', 'order_id', 'discount_id');
-    }
-
     public function discount()
     {
         return $this->belongsTo(Discount::class, 'discount_id');
@@ -95,6 +90,7 @@ class Order extends BaseModel
     {
         return $this->belongsToMany(Variant::class, 'order_variants', 'order_id', 'variant_id')->withPivot([
             'id',
+            'discount_id',
             'quantity',
             'price',
             'unit_price',
