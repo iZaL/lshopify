@@ -39,10 +39,7 @@ class CartController extends Controller
         return redirect()->back();
     }
 
-    public function remove(
-        Request $request,
-        DraftOrderCreateAction $orderCreateAction
-    ): RedirectResponse
+    public function remove(Request $request, DraftOrderCreateAction $orderCreateAction): RedirectResponse
     {
         $this->validate($request, [
             'rowId' => 'required',

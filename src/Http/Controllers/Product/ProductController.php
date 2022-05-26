@@ -117,10 +117,8 @@ class ProductController extends Controller
         return Inertia::render('Product/ProductCreate', $data);
     }
 
-    public function store(
-        ProductStoreRequest $request,
-        CreateProduct $productCreateAction
-    ): RedirectResponse {
+    public function store(ProductStoreRequest $request, CreateProduct $productCreateAction): RedirectResponse
+    {
         $product = Product::getModel();
         DB::beginTransaction();
 

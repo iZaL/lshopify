@@ -12,17 +12,17 @@ class CreateDiscount extends DiscountService
      */
     public function run(array $attributes): Discount
     {
-        $discount =  Discount::create(
+        $discount = Discount::create(
             $this->parseAttributes($attributes)
                 ->only((new Discount())->getFillable())
                 ->toArray()
         );
 
-        if($discount->target_type === 'products' && isset($attributes['variants'])) {
+        if ($discount->target_type === 'products' && isset($attributes['variants'])) {
             $discount->variants()->sync($attributes['variants']);
         }
 
-        if($discount->target_type === 'collections' && isset($attributes['collections'])) {
+        if ($discount->target_type === 'collections' && isset($attributes['collections'])) {
             $discount->collections()->sync($attributes['collections']);
         }
 
@@ -32,5 +32,4 @@ class CreateDiscount extends DiscountService
 
         return $discount;
     }
-
 }

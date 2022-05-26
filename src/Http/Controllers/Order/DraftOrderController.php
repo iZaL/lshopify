@@ -22,6 +22,7 @@ use IZal\Lshopify\Resources\OrderResource;
 use Inertia\Inertia;
 use IZal\Lshopify\Resources\ProductResource;
 use IZal\Lshopify\Resources\VariantResource;
+use Throwable;
 
 class DraftOrderController extends Controller
 {
@@ -76,10 +77,8 @@ class DraftOrderController extends Controller
         return Inertia::render('Order/Draft/DraftOrderCreate', $data);
     }
 
-    public function store(
-        DraftOrderStoreRequest $request,
-        DraftOrderCreateAction $action
-    ): RedirectResponse {
+    public function store(DraftOrderStoreRequest $request, DraftOrderCreateAction $action): RedirectResponse
+    {
         $cart = app('cart');
 
         if (!$cart->items()->count()) {
@@ -88,39 +87,35 @@ class DraftOrderController extends Controller
                 ->with('error', 'Products cannot be empty.');
         }
 
-        DB::beginTransaction();
-
         try {
-            DB::transaction(function ($q) use ($action, $cart, ) {
+            DB::transaction(function () use ($action, $cart) {
                 $order = $action->create($cart);
                 return redirect()
                     ->route('lshopify.draft.orders.edit', $order->id)
                     ->with('success', 'Saved');
             });
-        } catch (\Throwable $e) {
-            dd($e->getMessage());
+        } catch (Throwable $e) {
             return redirect()
                 ->back()
                 ->with('error', $e->getMessage());
         }
 
-
-//
-////        try {
-////            $order = $action->create($cart);
-////            DB::commit();
-////        } catch (\Exception $e) {
-////            dd($e->getMessage());
-////            DB::rollBack();
-////
-////            return redirect()
-////                ->back()
-////                ->with('error', $e->getMessage());
-////        }
-//
-//        return redirect()
-//            ->route('lshopify.draft.orders.edit', $order->id)
-//            ->with('success', 'Saved');
+        //
+        ////        try {
+        ////            $order = $action->create($cart);
+        ////            DB::commit();
+        ////        } catch (\Exception $e) {
+        ////            dd($e->getMessage());
+        ////            DB::rollBack();
+        ////
+        ////            return redirect()
+        ////                ->back()
+        ////                ->with('error', $e->getMessage());
+        ////        }
+        //
+        //        return redirect()
+        //            ->route('lshopify.draft.orders.edit', $order->id)
+        //            ->with('success', 'Saved');
     }
 
     public function edit($id): \Inertia\Response
@@ -238,11 +233,8 @@ class DraftOrderController extends Controller
         return Inertia::render('Order/Draft/DraftOrderEdit', $data);
     }
 
-    public function update(
-        $id,
-        DraftOrderUpdateRequest $request,
-        DraftOrderCreateAction $action
-    ): RedirectResponse {
+    public function update($id, DraftOrderUpdateRequest $request, DraftOrderCreateAction $action): RedirectResponse
+    {
         $order = DraftOrder::find($id);
 
         $cart = app('cart');

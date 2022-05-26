@@ -8,6 +8,6 @@ class DeleteProduct
 {
     public function execute(Builder $products)
     {
-       $products->delete();
+        $products->delete();
     }
 }

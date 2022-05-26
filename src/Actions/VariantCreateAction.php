@@ -79,5 +79,4 @@ class VariantCreateAction
 
         return $firstOption->crossJoin(...$optionsExcludingFirst);
     }
-
 }

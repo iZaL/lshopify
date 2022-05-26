@@ -2,6 +2,7 @@
 
 namespace IZal\Lshopify\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -17,6 +18,7 @@ use IZal\Lshopify\Resources\CollectionResource;
 use IZal\Lshopify\Resources\CustomerResource;
 use IZal\Lshopify\Resources\DiscountResource;
 use IZal\Lshopify\Resources\ProductResource;
+use Throwable;
 
 class DiscountController extends Controller
 {
@@ -77,24 +79,18 @@ class DiscountController extends Controller
     public function store(DiscountStoreRequest $request, CreateDiscount $createDiscount)
     {
         try {
-            DB::beginTransaction();
-            $discount = $createDiscount->run($request->except(['back']));
-            DB::commit();
-
-            if ($request->has('back')) {
+            DB::transaction(function () use ($createDiscount, $request) {
+                $discount = $createDiscount->run($request->except(['back']));
+                if ($request->has('back')) {
+                    return redirect()
+                        ->back()
+                        ->with('success', 'Discount created successfully');
+                }
                 return redirect()
-                    ->back()
-                    ->with('success', 'Discount created successfully');
-            }
-
-            return redirect()
-                ->route('lshopify.discounts.edit', $discount->id)
-                ->with('success', 'Discount updated successfully');
-
-        } catch (\Exception $e) {
-
-            dd($e->getMessage());
-            DB::rollBack();
+                    ->route('lshopify.discounts.edit', $discount->id)
+                    ->with('success', 'Discount updated successfully');
+            });
+        } catch (Throwable $e) {
             return redirect()
                 ->back()
                 ->with('error', $e->getMessage());
@@ -137,12 +133,10 @@ class DiscountController extends Controller
             return redirect()
                 ->route('lshopify.discounts.edit', $discountModel->id)
                 ->with('success', 'Discount updated successfully');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect()
                 ->back()
                 ->with('error', $e->getMessage());
         }
     }
-
-
 }
