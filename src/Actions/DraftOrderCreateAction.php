@@ -114,7 +114,7 @@ class DraftOrderCreateAction extends OrderCreateAction
         $variantDiscount = null;
         if ($variant) {
             if ($cartCondition = $cartItem->getConditionByName($variant->id)) {
-                $variantDiscount = $this->createVariantCondition($order, $variant, $cartCondition);
+                $variantDiscount = $this->createVariantDiscount($order, $variant, $cartCondition);
             }
             $order->variants()->attach($variant->id,
                 array_merge(
@@ -132,15 +132,15 @@ class DraftOrderCreateAction extends OrderCreateAction
     private function updateVariantsFromCartItems(DraftOrder $order): void
     {
         $oldVariants = $order->variants->modelKeys();
-//        dd($oldVariants);
         $newVariants = [];
         foreach ($this->cart->items() as $cartItem) {
-            $variant = $this->variant->find($cartItem->id);
+            $variant = $this->variant->find($cartItem->name);
             if($variant) {
                 $newVariants[] = $variant->id;
                 $this->updateVariantFromCartItem($order, $variant, $cartItem);
             }
         }
+
         // get diff of oldVariants and newVariants
         $diffVariants = collect($oldVariants)->diff($newVariants);
         $order->variants()->detach($diffVariants);
@@ -150,7 +150,7 @@ class DraftOrderCreateAction extends OrderCreateAction
     {
         $variantDiscount = null;
         if ($cartCondition = $cartItem->getConditionByName($variant->id)) {
-            $variantDiscount = $this->createVariantCondition($order, $variant, $cartCondition);
+            $variantDiscount = $this->createVariantDiscount($order, $variant, $cartCondition);
         }
         $order->variants()->updateExistingPivot($variant->id,
             array_merge(
@@ -167,18 +167,44 @@ class DraftOrderCreateAction extends OrderCreateAction
      * @param $itemCondition
      * @return Model|BelongsTo
      */
-    private function createVariantCondition(DraftOrder $order, Variant $variant, $itemCondition): Model|BelongsTo
+    private function createVariantDiscount(DraftOrder $order, Variant $variant, $itemCondition): Model|BelongsTo
     {
-        $discount = $order->discount()->create([
-            'name' => 'Admin discount',
-            'auto' => 1,
-            'value' => $itemCondition->value,
-            'value_type' => $itemCondition->suffix === 'percent' ? 'percent' : 'amount',
-            'reason' => $itemCondition->reason,
-        ]);
-        $variant->discounts()->attach($discount->id);
+        $variantCondition = $order->variants()
+            ->where('variant_id',$variant->id)
+            ->whereNotNull('discount_id')
+            ->first();
+        if($variantCondition) {
+            $discount = Discount::find(optional($variantCondition->pivot)->discount_id);
+            $discount?->update([
+                'value' => $itemCondition->value,
+                'value_type' => $itemCondition->suffix === 'percent' ? 'percent' : 'amount',
+                'reason' => $itemCondition->reason,
+            ]);
+        } else {
+            $discount = $order->discount()->create([
+                'name' => 'Admin discount',
+                'auto' => 1,
+                'value' => $itemCondition->value,
+                'value_type' => $itemCondition->suffix === 'percent' ? 'percent' : 'amount',
+                'reason' => $itemCondition->reason,
+            ]);
+            $variant->discounts()->attach($discount->id);
+        }
         return $discount;
     }
+
+//    private function createVariantCondition(DraftOrder $order, Variant $variant, $itemCondition): Model|BelongsTo
+//    {
+//        $discount = $order->discount()->create([
+//            'name' => 'Admin discount',
+//            'auto' => 1,
+//            'value' => $itemCondition->value,
+//            'value_type' => $itemCondition->suffix === 'percent' ? 'percent' : 'amount',
+//            'reason' => $itemCondition->reason,
+//        ]);
+//        $variant->discounts()->attach($discount->id);
+//        return $discount;
+//    }
 
     /**
      * @param Order|DraftOrder $order

@@ -38,7 +38,6 @@ class DraftOrderController extends Controller
                 ->get()
         );
         $cart = app('cart');
-        //        $cart->clear();
         return Inertia::render('Order/Draft/DraftOrderIndex', ['orders' => $orders, 'cartTotal' => $cart->total()]);
     }
 
@@ -111,6 +110,8 @@ class DraftOrderController extends Controller
     public function edit($id): Response
     {
         $cart = app('cart');
+//        session()->forget('cartOrder');
+//        $cart->clear();
 
         $products = Product::with(['variants'])
             ->latest()
@@ -123,9 +124,6 @@ class DraftOrderController extends Controller
 
         $customers = Customer::all();
         $customersResource = CustomerResource::collection($customers);
-
-//        session()->forget('cartOrder');
-//        $cart->clear();
 
         if (!session()->has('cartOrder') || session('cartOrder') !== $order->id) {
             $cart->clear();

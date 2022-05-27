@@ -56,7 +56,7 @@ class Variant extends BaseModel
         return VariantFactory::new();
     }
 
-    public static function defaultVariantOptions()
+    public static function defaultVariantOptions(): array
     {
         return [
             ['id' => 'Size', 'name' => 'Size'],
@@ -88,51 +88,9 @@ class Variant extends BaseModel
 
     public function getTitleAttribute()
     {
-        //        $title = $this->options;
-        //
-        //        if(!$title) {
-        //            $title = 'Default variant';
-        //        } else {
-        //            dd($title);
-        //            $title = implode(', ', $title);
-        //        }
-
         return collect($this->options)
             ->pluck('name')
             ->join(' / ');
     }
 
-    public function getVariantOptionsAttribute(): array
-    {
-        return collect($this->options)
-            ->map(function ($option) {
-                dd($option);
-                return [
-                    'id' => $option['id'],
-                    'name' => $option['name'],
-                ];
-            })
-            ->toArray();
-    }
-
-    //    public function getVariantOptionsValuesAttribute(): array
-    //    {
-    //        $variants = $this
-    //            ->pluck('options')
-    //            ->collapse()
-    //            ->unique('name')
-    //            ->toArray();
-    //        return [...$variants];
-    //    }
-
-    public function getOptionsArrayAttribute()
-    {
-        //
-
-        return $this->options;
-        $options = $this->variant_options;
-        dd($options);
-    }
 }
-
-// variants =
