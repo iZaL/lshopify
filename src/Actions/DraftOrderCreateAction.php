@@ -62,7 +62,7 @@ class DraftOrderCreateAction extends OrderCreateAction
         } else {
             $this->createOrderDiscount($order);
         }
-        $this->createVariantsFromCartItems($order);
+        $this->updateVariantsFromCartItems($order);
     }
 
     private function updateOrderDiscount(Discount $discount) {
@@ -99,7 +99,6 @@ class DraftOrderCreateAction extends OrderCreateAction
      */
     private function createVariantsFromCartItems(DraftOrder $order): void
     {
-        $order->variants()->sync([]);
         foreach ($this->cart->items() as $cartItem) {
             $this->createVariantFromCartItem($order, $cartItem);
         }
@@ -109,7 +108,7 @@ class DraftOrderCreateAction extends OrderCreateAction
      * @param DraftOrder $order
      * @param ItemCollection $cartItem
      */
-    public function createVariantFromCartItem(DraftOrder $order, ItemCollection $cartItem): void
+    public function createVariantFromCartItem(DraftOrder $order, ItemCollection $cartItem): Variant
     {
         $variant = $this->variant->find($cartItem->id);
         $variantDiscount = null;
@@ -118,12 +117,49 @@ class DraftOrderCreateAction extends OrderCreateAction
                 $variantDiscount = $this->createVariantCondition($order, $variant, $cartCondition);
             }
             $order->variants()->attach($variant->id,
+                array_merge(
+                    ['discount_id' => $variantDiscount?->id],
+                    $this->getCartItemData($cartItem)
+                ));
+        }
+        return $variant;
+    }
+
+    /**
+     * @param DraftOrder $order
+     * @return void
+     */
+    private function updateVariantsFromCartItems(DraftOrder $order): void
+    {
+        $oldVariants = $order->variants->modelKeys();
+//        dd($oldVariants);
+        $newVariants = [];
+        foreach ($this->cart->items() as $cartItem) {
+            $variant = $this->variant->find($cartItem->id);
+            if($variant) {
+                $newVariants[] = $variant->id;
+                $this->updateVariantFromCartItem($order, $variant, $cartItem);
+            }
+        }
+        // get diff of oldVariants and newVariants
+        $diffVariants = collect($oldVariants)->diff($newVariants);
+        $order->variants()->detach($diffVariants);
+    }
+
+    public function updateVariantFromCartItem(DraftOrder $order, Variant $variant, ItemCollection $cartItem): Variant
+    {
+        $variantDiscount = null;
+        if ($cartCondition = $cartItem->getConditionByName($variant->id)) {
+            $variantDiscount = $this->createVariantCondition($order, $variant, $cartCondition);
+        }
+        $order->variants()->updateExistingPivot($variant->id,
             array_merge(
                 ['discount_id' => $variantDiscount?->id],
                 $this->getCartItemData($cartItem)
             ));
-        }
+        return $variant;
     }
+
 
     /**
      * @param DraftOrder $order

@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Inertia\Response;
 use IZal\Lshopify\Actions\DraftOrderCreateAction;
 use IZal\Lshopify\Actions\OrderCreateAction;
 use IZal\Lshopify\Cart\Condition;
@@ -19,6 +20,7 @@ use IZal\Lshopify\Models\Discount;
 use IZal\Lshopify\Models\DraftOrder;
 use IZal\Lshopify\Models\Order;
 use IZal\Lshopify\Models\Product;
+use IZal\Lshopify\Models\Variant;
 use IZal\Lshopify\Resources\CustomerResource;
 use IZal\Lshopify\Resources\OrderResource;
 use Inertia\Inertia;
@@ -28,7 +30,7 @@ use Throwable;
 
 class DraftOrderController extends Controller
 {
-    public function index(): \Inertia\Response
+    public function index(): Response
     {
         $orders = OrderResource::collection(
             DraftOrder::with(['customer', 'success_payments'])
@@ -40,7 +42,7 @@ class DraftOrderController extends Controller
         return Inertia::render('Order/Draft/DraftOrderIndex', ['orders' => $orders, 'cartTotal' => $cart->total()]);
     }
 
-    public function create(Request $request): \Inertia\Response
+    public function create(Request $request): Response
     {
         $products = Product::with(['variants.image', 'default_variant', 'image'])
             ->latest()
@@ -106,7 +108,7 @@ class DraftOrderController extends Controller
             ->with('success', 'Saved');
     }
 
-    public function edit($id): \Inertia\Response
+    public function edit($id): Response
     {
         $cart = app('cart');
 
@@ -122,9 +124,12 @@ class DraftOrderController extends Controller
         $customers = Customer::all();
         $customersResource = CustomerResource::collection($customers);
 
-//        if (!session()->has('cartOrder') || session('cartOrder') !== $order->id) {
-//            $cart->clear();
-//            session()->put('cartOrder', $order->id);
+//        session()->forget('cartOrder');
+//        $cart->clear();
+
+        if (!session()->has('cartOrder') || session('cartOrder') !== $order->id) {
+            $cart->clear();
+            session()->put('cartOrder', $order->id);
             // sync DB orders with the cart, only on first request and ignore on subsequent requests.
 
             if ($discount = $order->discount) {
@@ -157,10 +162,8 @@ class DraftOrderController extends Controller
                         'quantity' => $variant->pivot->quantity,
                         'variant' => new VariantResource($variant),
                     ]);
-
-                    $discountID = $variant->pivot->discount_id;
-                    if($discountID) {
-                        $discount = Discount::find($discountID);
+                    $discount = Discount::find(optional($variant->pivot)->discount_id);
+                    if($discount) {
                         $cartItemCondition = [
                             'value' => $discount->value,
                             'suffix' => $discount->value_type,
@@ -178,23 +181,26 @@ class DraftOrderController extends Controller
                         ]);
                         $cart->update($cartItem->rowId, ['conditions' => $discount]);
                     }
-
                 }
             }
-//        }
-
+        }
         $items = [];
 
         foreach ($cart->items() as $item) {
-            $items[] = array_merge(
-                Arr::only($item->toArray(), ['id', 'name', 'quantity', 'rowId', 'price', 'variant']),
-                [
-                    'total' => $item->total(),
-                    'subtotal' => $item->subtotal(),
-                    'unit_price' => $item->unit_price(),
-                    'discount' => $item->getConditionByName($item->name),
-                ]
-            );
+            $variant = Variant::find($item['name']);
+            if($variant) {
+                $condition = $item->getConditionByName($item->name);
+                //@todo : remove condition if deleted from admin panel
+                $items[] = array_merge(
+                    Arr::only($item->toArray(), ['id', 'name', 'quantity', 'rowId', 'price', 'variant']),
+                    [
+                        'total' => $item->total(),
+                        'subtotal' => $item->subtotal(),
+                        'unit_price' => $item->unit_price(),
+                        'discount' => $condition,
+                    ]
+                );
+            }
         }
 
         $cartData = [
@@ -222,7 +228,9 @@ class DraftOrderController extends Controller
         try {
             $action->update($order, $request->except('shipping', 'billing', 'customer_id', 'total', 'subtotal'));
         } catch (Exception $e) {
-            dd($e->getMessage());
+            return redirect()
+                ->back()
+                ->with('errors', $e->getMessage());
         }
 
         if ($request->shipping) {

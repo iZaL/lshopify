@@ -24,10 +24,11 @@ class DraftOrderUpdateControllerTest extends CartTestCase
             'customer_id' => $customer->id,
         ];
 
-        Product::factory()->has(Variant::factory()->count(2))->create();
+        Product::factory()->has(Variant::factory()->count(3))->create();
 
         $variant1 = Variant::first();
         $variant2 = Variant::all()->last();
+        $removedVariant = Variant::whereNotIn('id',[$variant1->id,$variant2->id])->first();
 
         $item = [
             'id' => $variant1->id,
@@ -49,9 +50,20 @@ class DraftOrderUpdateControllerTest extends CartTestCase
             'total' => 400,
         ];
 
+        $removedItem = [
+            'id' => $removedVariant->id,
+            'name' => $removedVariant->id,
+            'quantity' => 1,
+            'price' => 100,
+            'unit_price' => 100,
+            'subtotal' => 100,
+            'total' => 100,
+        ];
+
         $this->cart->add($item);
 
         $order->variants()->attach($variant1->id, Arr::except($item, ['name']));
+        $order->variants()->attach($removedVariant->id, Arr::except($removedItem, ['name']));
 
         $order->update(['total' => $this->cart->total(), 'subtotal' => $this->cart->subtotal(), 'quantity' => $this->cart->quantity()]);
 
@@ -68,6 +80,7 @@ class DraftOrderUpdateControllerTest extends CartTestCase
 
         $this->assertDatabaseHas('order_variants', ['variant_id' => $variant1->id, 'quantity' => 1]);
         $this->assertDatabaseHas('order_variants', ['variant_id' => $variant2->id, 'quantity' => 2]);
+        $this->assertDatabaseMissing('order_variants', ['variant_id' => $removedVariant->id, 'quantity' => 1]);
         $this->assertDatabaseHas('orders', ['total' => 500, 'subtotal' => 500, 'quantity' => 3, 'draft' => 1]);
     }
 

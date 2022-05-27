@@ -19,7 +19,7 @@ class CartDiscountController extends Controller
     {
         $cart = app('cart');
         $discount = new Condition($request->discount);
-        $suffix = $request->discount['suffix'] === 'percentage' ? '%' : '';
+        $suffix = $request->discount['suffix'] === 'percent' ? '%' : '';
         $discount->setActions([
             [
                 'value' => '-' . $request->discount['value'] . $suffix,
