@@ -152,11 +152,13 @@ class DraftOrderCreateAction extends OrderCreateAction
         if ($cartCondition = $cartItem->getConditionByName($variant->id)) {
             $variantDiscount = $this->createVariantDiscount($order, $variant, $cartCondition);
         }
-        $order->variants()->updateExistingPivot($variant->id,
-            array_merge(
-                ['discount_id' => $variantDiscount?->id],
-                $this->getCartItemData($cartItem)
-            ));
+        $order->variants()->sync([$variant->id =>
+            [
+                'discount_id' => $variantDiscount?->id,
+                ...$this->getCartItemData($cartItem)
+            ],
+        ],false);
+
         return $variant;
     }
 

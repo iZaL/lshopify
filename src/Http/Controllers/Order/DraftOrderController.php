@@ -223,6 +223,7 @@ class DraftOrderController extends Controller
         try {
             $action->update($order, $request->except('shipping', 'billing', 'customer_id', 'total', 'subtotal'));
         } catch (Exception $e) {
+            dd($e->getMessage());
             return redirect()
                 ->back()
                 ->with('errors', $e->getMessage());

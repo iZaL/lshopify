@@ -19,7 +19,7 @@ class CartDiscountAddControllerTest extends CartTestCase
         ];
 
         $discount = [
-            'suffix' => 'percentage',
+            'suffix' => 'percent',
             'value' => '10',
             'reason' => 'VIP customer',
             'name' => '1',

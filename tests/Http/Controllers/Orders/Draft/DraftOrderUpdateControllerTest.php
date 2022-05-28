@@ -27,7 +27,7 @@ class DraftOrderUpdateControllerTest extends CartTestCase
         Product::factory()->has(Variant::factory()->count(3))->create();
 
         $variant1 = Variant::first();
-        $variant2 = Variant::all()->last();
+        $variant2 = Variant::find(2);
         $removedVariant = Variant::whereNotIn('id',[$variant1->id,$variant2->id])->first();
 
         $item = [
@@ -42,7 +42,7 @@ class DraftOrderUpdateControllerTest extends CartTestCase
 
         $addedItem = [
             'id' => $variant2->id,
-            'name' => $variant1->id,
+            'name' => $variant2->id,
             'quantity' => 2,
             'price' => 200,
             'unit_price' => 200,
