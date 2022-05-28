@@ -49,6 +49,9 @@ class DraftOrderController extends Controller
         $productsResource = ProductResource::collection($products);
 
         $cart = app('cart');
+//        $cart->clear();
+//        session()->forget('cartOrder');
+        session()->put('cartOrder',0);
 
         $items = [];
 
@@ -122,8 +125,6 @@ class DraftOrderController extends Controller
 
         $customers = Customer::all();
         $customersResource = CustomerResource::collection($customers);
-//        $cart->clear();
-//        session()->forget('cartOrder');
         if (!session()->has('cartOrder') || session('cartOrder') !== $order->id) {
             $cart->clear();
             session()->put('cartOrder', $order->id);
@@ -156,7 +157,7 @@ class DraftOrderController extends Controller
                         'id' => $variant->id,
                         'name' => $variant->id,
                         'price' => $variant->pivot->price,
-                        'quantity' => $variant->pivot->quantity * 5,
+                        'quantity' => $variant->pivot->quantity,
                         'variant' => new VariantResource($variant),
                     ]);
                 }
