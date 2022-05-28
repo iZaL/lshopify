@@ -12,11 +12,9 @@ import {
   Billing,
   Cart,
   CartDiscount,
-  // CartDiscount,
   CartItem,
   Customer,
   CustomerAddress,
-  Discount,
   Order,
   Product,
   Shipping,
@@ -41,6 +39,7 @@ export default function DraftOrderEdit(props: Props) {
 
   const {data, setData} = useForm<Order & {_method: 'PATCH'}>({
     ...order,
+    ...cart,
     _method: 'PATCH',
   });
 

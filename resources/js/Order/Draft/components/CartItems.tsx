@@ -31,6 +31,7 @@ export default function CartItems({
         ...cartItem,
         [field]: value,
       };
+      console.log('cartItem',cartItem)
       onVariantEdit(item.rowId, cartItem);
     }
   };

@@ -1,7 +1,5 @@
 import {ReactNode} from 'react';
 
-// import { CartDiscount } from '../../../vendor/izal/lshopify/resources/js/types'
-
 import {CustomerForm, OrderForm} from './form_types';
 
 export interface Tag {
@@ -187,7 +185,7 @@ export interface Cart {
 export interface CartDiscount {
   name?: string;
   type?: string;
-  target?: string;
+  target?: 'subtotal'|'price';
   suffix?: string;
   value?: string;
   reason?: string;

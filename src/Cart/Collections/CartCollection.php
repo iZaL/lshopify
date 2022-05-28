@@ -32,7 +32,7 @@ class CartCollection extends BaseCollection implements Serializable
      *
      * @var array
      */
-    protected $conditionsOrder = ['discount', 'other', 'tax'];
+    protected array $conditionsOrder = ['discount', 'other', 'tax'];
 
     /**
      * Holds the order in which items conditions apply.

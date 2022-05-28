@@ -167,7 +167,7 @@ class DraftOrderCreateAction extends OrderCreateAction
      * @param $itemCondition
      * @return Model|BelongsTo
      */
-    private function createVariantDiscount(DraftOrder $order, Variant $variant, $itemCondition): Model|BelongsTo
+    private function createVariantDiscount(DraftOrder $order, Variant $variant, $itemCondition): Model|BelongsTo|null
     {
         $variantCondition = $order->variants()
             ->where('variant_id',$variant->id)

@@ -3,7 +3,7 @@
 namespace IZal\Lshopify\Cart;
 
 use Closure;
-use Opis\Closure\SerializableClosure;
+use Laravel\SerializableClosure\SerializableClosure;
 
 class Condition extends Collection
 {
@@ -135,7 +135,7 @@ class Condition extends Collection
     /**
      * Applies the conditions to the given collection.
      *
-     * @param \IZal\Lshopify\Cart\Collection $collection
+     * @param Collection $collection
      * @param float                             $target
      *
      * @return false|float
@@ -166,7 +166,7 @@ class Condition extends Collection
     /**
      * Returns the total condition value.
      *
-     * @param \IZal\Lshopify\Cart\Collection|null $collection
+     * @param Collection|null $collection
      *
      * @return float
      */
@@ -182,7 +182,7 @@ class Condition extends Collection
     /**
      * Validates a set of rules against the collection.
      *
-     * @param \IZal\Lshopify\Cart\Collection $collection
+     * @param Collection $collection
      * @param float|null                        $target
      *
      * @return bool
@@ -223,8 +223,8 @@ class Condition extends Collection
     /**
      * Applies an action to the given collection.
      *
-     * @param \IZal\Lshopify\Cart\Collection $collection
-     * @param \IZal\Lshopify\Cart\Collection $action
+     * @param Collection $collection
+     * @param Collection $action
      * @param float $target
      * @return float
      */
@@ -252,7 +252,7 @@ class Condition extends Collection
     /**
      * Validates a single rule against the collection.
      *
-     * @param \IZal\Lshopify\Cart\Collection $collection
+     * @param Collection $collection
      * @param mixed                             $rule
      * @param float                             $target
      *
@@ -285,17 +285,12 @@ class Condition extends Collection
      */
     protected function calculate(string $target, string $operator, string $value, int $max = 0): float
     {
-        switch ($operator) {
-            default:
-            case '+':
-                return $max ? min($target + $max, $target + $value) : $target + $value;
-            case '*':
-                return $max ? min($target + $max, $target * $value) : $target * $value;
-            case '-':
-                return $max ? max($target + $max, $target - $value) : $target - $value;
-            case '/':
-                return $max ? max($target + $max, $target / $value) : $target / $value;
-        }
+        return match ($operator) {
+            default => $max ? min($target + $max, $target + $value) : $target + $value,
+            '*' => $max ? min($target + $max, $target * $value) : $target * $value,
+            '-' => $max ? max($target + $max, $target - $value) : $target - $value,
+            '/' => $max ? max($target + $max, $target / $value) : $target / $value,
+        };
     }
 
     /**
@@ -309,28 +304,21 @@ class Condition extends Collection
      */
     protected function operatorCheck(string $target, string $operator, string $value): bool
     {
-        switch ($operator) {
-            default:
-            case '=':
-                return $target === $value;
-            case '<=':
-                return $target <= $value;
-            case '>=':
-                return $target >= $value;
-            case '<':
-                return $target < $value;
-            case '>':
-                return $target > $value;
-            case '!=':
-                return $target != $value;
-        }
+        return match ($operator) {
+            default => $target === $value,
+            '<=' => $target <= $value,
+            '>=' => $target >= $value,
+            '<' => $target < $value,
+            '>' => $target > $value,
+            '!=' => $target != $value,
+        };
     }
 
     /**
      * Parses the action.
      *
      * @param mixed                             $value
-     * @param \IZal\Lshopify\Cart\Collection $collection
+     * @param Collection $collection
      * @param float                             $target
      *
      * @return array

@@ -31,16 +31,19 @@ export default function DraftOrderCreate(props: Props) {
   const onVariantsAdd = (variantIDs: number[]) => {
     Inertia.post(route('lshopify.cart.add'), {
       variantIDs,
+    },{
+      // preserveState:true,
+      // preserveScroll:true
     });
   };
 
-  const onVariantRemove = (rowId: string) => {
+  const onCartItemRemove = (rowId: string) => {
     Inertia.post(route('lshopify.cart.remove'), {
       rowId,
     });
   };
 
-  const onVariantEdit = (rowId: string, item: CartItem) => {
+  const onCartItemEdit = (rowId: string, item: CartItem) => {
     Inertia.post(route('lshopify.cart.update'), {
       rowId,
       item,
@@ -48,6 +51,8 @@ export default function DraftOrderCreate(props: Props) {
   };
 
   const onApplyDiscount = (discount: CartDiscount, item?: CartItem) => {
+    console.log('d',discount);
+    console.log('item',item);
     Inertia.post(route('lshopify.cart.discount.add'), {
       discount,
       item,
@@ -82,8 +87,8 @@ export default function DraftOrderCreate(props: Props) {
               products={products || []}
               cart={cart}
               onVariantsAdd={onVariantsAdd}
-              onVariantRemove={onVariantRemove}
-              onVariantEdit={onVariantEdit}
+              onVariantRemove={onCartItemRemove}
+              onVariantEdit={onCartItemEdit}
               onApplyDiscount={onApplyDiscount}
               onRemoveDiscount={onRemoveDiscount}
               onCreateOrder={onCreateOrder}

@@ -19,7 +19,7 @@ class CartDiscountController extends Controller
     {
         $cart = app('cart');
         $discount = new Condition($request->discount);
-        $suffix = $request->discount['suffix'] === 'percent' ? '%' : '';
+        $suffix = $request->discount['suffix'] === 'percentage' ? '%' : '';
         $discount->setActions([
             [
                 'value' => '-' . $request->discount['value'] . $suffix,
@@ -43,6 +43,7 @@ class CartDiscountController extends Controller
      */
     public function remove(Request $request): RedirectResponse
     {
+
         $this->validate($request, [
             'discount' => 'required|array',
             'item' => 'nullable',

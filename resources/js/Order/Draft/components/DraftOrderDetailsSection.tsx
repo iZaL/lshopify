@@ -62,7 +62,7 @@ export default function DraftOrderDetailsSection({
           ...discount,
           name: `${selectedDiscountItem.id}`,
           type: 'discount',
-          target: 'subtotal',
+          target: 'price',
         },
         selectedDiscountItem,
       );
@@ -78,6 +78,7 @@ export default function DraftOrderDetailsSection({
   };
 
   const onShowDiscountDialog = (discount: CartDiscount, item?: CartItem) => {
+    console.log('i',item);
     setSelectedDiscount(discount);
     setSelectedDiscountItem(item || null);
     setShowDialog('discount');

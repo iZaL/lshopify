@@ -110,8 +110,6 @@ class DraftOrderController extends Controller
     public function edit($id): Response
     {
         $cart = app('cart');
-//        session()->forget('cartOrder');
-//        $cart->clear();
 
         $products = Product::with(['variants'])
             ->latest()
@@ -124,13 +122,14 @@ class DraftOrderController extends Controller
 
         $customers = Customer::all();
         $customersResource = CustomerResource::collection($customers);
-
+//        $cart->clear();
+//        session()->forget('cartOrder');
         if (!session()->has('cartOrder') || session('cartOrder') !== $order->id) {
             $cart->clear();
             session()->put('cartOrder', $order->id);
             // sync DB orders with the cart, only on first request and ignore on subsequent requests.
-
-            if ($discount = $order->discount) {
+            $discount = $order->discount;
+            if($discount) {
                 $cartCondition = [
                     'value' => $discount->value,
                     'suffix' => $discount->value_type,
@@ -146,8 +145,8 @@ class DraftOrderController extends Controller
                         'value' => '-' . $discount->value . $suffix,
                     ],
                 ]);
+            } else {
                 $cart->removeConditionByName('cart');
-                $cart->condition($discount);
             }
 
             foreach ($order->variants as $variant) {
@@ -157,48 +156,45 @@ class DraftOrderController extends Controller
                         'id' => $variant->id,
                         'name' => $variant->id,
                         'price' => $variant->pivot->price,
-                        'quantity' => $variant->pivot->quantity,
+                        'quantity' => $variant->pivot->quantity * 5,
                         'variant' => new VariantResource($variant),
                     ]);
-                    $discount = Discount::find(optional($variant->pivot)->discount_id);
-                    if($discount) {
-                        $cartItemCondition = [
-                            'value' => $discount->value,
-                            'suffix' => $discount->value_type,
-                            'reason' => $discount->reason,
-                            'target' => 'subtotal',
-                            'name' => 'cart',
-                            'type' => 'discount',
-                        ];
-                        $discount = new Condition($cartItemCondition);
-                        $suffix = $discount->suffix === 'percent' ? '%' : '';
-                        $discount->setActions([
-                            [
-                                'value' => '-' . $discount->value . $suffix,
-                            ],
-                        ]);
-                        $cart->update($cartItem->rowId, ['conditions' => $discount]);
-                    }
+                }
+
+                $variantDiscount = Discount::find(optional($variant->pivot)->discount_id);
+
+                if($variantDiscount) {
+                    $cartItemCondition = [
+                        'value' => $variantDiscount->value,
+                        'suffix' => $variantDiscount->value_type,
+                        'reason' => $variantDiscount->reason,
+                        'name' => $variant->id,
+                        'target' => 'price',
+                        'type' => 'discount',
+                    ];
+                    $discount = new Condition($cartItemCondition);
+                    $suffix = $variantDiscount->suffix === 'percent' ? '%' : '';
+                    $discount->setActions([
+                        [
+                            'value' => '-' . $variantDiscount->value . $suffix,
+                        ],
+                    ]);
+                    $cart->update($cartItem->rowId, ['conditions' => $discount]);
                 }
             }
         }
         $items = [];
 
         foreach ($cart->items() as $item) {
-            $variant = Variant::find($item['name']);
-            if($variant) {
-                $condition = $item->getConditionByName($item->name);
-                //@todo : remove condition if deleted from admin panel
-                $items[] = array_merge(
-                    Arr::only($item->toArray(), ['id', 'name', 'quantity', 'rowId', 'price', 'variant']),
-                    [
-                        'total' => $item->total(),
-                        'subtotal' => $item->subtotal(),
-                        'unit_price' => $item->unit_price(),
-                        'discount' => $condition,
-                    ]
-                );
-            }
+            $items[] = array_merge(
+                Arr::only($item->toArray(), ['id', 'name', 'quantity', 'rowId', 'price', 'variant']),
+                [
+                    'total' => $item->total(),
+                    'subtotal' => $item->subtotal(),
+                    'unit_price' => $item->unit_price(),
+                    'discount' => $item->getConditionByName($item->name),
+                ]
+            );
         }
 
         $cartData = [
