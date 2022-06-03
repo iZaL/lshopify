@@ -67,7 +67,7 @@ class DraftOrderController extends Controller
         return Inertia::render('Order/Draft/DraftOrderCreate', $data);
     }
 
-    public function store(DraftOrderStoreRequest $request, DraftOrderCreateAction $action)
+    public function store(DraftOrderStoreRequest $request, DraftOrderCreateAction $draftOrderCreateAction)
     {
         $cart = app('cart');
 
@@ -79,7 +79,7 @@ class DraftOrderController extends Controller
 
         DB::beginTransaction();
         try {
-            $order = $action->create($cart);
+            $order = $draftOrderCreateAction->run();
             DB::commit();
 
         } catch (Throwable $e) {
@@ -133,9 +133,6 @@ class DraftOrderController extends Controller
                 ]);
                 $cart->condition($cartDiscount);
             }
-//            else {
-//                $cart->removeConditionByName('cart');
-//            }
 
             foreach ($order->variants as $variant) {
                 $cartItem = $cart->findByID($variant->id);
@@ -173,8 +170,7 @@ class DraftOrderController extends Controller
         }
 
         $cartData = [
-            'total' => $cart->total(),
-            'subtotal' => $cart->subtotal(),
+            ...$cart->getCartData(),
             'discount_value' => $cart->discountedValue(),
             'discount' => $cart->getConditionByName('cart'),
             'items' => $cart->resolveItems(),

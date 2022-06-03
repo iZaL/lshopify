@@ -607,6 +607,20 @@ class CartCollection extends BaseCollection implements Serializable
         return $cartItem;
     }
 
+
+    /**
+     * @return array
+     */
+    public function getCartData(): array
+    {
+        $cart = $this->cart;
+        return [
+            'total' => $cart->total(),
+            'subtotal' => $cart->subtotal(),
+            'quantity' => $cart->quantity(),
+        ];
+    }
+
     /**
      * Returns the list of required indexes.
      *
