@@ -41,7 +41,7 @@ class DraftOrderController extends Controller
         return Inertia::render('Order/Draft/DraftOrderIndex', ['orders' => $orders, 'cartTotal' => $cart->total()]);
     }
 
-    public function create(Request $request): Response
+    public function create(): Response
     {
         $products = Product::with(['variants.image', 'default_variant', 'image'])
             ->latest()
@@ -49,9 +49,8 @@ class DraftOrderController extends Controller
         $productsResource = ProductResource::collection($products);
 
         $cart = app('cart');
-//        $cart->clear();
-//        session()->forget('cartOrder');
-        session()->put('cartOrder',0);
+
+        session()->forget('cart_order');
 
         $items = [];
 
@@ -125,9 +124,10 @@ class DraftOrderController extends Controller
 
         $customers = Customer::all();
         $customersResource = CustomerResource::collection($customers);
-        if (!session()->has('cartOrder') || session('cartOrder') !== $order->id) {
+
+        if (!session()->has('cart_order') || session('cart_order') !== $order->id) {
             $cart->clear();
-            session()->put('cartOrder', $order->id);
+            session()->put('cart_order', $order->id);
             // sync DB orders with the cart, only on first request and ignore on subsequent requests.
             $discount = $order->discount;
             if($discount) {
@@ -139,13 +139,14 @@ class DraftOrderController extends Controller
                     'name' => 'cart',
                     'type' => 'discount',
                 ];
-                $discount = new Condition($cartCondition);
+                $cartDiscount = new Condition($cartCondition);
                 $suffix = $cartCondition['suffix'] === 'percent' ? '%' : '';
-                $discount->setActions([
+                $cartDiscount->setActions([
                     [
                         'value' => '-' . $discount->value . $suffix,
                     ],
                 ]);
+                $cart->condition($cartDiscount);
             } else {
                 $cart->removeConditionByName('cart');
             }
@@ -223,7 +224,6 @@ class DraftOrderController extends Controller
         try {
             $action->update($order, $request->except('shipping', 'billing', 'customer_id', 'total', 'subtotal'));
         } catch (Exception $e) {
-            dd($e->getMessage());
             return redirect()
                 ->back()
                 ->with('errors', $e->getMessage());

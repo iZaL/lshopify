@@ -6,7 +6,7 @@ use IZal\Lshopify\Models\Category;
 
 class CreateCategory
 {
-    public function run(array $attributes): Category
+    public function __invoke(array $attributes): Category
     {
         return Category::create(
             collect($attributes)

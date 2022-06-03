@@ -4,6 +4,7 @@ namespace IZal\Lshopify\Actions;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use IZal\Lshopify\Actions\Order\AddDiscount;
 use IZal\Lshopify\Cart\Cart;
 use IZal\Lshopify\Cart\Collections\ItemCollection;
 use IZal\Lshopify\Models\Customer;
@@ -25,18 +26,21 @@ class DraftOrderCreateAction extends OrderCreateAction
      */
     private $variant;
     private Cart $cart;
+    private AddDiscount $addDiscount;
 
     /**
      * DraftOrderCreateAction constructor.
      * @param DraftOrder $order
      * @param Variant $variant
      * @param Cart $cart
+     * @param AddDiscount $addDiscount
      */
-    public function __construct(DraftOrder $order, Variant $variant, Cart $cart)
+    public function __construct(DraftOrder $order, Variant $variant, Cart $cart, AddDiscount $addDiscount)
     {
         $this->order = $order;
         $this->variant = $variant;
         $this->cart = $cart;
+        $this->addDiscount = $addDiscount;
     }
 
     /**
@@ -45,7 +49,7 @@ class DraftOrderCreateAction extends OrderCreateAction
     public function create(): DraftOrder
     {
         $order = $this->order->create($this->getCartData());
-        $this->createOrderDiscount($order);
+        $this->addDiscount->run($order);
         $this->createVariantsFromCartItems($order);
         return $order;
     }
@@ -60,7 +64,7 @@ class DraftOrderCreateAction extends OrderCreateAction
         if($order->discount) {
             $this->updateOrderDiscount($order->discount);
         } else {
-            $this->createOrderDiscount($order);
+            $this->addDiscount->run($order);
         }
         $this->updateVariantsFromCartItems($order);
     }
@@ -73,23 +77,6 @@ class DraftOrderCreateAction extends OrderCreateAction
                 'value_type' => $cartDiscount->suffix === 'percent' ? 'percent' : 'amount',
                 'reason' => $cartDiscount->reason,
             ]);
-        }
-    }
-
-    private function createOrderDiscount(Order $order)
-    {
-        $cart = $this->cart;
-        $cartDiscount = $cart->getConditionByName('cart');
-        if($cartDiscount) {
-            $discount = $order->discount()->create([
-                'name' => 'Admin cart discount',
-                'auto' => 1,
-                'value' => $cartDiscount->value,
-                'value_type' => $cartDiscount->suffix === 'percent' ? 'percent' : 'amount',
-                'reason' => $cartDiscount->reason,
-            ]);
-            $order->discount_id = $discount->id;
-            $order->save();
         }
     }
 
@@ -107,6 +94,7 @@ class DraftOrderCreateAction extends OrderCreateAction
     /**
      * @param DraftOrder $order
      * @param ItemCollection $cartItem
+     * @return Variant
      */
     public function createVariantFromCartItem(DraftOrder $order, ItemCollection $cartItem): Variant
     {
@@ -167,7 +155,7 @@ class DraftOrderCreateAction extends OrderCreateAction
      * @param DraftOrder $order
      * @param Variant $variant
      * @param $itemCondition
-     * @return Model|BelongsTo
+     * @return Model|BelongsTo|null
      */
     private function createVariantDiscount(DraftOrder $order, Variant $variant, $itemCondition): Model|BelongsTo|null
     {
@@ -175,6 +163,7 @@ class DraftOrderCreateAction extends OrderCreateAction
             ->where('variant_id',$variant->id)
             ->whereNotNull('discount_id')
             ->first();
+
         if($variantCondition) {
             $discount = Discount::find(optional($variantCondition->pivot)->discount_id);
             $discount?->update([
@@ -194,19 +183,6 @@ class DraftOrderCreateAction extends OrderCreateAction
         }
         return $discount;
     }
-
-//    private function createVariantCondition(DraftOrder $order, Variant $variant, $itemCondition): Model|BelongsTo
-//    {
-//        $discount = $order->discount()->create([
-//            'name' => 'Admin discount',
-//            'auto' => 1,
-//            'value' => $itemCondition->value,
-//            'value_type' => $itemCondition->suffix === 'percent' ? 'percent' : 'amount',
-//            'reason' => $itemCondition->reason,
-//        ]);
-//        $variant->discounts()->attach($discount->id);
-//        return $discount;
-//    }
 
     /**
      * @param Order|DraftOrder $order
