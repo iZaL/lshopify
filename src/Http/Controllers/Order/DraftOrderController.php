@@ -4,12 +4,12 @@ namespace IZal\Lshopify\Http\Controllers\Order;
 
 use Exception;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 use Inertia\Response;
-use IZal\Lshopify\Actions\DraftOrderCreateAction;
-use IZal\Lshopify\Actions\OrderCreateAction;
+use IZal\Lshopify\Actions\Order\DraftOrderCreateAction;
+use IZal\Lshopify\Actions\Order\DraftOrderUpdateAction;
+use IZal\Lshopify\Actions\Order\OrderCreateAction;
 use IZal\Lshopify\Cart\Condition;
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\DraftOrderCustomerUpdateRequest;
@@ -20,10 +20,8 @@ use IZal\Lshopify\Models\Discount;
 use IZal\Lshopify\Models\DraftOrder;
 use IZal\Lshopify\Models\Order;
 use IZal\Lshopify\Models\Product;
-use IZal\Lshopify\Models\Variant;
 use IZal\Lshopify\Resources\CustomerResource;
 use IZal\Lshopify\Resources\OrderResource;
-use Inertia\Inertia;
 use IZal\Lshopify\Resources\ProductResource;
 use IZal\Lshopify\Resources\VariantResource;
 use Throwable;
@@ -46,31 +44,18 @@ class DraftOrderController extends Controller
         $products = Product::with(['variants.image', 'default_variant', 'image'])
             ->latest()
             ->get();
+
         $productsResource = ProductResource::collection($products);
 
         $cart = app('cart');
 
         session()->forget('cart_order');
 
-        $items = [];
-
-        foreach ($cart->items() as $item) {
-            $items[] = array_merge(
-                Arr::only($item->toArray(), ['id', 'name', 'quantity', 'rowId', 'price', 'variant']),
-                [
-                    'total' => $item->total(),
-                    'subtotal' => $item->subtotal(),
-                    'unit_price' => round($item->unit_price(), 2),
-                    'discount' => $item->getConditionByName($item->name),
-                ]
-            );
-        }
-
         $cartData = [
             'total' => $cart->total(),
             'subtotal' => $cart->subtotal(),
-            'discount_value' => round($cart->subtotal() - $cart->total(), 2),
-            'items' => $items,
+            'discount_value' => $cart->discountedValue(),
+            'items' => $cart->resolveItems(),
             'discount' => $cart->getConditionByName('cart'),
         ];
 
@@ -147,9 +132,10 @@ class DraftOrderController extends Controller
                     ],
                 ]);
                 $cart->condition($cartDiscount);
-            } else {
-                $cart->removeConditionByName('cart');
             }
+//            else {
+//                $cart->removeConditionByName('cart');
+//            }
 
             foreach ($order->variants as $variant) {
                 $cartItem = $cart->findByID($variant->id);
@@ -185,26 +171,13 @@ class DraftOrderController extends Controller
                 }
             }
         }
-        $items = [];
-
-        foreach ($cart->items() as $item) {
-            $items[] = array_merge(
-                Arr::only($item->toArray(), ['id', 'name', 'quantity', 'rowId', 'price', 'variant']),
-                [
-                    'total' => $item->total(),
-                    'subtotal' => $item->subtotal(),
-                    'unit_price' => $item->unit_price(),
-                    'discount' => $item->getConditionByName($item->name),
-                ]
-            );
-        }
 
         $cartData = [
             'total' => $cart->total(),
             'subtotal' => $cart->subtotal(),
             'discount_value' => $cart->discountedValue(),
             'discount' => $cart->getConditionByName('cart'),
-            'items' => $items,
+            'items' => $cart->resolveItems(),
         ];
 
         $data = [
@@ -217,7 +190,7 @@ class DraftOrderController extends Controller
         return Inertia::render('Order/Draft/DraftOrderEdit', $data);
     }
 
-    public function update($id, DraftOrderUpdateRequest $request, DraftOrderCreateAction $action): RedirectResponse
+    public function update($id, DraftOrderUpdateRequest $request, DraftOrderUpdateAction $action): RedirectResponse
     {
         $order = DraftOrder::find($id);
 
@@ -230,11 +203,11 @@ class DraftOrderController extends Controller
         }
 
         if ($request->shipping) {
-            $action->updateShippingAddress($order, $request->shipping);
+            $order->updateShippingAddress($request->shipping);
         }
 
         if ($request->billing) {
-            $action->updateBillingAddress($order, $request->billing);
+            $order->updateBillingAddress($request->billing);
         }
 
         return redirect()
@@ -267,10 +240,10 @@ class DraftOrderController extends Controller
         if ($request->customer_id) {
             $customer = Customer::find($request->customer_id);
             if ($customer) {
-                $action->attachCustomer($order, $customer);
+                $order->attachCustomer($customer);
             }
         } else {
-            $action->detachCustomer($order);
+            $order->detachCustomer();
         }
 
         return redirect()->back();

@@ -29,6 +29,7 @@ class Order extends BaseModel
         'quantity',
         'currency',
         'customer_id',
+        'discount_id',
 
         'contact_email',
         'contact_phone',
@@ -181,8 +182,103 @@ class Order extends BaseModel
      * Return the total amount for the order.
      * @return float
      */
-    public function getAmountAttribute()
+    public function getAmountAttribute(): float
     {
         return $this->total;
+    }
+
+    public function removeDiscount()
+    {
+        $this->update(['discount_id' => null]);
+    }
+
+    /**
+     * @param Customer $customer
+     */
+    public function attachCustomer(Customer $customer)
+    {
+        $this->update(['customer_id' => $customer->id]);
+        $this->updateShippingAddress();
+        $this->updateBillingAddress();
+    }
+
+    public function detachCustomer()
+    {
+        $this->update(['customer_id' => null]);
+    }
+
+    /**
+     * @param  array  $attributes
+     */
+    public function updateShippingAddress(array $attributes = [])
+    {
+        $shippingAttributes = empty($attributes) ? $this->getShippingAddress() : $attributes;
+        $attributes = CustomerAddress::parseShippingAddress($shippingAttributes, $this->getFillable());
+        $this->update($attributes);
+    }
+
+    /**
+     * @param array $attributes
+     */
+    public function updateBillingAddress(array $attributes = [])
+    {
+        $billingAttributes = empty($attributes) ? $this->getBillingAddress() : $attributes;
+        $attributes = CustomerAddress::parseBillingAddress($billingAttributes, $this->getFillable());
+        $this->update($attributes);
+    }
+
+    /**
+     * @return array
+     */
+    public function getShippingAddress(): array
+    {
+        $order = $this;
+        $customer = optional($order->customer);
+        $defaultAddress = optional($customer->default_address);
+
+        $fields = ['company', 'address1', 'address2', 'city', 'province', 'street', 'zip', 'country', 'phone'];
+
+        $attributes = [
+            'full_name' => $order->shipping_full_name ?? $customer->full_name,
+            'first_name' => $order->shipping_first_name ?? $customer->first_name,
+            'last_name' => $order->shipping_last_name ?? $customer->last_name,
+        ];
+
+        foreach ($fields as $field) {
+            $attributes[$field] = $order->{'shipping_' . $field} ?? $defaultAddress->{$field};
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getBillingAddress(): array
+    {
+        $order = $this;
+        $fields = [
+            'full_name',
+            'first_name',
+            'last_name',
+            'company',
+            'address1',
+            'address2',
+            'city',
+            'province',
+            'street',
+            'zip',
+            'country',
+            'phone',
+        ];
+
+        $shippingAttributes = $this->getShippingAddress();
+
+        $attributes = [];
+        foreach ($fields as $field) {
+            $attributes[$field] = $order->{'billing_' . $field} ?? $shippingAttributes[$field];
+        }
+
+        return $attributes;
     }
 }

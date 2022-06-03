@@ -2,6 +2,7 @@
 
 namespace IZal\Lshopify\Cart;
 
+use Illuminate\Support\Arr;
 use IZal\Lshopify\Cart\Collections\CartCollection;
 use IZal\Lshopify\Cart\Storage\StorageInterface;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -76,6 +77,23 @@ class Cart
         }
 
         return $this->cart = $this->newCartCollection();
+    }
+
+    public function resolveItems(): array
+    {
+        $items = [];
+        foreach ($this->items() as $item) {
+            $items[] = array_merge(
+                Arr::only($item->toArray(), ['id', 'name', 'quantity', 'rowId', 'price', 'variant']),
+                [
+                    'total' => $item->total(),
+                    'subtotal' => $item->subtotal(),
+                    'unit_price' => $item->unit_price(),
+                    'discount' => $item->getConditionByName($item->name),
+                ]
+            );
+        }
+        return $items;
     }
 
     /**

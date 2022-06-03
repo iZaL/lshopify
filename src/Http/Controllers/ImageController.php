@@ -3,11 +3,9 @@
 namespace IZal\Lshopify\Http\Controllers;
 
 use IZal\Lshopify\Actions\ImageUploadAction;
-use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\ImageDeleteRequest;
 use IZal\Lshopify\Http\Requests\ImageStoreRequest;
 use IZal\Lshopify\Models\Image;
-use IZal\Lshopify\Models\Product;
 
 class ImageController extends Controller
 {

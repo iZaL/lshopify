@@ -2,14 +2,11 @@
 
 namespace IZal\Lshopify\Actions\Discount;
 
-use Exception;
 use IZal\Lshopify\Models\Discount;
 
 class CreateDiscount extends DiscountService
 {
-    /**
-     * @throws Exception
-     */
+
     public function run(array $attributes): Discount
     {
         $discount = Discount::create(

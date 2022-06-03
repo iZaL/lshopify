@@ -3,6 +3,7 @@
 namespace IZal\Lshopify\Http\Controllers\Collection;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Inertia\Inertia;
 use IZal\Lshopify\Actions\ImageUploadAction;
 use IZal\Lshopify\Http\Controllers\Controller;
