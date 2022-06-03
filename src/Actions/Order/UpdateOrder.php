@@ -6,7 +6,7 @@ use IZal\Lshopify\Models\CustomerAddress;
 use IZal\Lshopify\Models\Order;
 use Illuminate\Support\Arr;
 
-class OrderUpdateAction extends OrderCreateAction
+class UpdateOrder extends CreateOrder
 {
     public function update(Order $order, array $attributes)
     {

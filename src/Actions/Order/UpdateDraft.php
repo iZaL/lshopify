@@ -6,7 +6,7 @@ use Illuminate\Support\Arr;
 use IZal\Lshopify\Cart\Cart;
 use IZal\Lshopify\Models\DraftOrder;
 
-class DraftOrderUpdateAction extends OrderCreateAction
+class UpdateDraft extends CreateOrder
 {
 
     private Cart $cart;
@@ -33,7 +33,7 @@ class DraftOrderUpdateAction extends OrderCreateAction
     public function update(DraftOrder $order, array $attributes)
     {
         $order->update(array_merge($this->cart->getCartData(), Arr::only($attributes, $order->getFillable())));
-        $this->attachDiscount->attach($order);
+        $this->attachDiscount->run($order);
         $this->syncCartVariants->update($order);
     }
 

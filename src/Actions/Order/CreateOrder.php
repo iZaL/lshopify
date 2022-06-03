@@ -5,7 +5,7 @@ namespace IZal\Lshopify\Actions\Order;
 use IZal\Lshopify\Models\DraftOrder;
 use IZal\Lshopify\Models\Order;
 
-class OrderCreateAction
+class CreateOrder
 {
     public function createOrderFromDraft(DraftOrder $draftOrder)
     {

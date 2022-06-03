@@ -15,7 +15,7 @@ class AttachDiscount
         $this->cart = $cart;
     }
 
-    public function attach(Order $order,$name = 'Admin cart discount',$isAuto = 1)
+    public function run(Order $order,$name = 'Admin cart discount',$isAuto = 1)
     {
         $cartDiscount = $this->cart->getConditionByName('cart');
         if($order->discount) {

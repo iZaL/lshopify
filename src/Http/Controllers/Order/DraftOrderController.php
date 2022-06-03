@@ -7,9 +7,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
-use IZal\Lshopify\Actions\Order\DraftOrderCreateAction;
-use IZal\Lshopify\Actions\Order\DraftOrderUpdateAction;
-use IZal\Lshopify\Actions\Order\OrderCreateAction;
+use IZal\Lshopify\Actions\Order\CreateDraft;
+use IZal\Lshopify\Actions\Order\UpdateDraft;
+use IZal\Lshopify\Actions\Order\CreateOrder;
 use IZal\Lshopify\Cart\Condition;
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\DraftOrderCustomerUpdateRequest;
@@ -67,7 +67,7 @@ class DraftOrderController extends Controller
         return Inertia::render('Order/Draft/DraftOrderCreate', $data);
     }
 
-    public function store(DraftOrderStoreRequest $request, DraftOrderCreateAction $draftOrderCreateAction)
+    public function store(DraftOrderStoreRequest $request, CreateDraft $draftOrderCreateAction)
     {
         $cart = app('cart');
 
@@ -186,7 +186,7 @@ class DraftOrderController extends Controller
         return Inertia::render('Order/Draft/DraftOrderEdit', $data);
     }
 
-    public function update($id, DraftOrderUpdateRequest $request, DraftOrderUpdateAction $action): RedirectResponse
+    public function update($id, DraftOrderUpdateRequest $request, UpdateDraft $action): RedirectResponse
     {
         $order = DraftOrder::find($id);
 
@@ -211,7 +211,7 @@ class DraftOrderController extends Controller
             ->with('success', 'Updated');
     }
 
-    public function confirm($id, OrderCreateAction $action): RedirectResponse
+    public function confirm($id, CreateOrder $action): RedirectResponse
     {
         $draftOrder = DraftOrder::find($id);
 
@@ -225,7 +225,7 @@ class DraftOrderController extends Controller
     public function attachCustomer(
         $id,
         DraftOrderCustomerUpdateRequest $request,
-        DraftOrderCreateAction $action
+        CreateDraft $action
     ): RedirectResponse {
         $order = DraftOrder::find($id);
 

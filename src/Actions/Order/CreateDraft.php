@@ -5,7 +5,7 @@ namespace IZal\Lshopify\Actions\Order;
 use IZal\Lshopify\Cart\Cart;
 use IZal\Lshopify\Models\DraftOrder;
 
-class DraftOrderCreateAction extends OrderCreateAction
+class CreateDraft extends CreateOrder
 {
 
     private AttachDiscount $addDiscount;
@@ -31,7 +31,7 @@ class DraftOrderCreateAction extends OrderCreateAction
     public function run(): DraftOrder
     {
         $order = DraftOrder::create($this->cart->getCartData());
-        $this->addDiscount->attach($order);
+        $this->addDiscount->run($order);
         $this->syncCartVariants->create($order);
         return $order;
     }

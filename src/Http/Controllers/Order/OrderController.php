@@ -2,7 +2,7 @@
 
 namespace IZal\Lshopify\Http\Controllers\Order;
 
-use IZal\Lshopify\Actions\Order\OrderUpdateAction;
+use IZal\Lshopify\Actions\Order\UpdateOrder;
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\OrderStoreRequest;
 use IZal\Lshopify\Http\Requests\OrderUpdateRequest;
@@ -59,7 +59,7 @@ class OrderController extends Controller
     public function update(
         $id,
         OrderUpdateRequest $request,
-        OrderUpdateAction $action
+        UpdateOrder $action
     ): \Illuminate\Http\RedirectResponse {
         $order = Order::find($id);
 

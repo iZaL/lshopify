@@ -2,7 +2,6 @@
 
 namespace IZal\Lshopify\Actions\Cart;
 
-use Illuminate\Http\Request;
 use IZal\Lshopify\Cart\Cart;
 use IZal\Lshopify\Models\Variant;
 use IZal\Lshopify\Resources\VariantResource;
