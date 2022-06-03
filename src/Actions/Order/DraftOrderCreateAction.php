@@ -12,28 +12,17 @@ use IZal\Lshopify\Models\Variant;
 
 class DraftOrderCreateAction extends OrderCreateAction
 {
-    /**
-     * @var DraftOrder
-     */
-    private $order;
-    /**
-     * @var Variant
-     */
-    private $variant;
+
     private Cart $cart;
     private AddDiscount $addDiscount;
 
     /**
      * DraftOrderCreateAction constructor.
-     * @param DraftOrder $order
-     * @param Variant $variant
      * @param Cart $cart
      * @param AddDiscount $addDiscount
      */
-    public function __construct(DraftOrder $order, Variant $variant, Cart $cart, AddDiscount $addDiscount)
+    public function __construct(Cart $cart, AddDiscount $addDiscount)
     {
-        $this->order = $order;
-        $this->variant = $variant;
         $this->cart = $cart;
         $this->addDiscount = $addDiscount;
     }
@@ -43,7 +32,7 @@ class DraftOrderCreateAction extends OrderCreateAction
      */
     public function create(): DraftOrder
     {
-        $order = $this->order->create($this->getCartData());
+        $order = DraftOrder::create($this->getCartData());
         $this->addDiscount->run($order);
         $this->syncCartVariants($order);
         return $order;
@@ -67,13 +56,13 @@ class DraftOrderCreateAction extends OrderCreateAction
      */
     public function attachVariantFromCartItem(DraftOrder $order, ItemCollection $cartItem): Variant
     {
-        $variant = $this->variant->find($cartItem->id);
+        $variant = Variant::find($cartItem->id);
         if ($variant) {
             $variantDiscount = null;
             if ($cartCondition = $cartItem->getConditionByName($variant->id)) {
                 $variantDiscount = $this->createVariantDiscount($order, $variant, $cartCondition);
             }
-            $order->variants()->sync($variant->id,
+            $order->variants()->attach($variant->id,
                 array_merge(
                     ['discount_id' => $variantDiscount?->id],
                     $this->getCartItemData($cartItem)

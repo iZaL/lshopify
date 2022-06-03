@@ -2,34 +2,29 @@
 
 namespace IZal\Lshopify\Actions\Order;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Arr;
 use IZal\Lshopify\Cart\Cart;
 use IZal\Lshopify\Cart\Collections\ItemCollection;
+use IZal\Lshopify\Models\Discount;
 use IZal\Lshopify\Models\DraftOrder;
 use IZal\Lshopify\Models\Variant;
 
 class DraftOrderUpdateAction extends OrderCreateAction
 {
 
-    /**
-     * @var Variant
-     */
-    private $variant;
     private Cart $cart;
     private UpdateDiscount $updateDiscount;
 
     /**
      * DraftOrderCreateAction constructor.
-     * @param DraftOrder $order
-     * @param Variant $variant
      * @param Cart $cart
-     * @param AddDiscount $addDiscount
+     * @param UpdateDiscount $updateDiscount
      */
-    public function __construct(DraftOrder $order, Variant $variant, Cart $cart, AddDiscount $addDiscount,UpdateDiscount $updateDiscount)
+    public function __construct(Cart $cart, UpdateDiscount $updateDiscount)
     {
-        $this->variant = $variant;
         $this->cart = $cart;
-        $this->addDiscount = $addDiscount;
         $this->updateDiscount = $updateDiscount;
     }
 
@@ -53,7 +48,7 @@ class DraftOrderUpdateAction extends OrderCreateAction
         $oldVariants = $order->variants->modelKeys();
         $newVariants = [];
         foreach ($this->cart->items() as $cartItem) {
-            $variant = $this->variant->find($cartItem->name);
+            $variant = Variant::find($cartItem->name);
             if($variant) {
                 $newVariants[] = $variant->id;
                 $this->updateVariantFromCartItem($order, $variant, $cartItem);
@@ -79,6 +74,33 @@ class DraftOrderUpdateAction extends OrderCreateAction
         ],false);
 
         return $variant;
+    }
+
+    private function createVariantDiscount(DraftOrder $order, Variant $variant, $itemCondition): Model|BelongsTo|null
+    {
+        $variantCondition = $order->variants()
+            ->where('variant_id',$variant->id)
+            ->whereNotNull('discount_id')
+            ->first();
+
+        if($variantCondition) {
+            $discount = Discount::find(optional($variantCondition->pivot)->discount_id);
+            $discount?->update([
+                'value' => $itemCondition->value,
+                'value_type' => $itemCondition->suffix === 'percent' ? 'percent' : 'amount',
+                'reason' => $itemCondition->reason,
+            ]);
+        } else {
+            $discount = $order->discount()->create([
+                'name' => 'Admin discount',
+                'auto' => 1,
+                'value' => $itemCondition->value,
+                'value_type' => $itemCondition->suffix === 'percent' ? 'percent' : 'amount',
+                'reason' => $itemCondition->reason,
+            ]);
+            $variant->discounts()->attach($discount->id);
+        }
+        return $discount;
     }
 
     /**
