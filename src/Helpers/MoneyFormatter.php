@@ -3,8 +3,6 @@
 namespace IZal\Lshopify\Helpers;
 
 use Illuminate\Support\Str;
-use IZal\Lshopify\Models\Tag;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 trait MoneyFormatter
 {
@@ -28,4 +26,10 @@ trait MoneyFormatter
         $value = $this->attributes[$key];
         return 'OMR ' . number_format($value, 2);
     }
+
+    public static function localize($price)
+    {
+        return 'OMR ' . number_format($price, 2);
+    }
+
 }

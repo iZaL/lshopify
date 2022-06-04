@@ -142,4 +142,20 @@ class Product extends BaseModel
         }
         return $this->default_variant()->sum('quantity');
     }
+
+    public function scopeForCollection($query, $value)
+    {
+        $collection = Collection::where('name',$value)->first();
+        return $collection->isManual() ? $collection->products : $collection->smart_products();
+    }
+
+    public function price()
+    {
+        $defaultPrice = $this->default_variant->price;
+        if($this->variants()->count()) {
+            $defaultPrice = $this->variants()->first()->price;
+        }
+        return $defaultPrice;
+    }
+
 }

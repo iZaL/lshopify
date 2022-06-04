@@ -2,7 +2,11 @@
 
 namespace IZal\Lshopify\Models;
 
+use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use IZal\Lshopify\Database\Factories\CollectionFactory;
 use IZal\Lshopify\Models\Traits\ImageableTrait;
 use IZal\Lshopify\Models\Traits\TaggableTrait;
@@ -21,26 +25,31 @@ class Collection extends BaseModel
 
     protected $fillable = ['name', 'slug', 'type', 'determiner', 'description'];
 
-    public static function newFactory()
+    public static function newFactory(): CollectionFactory
     {
         return CollectionFactory::new();
     }
 
-    public function conditions()
+    /**
+     * @return HasMany
+     */
+    public function conditions(): HasMany
     {
         return $this->hasMany(CollectionCondition::class, 'collection_id');
     }
 
-    public function products()
+    /**
+     * @return BelongsToMany
+     */
+    public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, 'collection_products', 'collection_id', 'product_id');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
-     * @throws \Exception
+     * @throws Exception
      */
-    public function smart_products()
+    public function smart_products(): Builder
     {
         $products = Product::query();
         if (!$this->relationLoaded('conditions')) {
@@ -49,7 +58,7 @@ class Collection extends BaseModel
         foreach ($this->conditions as $condition) {
             $products = $this->getProductsForCondition($products, $condition, $this->determiner);
         }
-        return $products->get();
+        return $products;
     }
 
     public function isManual(): bool
@@ -63,16 +72,17 @@ class Collection extends BaseModel
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $products
+     * @param Builder $products
      * @param $condition
      * @param string $determiner
-     * @throws \Exception
+     * @return Builder
+     * @throws Exception
      */
     public function getProductsForCondition(
-        \Illuminate\Database\Eloquent\Builder $products,
+        Builder $products,
         $condition,
         string $determiner = 'all'
-    ): \Illuminate\Database\Eloquent\Builder {
+    ): Builder {
         $conditionManager = new CollectionCriteriaManager($condition);
 
         $field = $conditionManager->resolveField();
@@ -100,4 +110,10 @@ class Collection extends BaseModel
 
         return $products;
     }
+
+    public function scopeOfName($query,$value)
+    {
+        return $query->where('name',$value);
+    }
+
 }
