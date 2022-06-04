@@ -12,7 +12,6 @@ use IZal\Lshopify\Models\Variant;
 
 class SyncCartVariants
 {
-
     private Cart $cart;
 
     public function __construct(Cart $cart)
@@ -37,7 +36,7 @@ class SyncCartVariants
         $newVariants = [];
         foreach ($this->cart->items() as $cartItem) {
             $variant = Variant::find($cartItem->name);
-            if($variant) {
+            if ($variant) {
                 $newVariants[] = $variant->id;
                 $this->updateVariantFromCartItem($order, $variant, $cartItem);
             }
@@ -54,12 +53,15 @@ class SyncCartVariants
         if ($cartCondition = $cartItem->getConditionByName($variant->id)) {
             $variantDiscount = $this->createVariantDiscount($order, $variant, $cartCondition);
         }
-        $order->variants()->sync([$variant->id =>
+        $order->variants()->sync(
             [
-                'discount_id' => $variantDiscount?->id,
-                ...$this->getCartItemData($cartItem)
+                $variant->id => [
+                    'discount_id' => $variantDiscount?->id,
+                    ...$this->getCartItemData($cartItem),
+                ],
             ],
-        ],false);
+            false
+        );
 
         return $variant;
     }
@@ -77,11 +79,12 @@ class SyncCartVariants
             if ($cartCondition = $cartItem->getConditionByName($variant->id)) {
                 $variantDiscount = $this->createVariantDiscount($order, $variant, $cartCondition);
             }
-            $order->variants()->attach($variant->id,
-                array_merge(
-                    ['discount_id' => $variantDiscount?->id],
-                    $this->getCartItemData($cartItem)
-                ));
+            $order
+                ->variants()
+                ->attach(
+                    $variant->id,
+                    array_merge(['discount_id' => $variantDiscount?->id], $this->getCartItemData($cartItem))
+                );
         }
         return $variant;
     }
@@ -94,12 +97,13 @@ class SyncCartVariants
      */
     private function createVariantDiscount(DraftOrder $order, Variant $variant, $itemCondition): Model|BelongsTo|null
     {
-        $variantCondition = $order->variants()
-            ->where('variant_id',$variant->id)
+        $variantCondition = $order
+            ->variants()
+            ->where('variant_id', $variant->id)
             ->whereNotNull('discount_id')
             ->first();
 
-        if($variantCondition) {
+        if ($variantCondition) {
             $discount = Discount::find(optional($variantCondition->pivot)->discount_id);
             $discount?->update([
                 'value' => $itemCondition->value,

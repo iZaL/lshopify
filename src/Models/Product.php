@@ -2,6 +2,7 @@
 
 namespace IZal\Lshopify\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -9,7 +10,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use IZal\Lshopify\Database\Factories\ProductFactory;
 use IZal\Lshopify\Models\Traits\ImageableTrait;
 use IZal\Lshopify\Models\Traits\TaggableTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends BaseModel
 {
@@ -42,21 +42,9 @@ class Product extends BaseModel
         return $this->hasMany(Variant::class, 'product_id');
     }
 
-    public function variants(): HasMany
-    {
-        return $this->hasMany(Variant::class, 'product_id')
-            ->whereNotNull('options')
-            ->where('default', 0);
-    }
-
     public function collections(): BelongsToMany
     {
         return $this->belongsToMany(Collection::class, 'collection_products');
-    }
-
-    public function default_variant(): HasOne
-    {
-        return $this->hasOne(Variant::class, 'product_id')->where('default', 1);
     }
 
     public function category(): BelongsTo
@@ -134,6 +122,18 @@ class Product extends BaseModel
             ->count() > 0;
     }
 
+    public function variants(): HasMany
+    {
+        return $this->hasMany(Variant::class, 'product_id')
+            ->whereNotNull('options')
+            ->where('default', 0);
+    }
+
+    public function default_variant(): HasOne
+    {
+        return $this->hasOne(Variant::class, 'product_id')->where('default', 1);
+    }
+
     public function getAvailableQuantityAttribute()
     {
         $hasVariants = $this->variants()->count() > 0;
@@ -145,17 +145,26 @@ class Product extends BaseModel
 
     public function scopeForCollection($query, $value)
     {
-        $collection = Collection::where('name',$value)->first();
+        $collection = Collection::where('name', $value)->first();
         return $collection->isManual() ? $collection->products : $collection->smart_products();
     }
 
     public function price()
     {
         $defaultPrice = $this->default_variant->price;
-        if($this->variants()->count()) {
+        if ($this->variants()->count()) {
             $defaultPrice = $this->variants()->first()->price;
         }
         return $defaultPrice;
     }
 
+    public function getDisplayImageAttribute()
+    {
+        return $this->default_image ? url($this->default_image->url) : url($this->image?->url);
+    }
+
+    public function hasColor()
+    {
+        // check if variants has color
+    }
 }

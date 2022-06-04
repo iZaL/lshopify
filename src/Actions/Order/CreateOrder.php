@@ -18,5 +18,4 @@ class CreateOrder
     {
         abort_if($order->draft(), 403);
     }
-
 }

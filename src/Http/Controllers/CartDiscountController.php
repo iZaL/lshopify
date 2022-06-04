@@ -43,7 +43,6 @@ class CartDiscountController extends Controller
      */
     public function remove(Request $request): RedirectResponse
     {
-
         $this->validate($request, [
             'discount' => 'required|array',
             'item' => 'nullable',

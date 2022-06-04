@@ -81,7 +81,6 @@ class DraftOrderController extends Controller
         try {
             $order = $draftOrderCreateAction->run();
             DB::commit();
-
         } catch (Throwable $e) {
             DB::rollBack();
             return redirect()
@@ -115,7 +114,7 @@ class DraftOrderController extends Controller
             session()->put('cart_order', $order->id);
             // sync DB orders with the cart, only on first request and ignore on subsequent requests.
             $discount = $order->discount;
-            if($discount) {
+            if ($discount) {
                 $cartCondition = [
                     'value' => $discount->value,
                     'suffix' => $discount->value_type,
@@ -148,7 +147,7 @@ class DraftOrderController extends Controller
 
                 $variantDiscount = Discount::find(optional($variant->pivot)->discount_id);
 
-                if($variantDiscount) {
+                if ($variantDiscount) {
                     $cartItemCondition = [
                         'value' => $variantDiscount->value,
                         'suffix' => $variantDiscount->value_type,
@@ -222,11 +221,8 @@ class DraftOrderController extends Controller
             ->with('success', 'Created Order');
     }
 
-    public function attachCustomer(
-        $id,
-        DraftOrderCustomerUpdateRequest $request,
-        CreateDraft $action
-    ): RedirectResponse {
+    public function attachCustomer($id, DraftOrderCustomerUpdateRequest $request, CreateDraft $action): RedirectResponse
+    {
         $order = DraftOrder::find($id);
 
         if (!$order) {

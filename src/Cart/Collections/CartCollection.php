@@ -607,7 +607,6 @@ class CartCollection extends BaseCollection implements Serializable
         return $cartItem;
     }
 
-
     /**
      * @return array
      */

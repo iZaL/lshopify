@@ -7,7 +7,6 @@ use IZal\Lshopify\Models\Order;
 
 class AttachDiscount
 {
-
     private Cart $cart;
 
     public function __construct(Cart $cart)
@@ -15,11 +14,11 @@ class AttachDiscount
         $this->cart = $cart;
     }
 
-    public function run(Order $order,$name = 'Admin cart discount',$isAuto = 1)
+    public function run(Order $order, $name = 'Admin cart discount', $isAuto = 1)
     {
         $cartDiscount = $this->cart->getConditionByName('cart');
-        if($order->discount) {
-            if($cartDiscount) {
+        if ($order->discount) {
+            if ($cartDiscount) {
                 $order->discount->update([
                     'value' => $cartDiscount->value,
                     'value_type' => $cartDiscount->suffix === 'percent' ? 'percent' : 'amount',
@@ -42,5 +41,4 @@ class AttachDiscount
             }
         }
     }
-
 }

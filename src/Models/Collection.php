@@ -78,11 +78,8 @@ class Collection extends BaseModel
      * @return Builder
      * @throws Exception
      */
-    public function getProductsForCondition(
-        Builder $products,
-        $condition,
-        string $determiner = 'all'
-    ): Builder {
+    public function getProductsForCondition(Builder $products, $condition, string $determiner = 'all'): Builder
+    {
         $conditionManager = new CollectionCriteriaManager($condition);
 
         $field = $conditionManager->resolveField();
@@ -111,9 +108,8 @@ class Collection extends BaseModel
         return $products;
     }
 
-    public function scopeOfName($query,$value)
+    public function scopeOfName($query, $value)
     {
-        return $query->where('name',$value);
+        return $query->where('name', $value);
     }
-
 }

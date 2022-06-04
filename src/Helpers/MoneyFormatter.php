@@ -31,5 +31,4 @@ trait MoneyFormatter
     {
         return 'OMR ' . number_format($price, 2);
     }
-
 }

@@ -6,7 +6,6 @@ use IZal\Lshopify\Models\Discount;
 
 class CreateDiscount extends DiscountService
 {
-
     public function run(array $attributes): Discount
     {
         $discount = Discount::create(

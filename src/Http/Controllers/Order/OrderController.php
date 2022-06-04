@@ -56,11 +56,8 @@ class OrderController extends Controller
         return Inertia::render('Order/OrderEdit', ['order' => $orderResource]);
     }
 
-    public function update(
-        $id,
-        OrderUpdateRequest $request,
-        UpdateOrder $action
-    ): \Illuminate\Http\RedirectResponse {
+    public function update($id, OrderUpdateRequest $request, UpdateOrder $action): \Illuminate\Http\RedirectResponse
+    {
         $order = Order::find($id);
 
         $action->update($order, $request->except('shipping', 'billing', 'customer_id', 'total', 'subtotal'));

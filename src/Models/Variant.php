@@ -92,5 +92,4 @@ class Variant extends BaseModel
             ->pluck('name')
             ->join(' / ');
     }
-
 }

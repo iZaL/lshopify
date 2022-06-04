@@ -7,7 +7,6 @@ use IZal\Lshopify\Models\DraftOrder;
 
 class CreateDraft extends CreateOrder
 {
-
     private AttachDiscount $addDiscount;
     private SyncCartVariants $syncCartVariants;
     private Cart $cart;
@@ -35,5 +34,4 @@ class CreateDraft extends CreateOrder
         $this->syncCartVariants->create($order);
         return $order;
     }
-
 }
