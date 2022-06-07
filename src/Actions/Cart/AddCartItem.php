@@ -8,13 +8,15 @@ use IZal\Lshopify\Resources\VariantResource;
 
 class AddCartItem
 {
-    public function run(array $variantIDs): Cart
+    public function run(array $variantIDs, $sync = false): Cart
     {
         $cart = app('cart');
         $variants = Variant::with(['product'])->find($variantIDs);
-        foreach ($cart->items() as $item) {
-            if (!in_array($item->id, $variantIDs)) {
-                $cart->remove($item->rowId);
+        if($sync) {
+            foreach ($cart->items() as $item) {
+                if (!in_array($item->id, $variantIDs)) {
+                    $cart->remove($item->rowId);
+                }
             }
         }
         if ($variants->count()) {

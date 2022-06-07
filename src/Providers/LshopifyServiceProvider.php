@@ -9,6 +9,7 @@ use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
 use IZal\Lshopify\Cart\CartServiceProvider;
 use IZal\Lshopify\Models\Collection;
+use IZal\Lshopify\Models\Image;
 use IZal\Lshopify\Models\Product;
 use IZal\Lshopify\Models\Variant;
 
@@ -26,6 +27,7 @@ class LshopifyServiceProvider extends ServiceProvider
             'product' => Product::class,
             'collection' => Collection::class,
             'variant' => Variant::class,
+            'image' => Image::class
         ]);
 
         if (!config('lshopify.enabled')) {

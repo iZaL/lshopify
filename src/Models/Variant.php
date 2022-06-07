@@ -2,7 +2,10 @@
 
 namespace IZal\Lshopify\Models;
 
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
+use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use IZal\Lshopify\Database\Factories\VariantFactory;
 use IZal\Lshopify\Models\Traits\DiscountableTrait;
 use IZal\Lshopify\Models\Traits\ImageableTrait;
@@ -24,6 +27,8 @@ class Variant extends BaseModel
         'out_of_stock_sale' => 'boolean',
         'price' => 'decimal:3',
         'compare_at_price' => 'decimal:3',
+//        'options' => AsArrayObject::class,
+//        'options' => AsCollection::class,
         'options' => 'array',
     ];
 
@@ -71,7 +76,7 @@ class Variant extends BaseModel
         return $this->belongsTo(Product::class, 'product_id');
     }
 
-    public function image()
+    public function image(): BelongsTo
     {
         return $this->belongsTo(Image::class);
     }
@@ -81,9 +86,13 @@ class Variant extends BaseModel
         return $this->belongsToMany(DraftOrder::class, 'order_variants');
     }
 
-    public function new_options()
+    public function getDisplayImageAttribute()
     {
-        return $this->hasMany(VariantOption::class, 'variant_id');
+        $image = $this->image;
+        if(!$this->image) {
+            $image = $this->product->image;
+        }
+        return $image;
     }
 
     public function getTitleAttribute()

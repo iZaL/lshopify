@@ -37,10 +37,12 @@ export default function VariantOptionsEdit({
       (
         o,
       ): VariantOption & {
-        edited?: boolean;
+        // edited?: boolean;
       } =>
         o.id === option.id
-          ? {...option, name: e.target.value, edited: true}
+          ? {...option, name: e.target.value
+            // , edited: true
+      }
           : o,
     );
     onChange('options', currentOptions);

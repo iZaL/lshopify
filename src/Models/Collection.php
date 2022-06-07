@@ -51,6 +51,8 @@ class Collection extends BaseModel
      */
     public function smart_products(): Builder
     {
+//        $user = $this->where('id','>',1);
+//        dd($user);
         $products = Product::query();
         if (!$this->relationLoaded('conditions')) {
             $this->load('conditions');
@@ -78,7 +80,7 @@ class Collection extends BaseModel
      * @return Builder
      * @throws Exception
      */
-    public function getProductsForCondition(Builder $products, $condition, string $determiner = 'all'): Builder
+    public function getProductsForCondition(Builder $products, $condition, string $determiner = 'all')
     {
         $conditionManager = new CollectionCriteriaManager($condition);
 

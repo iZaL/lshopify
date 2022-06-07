@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Collection as CollectionAlias;
 use IZal\Lshopify\Database\Factories\ProductFactory;
 use IZal\Lshopify\Models\Traits\ImageableTrait;
 use IZal\Lshopify\Models\Traits\TaggableTrait;
@@ -62,27 +63,18 @@ class Product extends BaseModel
         return $this->image;
     }
 
-    public function getVariantOptionsAttribute(): array
+    /**
+     * @return mixed
+     */
+    public function getVariantOptionsAttribute()
     {
         return $this->variants
             ->pluck('options')
             ->unique('id')
-            ->collapse()
-            ->toArray();
+            ->collapse();
     }
 
-    public function getVariantOptionsValuesAttribute(): array
-    {
-        $variants = $this->variants
-            ->pluck('options')
-            ->collapse()
-            ->unique()
-            ->toArray();
-
-        return [...$variants];
-    }
-
-    public function getVariantOptionsNewAttribute(): array
+    public function getVariantOptionValuesAttribute()
     {
         return $this->variants
             ->pluck('options')
@@ -102,11 +94,12 @@ class Product extends BaseModel
                                 'name' => $value,
                             ];
                         })
-                        ->toArray(),
+                        ->toArray()
+                    ,
                 ];
             })
             ->values()
-            ->toArray();
+            ;
     }
 
     public function getIsInventoryTrackedAttribute(): bool
@@ -143,14 +136,17 @@ class Product extends BaseModel
         return $this->default_variant()->sum('quantity');
     }
 
-    public function scopeForCollection($query, $value)
-    {
-        $collection = Collection::where('name', $value)->first();
-        return $collection->isManual() ? $collection->products : $collection->smart_products();
-    }
+//    public function scopeForCollection($query, $value)
+//    {
+//        $collection = Collection::where('name', $value)->first();
+//        return $collection->isManual() ? $collection->products : $collection->smart_products();
+//    }
 
     public function price()
     {
+        if (!$this->relationLoaded('default_variant')) {
+            $this->load('default_variant');
+        }
         $defaultPrice = $this->default_variant->price;
         if ($this->variants()->count()) {
             $defaultPrice = $this->variants()->first()->price;
@@ -163,8 +159,21 @@ class Product extends BaseModel
         return $this->default_image ? url($this->default_image->url) : url($this->image?->url);
     }
 
-    public function hasColor()
+    public function getHasColorAttribute():bool
     {
-        // check if variants has color
+        return $this->getColorVariantAttribute() >= 1;
     }
+
+    public function getColorVariantAttribute()
+    {
+        return $this->getVariantOptionsAttribute()->where('id','Color')->all();
+    }
+
+//    public function scopeOfVariant($query, $attribute)
+//    {
+//        return $this->getVariantOptionsAttribute()->where('id','Color')->all();
+//
+////        return $query->
+//    }
+
 }

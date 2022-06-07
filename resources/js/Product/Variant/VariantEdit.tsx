@@ -67,7 +67,8 @@ export default function VariantEdit(props: Props) {
 
   const handleSubmit = (): void => {
     const url = route('lshopify.products.variants.update', [variant.id]);
-    post(url, {
+    console.log('d',data);
+    Inertia.post(url,data, {
       preserveScroll: true,
       preserveState: false,
       onSuccess: () => {},

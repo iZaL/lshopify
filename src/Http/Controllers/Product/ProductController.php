@@ -2,6 +2,7 @@
 
 namespace IZal\Lshopify\Http\Controllers\Product;
 
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -125,7 +126,7 @@ class ProductController extends Controller
         try {
             $action = $productCreateAction->run($product, collect($request->all()));
             DB::commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             return redirect()
                 ->back()
@@ -158,7 +159,7 @@ class ProductController extends Controller
             'default_variant_options' => Variant::defaultVariantOptions(),
             'categories' => CategoryResource::collection(Category::all()),
             'vendors' => VendorResource::collection(Vendor::all()),
-            'variant_options' => $product->variant_options_new,
+            'variant_options' => $product->variant_option_values,
         ];
 
         return Inertia::render('Product/ProductEdit', $data);
@@ -169,7 +170,7 @@ class ProductController extends Controller
         $product = Product::find($id);
         try {
             $action->run($product, collect($request->all()));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect()
                 ->back()
                 ->with('error', $e->getMessage());

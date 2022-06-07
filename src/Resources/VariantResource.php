@@ -14,7 +14,8 @@ class VariantResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'options' => is_array($this->options) ? $this->options : [],
+            'options' => $this->options,
+//            'options' => is_array($this->options) ? $this->options : [],
             //            'options_new' => is_array($this->options) ? $this->options_new : [],
             'price' => $this->price,
             'compare_at_price' => $this->compare_at_price,
