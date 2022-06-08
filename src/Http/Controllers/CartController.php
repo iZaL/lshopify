@@ -5,20 +5,21 @@ namespace IZal\Lshopify\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use IZal\Lshopify\Actions\Cart\AddCartItem;
+use IZal\Lshopify\Jobs\Cart\AddCartItem;
 
 class CartController extends Controller
 {
     /**
      * @throws ValidationException
      */
-    public function add(Request $request, AddCartItem $addCartItem): RedirectResponse
+    public function add(Request $request): RedirectResponse
     {
         $this->validate($request, [
             'variantIDs' => 'nullable|array',
             'orderID' => 'nullable|exists:orders,id',
         ]);
-        $addCartItem->run($request->variantIDs);
+
+        $this->dispatch(new AddCartItem($request->variantIDs));
         return redirect()->back();
     }
 
