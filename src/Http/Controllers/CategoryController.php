@@ -3,7 +3,7 @@
 namespace IZal\Lshopify\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
-use IZal\Lshopify\Actions\CreateCategory;
+use IZal\Lshopify\Jobs\CreateCategory;
 use IZal\Lshopify\Http\Requests\CategoryStoreRequest;
 use IZal\Lshopify\Models\Product;
 

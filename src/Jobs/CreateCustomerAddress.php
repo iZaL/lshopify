@@ -1,6 +1,6 @@
 <?php
 
-namespace IZal\Lshopify\Actions;
+namespace IZal\Lshopify\Jobs;
 
 use Illuminate\Database\Eloquent\Model;
 use IZal\Lshopify\Models\Customer;

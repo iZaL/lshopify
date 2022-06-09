@@ -4,9 +4,9 @@ namespace IZal\Lshopify\Http\Controllers\Product;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use IZal\Lshopify\Actions\VariantCreateAction;
-use IZal\Lshopify\Actions\VariantDeleteAction;
-use IZal\Lshopify\Actions\VariantUpdateAction;
+use IZal\Lshopify\Jobs\VariantCreateAction;
+use IZal\Lshopify\Jobs\VariantDeleteAction;
+use IZal\Lshopify\Jobs\VariantUpdateAction;
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\VariantAttributeUpdateRequest;
 use IZal\Lshopify\Http\Requests\VariantDeleteRequest;

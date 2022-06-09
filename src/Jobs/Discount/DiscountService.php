@@ -1,6 +1,6 @@
 <?php
 
-namespace IZal\Lshopify\Actions\Discount;
+namespace IZal\Lshopify\Jobs\Discount;
 
 use Exception;
 use Illuminate\Support\Carbon;

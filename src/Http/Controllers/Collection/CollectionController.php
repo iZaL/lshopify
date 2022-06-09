@@ -5,7 +5,7 @@ namespace IZal\Lshopify\Http\Controllers\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Inertia\Inertia;
-use IZal\Lshopify\Actions\ImageUploadAction;
+use IZal\Lshopify\Jobs\ImageUploadAction;
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\CollectionStoreRequest;
 use IZal\Lshopify\Models\Collection;

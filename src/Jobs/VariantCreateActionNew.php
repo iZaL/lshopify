@@ -1,6 +1,6 @@
 <?php
 
-namespace IZal\Lshopify\Actions;
+namespace IZal\Lshopify\Jobs;
 
 use IZal\Lshopify\Models\Variant;
 use Illuminate\Support\Collection;

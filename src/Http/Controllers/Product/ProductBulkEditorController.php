@@ -5,7 +5,7 @@ namespace IZal\Lshopify\Http\Controllers\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use IZal\Lshopify\Actions\UpdateProduct;
+use IZal\Lshopify\Jobs\UpdateProduct;
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\ProductBulkEditorUpdateRequest;
 use IZal\Lshopify\Models\Product;

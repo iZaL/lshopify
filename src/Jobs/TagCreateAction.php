@@ -1,6 +1,6 @@
 <?php
 
-namespace IZal\Lshopify\Actions;
+namespace IZal\Lshopify\Jobs;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use IZal\Lshopify\Models\Tag;

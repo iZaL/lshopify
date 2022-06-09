@@ -1,6 +1,6 @@
 <?php
 
-namespace IZal\Lshopify\Actions\Order;
+namespace IZal\Lshopify\Jobs\Order;
 
 use Illuminate\Support\Arr;
 use IZal\Lshopify\Cart\Cart;

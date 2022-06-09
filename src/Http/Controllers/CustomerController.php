@@ -3,8 +3,8 @@
 namespace IZal\Lshopify\Http\Controllers;
 
 use Inertia\Inertia;
-use IZal\Lshopify\Actions\CreateCustomer;
-use IZal\Lshopify\Actions\CreateCustomerAddress;
+use IZal\Lshopify\Jobs\CreateCustomer;
+use IZal\Lshopify\Jobs\CreateCustomerAddress;
 use IZal\Lshopify\Http\Requests\CustomerStoreRequest;
 use IZal\Lshopify\Models\Customer;
 use IZal\Lshopify\Resources\CustomerResource;

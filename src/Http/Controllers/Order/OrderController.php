@@ -2,7 +2,7 @@
 
 namespace IZal\Lshopify\Http\Controllers\Order;
 
-use IZal\Lshopify\Actions\Order\UpdateOrder;
+use IZal\Lshopify\Jobs\Order\UpdateOrder;
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\OrderStoreRequest;
 use IZal\Lshopify\Http\Requests\OrderUpdateRequest;

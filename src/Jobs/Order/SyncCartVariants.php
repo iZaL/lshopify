@@ -1,6 +1,6 @@
 <?php
 
-namespace IZal\Lshopify\Actions\Order;
+namespace IZal\Lshopify\Jobs\Order;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

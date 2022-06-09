@@ -1,6 +1,6 @@
 <?php
 
-namespace IZal\Lshopify\Actions\Order;
+namespace IZal\Lshopify\Jobs\Order;
 
 use IZal\Lshopify\Models\CustomerAddress;
 use IZal\Lshopify\Models\Order;

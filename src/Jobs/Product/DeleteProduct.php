@@ -1,6 +1,6 @@
 <?php
 
-namespace IZal\Lshopify\Actions\Product;
+namespace IZal\Lshopify\Jobs\Product;
 
 use Illuminate\Contracts\Database\Query\Builder;
 

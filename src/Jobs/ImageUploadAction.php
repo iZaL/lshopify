@@ -1,6 +1,6 @@
 <?php
 
-namespace IZal\Lshopify\Actions;
+namespace IZal\Lshopify\Jobs;
 
 use Illuminate\Http\File;
 use IZal\Lshopify\Models\Image;

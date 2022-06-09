@@ -3,7 +3,7 @@
 namespace IZal\Lshopify\Http\Controllers;
 
 use Illuminate\Http\Request;
-use IZal\Lshopify\Actions\VendorAction;
+use IZal\Lshopify\Jobs\VendorAction;
 use IZal\Lshopify\Models\Product;
 
 class VendorController extends Controller

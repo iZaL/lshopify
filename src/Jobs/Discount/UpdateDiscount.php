@@ -1,14 +1,18 @@
 <?php
 
-namespace IZal\Lshopify\Actions\Discount;
+namespace IZal\Lshopify\Jobs\Discount;
 
+use Exception;
 use IZal\Lshopify\Models\Discount;
 
-class CreateDiscount extends DiscountService
+class UpdateDiscount extends DiscountService
 {
-    public function run(array $attributes): Discount
+    /**
+     * @throws Exception
+     */
+    public function run(Discount $discount, array $attributes): Discount
     {
-        $discount = Discount::create(
+        $discount = tap($discount)->update(
             $this->parseAttributes($attributes)
                 ->only((new Discount())->getFillable())
                 ->toArray()

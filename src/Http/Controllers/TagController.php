@@ -2,7 +2,7 @@
 
 namespace IZal\Lshopify\Http\Controllers;
 
-use IZal\Lshopify\Actions\TagCreateAction;
+use IZal\Lshopify\Jobs\TagCreateAction;
 use IZal\Lshopify\Http\Requests\TagStoreRequest;
 
 class TagController extends Controller

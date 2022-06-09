@@ -1,9 +1,9 @@
 <?php
 
-namespace IZal\Lshopify\Actions\Product;
+namespace IZal\Lshopify\Jobs\Product;
 
-use IZal\Lshopify\Actions\VariantCreateAction;
-use IZal\Lshopify\Actions\VariantUpdateAction;
+use IZal\Lshopify\Jobs\VariantCreateAction;
+use IZal\Lshopify\Jobs\VariantUpdateAction;
 use IZal\Lshopify\Models\Product;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;

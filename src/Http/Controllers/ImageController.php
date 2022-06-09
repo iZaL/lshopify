@@ -2,7 +2,7 @@
 
 namespace IZal\Lshopify\Http\Controllers;
 
-use IZal\Lshopify\Actions\ImageUploadAction;
+use IZal\Lshopify\Jobs\ImageUploadAction;
 use IZal\Lshopify\Http\Requests\ImageDeleteRequest;
 use IZal\Lshopify\Http\Requests\ImageStoreRequest;
 use IZal\Lshopify\Models\Image;
