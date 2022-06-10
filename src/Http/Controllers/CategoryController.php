@@ -11,17 +11,12 @@ class CategoryController extends Controller
 {
     /**
      * @param CategoryStoreRequest $request
-     * @param CreateCategory $createCategory
      * @return RedirectResponse
      */
-    public function store(CategoryStoreRequest $request, CreateCategory $createCategory): RedirectResponse
+    public function store(CategoryStoreRequest $request): RedirectResponse
     {
-        $category = $createCategory($request->all());
-        if ($request->product_id) {
-            $product = Product::find($request->product_id);
-            $product->category_id = $category->id;
-            $product->save();
-        }
+        $this->dispatch(new CreateCategory($request->all()));
+
         return redirect()->back();
     }
 }

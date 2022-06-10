@@ -5,9 +5,9 @@ namespace IZal\Lshopify\Http\Controllers\Product;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
+use IZal\Lshopify\Jobs\ImageUploadAction;
 use IZal\Lshopify\Jobs\Product\CreateProduct;
 use IZal\Lshopify\Jobs\Product\DeleteProduct;
 use IZal\Lshopify\Jobs\Product\UpdateProduct;
@@ -118,23 +118,12 @@ class ProductController extends Controller
         return Inertia::render('Product/ProductCreate', $data);
     }
 
-    public function store(ProductStoreRequest $request, CreateProduct $productCreateAction): RedirectResponse
+    public function store(ProductStoreRequest $request, ImageUploadAction $imageUploadAction): RedirectResponse
     {
-        $product = Product::getModel();
-        DB::beginTransaction();
-
-        try {
-            $action = $productCreateAction->run($product, collect($request->all()));
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollBack();
-            return redirect()
-                ->back()
-                ->with('error', $e->getMessage());
-        }
+        $product = $this->dispatch(new CreateProduct($request->all(), $imageUploadAction));
 
         return redirect()
-            ->route('lshopify.products.edit', $action->id)
+            ->route('lshopify.products.edit', $product->id)
             ->with('success', 'Saved');
     }
 
@@ -165,31 +154,24 @@ class ProductController extends Controller
         return Inertia::render('Product/ProductEdit', $data);
     }
 
-    public function update(ProductStoreRequest $request, UpdateProduct $action, $id): RedirectResponse
+    public function update($id, ProductStoreRequest $request): RedirectResponse
     {
         $product = Product::find($id);
-        try {
-            $action->run($product, collect($request->all()));
-        } catch (Exception $e) {
-            return redirect()
-                ->back()
-                ->with('error', $e->getMessage());
-        }
+
+        $this->dispatch(new UpdateProduct($product, $request->all()));
 
         return redirect()
             ->route('lshopify.products.edit', $product->id, 303)
             ->with('success', 'Saved');
     }
 
-    public function delete(Request $request, DeleteProduct $deleteProduct): RedirectResponse
+    public function delete(Request $request): RedirectResponse
     {
         $this->validate($request, [
             'product_ids' => 'required|array',
         ]);
 
-        $products = Product::whereIn('id', $request->product_ids);
-
-        $deleteProduct->execute($products);
+        $this->dispatch(new DeleteProduct($request->product_ids));
 
         return redirect()
             ->back()

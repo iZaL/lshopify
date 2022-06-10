@@ -51,8 +51,6 @@ class Collection extends BaseModel
      */
     public function smart_products(): Builder
     {
-//        $user = $this->where('id','>',1);
-//        dd($user);
         $products = Product::query();
         if (!$this->relationLoaded('conditions')) {
             $this->load('conditions');

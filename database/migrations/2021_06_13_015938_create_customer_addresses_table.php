@@ -15,7 +15,7 @@ class CreateCustomerAddressesTable extends Migration
     {
         Schema::create('customer_addresses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('customer_id');
+            $table->unsignedInteger('customer_id')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('company')->nullable();

@@ -1,8 +1,8 @@
 <?php
 
-namespace IZal\Lshopify\Jobs;
+namespace IZal\Lshopify\Jobs\Product\Variant;
 
-class VariantDeleteAction
+class DeleteVariant
 {
     public function delete($variant): self
     {

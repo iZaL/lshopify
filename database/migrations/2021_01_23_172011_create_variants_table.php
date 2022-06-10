@@ -40,7 +40,7 @@ class CreateVariantsTable extends Migration
 
         Schema::create('variants', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('product_id');
+            $table->unsignedInteger('product_id')->nullable();
             $table->unsignedInteger('image_id')->nullable();
             $table->unsignedInteger('origin_country_id')->nullable();
             $table->string('title')->nullable();

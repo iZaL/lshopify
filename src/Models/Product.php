@@ -94,12 +94,10 @@ class Product extends BaseModel
                                 'name' => $value,
                             ];
                         })
-                        ->toArray()
-                    ,
+                        ->toArray(),
                 ];
             })
-            ->values()
-            ;
+            ->values();
     }
 
     public function getIsInventoryTrackedAttribute(): bool
@@ -136,11 +134,11 @@ class Product extends BaseModel
         return $this->default_variant()->sum('quantity');
     }
 
-//    public function scopeForCollection($query, $value)
-//    {
-//        $collection = Collection::where('name', $value)->first();
-//        return $collection->isManual() ? $collection->products : $collection->smart_products();
-//    }
+    //    public function scopeForCollection($query, $value)
+    //    {
+    //        $collection = Collection::where('name', $value)->first();
+    //        return $collection->isManual() ? $collection->products : $collection->smart_products();
+    //    }
 
     public function price()
     {
@@ -159,21 +157,22 @@ class Product extends BaseModel
         return $this->default_image ? url($this->default_image->url) : url($this->image?->url);
     }
 
-    public function getHasColorAttribute():bool
+    public function getHasColorAttribute(): bool
     {
         return $this->getColorVariantAttribute() >= 1;
     }
 
     public function getColorVariantAttribute()
     {
-        return $this->getVariantOptionsAttribute()->where('id','Color')->all();
+        return $this->getVariantOptionsAttribute()
+            ->where('id', 'Color')
+            ->all();
     }
 
-//    public function scopeOfVariant($query, $attribute)
-//    {
-//        return $this->getVariantOptionsAttribute()->where('id','Color')->all();
-//
-////        return $query->
-//    }
-
+    //    public function scopeOfVariant($query, $attribute)
+    //    {
+    //        return $this->getVariantOptionsAttribute()->where('id','Color')->all();
+    //
+    ////        return $query->
+    //    }
 }

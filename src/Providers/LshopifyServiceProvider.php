@@ -27,7 +27,7 @@ class LshopifyServiceProvider extends ServiceProvider
             'product' => Product::class,
             'collection' => Collection::class,
             'variant' => Variant::class,
-            'image' => Image::class
+            'image' => Image::class,
         ]);
 
         if (!config('lshopify.enabled')) {

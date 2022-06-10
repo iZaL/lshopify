@@ -9,7 +9,6 @@ use IZal\Lshopify\Resources\VariantResource;
 
 class AddCartItem
 {
-
     protected $variants;
     /**
      * @var false
@@ -18,7 +17,8 @@ class AddCartItem
 
     protected $cart;
 
-    public function __construct(array $variantIDs, $sync = false) {
+    public function __construct(array $variantIDs, $sync = false)
+    {
         $this->variants = Variant::with(['product'])->find($variantIDs);
         $this->sync = $sync;
         $this->cart = app('cart');
@@ -28,7 +28,7 @@ class AddCartItem
     {
         $variants = $this->variants;
         $cart = $this->cart;
-        if($this->sync) {
+        if ($this->sync) {
             foreach ($cart->items() as $item) {
                 if (!in_array($item->id, $variants->pluck('id')->all())) {
                     $cart->remove($item->rowId);
@@ -51,6 +51,5 @@ class AddCartItem
             }
         }
         return $cart;
-
     }
 }

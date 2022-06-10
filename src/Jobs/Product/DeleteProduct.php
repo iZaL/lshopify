@@ -2,12 +2,34 @@
 
 namespace IZal\Lshopify\Jobs\Product;
 
-use Illuminate\Contracts\Database\Query\Builder;
+use IZal\Lshopify\Events\ProductDeleted;
+use IZal\Lshopify\Models\Product;
 
 class DeleteProduct
 {
-    public function execute(Builder $products)
+    private array $productID;
+
+    public function __construct(array|string $productID)
     {
-        $products->delete();
+        $this->productID = $productID;
+    }
+
+    public function handle()
+    {
+        $productID = $this->productID;
+        if (is_array($productID)) {
+            foreach ($productID as $id) {
+                self::deleteProduct($id);
+            }
+        } else {
+            self::deleteProduct($productID);
+        }
+    }
+
+    private static function deleteProduct($productID)
+    {
+        $product = Product::find($productID);
+        $product->delete();
+        event(new ProductDeleted($product));
     }
 }

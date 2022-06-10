@@ -2,16 +2,18 @@
 
 namespace IZal\Lshopify\Http\Controllers\Product;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use IZal\Lshopify\Jobs\VariantCreateAction;
-use IZal\Lshopify\Jobs\VariantDeleteAction;
-use IZal\Lshopify\Jobs\VariantUpdateAction;
+use Inertia\Response;
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\VariantAttributeUpdateRequest;
 use IZal\Lshopify\Http\Requests\VariantDeleteRequest;
 use IZal\Lshopify\Http\Requests\VariantStoreRequest;
 use IZal\Lshopify\Http\Requests\VariantUpdateRequest;
+use IZal\Lshopify\Jobs\Product\Variant\CreateVariant;
+use IZal\Lshopify\Jobs\Product\Variant\DeleteVariant;
+use IZal\Lshopify\Jobs\Product\Variant\UpdateVariant;
 use IZal\Lshopify\Models\Product;
 use IZal\Lshopify\Models\Variant;
 use IZal\Lshopify\Resources\ProductResource;
@@ -19,7 +21,7 @@ use IZal\Lshopify\Resources\VariantResource;
 
 class VariantController extends Controller
 {
-    public function create($productID, Request $request): \Inertia\Response
+    public function create($productID, Request $request): Response
     {
         $product = Product::with(['images', 'variants'])->find($productID);
         $product = new ProductResource($product);
@@ -30,30 +32,26 @@ class VariantController extends Controller
         return Inertia::render('Product/Variant/VariantCreate', $data);
     }
 
-    public function store(
-        $productID,
-        VariantStoreRequest $request,
-        VariantCreateAction $variantCreateAction
-    ): \Illuminate\Http\RedirectResponse {
+    public function store($productID, VariantStoreRequest $request): RedirectResponse
+    {
         $product = Product::find($productID);
         $imageID = null;
         if ($request->image && !$request->file('image')) {
             $imageID = $request->image['id'] ?? null;
         }
 
-        $variantAttributes = array_merge($request->except('images', 'image'), [
-            'product_id' => $product->id,
+        $variantAttributes = array_merge($request->except('product_id', 'images', 'image'), [
             'image_id' => $imageID,
         ]);
 
-        $variant = $variantCreateAction->create($variantAttributes);
+        $variant = $this->dispatch(new CreateVariant($product, $variantAttributes));
 
         return redirect()
             ->route('lshopify.products.variants.edit', [$product->id, $variant->id])
             ->with('success', 'Saved');
     }
 
-    public function edit($productID, $variantID): \Inertia\Response
+    public function edit($productID, $variantID): Response
     {
         $product = Product::with(['images', 'variants'])->find($productID);
         $variant = Variant::find($variantID);
@@ -69,8 +67,8 @@ class VariantController extends Controller
     public function update(
         $variantID,
         VariantUpdateRequest $request,
-        VariantUpdateAction $variantUpdateAction
-    ): \Illuminate\Http\RedirectResponse {
+        UpdateVariant $variantUpdateAction
+    ): RedirectResponse {
         $variant = Variant::find($variantID);
         $imageID = null;
 
@@ -98,7 +96,7 @@ class VariantController extends Controller
             ->with('success', 'Saved');
     }
 
-    public function attributes($productID, VariantAttributeUpdateRequest $request): \Illuminate\Http\RedirectResponse
+    public function attributes($productID, VariantAttributeUpdateRequest $request): RedirectResponse
     {
         $product = Product::find($productID);
         $product
@@ -111,11 +109,8 @@ class VariantController extends Controller
             ->with('success', 'Saved');
     }
 
-    public function delete(
-        $productID,
-        VariantDeleteRequest $request,
-        VariantDeleteAction $action
-    ): \Illuminate\Http\RedirectResponse {
+    public function delete($productID, VariantDeleteRequest $request, DeleteVariant $action): RedirectResponse
+    {
         $product = Product::find($productID);
         $product
             ->variants()

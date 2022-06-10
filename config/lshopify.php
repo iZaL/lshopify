@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'enabled' => true,
 
     'enable_local_development' => false,
@@ -16,9 +15,5 @@ return [
         'alias' => 'lshopify.',
     ],
 
-    'middleware' => [
-        'web',
-        \IZal\Lshopify\Http\Middleware\HandleInertiaRequests::class
-    ],
-
+    'middleware' => ['web', \IZal\Lshopify\Http\Middleware\HandleInertiaRequests::class],
 ];

@@ -2,60 +2,65 @@
 
 namespace IZal\Lshopify\Jobs\Product;
 
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use IZal\Lshopify\Jobs\ImageUploadAction;
-use IZal\Lshopify\Jobs\VariantCreateAction;
+use IZal\Lshopify\Jobs\Product\Variant\CreateVariant;
+use IZal\Lshopify\Models\Category;
 use IZal\Lshopify\Models\Product;
 use Illuminate\Support\Collection;
 
 class CreateProduct
 {
+    use DispatchesJobs;
+
     /**
      * @var ImageUploadAction
      */
     private $imageUploadAction;
-    /**
-     * @var VariantCreateAction
-     */
-    private $variantCreateAction;
+    private $attributes;
 
-    public function __construct(ImageUploadAction $imageUploadAction, VariantCreateAction $variantCreateAction)
+    public function __construct(array $attributes, ImageUploadAction $imageUploadAction)
     {
         $this->imageUploadAction = $imageUploadAction;
-        $this->variantCreateAction = $variantCreateAction;
+        $this->attributes = $attributes;
     }
 
-    public function run(Product $product, Collection $requestData): Product
+    public function handle(): Product
     {
-        $product = $product->create($requestData->only($product->getFillable())->toArray());
+        $attributes = $this->attributes;
+        $product = new Product();
+        $product->fill($attributes);
+        $product->save();
 
-        $defaultVariantAttributes = $requestData->get('default_variant');
-        $defaultVariantAttributes['default'] = true;
-        $defaultVariantAttributes['product_id'] = $product->id;
-        $this->variantCreateAction->create($defaultVariantAttributes, true);
+        $variantAttributes = $attributes['default_variant'];
+        $variantAttributes['default'] = true;
+
+        $this->dispatch(new CreateVariant($product, $variantAttributes, true));
 
         // product type
-        $category = $requestData->get('category');
-        $product->update(['category_id' => $category['id'] ?? null]);
-
-        //        $vendor = $requestData->get('vendor');
-        //        $product->update(['vendor_id' => $vendor['id'] ?? null]);
+        if (isset($attributes['category'])) {
+            $category = Category::find(optional($attributes['category'])['id']);
+            if ($category) {
+                $product->category()->associate($category);
+            }
+        }
 
         // tags
         $product->syncTags(
-            collect($requestData->get('tags'))
+            collect($attributes['tags'])
                 ->pluck('id')
                 ->toArray()
         );
 
         // collection
         $product->collections()->sync(
-            collect($requestData->get('collections'))
+            collect($attributes['collections'])
                 ->pluck('id')
                 ->toArray()
         );
 
-        if (!empty($requestData->get('images'))) {
-            $this->imageUploadAction->uploadToServer($requestData->get('images'))->saveInDB([
+        if (isset($attributes['images']) && !empty($attributes['images'])) {
+            $this->imageUploadAction->uploadToServer($attributes['images'])->saveInDB([
                 'imageable_id' => $product->id,
                 'imageable_type' => 'product',
             ]);

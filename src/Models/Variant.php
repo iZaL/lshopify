@@ -27,8 +27,8 @@ class Variant extends BaseModel
         'out_of_stock_sale' => 'boolean',
         'price' => 'decimal:3',
         'compare_at_price' => 'decimal:3',
-//        'options' => AsArrayObject::class,
-//        'options' => AsCollection::class,
+        //        'options' => AsArrayObject::class,
+        //        'options' => AsCollection::class,
         'options' => 'array',
     ];
 
@@ -54,6 +54,7 @@ class Variant extends BaseModel
         'physical_product',
         'out_of_stock_sale',
         'image_id',
+        'options',
     ];
 
     public static function newFactory()
@@ -89,7 +90,7 @@ class Variant extends BaseModel
     public function getDisplayImageAttribute()
     {
         $image = $this->image;
-        if(!$this->image) {
+        if (!$this->image) {
             $image = $this->product->image;
         }
         return $image;

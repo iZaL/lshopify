@@ -2,89 +2,90 @@
 
 namespace IZal\Lshopify\Jobs\Product;
 
-use IZal\Lshopify\Jobs\VariantCreateAction;
-use IZal\Lshopify\Jobs\VariantUpdateAction;
-use IZal\Lshopify\Models\Product;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Collection;
+use IZal\Lshopify\Jobs\Product\Variant\CreateVariant;
+use IZal\Lshopify\Jobs\Product\Variant\UpdateVariant;
+use IZal\Lshopify\Models\Category;
+use IZal\Lshopify\Models\Product;
+use IZal\Lshopify\Models\Vendor;
 
 class UpdateProduct
 {
-    /**
-     * @var VariantCreateAction
-     */
-    private $variantCreateAction;
-    /**
-     * @var VariantUpdateAction
-     */
-    private $variantUpdateAction;
+    private array $attributes;
+    private Product $product;
 
-    public function __construct(VariantCreateAction $variantCreateAction, VariantUpdateAction $variantUpdateAction)
+    public function __construct(Product $product, array $attributes)
     {
-        $this->variantCreateAction = $variantCreateAction;
-        $this->variantUpdateAction = $variantUpdateAction;
+        $this->attributes = $attributes;
+        $this->product = $product;
     }
 
-    public function run(Product $product, Collection $requestData)
+    public function handle()
     {
-        $productData = $requestData->only($product->getFillable());
-        tap($product)->update($productData->toArray());
+        $attributes = $this->attributes;
+        $product = $this->product;
+
+        $product->update($attributes);
 
         // product type
-        $category = $requestData->get('category');
-        $product->update(['category_id' => $category['id'] ?? null]);
-
-        // Vendor
-        $vendor = $requestData->get('vendor');
-        $product->update(['vendor_id' => $vendor['id'] ?? null]);
-
-        // tags
-        $product->syncTags(
-            collect($requestData->get('tags'))
-                ->pluck('id')
-                ->toArray()
-        );
-
-        // collection
-        $product->collections()->sync(
-            collect($requestData->get('collections'))
-                ->pluck('id')
-                ->toArray()
-        );
-
-        // update default variant
-        $defaultVariantAttributes = $requestData->get('default_variant');
-        $defaultVariant = $product->default_variant;
-
-        if ($defaultVariant) {
-            $defaultVariant->update(
-                collect($defaultVariantAttributes)
-                    ->only($defaultVariant->getFillable())
-                    ->toArray()
-            );
-
-            if (isset($defaultVariantAttributes['options']) && !empty($defaultVariantAttributes['options'])) {
-                $this->variantCreateAction->createVariantOptionWithValues(
-                    $defaultVariant,
-                    $defaultVariantAttributes['options']
-                );
+        if (isset($attributes['category'])) {
+            $category = Category::find(optional($attributes['category'])['id']);
+            if ($category) {
+                $product->category()->associate($category);
             }
         }
 
-        if (!empty($requestData->get('variants'))) {
-            foreach ($requestData->get('variants') as $variantAttribute) {
+        // Vendor
+        if (isset($attributes['vendor'])) {
+            $vendor = Vendor::find(optional($attributes['vendor'])['id']);
+            if ($vendor) {
+                $product->vendor()->associate($vendor);
+            }
+        }
+
+        // tags
+
+        if (isset($attributes['tags'])) {
+            $product->syncTags(
+                collect($attributes['tags'])
+                    ->pluck('id')
+                    ->toArray(),
+                false
+            );
+        }
+
+        // collection
+        if (isset($attributes['collections'])) {
+            $product->collections()->sync(
+                collect($attributes['collections'])
+                    ->pluck('id')
+                    ->toArray(),
+                false
+            );
+        }
+
+        // update default variant
+        $defaultVariantAttributes = $attributes['default_variant'];
+        $defaultVariant = $product->default_variant;
+
+        if ($defaultVariant) {
+            $defaultVariant->update($defaultVariantAttributes);
+
+            if (isset($defaultVariantAttributes['options']) && !empty($defaultVariantAttributes['options'])) {
+                CreateVariant::createVariantOptionWithValues($defaultVariant, $defaultVariantAttributes['options']);
+            }
+        }
+
+        if (!empty($attributes['variants'])) {
+            foreach ($attributes['variants'] as $variantAttribute) {
                 $variant = $product->variants()->find($variantAttribute['id']);
                 if ($variant) {
                     if (isset($variantAttribute['image']) && !($variantAttribute['image'] instanceof UploadedFile)) {
                         $variantAttribute['image_id'] = $variantAttribute['image']['id'] ?? null;
                     }
-                    $variant->update(
-                        collect($variantAttribute)
-                            ->only($variant->getFillable())
-                            ->toArray()
-                    );
+                    $variant->update($variantAttribute);
                     if (isset($variantAttribute['options'])) {
-                        $this->variantUpdateAction->updateVariantOptions($variant, $variantAttribute['options']);
+                        UpdateVariant::updateVariantOptions($variant, $variantAttribute['options']);
                     }
                 }
             }

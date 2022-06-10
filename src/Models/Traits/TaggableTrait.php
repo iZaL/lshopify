@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 trait TaggableTrait
 {
-    public function syncTags(array $tags)
+    public function syncTags(array $tags, $detach = true)
     {
         $this->save();
-        $this->tags()->sync($tags);
+        $this->tags()->sync($tags, $detach);
     }
 
     public function removeTags()

@@ -25,7 +25,7 @@ use IZal\Lshopify\Http\Controllers\VendorController;
 
 Route::group(['prefix' => 'cart', 'as' => 'cart.'], function () {
     Route::controller(CartController::class)->group(function () {
-        Route::post('add','add')->name('add');
+        Route::post('add', 'add')->name('add');
         Route::post('update', 'update')->name('update');
         Route::post('remove', 'remove')->name('remove');
         Route::post('clear', 'clear')->name('clear');
@@ -40,7 +40,7 @@ Route::controller(CategoryController::class)->group(function () {
     Route::post('categories', 'store')->name('categories.store');
 });
 
-Route::group(['prefix' => 'products','as' => 'products.'], function () {
+Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
     Route::controller(ProductController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('create', 'create')->name('create');
@@ -63,7 +63,7 @@ Route::group(['prefix' => 'products','as' => 'products.'], function () {
     });
 });
 
-Route::group(['prefix' => 'collections','as' => 'collections.'], function () {
+Route::group(['prefix' => 'collections', 'as' => 'collections.'], function () {
     Route::controller(CollectionController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('create', 'create')->name('create');
@@ -72,10 +72,10 @@ Route::group(['prefix' => 'collections','as' => 'collections.'], function () {
         Route::patch('/{id}', 'update')->name('update');
         Route::delete('/{id}', 'delete')->name('destroy');
     });
-    Route::post('/{id}/products', [CollectionProductController::class,'store'])->name('products.store');
+    Route::post('/{id}/products', [CollectionProductController::class, 'store'])->name('products.store');
 });
 
-Route::group(['prefix' => 'orders','as' => 'orders.'], function () {
+Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
     Route::controller(OrderController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/{id}', 'show')->name('show');
@@ -100,10 +100,10 @@ Route::group(['prefix' => 'orders','as' => 'orders.'], function () {
         Route::post('/{id}/return/{return_id}/edit', 'edit')->name('return.edit');
     });
 
-    Route::post('/{id}/payments', [PaymentController::class,'store'])->name('payments.store');
+    Route::post('/{id}/payments', [PaymentController::class, 'store'])->name('payments.store');
 });
 
-Route::group(['prefix' => 'draft/orders','as' => 'draft.orders.'], function () {
+Route::group(['prefix' => 'draft/orders', 'as' => 'draft.orders.'], function () {
     Route::controller(DraftOrderController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/create', 'create')->name('create');
@@ -112,7 +112,7 @@ Route::group(['prefix' => 'draft/orders','as' => 'draft.orders.'], function () {
         Route::patch('/{id}', 'update')->name('update');
         Route::delete('/{id}', 'delete')->name('destroy');
         Route::post('/{id}/customer', 'attachCustomer')->name('customer.update');
-        Route::post('/{id}/confirm','confirm')->name('confirm');
+        Route::post('/{id}/confirm', 'confirm')->name('confirm');
     });
 });
 
@@ -121,15 +121,14 @@ Route::controller(ImageController::class)->group(function () {
     Route::post('images/delete', 'delete')->name('images.delete');
 });
 
-Route::get('inventories', [InventoryController::class,'index'])->name('inventories.index');
+Route::get('inventories', [InventoryController::class, 'index'])->name('inventories.index');
 
-Route::group(['prefix' => 'customers','as' => 'customers.'], function () {
+Route::group(['prefix' => 'customers', 'as' => 'customers.'], function () {
     Route::get('/', [CustomerController::class, 'index'])->name('index');
     Route::post('/', [CustomerController::class, 'store'])->name('store');
 });
 
-
-Route::group(['prefix' => 'discounts','as' => 'discounts.'], function () {
+Route::group(['prefix' => 'discounts', 'as' => 'discounts.'], function () {
     Route::get('/', [DiscountController::class, 'index'])->name('index');
     Route::get('/create', [DiscountController::class, 'create'])->name('create');
     Route::get('/{id}/edit', [DiscountController::class, 'edit'])->name('edit');
@@ -137,10 +136,8 @@ Route::group(['prefix' => 'discounts','as' => 'discounts.'], function () {
     Route::patch('/{id}', [DiscountController::class, 'update'])->name('update');
 });
 
+Route::post('vendors', [VendorController::class, 'store'])->name('vendors.store');
 
-Route::post('vendors', [VendorController::class,'store'])->name('vendors.store');
-
-Route::post('tags', [TagController::class,'store'])->name('tags.store');
+Route::post('tags', [TagController::class, 'store'])->name('tags.store');
 
 Route::get('/', DashboardController::class)->name('home');
-
