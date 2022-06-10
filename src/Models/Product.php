@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Collection as CollectionAlias;
 use IZal\Lshopify\Database\Factories\ProductFactory;
 use IZal\Lshopify\Models\Traits\ImageableTrait;
 use IZal\Lshopify\Models\Traits\TaggableTrait;
@@ -134,12 +133,6 @@ class Product extends BaseModel
         return $this->default_variant()->sum('quantity');
     }
 
-    //    public function scopeForCollection($query, $value)
-    //    {
-    //        $collection = Collection::where('name', $value)->first();
-    //        return $collection->isManual() ? $collection->products : $collection->smart_products();
-    //    }
-
     public function price()
     {
         if (!$this->relationLoaded('default_variant')) {
@@ -154,7 +147,7 @@ class Product extends BaseModel
 
     public function getDisplayImageAttribute()
     {
-        return $this->default_image ? url($this->default_image->url) : url($this->image?->url);
+        return $this->default_image ? url($this->default_image->url) : ( $this->image ? url($this->image->url) : null);
     }
 
     public function getHasColorAttribute(): bool
@@ -169,10 +162,4 @@ class Product extends BaseModel
             ->all();
     }
 
-    //    public function scopeOfVariant($query, $attribute)
-    //    {
-    //        return $this->getVariantOptionsAttribute()->where('id','Color')->all();
-    //
-    ////        return $query->
-    //    }
 }

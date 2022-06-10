@@ -16,5 +16,6 @@ class TagsTableSeeder extends Seeder
     {
         Tag::factory()->create(['name' => 'Cotton']);
         Tag::factory()->create(['name' => 'Summer']);
+        Tag::factory()->create(['name' => 'Trending']);
     }
 }

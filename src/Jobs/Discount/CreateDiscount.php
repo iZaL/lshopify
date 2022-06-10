@@ -3,13 +3,23 @@
 namespace IZal\Lshopify\Jobs\Discount;
 
 use IZal\Lshopify\Models\Discount;
+use IZal\Lshopify\Traits\DateService;
 
-class CreateDiscount extends DiscountService
+class CreateDiscount
 {
-    public function run(array $attributes): Discount
+    private array $attributes;
+
+    public function __construct(array $attributes)
     {
+        $this->attributes = $attributes;
+    }
+
+    public function handle(): Discount
+    {
+        $attributes = $this->attributes;
+
         $discount = Discount::create(
-            $this->parseAttributes($attributes)
+            DateService::parseAttributes($attributes)
                 ->only((new Discount())->getFillable())
                 ->toArray()
         );

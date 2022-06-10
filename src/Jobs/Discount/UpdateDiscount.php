@@ -4,16 +4,28 @@ namespace IZal\Lshopify\Jobs\Discount;
 
 use Exception;
 use IZal\Lshopify\Models\Discount;
+use IZal\Lshopify\Traits\DateService;
 
-class UpdateDiscount extends DiscountService
+class UpdateDiscount
 {
+    private Discount $discount;
+    private array $attributes;
+
+    public function __construct(Discount $discount, array $attributes)
+    {
+        $this->discount = $discount;
+        $this->attributes = $attributes;
+    }
     /**
      * @throws Exception
      */
-    public function run(Discount $discount, array $attributes): Discount
+    public function handle(): Discount
     {
+        $discount = $this->discount;
+        $attributes = $this->attributes;
+
         $discount = tap($discount)->update(
-            $this->parseAttributes($attributes)
+            DateService::parseAttributes($attributes)
                 ->only((new Discount())->getFillable())
                 ->toArray()
         );

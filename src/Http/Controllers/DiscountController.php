@@ -76,25 +76,17 @@ class DiscountController extends Controller
         ]);
     }
 
-    public function store(DiscountStoreRequest $request, CreateDiscount $createDiscount)
+    public function store(DiscountStoreRequest $request)
     {
-        try {
-            DB::transaction(function () use ($createDiscount, $request) {
-                $discount = $createDiscount->run($request->except(['back']));
-                if ($request->has('back')) {
-                    return redirect()
-                        ->back()
-                        ->with('success', 'Discount created successfully');
-                }
+            $discount = $this->dispatch(new CreateDiscount($request->except(['back'])));
+            if ($request->has('back')) {
                 return redirect()
-                    ->route('lshopify.discounts.edit', $discount->id)
-                    ->with('success', 'Discount updated successfully');
-            });
-        } catch (Throwable $e) {
+                    ->back()
+                    ->with('success', 'Discount created successfully');
+            }
             return redirect()
-                ->back()
-                ->with('error', $e->getMessage());
-        }
+                ->route('lshopify.discounts.edit', $discount->id)
+                ->with('success', 'Discount updated successfully');
     }
 
     public function edit(Request $request, $id)
@@ -125,11 +117,11 @@ class DiscountController extends Controller
         ]);
     }
 
-    public function update(DiscountStoreRequest $request, UpdateDiscount $updateDiscount, $id)
+    public function update(DiscountStoreRequest $request,$id)
     {
         try {
             $discountModel = $this->discount->findOrFail($id);
-            $updateDiscount->run($discountModel, $request->only($this->discount->getFillable()));
+            $this->dispatch(new UpdateDiscount($discountModel, $request->all()));
             return redirect()
                 ->route('lshopify.discounts.edit', $discountModel->id)
                 ->with('success', 'Discount updated successfully');

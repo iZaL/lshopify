@@ -1,18 +1,20 @@
 <?php
 
-namespace IZal\Lshopify\Jobs\Discount;
+
+namespace IZal\Lshopify\Traits;
 
 use Exception;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
-class DiscountService
+trait DateService
 {
-    public function parseAttributes(array $attributes): Collection
+
+    public static function parseAttributes(array $attributes): Collection
     {
         return collect($attributes)
             ->except(['starts_at', 'ends_at'])
-            ->merge($this->parseStartEndDates($attributes['starts_at'], $attributes['ends_at']));
+            ->merge(self::parseStartEndDates($attributes['starts_at'], $attributes['ends_at']));
     }
 
     /**
@@ -21,9 +23,9 @@ class DiscountService
      * @return array
      * @throws Exception
      */
-    protected function parseStartEndDates($startDate, $endDate): array
+    protected static function parseStartEndDates($startDate, $endDate): array
     {
-        [$startsAt, $endsAt] = $this->validateDates($startDate, $endDate);
+        [$startsAt, $endsAt] = self::validateDates($startDate, $endDate);
 
         return [
             'starts_at' => $startsAt->format('Y-m-d h:i:s'),
@@ -35,7 +37,7 @@ class DiscountService
      * Validate two dates
      * @throws Exception
      */
-    private function validateDates($startDate, $endDate): array
+    private static function validateDates($startDate, $endDate): array
     {
         $startsAt = Carbon::parse($startDate);
         $endsAt = Carbon::parse($endDate);

@@ -177,4 +177,5 @@ class ProductController extends Controller
             ->back()
             ->with('success', 'Products Deleted');
     }
+
 }
