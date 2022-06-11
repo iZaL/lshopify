@@ -21,7 +21,7 @@ class CreateDraftOrder extends CreateOrder
         $order->fill($this->cart->getCartData());
         $order->save();
 
-        $order->attachDiscount();
+        $order->createCartDiscount();
         $order->syncCartVariants();
 
         return $order;

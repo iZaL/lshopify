@@ -2,19 +2,14 @@
 
 namespace IZal\Lshopify\Traits;
 
-use IZal\Lshopify\Cart\Cart;
-use IZal\Lshopify\Cart\Collections\CartCollection;
 use IZal\Lshopify\Cart\Collections\ItemCollection;
 use IZal\Lshopify\Models\Discount;
 use IZal\Lshopify\Models\Variant;
 
 trait DiscountService
 {
-    private string $name;
-    private int $isAuto;
 
-
-    public function attachDiscount($name = 'Admin cart discount', $isAuto = 1)
+    public function createCartDiscount($name = 'Admin cart discount', $isAuto = 1)
     {
         $order = $this;
         $cart = app('cart');
@@ -43,35 +38,56 @@ trait DiscountService
         }
     }
 
-    public function createVariantDiscount(Variant $variant, ItemCollection $cartItem, $name = 'Admin discount', $isAuto = 1)
+    public function updateVariantDiscount(Variant $variant, ItemCollection $cartItem, $name = 'Admin discount', $isAuto = 1)
     {
         $itemCondition = $cartItem->getConditionByName($variant->id);
 
-        $orderVariant = $this
-            ->variants()
-            ->where('variant_id', $variant->id)
-            ->first();
+        if($itemCondition) {
 
-        if ($orderVariant) {
+            $orderVariant = $this
+                ->variants()
+                ->where('variant_id', $variant->id)
+                ->first();
 
-            $discountAttributes = [
-                'name' => $name,
-                'auto' => $isAuto,
-                'value' => $itemCondition->value,
-                'value_type' => $itemCondition->suffix === 'percent' ? 'percent' : 'amount',
-                'reason' => $itemCondition->reason,
-            ];
+            if ($orderVariant) {
 
-            if($orderVariant->pivot?->discount_id) {
-                $discount = Discount::find(optional($orderVariant->pivot)->discount_id);
-                $discount?->update($discountAttributes);
-            } else {
-                $discount = new Discount();
-                $discount->fill($discountAttributes);
-                $discount->save();
-                $orderVariant->discounts()->attach($discount->id);
+                $discountAttributes = [
+                    'name' => $name,
+                    'auto' => $isAuto,
+                    'value' => $itemCondition->value,
+                    'value_type' => $itemCondition->suffix === 'percent' ? 'percent' : 'amount',
+                    'reason' => $itemCondition->reason,
+                ];
+
+                if($orderVariant->pivot->discount_id) {
+                    $discount = Discount::find(optional($orderVariant->pivot)->discount_id);
+                    if($discount) {
+                        $discount?->update($discountAttributes);
+                    } else {
+                        $this->createDiscount($orderVariant, $discountAttributes);
+                    }
+                } else {
+                    // create discount
+                    $this->createDiscount($orderVariant, $discountAttributes);
+                }
+
             }
-
         }
+
+
     }
+
+    public function createDiscount(Variant $variant, $discountAttributes) {
+        $discount = new Discount();
+        $discount->fill($discountAttributes);
+        $discount->save();
+
+        // attach discount to variant
+        $variant->discounts()->attach($discount->id);
+
+        // update order pivot model with the discount
+        $variant->pivot->discount_id = $discount->id;
+        $variant->push();
+    }
+
 }

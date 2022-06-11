@@ -39,12 +39,8 @@ trait SyncCartVariants
         $this->variants()->detach($diffVariants);
     }
 
-    private function updateVariantFromCartItem(Variant $variant, ItemCollection $cartItem): Variant
+    public function updateVariantFromCartItem(Variant $variant, ItemCollection $cartItem): Variant
     {
-//        $variantDiscount = null;
-//        if ($cartCondition = $cartItem->getConditionByName($variant->id)) {
-//            $variantDiscount = $this->createVariantDiscount($variant, $cartCondition);
-//        }
         $this->variants()->sync(
             [
                 $variant->id => [
@@ -54,7 +50,7 @@ trait SyncCartVariants
             false
         );
 
-        $this->createVariantDiscount($variant, $cartItem);
+        $this->updateVariantDiscount($variant, $cartItem);
 
         return $variant;
     }
@@ -63,16 +59,14 @@ trait SyncCartVariants
      * @param ItemCollection $cartItem
      * @return Variant
      */
-    private function attachVariantFromCartItem(ItemCollection $cartItem): Variant
+    public function attachVariantFromCartItem(ItemCollection $cartItem): Variant
     {
         $variant = Variant::find($cartItem->id);
         if ($variant) {
             $this
                 ->variants()
-                ->attach($variant->id);
-
-                $this->createVariantDiscount($variant, $cartItem);
-
+                ->attach($variant->id,CartService::parseItem($cartItem));
+                $this->updateVariantDiscount($variant, $cartItem);
         }
         return $variant;
     }

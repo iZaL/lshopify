@@ -88,6 +88,8 @@ class DraftOrderController extends Controller
     {
         $cart = app('cart');
 
+        session()->forget('cart_order');
+
         $products = Product::with(['variants'])
             ->latest()
             ->get();

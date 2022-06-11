@@ -26,7 +26,7 @@ class UpdateDraftOrder extends CreateOrder
     public function update(DraftOrder $order, array $attributes)
     {
         $order->update(array_merge($this->cart->getCartData(), Arr::only($attributes, $order->getFillable())));
-        $order->attachDiscount();
+        $order->createCartDiscount();
         $order->updateCartVariants();
     }
 }
