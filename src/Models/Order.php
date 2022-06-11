@@ -3,16 +3,18 @@
 namespace IZal\Lshopify\Models;
 
 use Carbon\Carbon;
-use Dflydev\DotAccessData\Data;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use IZal\Lshopify\Database\Factories\OrderFactory;
 use IZal\Lshopify\Helpers\MoneyFormatter;
+use IZal\Lshopify\Traits\DiscountService;
+use Str;
 
 class Order extends BaseModel
 {
     use HasFactory;
     use MoneyFormatter;
+    use DiscountService;
 
     protected $table = 'orders';
 
@@ -151,14 +153,14 @@ class Order extends BaseModel
     public function getShippingFullNameAttribute()
     {
         return $this->shipping_first_name
-            ? \Str::title($this->shipping_first_name . ' ' . $this->shipping_last_name)
+            ? Str::title($this->shipping_first_name . ' ' . $this->shipping_last_name)
             : null;
     }
 
     public function getBillingFullNameAttribute()
     {
         return $this->billing_first_name
-            ? \Str::title($this->billing_first_name . ' ' . $this->billing_last_name)
+            ? Str::title($this->billing_first_name . ' ' . $this->billing_last_name)
             : null;
     }
 

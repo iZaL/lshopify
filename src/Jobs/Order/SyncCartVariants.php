@@ -9,24 +9,21 @@ use IZal\Lshopify\Cart\Collections\ItemCollection;
 use IZal\Lshopify\Models\Discount;
 use IZal\Lshopify\Models\DraftOrder;
 use IZal\Lshopify\Models\Variant;
+use IZal\Lshopify\Traits\CartService;
 
-class SyncCartVariants
+trait SyncCartVariants
 {
     private Cart $cart;
 
-    public function __construct(Cart $cart)
+    public function __construct()
     {
-        $this->cart = $cart;
+        $this->cart = app('cart');
     }
 
-    /**
-     * @param DraftOrder $order
-     * @return void
-     */
-    public function create(DraftOrder $order): void
+    public function syncCartVariants(): void
     {
         foreach ($this->cart->items() as $cartItem) {
-            $this->attachVariantFromCartItem($order, $cartItem);
+            $this->attachVariantFromCartItem($cartItem);
         }
     }
 
@@ -47,7 +44,7 @@ class SyncCartVariants
         $order->variants()->detach($diffVariants);
     }
 
-    public function updateVariantFromCartItem(DraftOrder $order, Variant $variant, ItemCollection $cartItem): Variant
+    private function updateVariantFromCartItem(DraftOrder $order, Variant $variant, ItemCollection $cartItem): Variant
     {
         $variantDiscount = null;
         if ($cartCondition = $cartItem->getConditionByName($variant->id)) {
@@ -57,7 +54,7 @@ class SyncCartVariants
             [
                 $variant->id => [
                     'discount_id' => $variantDiscount?->id,
-                    ...$this->getCartItemData($cartItem),
+                    CartService::parseItem($cartItem),
                 ],
             ],
             false
@@ -67,37 +64,35 @@ class SyncCartVariants
     }
 
     /**
-     * @param DraftOrder $order
      * @param ItemCollection $cartItem
      * @return Variant
      */
-    public function attachVariantFromCartItem(DraftOrder $order, ItemCollection $cartItem): Variant
+    private function attachVariantFromCartItem(ItemCollection $cartItem): Variant
     {
         $variant = Variant::find($cartItem->id);
         if ($variant) {
             $variantDiscount = null;
             if ($cartCondition = $cartItem->getConditionByName($variant->id)) {
-                $variantDiscount = $this->createVariantDiscount($order, $variant, $cartCondition);
+                $variantDiscount = $this->createVariantDiscount($variant, $cartCondition);
             }
-            $order
+            $this
                 ->variants()
                 ->attach(
                     $variant->id,
-                    array_merge(['discount_id' => $variantDiscount?->id], $this->getCartItemData($cartItem))
+                    array_merge(['discount_id' => $variantDiscount?->id], CartService::parseItem($cartItem))
                 );
         }
         return $variant;
     }
 
     /**
-     * @param DraftOrder $order
      * @param Variant $variant
      * @param $itemCondition
      * @return Model|BelongsTo|null
      */
-    private function createVariantDiscount(DraftOrder $order, Variant $variant, $itemCondition): Model|BelongsTo|null
+    private function createVariantDiscount(Variant $variant, $itemCondition): Model|BelongsTo|null
     {
-        $variantCondition = $order
+        $variantCondition = $this
             ->variants()
             ->where('variant_id', $variant->id)
             ->whereNotNull('discount_id')
@@ -111,7 +106,7 @@ class SyncCartVariants
                 'reason' => $itemCondition->reason,
             ]);
         } else {
-            $discount = $order->discount()->create([
+            $discount = $this->discount()->create([
                 'name' => 'Admin discount',
                 'auto' => 1,
                 'value' => $itemCondition->value,
@@ -123,18 +118,5 @@ class SyncCartVariants
         return $discount;
     }
 
-    /**
-     * @param  ItemCollection  $cartItem
-     * @return array
-     */
-    private function getCartItemData(ItemCollection $cartItem): array
-    {
-        return [
-            'price' => $cartItem->price(),
-            'unit_price' => $cartItem->unit_price(),
-            'total' => $cartItem->total(),
-            'subtotal' => $cartItem->subtotal(),
-            'quantity' => $cartItem->quantity(),
-        ];
-    }
+
 }

@@ -7,8 +7,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
-use IZal\Lshopify\Jobs\Order\CreateDraft;
-use IZal\Lshopify\Jobs\Order\UpdateDraft;
+use IZal\Lshopify\Jobs\Order\CreateDraftOrder;
+use IZal\Lshopify\Jobs\Order\UpdateDraftOrder;
 use IZal\Lshopify\Jobs\Order\CreateOrder;
 use IZal\Lshopify\Cart\Condition;
 use IZal\Lshopify\Http\Controllers\Controller;
@@ -67,7 +67,7 @@ class DraftOrderController extends Controller
         return Inertia::render('Order/Draft/DraftOrderCreate', $data);
     }
 
-    public function store(DraftOrderStoreRequest $request, CreateDraft $draftOrderCreateAction)
+    public function store(DraftOrderStoreRequest $request)
     {
         $cart = app('cart');
 
@@ -77,16 +77,7 @@ class DraftOrderController extends Controller
                 ->with('error', 'Products cannot be empty.');
         }
 
-        DB::beginTransaction();
-        try {
-            $order = $draftOrderCreateAction->run();
-            DB::commit();
-        } catch (Throwable $e) {
-            DB::rollBack();
-            return redirect()
-                ->back()
-                ->with('error', $e->getMessage());
-        }
+        $order = $this->dispatch(new CreateDraftOrder());
 
         return redirect()
             ->route('lshopify.draft.orders.edit', $order->id)
@@ -185,7 +176,7 @@ class DraftOrderController extends Controller
         return Inertia::render('Order/Draft/DraftOrderEdit', $data);
     }
 
-    public function update($id, DraftOrderUpdateRequest $request, UpdateDraft $action): RedirectResponse
+    public function update($id, DraftOrderUpdateRequest $request, UpdateDraftOrder $action): RedirectResponse
     {
         $order = DraftOrder::find($id);
 
@@ -221,7 +212,7 @@ class DraftOrderController extends Controller
             ->with('success', 'Created Order');
     }
 
-    public function attachCustomer($id, DraftOrderCustomerUpdateRequest $request, CreateDraft $action): RedirectResponse
+    public function attachCustomer($id, DraftOrderCustomerUpdateRequest $request, CreateDraftOrder $action): RedirectResponse
     {
         $order = DraftOrder::find($id);
 
