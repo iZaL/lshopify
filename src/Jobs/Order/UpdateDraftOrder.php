@@ -6,27 +6,37 @@ use Illuminate\Support\Arr;
 use IZal\Lshopify\Cart\Cart;
 use IZal\Lshopify\Models\DraftOrder;
 
-class UpdateDraftOrder extends CreateOrder
+class UpdateDraftOrder
 {
     private Cart $cart;
+    private array $attributes;
+    private DraftOrder $order;
 
-    /**
-     * DraftOrderCreateAction constructor.
-     * @param Cart $cart
-     */
-    public function __construct(Cart $cart)
+    public function __construct(DraftOrder $order, array $attributes)
     {
-        $this->cart = $cart;
+        $this->cart = app('cart');
+        $this->attributes = $attributes;
+        $this->order = $order;
     }
 
-    /**
-     * @param  DraftOrder  $order
-     * @param  array  $attributes
-     */
-    public function update(DraftOrder $order, array $attributes)
+    public function handle()
     {
-        $order->update(array_merge($this->cart->getCartData(), Arr::only($attributes, $order->getFillable())));
+        $attributes = $this->attributes;
+        $order = $this->order;
+        $order->update(array_merge($this->cart->getCartData(), $attributes));
+
+        if (isset($attributes['shipping'])) {
+            $order->updateShippingAddress($attributes['shipping']);
+        }
+
+        if (isset($attributes['billing'])) {
+            $order->updateBillingAddress($attributes['billing']);
+        }
+
+        // Create Order Discount
         $order->createCartDiscount();
+
+        // Sync cart variants
         $order->updateCartVariants();
     }
 }

@@ -147,7 +147,7 @@ class Product extends BaseModel
 
     public function getDisplayImageAttribute()
     {
-        return $this->default_image ? url($this->default_image->url) : ( $this->image ? url($this->image->url) : null);
+        return $this->default_image ? url($this->default_image->url) : ($this->image ? url($this->image->url) : null);
     }
 
     public function getHasColorAttribute(): bool
@@ -161,5 +161,4 @@ class Product extends BaseModel
             ->where('id', 'Color')
             ->all();
     }
-
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace IZal\Lshopify\Traits;
 
 use Exception;
@@ -9,7 +8,6 @@ use Illuminate\Support\Collection;
 
 trait DateService
 {
-
     public static function parseAttributes(array $attributes): Collection
     {
         return collect($attributes)

@@ -2,14 +2,11 @@
 
 namespace IZal\Lshopify\Http\Controllers\Order;
 
-use Exception;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 use IZal\Lshopify\Jobs\Order\CreateDraftOrder;
 use IZal\Lshopify\Jobs\Order\UpdateDraftOrder;
-use IZal\Lshopify\Jobs\Order\CreateOrder;
 use IZal\Lshopify\Cart\Condition;
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\DraftOrderCustomerUpdateRequest;
@@ -87,8 +84,6 @@ class DraftOrderController extends Controller
     public function edit($id): Response
     {
         $cart = app('cart');
-
-        session()->forget('cart_order');
 
         $products = Product::with(['variants'])
             ->latest()
@@ -178,43 +173,29 @@ class DraftOrderController extends Controller
         return Inertia::render('Order/Draft/DraftOrderEdit', $data);
     }
 
-    public function update($id, DraftOrderUpdateRequest $request, UpdateDraftOrder $action): RedirectResponse
+    public function update($id, DraftOrderUpdateRequest $request): RedirectResponse
     {
         $order = DraftOrder::find($id);
 
-        try {
-            $action->update($order, $request->except('shipping', 'billing', 'customer_id', 'total', 'subtotal'));
-        } catch (Exception $e) {
-            return redirect()
-                ->back()
-                ->with('errors', $e->getMessage());
-        }
-
-        if ($request->shipping) {
-            $order->updateShippingAddress($request->shipping);
-        }
-
-        if ($request->billing) {
-            $order->updateBillingAddress($request->billing);
-        }
+        $this->dispatch(new UpdateDraftOrder($order, $request->all()));
 
         return redirect()
             ->back()
             ->with('success', 'Updated');
     }
 
-    public function confirm($id, CreateOrder $action): RedirectResponse
+    public function confirm($id): RedirectResponse
     {
         $draftOrder = DraftOrder::find($id);
 
-        $action->createOrderFromDraft($draftOrder);
+        $draftOrder->confirm();
 
         return redirect()
             ->route('lshopify.orders.show', $draftOrder->id)
             ->with('success', 'Created Order');
     }
 
-    public function attachCustomer($id, DraftOrderCustomerUpdateRequest $request, CreateDraftOrder $action): RedirectResponse
+    public function attachCustomer($id, DraftOrderCustomerUpdateRequest $request): RedirectResponse
     {
         $order = DraftOrder::find($id);
 

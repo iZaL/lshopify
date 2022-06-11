@@ -2,6 +2,8 @@
 
 namespace IZal\Lshopify\Http\Controllers\Order;
 
+use Illuminate\Http\RedirectResponse;
+use Inertia\Response;
 use IZal\Lshopify\Jobs\Order\UpdateOrder;
 use IZal\Lshopify\Http\Controllers\Controller;
 use IZal\Lshopify\Http\Requests\OrderStoreRequest;
@@ -26,7 +28,7 @@ class OrderController extends Controller
         return Inertia::render('Order/OrderIndex', ['orders' => $orders]);
     }
 
-    public function show($id): \Inertia\Response
+    public function show($id): Response
     {
         $order = Order::with(['workflows.variants.product.image', 'workflows.variants.image', 'customer'])->find($id);
         $customers = Customer::all();
@@ -43,12 +45,12 @@ class OrderController extends Controller
         ]);
     }
 
-    public function store(OrderStoreRequest $request): \Illuminate\Http\RedirectResponse
+    public function store(OrderStoreRequest $request): RedirectResponse
     {
         return redirect()->route('lshopify.orders.index');
     }
 
-    public function edit($id): \Inertia\Response
+    public function edit($id): Response
     {
         $order = Order::find($id);
         $orderResource = new OrderResource($order);
@@ -56,19 +58,13 @@ class OrderController extends Controller
         return Inertia::render('Order/OrderEdit', ['order' => $orderResource]);
     }
 
-    public function update($id, OrderUpdateRequest $request, UpdateOrder $action): \Illuminate\Http\RedirectResponse
+    public function update($id, OrderUpdateRequest $request): RedirectResponse
     {
         $order = Order::find($id);
 
-        $action->update($order, $request->except('shipping', 'billing', 'customer_id', 'total', 'subtotal'));
-
-        if ($request->shipping) {
-            $action->updateShippingAddress($order, $request->shipping);
-        }
-
-        if ($request->billing) {
-            $action->updateBillingAddress($order, $request->billing);
-        }
+        $this->dispatch(
+            new UpdateOrder($order, $request->except('shipping', 'billing', 'customer_id', 'total', 'subtotal'))
+        );
 
         return redirect()
             ->back()

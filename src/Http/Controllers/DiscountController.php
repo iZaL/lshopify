@@ -78,15 +78,15 @@ class DiscountController extends Controller
 
     public function store(DiscountStoreRequest $request)
     {
-            $discount = $this->dispatch(new CreateDiscount($request->except(['back'])));
-            if ($request->has('back')) {
-                return redirect()
-                    ->back()
-                    ->with('success', 'Discount created successfully');
-            }
+        $discount = $this->dispatch(new CreateDiscount($request->except(['back'])));
+        if ($request->has('back')) {
             return redirect()
-                ->route('lshopify.discounts.edit', $discount->id)
-                ->with('success', 'Discount updated successfully');
+                ->back()
+                ->with('success', 'Discount created successfully');
+        }
+        return redirect()
+            ->route('lshopify.discounts.edit', $discount->id)
+            ->with('success', 'Discount updated successfully');
     }
 
     public function edit(Request $request, $id)
@@ -117,7 +117,7 @@ class DiscountController extends Controller
         ]);
     }
 
-    public function update(DiscountStoreRequest $request,$id)
+    public function update(DiscountStoreRequest $request, $id)
     {
         try {
             $discountModel = $this->discount->findOrFail($id);

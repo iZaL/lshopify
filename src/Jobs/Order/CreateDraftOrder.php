@@ -4,9 +4,8 @@ namespace IZal\Lshopify\Jobs\Order;
 
 use IZal\Lshopify\Models\DraftOrder;
 
-class CreateDraftOrder extends CreateOrder
+class CreateDraftOrder
 {
-
     public function __construct()
     {
         $this->cart = app('cart');
@@ -22,6 +21,7 @@ class CreateDraftOrder extends CreateOrder
         $order->save();
 
         $order->createCartDiscount();
+
         $order->syncCartVariants();
 
         return $order;

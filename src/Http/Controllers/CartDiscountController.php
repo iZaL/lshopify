@@ -49,6 +49,7 @@ class CartDiscountController extends Controller
         ]);
         $cart = app('cart');
         $cart->removeConditionByName($request->discount['name']);
+        session()->forget('cart_order');
         return redirect()->back();
     }
 }

@@ -1,13 +1,11 @@
 <?php
 
-
 namespace IZal\Lshopify\Traits;
 
 use IZal\Lshopify\Cart\Collections\ItemCollection;
 
 trait CartService
 {
-
     /**
      * @param ItemCollection $cartItem
      * @return array

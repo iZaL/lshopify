@@ -6,7 +6,6 @@ use IZal\Lshopify\Models\Vendor;
 
 class VendorCreated
 {
-
     /**
      * @param Vendor $vendor
      */

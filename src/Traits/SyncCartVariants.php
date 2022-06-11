@@ -22,6 +22,20 @@ trait SyncCartVariants
         }
     }
 
+    /**
+     * @param ItemCollection $cartItem
+     * @return Variant
+     */
+    public function attachVariantFromCartItem(ItemCollection $cartItem): Variant
+    {
+        $variant = Variant::find($cartItem->id);
+        if ($variant) {
+            $this->variants()->attach($variant->id, CartService::parseItem($cartItem));
+            $this->updateVariantDiscount($variant, $cartItem);
+        }
+        return $variant;
+    }
+
     public function updateCartVariants(): void
     {
         $oldVariants = $this->variants->modelKeys();
@@ -43,9 +57,7 @@ trait SyncCartVariants
     {
         $this->variants()->sync(
             [
-                $variant->id => [
-                    CartService::parseItem($cartItem),
-                ],
+                $variant->id => CartService::parseItem($cartItem),
             ],
             false
         );
@@ -54,22 +66,4 @@ trait SyncCartVariants
 
         return $variant;
     }
-
-    /**
-     * @param ItemCollection $cartItem
-     * @return Variant
-     */
-    public function attachVariantFromCartItem(ItemCollection $cartItem): Variant
-    {
-        $variant = Variant::find($cartItem->id);
-        if ($variant) {
-            $this
-                ->variants()
-                ->attach($variant->id,CartService::parseItem($cartItem));
-                $this->updateVariantDiscount($variant, $cartItem);
-        }
-        return $variant;
-    }
-
-
 }

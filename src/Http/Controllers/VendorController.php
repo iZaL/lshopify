@@ -17,7 +17,6 @@ class VendorController extends Controller
 
         $this->dispatch(new CreateVendor($request->all()));
 
-
         return redirect()->back();
     }
 }

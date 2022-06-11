@@ -35,4 +35,11 @@ class DraftOrder extends Order
         $this->status = 'archived';
         $this->save();
     }
+
+    public function confirm()
+    {
+        abort_unless($this->draft(), 403);
+        $this->forceFill(['draft' => 0]);
+        $this->save();
+    }
 }

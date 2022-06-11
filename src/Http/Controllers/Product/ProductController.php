@@ -2,7 +2,6 @@
 
 namespace IZal\Lshopify\Http\Controllers\Product;
 
-use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -177,5 +176,4 @@ class ProductController extends Controller
             ->back()
             ->with('success', 'Products Deleted');
     }
-
 }

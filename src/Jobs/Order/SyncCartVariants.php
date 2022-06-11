@@ -75,12 +75,10 @@ trait SyncCartVariants
             if ($cartCondition = $cartItem->getConditionByName($variant->id)) {
                 $variantDiscount = $this->createVariantDiscount($variant, $cartCondition);
             }
-            $this
-                ->variants()
-                ->attach(
-                    $variant->id,
-                    array_merge(['discount_id' => $variantDiscount?->id], CartService::parseItem($cartItem))
-                );
+            $this->variants()->attach(
+                $variant->id,
+                array_merge(['discount_id' => $variantDiscount?->id], CartService::parseItem($cartItem))
+            );
         }
         return $variant;
     }
@@ -92,8 +90,7 @@ trait SyncCartVariants
      */
     private function createVariantDiscount(Variant $variant, $itemCondition): Model|BelongsTo|null
     {
-        $variantCondition = $this
-            ->variants()
+        $variantCondition = $this->variants()
             ->where('variant_id', $variant->id)
             ->whereNotNull('discount_id')
             ->first();
@@ -117,6 +114,4 @@ trait SyncCartVariants
         }
         return $discount;
     }
-
-
 }

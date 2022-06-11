@@ -180,11 +180,7 @@ class Order extends BaseModel
         return $this->draft === 1;
     }
 
-    /**
-     * Return the total amount for the order.
-     * @return float
-     */
-    public function getAmountAttribute(): float
+    public function getAmountAttribute()
     {
         return $this->total;
     }

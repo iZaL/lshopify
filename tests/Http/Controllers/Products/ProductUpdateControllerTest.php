@@ -43,7 +43,6 @@ class ProductUpdateControllerTest extends TestCase
         $this->assertDatabaseHas('products', $productData);
         $this->assertDatabaseCount('variants', 12);
         $this->assertDatabaseHas('variants', ['default' => 1]);
-        $response->assertStatus(302);
     }
     public function test_can_update_products()
     {
@@ -81,6 +80,5 @@ class ProductUpdateControllerTest extends TestCase
         $this->assertDatabaseHas('products', $productData);
         $this->assertDatabaseCount('variants', 12);
         $this->assertDatabaseHas('variants', ['default' => 1]);
-        $response->assertStatus(302);
     }
 }

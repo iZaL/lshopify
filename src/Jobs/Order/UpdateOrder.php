@@ -2,36 +2,30 @@
 
 namespace IZal\Lshopify\Jobs\Order;
 
-use IZal\Lshopify\Models\CustomerAddress;
 use IZal\Lshopify\Models\Order;
-use Illuminate\Support\Arr;
 
-class UpdateOrder extends CreateOrder
+class UpdateOrder
 {
-    public function update(Order $order, array $attributes)
+    private Order $order;
+    private array $attributes;
+
+    public function __construct(Order $order, array $attributes)
     {
-        $order->update(Arr::only($attributes, $order->getFillable()));
+        $this->order = $order;
+        $this->attributes = $attributes;
     }
 
-    /**
-     * @param  Order  $order
-     * @param  array  $attributes
-     */
-    public function updateShippingAddress(Order $order, array $attributes = [])
+    public function handle()
     {
-        $shippingAttributes = empty($attributes) ? $this->getShippingAddress($order) : $attributes;
-        $attributes = CustomerAddress::parseShippingAddress($shippingAttributes, $order->getFillable());
-        $order->update($attributes);
-    }
+        $order = $this->order;
+        $order->update($this->attributes);
 
-    /**
-     * @param  Order  $order
-     * @param  array  $attributes
-     */
-    public function updateBillingAddress(Order $order, array $attributes = [])
-    {
-        $billingAttributes = empty($attributes) ? $this->getBillingAddress($order) : $attributes;
-        $attributes = CustomerAddress::parseBillingAddress($billingAttributes, $order->getFillable());
-        $order->update($attributes);
+        if (isset($attributes['shipping'])) {
+            $order->updateShippingAddress($attributes['shipping']);
+        }
+
+        if (isset($attributes['billing'])) {
+            $order->updateBillingAddress($attributes['billing']);
+        }
     }
 }

@@ -8,14 +8,13 @@ use IZal\Lshopify\Models\Variant;
 
 trait DiscountService
 {
-
     public function createCartDiscount($name = 'Admin cart discount', $isAuto = 1)
     {
         $order = $this;
         $cart = app('cart');
         $cartDiscount = $cart->getConditionByName('cart');
 
-        if($cartDiscount) {
+        if ($cartDiscount) {
             $discountAttributes = [
                 'auto' => $isAuto,
                 'name' => $name,
@@ -24,12 +23,13 @@ trait DiscountService
                 'reason' => $cartDiscount->reason,
             ];
 
-            if($order->discount) {
+            if ($order->discount) {
                 $order->discount->update($discountAttributes);
             } else {
                 $discount = new Discount();
                 $discount->fill($discountAttributes);
                 $discount->save();
+
                 $order->discount()->associate($discount);
                 $order->save();
             }
@@ -38,19 +38,20 @@ trait DiscountService
         }
     }
 
-    public function updateVariantDiscount(Variant $variant, ItemCollection $cartItem, $name = 'Admin discount', $isAuto = 1)
-    {
+    public function updateVariantDiscount(
+        Variant $variant,
+        ItemCollection $cartItem,
+        $name = 'Admin discount',
+        $isAuto = 1
+    ) {
         $itemCondition = $cartItem->getConditionByName($variant->id);
 
-        if($itemCondition) {
-
-            $orderVariant = $this
-                ->variants()
+        if ($itemCondition) {
+            $orderVariant = $this->variants()
                 ->where('variant_id', $variant->id)
                 ->first();
 
             if ($orderVariant) {
-
                 $discountAttributes = [
                     'name' => $name,
                     'auto' => $isAuto,
@@ -59,25 +60,22 @@ trait DiscountService
                     'reason' => $itemCondition->reason,
                 ];
 
-                if($orderVariant->pivot->discount_id) {
+                if ($orderVariant->pivot->discount_id) {
                     $discount = Discount::find(optional($orderVariant->pivot)->discount_id);
-                    if($discount) {
-                        $discount?->update($discountAttributes);
+                    if ($discount) {
+                        $discount->update($discountAttributes);
                     } else {
-                        $this->createDiscount($orderVariant, $discountAttributes);
+                        $this->createVariantDiscount($orderVariant, $discountAttributes);
                     }
                 } else {
-                    // create discount
-                    $this->createDiscount($orderVariant, $discountAttributes);
+                    $this->createVariantDiscount($orderVariant, $discountAttributes);
                 }
-
             }
         }
-
-
     }
 
-    public function createDiscount(Variant $variant, $discountAttributes) {
+    public function createVariantDiscount(Variant $variant, $discountAttributes)
+    {
         $discount = new Discount();
         $discount->fill($discountAttributes);
         $discount->save();
@@ -89,5 +87,4 @@ trait DiscountService
         $variant->pivot->discount_id = $discount->id;
         $variant->push();
     }
-
 }

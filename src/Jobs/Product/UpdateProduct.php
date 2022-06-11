@@ -65,14 +65,17 @@ class UpdateProduct
         }
 
         // update default variant
-        $defaultVariantAttributes = $attributes['default_variant'];
-        $defaultVariant = $product->default_variant;
 
-        if ($defaultVariant) {
-            $defaultVariant->update($defaultVariantAttributes);
+        if (isset($attributes['default_variant'])) {
+            $defaultVariantAttributes = $attributes['default_variant'];
+            $defaultVariant = $product->default_variant;
 
-            if (isset($defaultVariantAttributes['options']) && !empty($defaultVariantAttributes['options'])) {
-                CreateVariant::createVariantOptionWithValues($defaultVariant, $defaultVariantAttributes['options']);
+            if ($defaultVariant) {
+                $defaultVariant->update($defaultVariantAttributes);
+
+                if (isset($defaultVariantAttributes['options']) && !empty($defaultVariantAttributes['options'])) {
+                    CreateVariant::createVariantOptionWithValues($defaultVariant, $defaultVariantAttributes['options']);
+                }
             }
         }
 
@@ -91,6 +94,6 @@ class UpdateProduct
             }
         }
 
-        return tap($product);
+        return $product;
     }
 }

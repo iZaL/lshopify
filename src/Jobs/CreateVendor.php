@@ -22,9 +22,9 @@ class CreateVendor
         $vendor->fill($attributes);
         $vendor = tap($vendor)->save();
 
-        if($attributes['product_id']) {
+        if ($attributes['product_id']) {
             $product = Product::find($attributes['product_id']);
-            if($product) {
+            if ($product) {
                 $product->vendor()->associate($vendor);
                 $product->save();
             }
