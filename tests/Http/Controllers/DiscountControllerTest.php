@@ -52,9 +52,7 @@ class DiscountControllerTest extends TestCase
         $dbValues['starts_at'] = Carbon::parse($startsAt)->toDateTimeString();
         $dbValues['ends_at'] = Carbon::parse($endsAt)->toDateTimeString();
         $response = $this->post(route('lshopify.discounts.store'), $data);
-
         $this->assertDatabaseHas('discounts',$dbValues);
-
     }
 
     public function test_edit()
