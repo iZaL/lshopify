@@ -64,10 +64,8 @@ class VariantController extends Controller
         return Inertia::render('Product/Variant/VariantEdit', $data);
     }
 
-    public function update(
-        $variantID,
-        VariantUpdateRequest $request,
-    ): RedirectResponse {
+    public function update($variantID, VariantUpdateRequest $request): RedirectResponse
+    {
         $variant = Variant::find($variantID);
         $imageID = null;
 

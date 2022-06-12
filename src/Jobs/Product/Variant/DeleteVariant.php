@@ -7,7 +7,6 @@ use IZal\Lshopify\Models\Variant;
 
 class DeleteVariant
 {
-
     private Variant $variant;
 
     public function __construct(Variant $variant)

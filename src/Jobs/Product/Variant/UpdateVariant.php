@@ -10,7 +10,8 @@ class UpdateVariant
     private Variant $variant;
     private $options;
 
-    public function __construct(Variant $variant, $options) {
+    public function __construct(Variant $variant, $options)
+    {
         $this->variant = $variant;
         $this->options = $options;
     }

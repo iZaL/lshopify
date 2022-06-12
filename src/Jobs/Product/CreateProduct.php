@@ -10,7 +10,6 @@ use IZal\Lshopify\Models\Product;
 
 class CreateProduct
 {
-
     /**
      * @var ImageUploadAction
      */

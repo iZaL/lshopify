@@ -41,5 +41,4 @@ class CreateVariant
         event(new VariantCreated($variant));
         return $variant;
     }
-
 }

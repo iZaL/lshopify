@@ -8,13 +8,12 @@ use Illuminate\Support\Collection;
 
 class DateHelper
 {
-
-//    public static function parseAttributes(array $attributes): Collection
-//    {
-//        return collect($attributes)
-//            ->except(['starts_at', 'ends_at'])
-//            ->merge(self::parseStartEndDates($attributes['starts_at'], $attributes['ends_at']));
-//    }
+    //    public static function parseAttributes(array $attributes): Collection
+    //    {
+    //        return collect($attributes)
+    //            ->except(['starts_at', 'ends_at'])
+    //            ->merge(self::parseStartEndDates($attributes['starts_at'], $attributes['ends_at']));
+    //    }
 
     /**
      * @param $startDate

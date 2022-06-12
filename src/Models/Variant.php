@@ -101,7 +101,7 @@ class Variant extends BaseModel
 
     public function createOptions()
     {
-        if($this->default) {
+        if ($this->default) {
             $options = $this->getOptionsMatrix();
             foreach ($options as $option) {
                 $newVariant = $this->replicate(['default']);
@@ -136,7 +136,5 @@ class Variant extends BaseModel
         $optionsExcludingFirst = $optionValues->slice(1)->all(); // get the rest items of array
 
         return $firstOption->crossJoin(...$optionsExcludingFirst);
-
     }
-
 }

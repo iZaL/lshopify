@@ -23,25 +23,30 @@ class UpdateDiscount
     {
         $discount = $this->discount;
 
-        $parsedDates = DateHelper::parseStartEndDates($this->attributes['starts_at'],$this->attributes['ends_at']);
+        $parsedDates = DateHelper::parseStartEndDates($this->attributes['starts_at'], $this->attributes['ends_at']);
 
-        $attributes = collect($this->attributes)->except(['starts_at', 'ends_at']);
+        $attributes = collect($this->attributes)
+            ->except(['starts_at', 'ends_at'])
+            ->toArray();
 
-        $discount = tap($discount)->update([
-            ...$attributes,
-            ...$parsedDates
-        ]);
+        $discount = tap($discount)->update([...$attributes, ...$parsedDates]);
 
         if ($discount->target_type === 'products' && isset($attributes['variants'])) {
             $discount->variants()->sync($attributes['variants']);
+        } else {
+            $discount->variants()->detach();
         }
 
         if ($discount->target_type === 'collections' && isset($attributes['collections'])) {
             $discount->collections()->sync($attributes['collections']);
+        } else {
+            $discount->collections()->detach();
         }
 
         if (isset($attributes['customers'])) {
             $discount->customers()->sync($attributes['customers']);
+        } else {
+            $discount->customers()->detach();
         }
 
         return $discount;

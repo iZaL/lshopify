@@ -17,16 +17,14 @@ class CreateDiscount
 
     public function handle(): Discount
     {
+        $parsedDates = DateHelper::parseStartEndDates($this->attributes['starts_at'], $this->attributes['ends_at']);
 
-        $parsedDates = DateHelper::parseStartEndDates($this->attributes['starts_at'],$this->attributes['ends_at']);
-
-        $attributes = collect($this->attributes)->except(['starts_at', 'ends_at']);
+        $attributes = collect($this->attributes)
+            ->except(['starts_at', 'ends_at'])
+            ->toArray();
 
         $discount = new Discount();
-        $discount->fill([
-            ...$attributes,
-            ...$parsedDates
-        ]);
+        $discount->fill([...$attributes, ...$parsedDates]);
 
         $discount->save();
 

@@ -81,7 +81,6 @@ trait DiscountService
         $discount->save();
 
         // attach discount to variant
-        $variant->discounts()->attach($discount->id,['discount_id' => $discount->id]);
-
+        $variant->discounts()->attach($discount->id, ['discount_id' => $discount->id]);
     }
 }
