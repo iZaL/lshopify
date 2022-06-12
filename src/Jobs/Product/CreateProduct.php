@@ -2,16 +2,14 @@
 
 namespace IZal\Lshopify\Jobs\Product;
 
-use Illuminate\Foundation\Bus\DispatchesJobs;
+use IZal\Lshopify\Events\ProductCreated;
 use IZal\Lshopify\Jobs\ImageUploadAction;
 use IZal\Lshopify\Jobs\Product\Variant\CreateVariant;
 use IZal\Lshopify\Models\Category;
 use IZal\Lshopify\Models\Product;
-use Illuminate\Support\Collection;
 
 class CreateProduct
 {
-    use DispatchesJobs;
 
     /**
      * @var ImageUploadAction
@@ -35,7 +33,7 @@ class CreateProduct
         $variantAttributes = $attributes['default_variant'];
         $variantAttributes['default'] = true;
 
-        $this->dispatch(new CreateVariant($product, $variantAttributes, true));
+        dispatch(new CreateVariant($product, $variantAttributes, true));
 
         // product type
         if (isset($attributes['category'])) {
@@ -66,6 +64,7 @@ class CreateProduct
             ]);
         }
 
+        event(new ProductCreated($product));
         return $product;
     }
 }

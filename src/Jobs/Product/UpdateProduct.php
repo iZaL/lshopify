@@ -3,6 +3,7 @@
 namespace IZal\Lshopify\Jobs\Product;
 
 use Illuminate\Http\UploadedFile;
+use IZal\Lshopify\Events\ProductUpdated;
 use IZal\Lshopify\Jobs\Product\Variant\UpdateVariant;
 use IZal\Lshopify\Models\Category;
 use IZal\Lshopify\Models\Product;
@@ -70,7 +71,6 @@ class UpdateProduct
 
             if ($defaultVariant) {
                 $defaultVariant->update($defaultVariantAttributes);
-
                 if (isset($defaultVariantAttributes['options']) && !empty($defaultVariantAttributes['options'])) {
                     $defaultVariant->createOptions();
                 }
@@ -85,15 +85,13 @@ class UpdateProduct
                         $variantAttribute['image_id'] = $variantAttribute['image']['id'] ?? null;
                     }
                     $variant->update($variantAttribute);
-                    if (isset($variantAttribute['options'])) {
-                        dispatch(new UpdateVariant($variant, $variantAttribute['options']));
-                    }
                 }
             }
         }
 
         $product->push();
 
+        event(new ProductUpdated($product));
         return $product;
     }
 }
