@@ -4,7 +4,7 @@ namespace IZal\Lshopify\Jobs\Discount;
 
 use Exception;
 use IZal\Lshopify\Models\Discount;
-use IZal\Lshopify\Traits\DateService;
+use IZal\Lshopify\Helpers\DateHelper;
 
 class UpdateDiscount
 {
@@ -22,13 +22,15 @@ class UpdateDiscount
     public function handle(): Discount
     {
         $discount = $this->discount;
-        $attributes = $this->attributes;
 
-        $discount = tap($discount)->update(
-            DateService::parseAttributes($attributes)
-                ->only((new Discount())->getFillable())
-                ->toArray()
-        );
+        $parsedDates = DateHelper::parseStartEndDates($this->attributes['starts_at'],$this->attributes['ends_at']);
+
+        $attributes = collect($this->attributes)->except(['starts_at', 'ends_at']);
+
+        $discount = tap($discount)->update([
+            ...$attributes,
+            ...$parsedDates
+        ]);
 
         if ($discount->target_type === 'products' && isset($attributes['variants'])) {
             $discount->variants()->sync($attributes['variants']);

@@ -1,19 +1,20 @@
 <?php
 
-namespace IZal\Lshopify\Traits;
+namespace IZal\Lshopify\Helpers;
 
 use Exception;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
-trait DateService
+class DateHelper
 {
-    public static function parseAttributes(array $attributes): Collection
-    {
-        return collect($attributes)
-            ->except(['starts_at', 'ends_at'])
-            ->merge(self::parseStartEndDates($attributes['starts_at'], $attributes['ends_at']));
-    }
+
+//    public static function parseAttributes(array $attributes): Collection
+//    {
+//        return collect($attributes)
+//            ->except(['starts_at', 'ends_at'])
+//            ->merge(self::parseStartEndDates($attributes['starts_at'], $attributes['ends_at']));
+//    }
 
     /**
      * @param $startDate
@@ -21,7 +22,7 @@ trait DateService
      * @return array
      * @throws Exception
      */
-    protected static function parseStartEndDates($startDate, $endDate): array
+    public static function parseStartEndDates($startDate, $endDate): array
     {
         [$startsAt, $endsAt] = self::validateDates($startDate, $endDate);
 

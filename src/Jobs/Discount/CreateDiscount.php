@@ -2,8 +2,9 @@
 
 namespace IZal\Lshopify\Jobs\Discount;
 
+use IZal\Lshopify\Events\DiscountCreated;
 use IZal\Lshopify\Models\Discount;
-use IZal\Lshopify\Traits\DateService;
+use IZal\Lshopify\Helpers\DateHelper;
 
 class CreateDiscount
 {
@@ -16,13 +17,18 @@ class CreateDiscount
 
     public function handle(): Discount
     {
-        $attributes = $this->attributes;
 
-        $discount = Discount::create(
-            DateService::parseAttributes($attributes)
-                ->only((new Discount())->getFillable())
-                ->toArray()
-        );
+        $parsedDates = DateHelper::parseStartEndDates($this->attributes['starts_at'],$this->attributes['ends_at']);
+
+        $attributes = collect($this->attributes)->except(['starts_at', 'ends_at']);
+
+        $discount = new Discount();
+        $discount->fill([
+            ...$attributes,
+            ...$parsedDates
+        ]);
+
+        $discount->save();
 
         if ($discount->target_type === 'products' && isset($attributes['variants'])) {
             $discount->variants()->sync($attributes['variants']);
@@ -36,6 +42,7 @@ class CreateDiscount
             $discount->customers()->sync($attributes['customers']);
         }
 
+        event(new DiscountCreated($discount));
         return $discount;
     }
 }
