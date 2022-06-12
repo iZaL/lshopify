@@ -8,18 +8,18 @@ use IZal\Lshopify\Models\Variant;
 class UpdateVariant
 {
     private Variant $variant;
-    private $variantOptions;
+    private $options;
 
-    public function __construct(Variant $variant, $variantOptions) {
+    public function __construct(Variant $variant, $options) {
         $this->variant = $variant;
-        $this->variantOptions = $variantOptions;
+        $this->options = $options;
     }
 
     public function handle()
     {
         $variant = $this->variant;
         $options = [];
-        foreach ($this->variantOptions as $option) {
+        foreach ($this->options as $option) {
             $options[] = ['name' => $option['name'], 'id' => $option['id']];
         }
         $variant->options = $options;

@@ -3,10 +3,10 @@
 namespace IZal\Lshopify\Jobs\Product;
 
 use Illuminate\Http\UploadedFile;
-use IZal\Lshopify\Jobs\Product\Variant\CreateVariant;
 use IZal\Lshopify\Jobs\Product\Variant\UpdateVariant;
 use IZal\Lshopify\Models\Category;
 use IZal\Lshopify\Models\Product;
+use IZal\Lshopify\Models\Variant;
 use IZal\Lshopify\Models\Vendor;
 
 class UpdateProduct
@@ -16,14 +16,14 @@ class UpdateProduct
 
     public function __construct(Product $product, array $attributes)
     {
-        $this->attributes = $attributes;
         $this->product = $product;
+        $this->attributes = $attributes;
     }
 
     public function handle()
     {
-        $attributes = $this->attributes;
         $product = $this->product;
+        $attributes = $this->attributes;
 
         $product->update($attributes);
 
@@ -44,7 +44,6 @@ class UpdateProduct
         }
 
         // tags
-
         if (isset($attributes['tags'])) {
             $product->syncTags(
                 collect($attributes['tags'])
@@ -65,7 +64,6 @@ class UpdateProduct
         }
 
         // update default variant
-
         if (isset($attributes['default_variant'])) {
             $defaultVariantAttributes = $attributes['default_variant'];
             $defaultVariant = $product->default_variant;
@@ -74,21 +72,21 @@ class UpdateProduct
                 $defaultVariant->update($defaultVariantAttributes);
 
                 if (isset($defaultVariantAttributes['options']) && !empty($defaultVariantAttributes['options'])) {
-                    CreateVariant::createVariantOptionWithValues($defaultVariant, $defaultVariantAttributes['options']);
+                    $defaultVariant->createOptions();
                 }
             }
         }
 
-        if (!empty($attributes['variants'])) {
+        if ($attributes['variants'] && !empty($attributes['variants'])) {
             foreach ($attributes['variants'] as $variantAttribute) {
-                $variant = $product->variants()->find($variantAttribute['id']);
+                $variant = Variant::find($variantAttribute['id']);
                 if ($variant) {
                     if (isset($variantAttribute['image']) && !($variantAttribute['image'] instanceof UploadedFile)) {
                         $variantAttribute['image_id'] = $variantAttribute['image']['id'] ?? null;
                     }
                     $variant->update($variantAttribute);
                     if (isset($variantAttribute['options'])) {
-                        UpdateVariant::updateVariantOptions($variant, $variantAttribute['options']);
+                        dispatch(new UpdateVariant($variant, $variantAttribute['options']));
                     }
                 }
             }
@@ -99,8 +97,3 @@ class UpdateProduct
         return $product;
     }
 }
-
-// update existing pivot
-//$user->roles()->updateExistingPivot($roleId, [
-//    'active' => false,
-//]);

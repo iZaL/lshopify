@@ -2,8 +2,6 @@
 
 namespace IZal\Lshopify\Models;
 
-use Illuminate\Database\Eloquent\Casts\AsArrayObject;
-use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use IZal\Lshopify\Database\Factories\VariantFactory;
@@ -27,8 +25,6 @@ class Variant extends BaseModel
         'out_of_stock_sale' => 'boolean',
         'price' => 'decimal:3',
         'compare_at_price' => 'decimal:3',
-        //        'options' => AsArrayObject::class,
-        //        'options' => AsCollection::class,
         'options' => 'array',
     ];
 
@@ -102,4 +98,45 @@ class Variant extends BaseModel
             ->pluck('name')
             ->join(' / ');
     }
+
+    public function createOptions()
+    {
+        if($this->default) {
+            $options = $this->getOptionsMatrix();
+            foreach ($options as $option) {
+                $newVariant = $this->replicate(['default']);
+                $newVariant->options = $option;
+                $newVariant->save();
+            }
+        }
+    }
+
+    public function getOptionsMatrix(): \Illuminate\Support\Collection
+    {
+        $optionValues = collect([]);
+        $options = $this->options;
+        foreach ($options as $option) {
+            $values = [];
+            foreach ($option['values'] as $value) {
+                $values[] = [
+                    'id' => $option['id'],
+                    'name' => $value['name'],
+                ];
+            }
+            $optionValues[] = $values;
+        }
+
+        /**
+         * The following methods cross joins the products with its variants
+         * for ex: Size (S,M) Color(Black, Brown)
+         * result: [S Black, S brown, M Black, M Brown)
+         */
+        $firstOption = collect($optionValues->first()); // get the first item of the array
+
+        $optionsExcludingFirst = $optionValues->slice(1)->all(); // get the rest items of array
+
+        return $firstOption->crossJoin(...$optionsExcludingFirst);
+
+    }
+
 }
