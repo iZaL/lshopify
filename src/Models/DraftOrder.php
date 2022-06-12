@@ -5,12 +5,12 @@ namespace IZal\Lshopify\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use IZal\Lshopify\Database\Factories\DraftOrderFactory;
-use IZal\Lshopify\Traits\SyncCartVariants;
+use IZal\Lshopify\Traits\CartService;
 
 class DraftOrder extends Order
 {
     use HasFactory;
-    use SyncCartVariants;
+    use CartService;
 
     protected $table = 'orders';
 
