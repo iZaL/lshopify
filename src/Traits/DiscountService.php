@@ -81,10 +81,7 @@ trait DiscountService
         $discount->save();
 
         // attach discount to variant
-        $variant->discounts()->attach($discount->id);
+        $variant->discounts()->attach($discount->id,['discount_id' => $discount->id]);
 
-        // update order pivot model with the discount
-        $variant->pivot->discount_id = $discount->id;
-        $variant->push();
     }
 }

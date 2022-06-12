@@ -94,6 +94,13 @@ class UpdateProduct
             }
         }
 
+        $product->push();
+
         return $product;
     }
 }
+
+// update existing pivot
+//$user->roles()->updateExistingPivot($roleId, [
+//    'active' => false,
+//]);

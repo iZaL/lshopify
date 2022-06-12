@@ -67,7 +67,6 @@ class VariantController extends Controller
     public function update(
         $variantID,
         VariantUpdateRequest $request,
-        UpdateVariant $variantUpdateAction
     ): RedirectResponse {
         $variant = Variant::find($variantID);
         $imageID = null;
@@ -88,7 +87,7 @@ class VariantController extends Controller
         $options = $request->get('options');
 
         if (isset($options)) {
-            $variantUpdateAction->updateVariantOptions($variant, $options);
+            $this->dispatch(new UpdateVariant($variant, $options));
         }
 
         return redirect()
@@ -109,13 +108,12 @@ class VariantController extends Controller
             ->with('success', 'Saved');
     }
 
-    public function delete($productID, VariantDeleteRequest $request, DeleteVariant $action): RedirectResponse
+    public function delete($productID, VariantDeleteRequest $request): RedirectResponse
     {
         $product = Product::find($productID);
-        $product
-            ->variants()
-            ->whereIn('id', $request->variants)
-            ->delete();
+        foreach ($product->variants as $variant) {
+            $this->dispatch(new DeleteVariant($variant));
+        }
 
         return redirect()
             ->back()

@@ -2,6 +2,7 @@
 
 namespace IZal\Lshopify\Jobs\Product\Variant;
 
+use IZal\Lshopify\Events\VariantCreated;
 use IZal\Lshopify\Models\Product;
 use IZal\Lshopify\Models\Variant;
 use Illuminate\Support\Collection;
@@ -38,9 +39,9 @@ class CreateVariant
                 self::createVariantOptionWithValues($variant, $attributes['options']);
             }
         }
-
         //        $this->product->variants()->save($variant);
 
+        event(new VariantCreated($variant));
         return $variant;
     }
 
