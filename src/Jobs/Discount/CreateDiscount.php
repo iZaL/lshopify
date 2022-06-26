@@ -24,7 +24,7 @@ class CreateDiscount
             ->toArray();
 
         $discount = new Discount();
-        $discount->fill([...$attributes, ...$parsedDates]);
+        $discount->fill(array_merge($attributes, $parsedDates));
 
         $discount->save();
 
