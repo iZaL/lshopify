@@ -35,7 +35,7 @@ class CreateProduct
         dispatch(new CreateVariant($product, $variantAttributes, true));
 
         // product type
-        if (isset($attributes['category'])) {
+        if ($attributes['category']) {
             $category = Category::find(optional($attributes['category'])['id']);
             if ($category) {
                 $product->category()->associate($category);
@@ -43,18 +43,22 @@ class CreateProduct
         }
 
         // tags
-        $product->syncTags(
-            collect($attributes['tags'])
-                ->pluck('id')
-                ->toArray()
-        );
+        if($attributes['tags']) {
+            $product->syncTags(
+                collect($attributes['tags'])
+                    ->pluck('id')
+                    ->toArray()
+            );
+        }
 
         // collection
-        $product->collections()->sync(
-            collect($attributes['collections'])
-                ->pluck('id')
-                ->toArray()
-        );
+        if($attributes['collections']) {
+            $product->collections()->sync(
+                collect($attributes['collections'])
+                    ->pluck('id')
+                    ->toArray()
+            );
+        }
 
         if (isset($attributes['images']) && !empty($attributes['images'])) {
             $this->imageUploadAction->uploadToServer($attributes['images'])->saveInDB([
