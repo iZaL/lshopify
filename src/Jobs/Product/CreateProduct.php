@@ -35,7 +35,7 @@ class CreateProduct
         dispatch(new CreateVariant($product, $variantAttributes, true));
 
         // product type
-        if ($attributes['category']) {
+        if (isset($attributes['category'])) {
             $category = Category::find(optional($attributes['category'])['id']);
             if ($category) {
                 $product->category()->associate($category);
@@ -43,7 +43,7 @@ class CreateProduct
         }
 
         // tags
-        if($attributes['tags']) {
+        if(isset($attributes['tags'])) {
             $product->syncTags(
                 collect($attributes['tags'])
                     ->pluck('id')
@@ -52,7 +52,7 @@ class CreateProduct
         }
 
         // collection
-        if($attributes['collections']) {
+        if(isset($attributes['collections'])) {
             $product->collections()->sync(
                 collect($attributes['collections'])
                     ->pluck('id')
