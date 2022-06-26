@@ -42,6 +42,18 @@ class Product extends BaseModel
         return $this->hasMany(Variant::class, 'product_id');
     }
 
+    public function variants(): HasMany
+    {
+        return $this->hasMany(Variant::class, 'product_id')
+            ->whereNotNull('options')
+            ->where('default', 0);
+    }
+
+    public function default_variant(): HasOne
+    {
+        return $this->hasOne(Variant::class, 'product_id')->where('default', 1);
+    }
+
     public function collections(): BelongsToMany
     {
         return $this->belongsToMany(Collection::class, 'collection_products');
@@ -110,18 +122,6 @@ class Product extends BaseModel
         return $this->default_variant()
             ->where('tracked', 1)
             ->count() > 0;
-    }
-
-    public function variants(): HasMany
-    {
-        return $this->hasMany(Variant::class, 'product_id')
-            ->whereNotNull('options')
-            ->where('default', 0);
-    }
-
-    public function default_variant(): HasOne
-    {
-        return $this->hasOne(Variant::class, 'product_id')->where('default', 1);
     }
 
     public function getAvailableQuantityAttribute()

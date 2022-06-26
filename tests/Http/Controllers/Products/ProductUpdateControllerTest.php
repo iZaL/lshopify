@@ -41,7 +41,7 @@ class ProductUpdateControllerTest extends TestCase
         $response = $this->patch(route('lshopify.products.update',[$product->id]), $data);
 
         $this->assertDatabaseHas('products', $productData);
-        $this->assertDatabaseCount('variants', 12);
+        $this->assertDatabaseCount('variants', 4);
         $this->assertDatabaseHas('variants', ['default' => 1]);
     }
     public function test_can_update_products()
@@ -78,7 +78,7 @@ class ProductUpdateControllerTest extends TestCase
         $response = $this->patch(route('lshopify.products.update',[$product->id]), $data);
 
         $this->assertDatabaseHas('products', $productData);
-        $this->assertDatabaseCount('variants', 12);
+        $this->assertDatabaseCount('variants', 4);
         $this->assertDatabaseHas('variants', ['default' => 1]);
     }
 }

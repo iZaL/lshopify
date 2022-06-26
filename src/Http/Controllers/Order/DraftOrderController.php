@@ -2,6 +2,7 @@
 
 namespace IZal\Lshopify\Http\Controllers\Order;
 
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -85,6 +86,8 @@ class DraftOrderController extends Controller
     {
         $cart = app('cart');
 
+        session()->forget('cart_order');
+
         $products = Product::with(['variants'])
             ->latest()
             ->get();
@@ -119,20 +122,27 @@ class DraftOrderController extends Controller
                     ],
                 ]);
                 $cart->condition($cartDiscount);
+            } else {
+                $cart->removeConditionByName('cart');
             }
 
             foreach ($order->variants as $variant) {
                 $cartItem = $cart->findByID($variant->id);
                 if (!$cartItem) {
-                    $cartItem = $cart->add([
-                        'id' => $variant->id,
-                        'name' => $variant->id,
-                        'price' => $variant->pivot->price,
-                        'quantity' => $variant->pivot->quantity,
-                        'variant' => new VariantResource($variant),
-                    ]);
+                    try {
+                        $cartItem = $cart->add([
+                            'id' => $variant->id,
+                            'name' => $variant->id,
+                            'price' => $variant->pivot->price,
+                            'quantity' => $variant->pivot->quantity,
+                            'variant' => new VariantResource($variant),
+                        ]);
+                    } catch (Exception $e) {
+                        dd($e);
+                    }
                 }
 
+                dd('x');
                 $variantDiscount = Discount::find(optional($variant->pivot)->discount_id);
 
                 if ($variantDiscount) {

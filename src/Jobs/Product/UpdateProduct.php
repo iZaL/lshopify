@@ -64,30 +64,34 @@ class UpdateProduct
             );
         }
 
-        // update default variant
-        if (isset($attributes['default_variant'])) {
-            $defaultVariantAttributes = $attributes['default_variant'];
-            $defaultVariant = $product->default_variant;
+        $defaultVariant = $product->default_variant;
 
-            if ($defaultVariant) {
-                $defaultVariant->update($defaultVariantAttributes);
-                if (isset($defaultVariantAttributes['options']) && !empty($defaultVariantAttributes['options'])) {
-                    $defaultVariant->createOptions();
-                }
+        if($defaultVariant) {
+            // update default variant
+            if (isset($attributes['default_variant'])) {
+                $defaultVariantAttributes = $attributes['default_variant'];
+                $defaultVariant->update(
+                    array_merge($defaultVariantAttributes,['options' => null]),
+                );
             }
-        }
 
-        if ($attributes['variants'] && !empty($attributes['variants'])) {
-            foreach ($attributes['variants'] as $variantAttribute) {
-                $variant = Variant::find($variantAttribute['id']);
-                if ($variant) {
-                    if (isset($variantAttribute['image']) && !($variantAttribute['image'] instanceof UploadedFile)) {
-                        $variantAttribute['image_id'] = $variantAttribute['image']['id'] ?? null;
+            if ($attributes['variants'] && !empty($attributes['variants'])) {
+                foreach ($attributes['variants'] as $variantAttribute) {
+                    $variant = Variant::find($variantAttribute['id']);
+                    if ($variant) {
+                        if (isset($variantAttribute['image']) && !($variantAttribute['image'] instanceof UploadedFile)) {
+                            $variantAttribute['image_id'] = $variantAttribute['image']['id'] ?? null;
+                        }
+                        $variant->update($variantAttribute);
                     }
-                    $variant->update($variantAttribute);
+                }
+            } else {
+                if (isset($defaultVariantAttributes['options']) && !empty($defaultVariantAttributes['options'])) {
+                    $defaultVariant->createOptions($defaultVariantAttributes['options']);
                 }
             }
         }
+
 
         $product->push();
 

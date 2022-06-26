@@ -18,7 +18,7 @@ class VariantControllerTest extends TestCase
                 [
                     'id'=> '2',
                     'name'=> 'Color',
-                    'options'=> [
+                    'values'=> [
                         [
                             'id'=> 'Black',
                             'name'=> 'Black',
@@ -32,7 +32,7 @@ class VariantControllerTest extends TestCase
                 [
                     'id'=> '1',
                     'name'=> 'Size',
-                    'options'=> [
+                    'values'=> [
                         [
                             'id'=> 'XL',
                             'name'=> 'XL',
@@ -46,7 +46,7 @@ class VariantControllerTest extends TestCase
                 [
                     'id'=> '3',
                     'name'=> 'Material',
-                    'options'=> [
+                    'values'=> [
                         [
                             'id'=> 'Cotton',
                             'name'=> 'Cotton',

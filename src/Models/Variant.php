@@ -99,10 +99,10 @@ class Variant extends BaseModel
             ->join(' / ');
     }
 
-    public function createOptions()
+    public function createOptions(array $options)
     {
         if ($this->default) {
-            $options = $this->getOptionsMatrix();
+            $options = $this->getOptionsMatrix($options);
             foreach ($options as $option) {
                 $newVariant = $this->replicate(['default']);
                 $newVariant->options = $option;
@@ -111,10 +111,9 @@ class Variant extends BaseModel
         }
     }
 
-    public function getOptionsMatrix(): \Illuminate\Support\Collection
+    public function getOptionsMatrix(array $options): \Illuminate\Support\Collection
     {
         $optionValues = collect([]);
-        $options = $this->options;
         foreach ($options as $option) {
             $values = [];
             foreach ($option['values'] as $value) {

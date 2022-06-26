@@ -53,6 +53,10 @@ export default function VariantCreate(props: Props) {
   });
 
   useEffect(() => {
+    console.log('data changed', data);
+  }, [data]);
+
+  useEffect(() => {
     setData('images', product.images || []);
   }, [product.images]);
 

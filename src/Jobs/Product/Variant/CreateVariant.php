@@ -27,15 +27,19 @@ class CreateVariant
     public function handle(): Variant
     {
         $attributes = $this->variantAttributes;
-        $attributes['product_id'] = $this->product->id;
         $variant = new Variant();
-        unset($attributes['image_id']);
-        $variant->fill($attributes);
+
+        $variant->fill(array_merge($attributes,[
+            'image_id' => null,
+            'options' => null, //@todo
+            'product_id' => $this->product->id
+        ]));
+
         $variant->save();
 
         if (!empty($attributes['options'])) {
             if ($this->createOptions) {
-                $variant->createOptions();
+                $variant->createOptions($attributes['options']);
             }
         }
         event(new VariantCreated($variant));

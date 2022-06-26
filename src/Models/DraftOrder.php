@@ -20,9 +20,18 @@ class DraftOrder extends Order
         static::addGlobalScope('draft', function (Builder $builder) {
             $builder->where('draft', 1);
         });
-        static::creating(function ($model) {
-            $model->draft = 1;
-        });
+//        static::creating(function ($model) {
+//            $model->draft = 1;
+//            if($model->default) {
+//                $model->options = [];
+//            }
+//        });
+//        static::updating(function ($model) {
+//            $model->draft = 1;
+//            if($model->default) {
+//                $model->options = [];
+//            }
+//        });
     }
 
     public static function newFactory()

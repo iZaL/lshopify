@@ -3,6 +3,7 @@
 namespace IZal\Lshopify\Jobs\Discount;
 
 use Exception;
+use IZal\Lshopify\Events\DiscountUpdated;
 use IZal\Lshopify\Models\Discount;
 use IZal\Lshopify\Helpers\DateHelper;
 
@@ -48,6 +49,8 @@ class UpdateDiscount
         } else {
             $discount->customers()->detach();
         }
+
+        event(new DiscountUpdated($discount));
 
         return $discount;
     }
